@@ -670,6 +670,12 @@ dreamopt@~0.6.0:
   dependencies:
     wordwrap ">=0.0.2"
 
+erotic@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/erotic/-/erotic-0.2.0.tgz#4162384016281b1dd313bf1ecc87576f92d8e509"
+  dependencies:
+    clean-stack "1.3.0"
+
 erotic@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/erotic/-/erotic-1.1.0.tgz#ccfa6c05e836bae8610ac407dbe191efa9cdbeda"
@@ -679,6 +685,12 @@ erotic@1.1.0:
 erte@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/erte/-/erte-1.1.1.tgz#b9bd6252168c256232a06e37e472d172a895c5ee"
+  dependencies:
+    diff "3.5.0"
+
+erte@1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/erte/-/erte-1.1.3.tgz#5de29caf9f3afaad317ecc4458ae4982102b2b03"
   dependencies:
     diff "3.5.0"
 
@@ -1421,6 +1433,12 @@ make-dir@^1.0.0:
   dependencies:
     pify "^3.0.0"
 
+makepromise@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/makepromise/-/makepromise-1.1.1.tgz#4e03bf98c25ca96a4223b0f2e280e3b3a6f9dea4"
+  dependencies:
+    erotic "0.2.0"
+
 map-cache@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/map-cache/-/map-cache-0.2.2.tgz#c32abd0bd6525d9b051645bb4f26ac5dc98a0dbf"
@@ -1850,6 +1868,12 @@ regexpp@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/regexpp/-/regexpp-1.1.0.tgz#0e3516dd0b7904f413d2d4193dce4618c3a689ab"
 
+reloquent@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/reloquent/-/reloquent-0.2.0.tgz#0b9e5f02cc9d19466474a90a40d057f97312bfde"
+  dependencies:
+    promto "1.0.1"
+
 remove-trailing-separator@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
@@ -1889,6 +1913,10 @@ restore-cursor@^2.0.0:
   dependencies:
     onetime "^2.0.0"
     signal-exit "^3.0.2"
+
+restream@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/restream/-/restream-1.2.0.tgz#fd13b031a54e80cc65d1878c43149f1b3a40efbb"
 
 restream@2.0.1:
   version "2.0.1"
@@ -2018,6 +2046,16 @@ snapdragon@^0.8.1:
     source-map "^0.5.6"
     source-map-resolve "^0.5.0"
     use "^3.1.0"
+
+snapshot-context@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/snapshot-context/-/snapshot-context-2.0.1.tgz#3a3e622808f89d3f7723d4009df7f9f07436ead8"
+  dependencies:
+    assert-diff "1.2.6"
+    erotic "1.1.0"
+    erte "1.1.3"
+    reloquent "0.2.0"
+    wrote "1.4.0"
 
 source-map-resolve@^0.5.0:
   version "0.5.2"
@@ -2255,6 +2293,14 @@ write@^0.2.1:
   resolved "https://registry.yarnpkg.com/write/-/write-0.2.1.tgz#5fc03828e264cea3fe91455476f7a3c566cb0757"
   dependencies:
     mkdirp "^0.5.1"
+
+wrote@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/wrote/-/wrote-1.4.0.tgz#68c95aa1d62e425c8cdf03fa26baa3acca2eed8f"
+  dependencies:
+    catchment "2.0.1"
+    makepromise "1.1.1"
+    restream "1.2.0"
 
 yallist@^2.1.2:
   version "2.1.2"
