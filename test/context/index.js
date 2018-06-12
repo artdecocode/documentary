@@ -30,11 +30,15 @@ export default class Context {
   get SNAPSHOT_DIR() {
     return resolve(__dirname, '../snapshot')
   }
-  async toc(input) {
+  /**
+   * Run the toc command.
+   * @param {string} input Path to the source readme file
+   */
+  async toc(input, ...args) {
     const proc = fork(TEST_BUILD ?
       resolve(__dirname, '../../build/bin/index.js') :
       resolve(__dirname, '../../src/bin/register.js'),
-    ['-t', input], {
+    ['-t', input, ...args], {
       stdio: 'pipe',
     })
     const { stdout, stderr } = await proc.promise
