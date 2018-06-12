@@ -21,6 +21,9 @@ export default class Context {
   get README() {
     return
   }
+  /**
+   * Path to the source readme file with %TOC% marker for replacement.
+   */
   get README_PATH() {
     return resolve(__dirname, '../fixtures/README-source.md')
   }
