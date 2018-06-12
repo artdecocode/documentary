@@ -28,7 +28,7 @@ The `doc` client is available after installation.
 TOC for the README page can be generated with the TOC generator.
 
 ```sh
-doc -t README.md
+doc -t input-source.md [-r] [-o output.md]
 ```
 
 ```fs
@@ -41,14 +41,14 @@ doc -t README.md
 
 It will also include valid URLs used on GitHub to skip to the title when complex titles are given.
 
-To replace the `%TOC%` placeholder in the file with the generated table of content, pass `-r` (`--replace`) command.
+When `-r` or `--replace` argument is passed, the `%TOC%` placeholder in the file will be replaced with the generated table of contents. Passing `-o` allows to save the output to the file, otherwise it is printed into the _stdout_.
 
 ```sh
-doc -t README.md -r
+doc -t README-source.md -r -o README.md
 ```
 
-```fs
-Replaced a table of contents in the README.md file.
+```
+Saved README.md from README-source.md
 ```
 
 ### `-l`, `--live`: GitHub Live
