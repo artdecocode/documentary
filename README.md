@@ -31,7 +31,7 @@ TOC for the README page can be generated with the TOC generator.
 doc -t input-source.md [-r] [-o output.md]
 ```
 
-```fs
+```md
 - [Table Of Contents](#table-of-contents)
 - [CLI](#cli)
   * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
