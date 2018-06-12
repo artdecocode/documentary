@@ -2,11 +2,15 @@
 
 [![npm version](https://badge.fury.io/js/documentary.svg)](https://badge.fury.io/js/documentary)
 
-`documentary` is a new Node.js npm package. A library to manage documentation, such as README, usage, man pages and changelog.
+`documentary` is a command-line tool and a library to manage documentation of Node.js packages.
+
+<!-- such as README, usage, man pages and changelog. -->
 
 ```sh
 yarn add -E documentary
 ```
+
+The features include generation of table of content, github live preview and title generator.
 
 ## Table of Contents
 
@@ -25,7 +29,7 @@ The `doc` client is available after installation.
 
 ### `-t`, `--toc`: Generate TOC
 
-TOC for the README page can be generated with the TOC generator.
+Table of Contents for the README page can be generated with `documentary` TOC generator.
 
 ```sh
 doc -t input-source.md [-r] [-o output.md]
