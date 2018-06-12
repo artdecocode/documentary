@@ -12,6 +12,7 @@
     "lint": "eslint .",
     "e": "node example",
     "example/": "yarn e example/example.js",
+    "example/toc.js": "NODE_DEBUG=doc yarn e example/toc.js",
     "build": "babel src --out-dir build --source-maps"
   },
   "files": [
@@ -41,5 +42,11 @@
     "eslint-config-artdeco": "1.0.0",
     "yarn-s": "1.1.0",
     "zoroaster": "2.1.0"
+  },
+  "dependencies": {
+    "catchment": "2.0.1",
+    "chrome-launcher": "0.10.2",
+    "chrome-remote-interface": "0.25.6",
+    "spawncommand": "2.0.1"
   }
 }

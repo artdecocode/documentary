@@ -11,6 +11,13 @@ export default class Context {
   example() {
     return 'OK'
   }
+  /**
+   * A markdown document headers structure, e.g.,
+   * `{ hello: [] }
+   */
+  get structure() {
+
+  }
   async _destroy() {
     console.log('destroy context')
   }
