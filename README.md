@@ -58,6 +58,8 @@ doc -t README-source.md -r -o README.md
 Saved README.md from README-source.md
 ```
 
+The command will also strip any markdown comments (e,g., `<!—— comment ——>`).
+
 ### `-l`, `--live`: GitHub Live
 
 With GitHub live, `documentary` will monitor for any happening commits, push them to GitHub, extract the commit version, and refresh the page with open `README.md` file in Chrome browser. This allows to see the preview as it is viewed on GitHub.

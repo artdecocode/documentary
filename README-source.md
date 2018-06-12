@@ -53,7 +53,7 @@ doc -t README-source.md -r -o README.md
 Saved README.md from README-source.md
 ```
 
-The command will also strip any comments found in `<!-- -->` blocks.
+The command will also strip any markdown comments (e,g., `<!—— comment ——>`).
 
 ### `-l`, `--live`: GitHub Live
 
