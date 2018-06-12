@@ -4,8 +4,6 @@
 
 `documentary` is a command-line tool and a library to manage documentation of Node.js packages.
 
-<!-- such as README, usage, man pages and changelog. -->
-
 ```sh
 # install doc binary
 npm i -g documentary
@@ -72,24 +70,6 @@ doc live
 
 The programmatic use of the `documentary` is intended for developers who want to use this software in their projects.
 
-<!-- ### extractStructure(markdown: string): object -->
-
-<!-- ### MethodDescriptor
-
-A method descriptor contains meta-information about a method, such as what arguments it takes, of what type, etc.
-
-```js
-const md = {
-  name: 'methodName',
-  arguments: {
-    name: {
-      type: 'string',
-    },
-  },
-  return: 'string',
-}
-``` -->
-
 ### generateTitle(method: MethodDescriptor): string
 
 Generate a title for a method, for example:
@@ -142,19 +122,6 @@ DOC 13980: Reading /documentary/example/markdown.md
 - [API](#api)
 - [Copyright](#copyright)
 ```
-
-
-<!-- const TOC = toc({
-  packageName: [
-    CLI: [
-      '`-c`, `--command`: Execute Command',
-      '`-h`, `--help`: Display Help',
-    ],
-    API: {
-      '`toc(): string`'
-    },
-  },
-}) -->
 
 
 ---

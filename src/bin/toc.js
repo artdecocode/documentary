@@ -8,10 +8,16 @@ const LOG = debuglog('doc')
 
 const replaceFile = (path, re, replacement, outfile) => {
   const rs = createReadStream(path)
-  const s = replaceStream({
-    re,
-    replacement,
-  })
+  const s = replaceStream([
+    {
+      re,
+      replacement,
+    },
+    {
+      re: /<!--[\s\S]*?-->\n+/g,
+      replacement: '',
+    },
+  ])
 
   const ws = outfile ? createWriteStream(outfile) : process.stdout
 

@@ -18,6 +18,27 @@
         "test/spec",
         "--babel"
       ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch App",
+      "program": "${workspaceFolder}/src/bin/register.js",
+      "env": {
+        "BABEL_ENV": "debug",
+        "NODE_DEBUG": "doc"
+      },
+      "args": [
+        "-t",
+        "README-source.md",
+        "-r",
+        "-o",
+        "README.md"
+      ],
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
     }
   ]
 }
