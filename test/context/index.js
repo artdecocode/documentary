@@ -1,9 +1,13 @@
+import { debuglog } from 'util'
+
+const LOG = debuglog('context')
+
 /**
  * A testing context for the package.
  */
 export default class Context {
   async _init() {
-    console.log('init context')
+    LOG('init context')
   }
   /**
    * Example method.
@@ -19,6 +23,6 @@ export default class Context {
 
   }
   async _destroy() {
-    console.log('destroy context')
+    LOG('destroy context')
   }
 }

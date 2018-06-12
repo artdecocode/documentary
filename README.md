@@ -18,7 +18,7 @@ yarn add -E documentary
   * [extractStructure(markdown: string): object](#extractstructuremarkdown-string-object)
   * [MethodDescriptor](#methoddescriptor)
   * [generateTitle(method: MethodDescriptor): string](#generatetitlemethod-methoddescriptor-string)
-    * [`koa2Jsx({`<br/>&nbsp;&nbsp;`reducer: function,`<br/>&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;`render?: function,`<br/>`}): function`](#koa2jsxbrnbspnbspreducer-functionbrnbspnbspview-containerbrnbspnbspactions-objectbrnbspnbspstatic-boolean--truebrnbspnbsprender-functionbr-function)
+    * [`koa2Jsx({`<br/>&nbsp;&nbsp;`reducer: function,`<br/>&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;`render?: function,`<br/>`}): function`](#koa2jsxreducer-functionview-containeractions-objectstatic-boolean--truerender-function-function)
   * [`toc(readable: ReadableStream): string`](#tocreadable-readablestream-string)
 
 ## CLI

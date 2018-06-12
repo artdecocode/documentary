@@ -1,3 +1,4 @@
+import { getLink } from './lib'
 import { Readable, Transform } from 'stream'
 /**
  * This is the main package file.
@@ -16,11 +17,6 @@ export default async function documentary() {
 // }
 
 const re = /^ *(#+) *((?:(?!\n)[\s\S])+)\n/gm
-//   replacement: (match, p1, p2) => {
-//     const l = p1.length
-//     return `<h${l}>${p2}</h${l}>`
-//   },
-// },
 
 export class Toc extends Transform {
   constructor(md, {
@@ -37,7 +33,7 @@ export class Toc extends Transform {
       const [, { length: level }, title] = res
       // console.log(length, title)
       if (this.skipLevelOne && level == 1) continue
-      const link = title.replace(/[^\w-\d ]/g, '').toLowerCase().replace(/[, ]/g, '-')
+      const link = getLink(title)
       const t = `[${title}](#${link})`
       let s
       if (level == 2) {
