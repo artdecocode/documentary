@@ -10,14 +10,7 @@ yarn add -E documentary
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
-- [CLI](#cli)
-  * [`-t`, `--toc`: Generate TOC](#-t---toc-generate-toc)
-  * [`-l`, `--live`: GitHub Live](#-l---live-github-live)
-- [API](#api)
-  * [generateTitle(method: MethodDescriptor): string](#generatetitlemethod-methoddescriptor-string)
-    * [`koa2Jsx({`<br/>&nbsp;&nbsp;`reducer: function,`<br/>&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;`render?: function,`<br/>`}): function`](#koa2jsxreducer-functionview-containeractions-objectstatic-boolean--truerender-function-function)
-  * [`toc(readable: ReadableStream): string`](#tocreadable-readablestream-string)
+%TOC%
 
 ## CLI
 

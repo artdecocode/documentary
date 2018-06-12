@@ -11,7 +11,7 @@
     "test-watch": "yarn test -w",
     "lint": "eslint .",
     "e": "node example",
-    "dev": "node src/bin/register",
+    "dev": "NODE_DEBUG=doc node src/bin/register",
     "start": "node build/bin",
     "example/": "yarn e example/example.js",
     "example/toc.js": "NODE_DEBUG=doc yarn e example/toc.js",
@@ -50,10 +50,11 @@
     "zoroaster": "2.1.0"
   },
   "dependencies": {
-    "argufy": "1.0.1",
+    "argufy": "1.0.2",
     "catchment": "2.0.1",
     "chrome-launcher": "0.10.2",
     "chrome-remote-interface": "0.25.6",
+    "restream": "2.0.1",
     "spawncommand": "2.0.1"
   }
 }
