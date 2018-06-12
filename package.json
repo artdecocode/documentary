@@ -52,8 +52,6 @@
   "dependencies": {
     "argufy": "1.0.2",
     "catchment": "2.0.1",
-    "chrome-launcher": "0.10.2",
-    "chrome-remote-interface": "0.25.6",
     "restream": "2.0.1",
     "spawncommand": "2.0.1"
   }
