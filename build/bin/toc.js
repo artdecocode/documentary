@@ -21,10 +21,13 @@ const LOG = (0, _util.debuglog)('doc');
 
 const replaceFile = (path, re, replacement, outfile) => {
   const rs = (0, _fs.createReadStream)(path);
-  const s = (0, _restream.replaceStream)({
+  const s = (0, _restream.replaceStream)([{
     re,
     replacement
-  });
+  }, {
+    re: /<!--[\s\S]*?-->\n+/g,
+    replacement: ''
+  }]);
   const ws = outfile ? (0, _fs.createWriteStream)(outfile) : process.stdout;
   rs.pipe(s).pipe(ws);
 
