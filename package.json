@@ -11,10 +11,16 @@
     "test-watch": "yarn test -w",
     "lint": "eslint .",
     "e": "node example",
+    "dev": "node src/bin/register",
+    "start": "node build/bin",
     "example/": "yarn e example/example.js",
     "example/toc.js": "NODE_DEBUG=doc yarn e example/toc.js",
     "build": "babel src --out-dir build --source-maps"
   },
+  "bin": {
+    "doc": "build/bin/index.js"
+  },
+  "man": "man/doc.1",
   "files": [
     "build"
   ],
@@ -44,6 +50,7 @@
     "zoroaster": "2.1.0"
   },
   "dependencies": {
+    "argufy": "1.0.1",
     "catchment": "2.0.1",
     "chrome-launcher": "0.10.2",
     "chrome-remote-interface": "0.25.6",

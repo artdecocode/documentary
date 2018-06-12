@@ -23,17 +23,37 @@ yarn add -E documentary
 
 ## CLI
 
-### Generate TOC
+The `doc` client is available after installation.
+
+### `-t`, `--toc`: Generate TOC
 
 TOC for the README page can be generated with the TOC generator.
 
 ```sh
-doc README.md
+doc -t README.md
+```
+
+```fs
+- [Table Of Contents](#table-of-contents)
+- [CLI](#cli)
+  * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
+- [API](#api)
+- [Copyright](#copyright)
 ```
 
 It will also include valid URLs used on GitHub to skip to the title when complex titles are given.
 
-### GitHub Live
+To replace the `%TOC%` placeholder in the file with the generated table of content, pass `-r` (`--replace`) command.
+
+```sh
+doc -t README.md -r
+```
+
+```fs
+Replaced a table of contents in the README.md file.
+```
+
+### `-l`, `--live`: GitHub Live
 
 With GitHub live, `documentary` will monitor for any happening commits, push them to GitHub, extract the commit version, and refresh the page with open `README.md` file in Chrome browser. This allows to see the preview as it is viewed on GitHub.
 
@@ -45,9 +65,9 @@ doc live
 
 The programmatic use of the `documentary` is intended for developers who want to use this software in their projects.
 
-### extractStructure(markdown: string): object
+<!-- ### extractStructure(markdown: string): object -->
 
-### MethodDescriptor
+<!-- ### MethodDescriptor
 
 A method descriptor contains meta-information about a method, such as what arguments it takes, of what type, etc.
 
@@ -61,7 +81,7 @@ const md = {
   },
   return: 'string',
 }
-```
+``` -->
 
 ### generateTitle(method: MethodDescriptor): string
 
@@ -79,22 +99,41 @@ import { Toc } from 'documentary'
 import Catchment from 'catchment'
 import { createReadStream } from 'fs'
 import { resolve } from 'path'
+import { debuglog } from 'util'
+
+const LOG = debuglog('doc')
 
 const path = resolve(__dirname, 'markdown.md')
 
+// read the argument from yarn script, or execute against default readme file.
+const [,,, arg2] = process.argv
+const p = arg2 || path
+
 ;(async () => {
-  const md = createReadStream(path)
-  const rs = new Toc()
-  md.pipe(rs)
+  LOG('Reading %s', p)
+  const md = createReadStream(p)
+  const rs = new Toc(md)
   const { promise } = new Catchment({
     rs,
   })
-  await promise
+  const res = await promise
+  console.log(res)
 })()
 ```
 
-```fs
+```sh
+yarn example/toc.js
+```
 
+```fs
+$ NODE_DEBUG=doc yarn e example/toc.js
+$ node example example/toc.js
+DOC 13980: Reading /documentary/example/markdown.md
+- [Table Of Contents](#table-of-contents)
+- [CLI](#cli)
+  * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
+- [API](#api)
+- [Copyright](#copyright)
 ```
 
 
