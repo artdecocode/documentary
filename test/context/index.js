@@ -1,8 +1,10 @@
 import { debuglog } from 'util'
 import { fork } from 'spawncommand'
-import { resolve } from 'path'
+import { resolve, relative } from 'path'
+import { unlink, createReadStream } from 'fs'
+import Catchment from 'catchment'
 
-const LOG = debuglog('context')
+const LOG = debuglog('doc')
 const TEST_BUILD = process.env.BABEL_ENV == 'test-build'
 
 /**
@@ -11,6 +13,11 @@ const TEST_BUILD = process.env.BABEL_ENV == 'test-build'
 export default class Context {
   async _init() {
     LOG('init context')
+    await new Promise((r) => {
+      unlink(this.OUTPUT, () => {
+        r()
+      })
+    })
   }
   /**
    * Example method.
@@ -18,9 +25,22 @@ export default class Context {
   example() {
     return 'OK'
   }
-  get README() {
-    return
+  /**
+   * A path to a temporary file which does not exist at the beginning of test context.
+   */
+  get OUTPUT() {
+    const p = resolve(__dirname, '../fixtures/output.md')
+    return p
   }
+  async readOutput() {
+    const rs = createReadStream(this.OUTPUT)
+    const { promise } = new Catchment({ rs })
+    const res = await promise
+    return res
+  }
+  // get README() {
+  //   return
+  // }
   /**
    * Path to the source readme file with %TOC% marker for replacement.
    */
