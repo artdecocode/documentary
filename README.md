@@ -7,6 +7,11 @@
 <!-- such as README, usage, man pages and changelog. -->
 
 ```sh
+# install doc binary
+npm i -g documentary
+```
+
+```sh
 yarn add -E documentary
 ```
 
