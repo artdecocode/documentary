@@ -2,6 +2,7 @@
 
 ### 1.0.1
 
+- [test] add tests
 - [dep] skip currently unused dependencies
 
 ### 1.0.0
