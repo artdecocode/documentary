@@ -142,13 +142,9 @@ const LOG = debuglog('doc')
 
 const path = resolve(__dirname, 'markdown.md')
 
-// read the argument from yarn script, or execute against default readme file.
-const [,,, arg2] = process.argv
-const p = arg2 || path
-
 ;(async () => {
-  LOG('Reading %s', p)
-  const md = createReadStream(p)
+  LOG('Reading %s', path)
+  const md = createReadStream(path)
   const rs = new Toc()
   md.pipe(rs)
 
