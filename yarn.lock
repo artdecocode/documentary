@@ -258,9 +258,9 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
-argufy@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/argufy/-/argufy-1.0.2.tgz#d37a62765194395bbc1119e751f209c78db5bb8d"
+argufy@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/argufy/-/argufy-1.1.1.tgz#f39f20ee3240b7d1119724fe5e308caaed23a2b0"
 
 arr-diff@^2.0.0:
   version "2.0.0"
@@ -1918,9 +1918,9 @@ restream@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/restream/-/restream-1.2.0.tgz#fd13b031a54e80cc65d1878c43149f1b3a40efbb"
 
-restream@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/restream/-/restream-2.0.1.tgz#6e8ceb8d3444ca4be74b6a4a446a8798fca82aa0"
+restream@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/restream/-/restream-2.0.3.tgz#35c032d02f57afacb4b78f6ae9b510f99a29a1d1"
 
 ret@~0.1.10:
   version "0.1.15"
