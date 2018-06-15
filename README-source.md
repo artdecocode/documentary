@@ -39,6 +39,18 @@ The `dc` command is just a convenience script to commit both source and output f
 yarn dc 'add copyright'
 ```
 
+### VS Code Settings
+
+It might be confusing to have a source and ouput `README.md` file, therefore to prevent errors, the following snippet can be used to hide the compiled file from VS Code search (update the `.vscode/settings.json` file):
+
+```json
+{
+  "search.exclude": {
+    "**/README.md": true
+  }
+}
+```
+
 ## Features
 
 The processed `README-source.md` file will have a generated table of contents, markdown tables and neat titles for API method descriptions.
@@ -130,18 +142,6 @@ When `NODE_DEBUG=doc` is set, the program will print debug information, e.g.,
 ```
 DOC 80734: stripping comment
 DOC 80734: could not parse the table
-```
-
-## VS Code Settings
-
-It might be confusing to have a source and ouput `README.md` file, therefore to prevent errors, the following snippet can be used to hide the compiled file from VS Code search (update the `.vscode/settings.json` file):
-
-```json
-{
-  "search.exclude": {
-    "**/README.md": true
-  }
-}
 ```
 
 ## API

@@ -12,12 +12,12 @@ yarn add -E documentary
 
 - [Table of Contents](#table-of-contents)
 - [Installation & Usage](#installation--usage)
+  * [VS Code Settings](#vs-code-settings)
 - [Features](#features)
   * [TOC Generation](#toc-generation)
   * [Comments Stripping](#comments-stripping)
   * [Tables Display](#tables-display)
 - [CLI](#cli)
-- [VS Code Settings](#vs-code-settings)
 - [API](#api)
   * [`new Toc(readable: ReadableStream)`](#new-tocreadable-readablestream)
 
@@ -44,6 +44,18 @@ The `dc` command is just a convenience script to commit both source and output f
 
 ```sh
 yarn dc 'add copyright'
+```
+
+### VS Code Settings
+
+It might be confusing to have a source and ouput `README.md` file, therefore to prevent errors, the following snippet can be used to hide the compiled file from VS Code search (update the `.vscode/settings.json` file):
+
+```json
+{
+  "search.exclude": {
+    "**/README.md": true
+  }
+}
 ```
 
 ## Features
@@ -108,18 +120,6 @@ When `NODE_DEBUG=doc` is set, the program will print debug information, e.g.,
 ```
 DOC 80734: stripping comment
 DOC 80734: could not parse the table
-```
-
-## VS Code Settings
-
-It might be confusing to have a source and ouput `README.md` file, therefore to prevent errors, the following snippet can be used to hide the compiled file from VS Code search (update the `.vscode/settings.json` file):
-
-```json
-{
-  "search.exclude": {
-    "**/README.md": true
-  }
-}
 ```
 
 ## API
