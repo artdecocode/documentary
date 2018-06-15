@@ -17,6 +17,7 @@ yarn add -E documentary
   * [TOC Generation](#toc-generation)
   * [Comments Stripping](#comments-stripping)
   * [Tables Display](#tables-display)
+  * [Method Title](#method-title)
 - [CLI](#cli)
 - [API](#api)
   * [`new Toc()`](#new-toc)
@@ -98,6 +99,49 @@ Result:
 | --- | ----------- |
 | -f | Display only free domains |
 | -z | A list of zones to check |
+
+### Method Title
+
+It is possible to generate neat titles useful for API documentation with `documentary`. The method signature should be specified as a `JSON` array, where every member is an argument specified as an array. The first item in the argument array is the argument name, and the second one is type. Type can be either a string, or an object. If it is an object, each value in the object will first contain the property type, and the second one the default value. To mark a property as optional, the `?` symbol can be used at the end.
+
+#### `async runSoftware(`<br/>&nbsp;&nbsp;`string: path`,<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`View: Container`,<br/>&nbsp;&nbsp;&nbsp;&nbsp;`actions: object`,<br/>&nbsp;&nbsp;&nbsp;&nbsp;`static?: boolean = true`,<br/>&nbsp;&nbsp;&nbsp;&nbsp;`render?: function`<br/>&nbsp;&nbsp;`}`<br/>`): string`
+
+Generated from
+
+````m
+```#️⃣#️⃣#️⃣#️⃣ async runSoftware => string
+[
+  ["string", "path"],
+  ["config", {
+    "View": ["Container"],
+    "actions": ["object"],
+    "static?": ["boolean", true],
+    "render?": ["function"]
+  }]
+]
+```
+````
+
+#### `async runSoftware(`<br/>&nbsp;&nbsp;`string: path`<br/>`): void`
+
+Generated from
+
+````m
+```#️⃣#️⃣#️⃣#️⃣ async runSoftware => string
+[
+  ["string", "path"]
+]
+```
+````
+
+#### `runSoftware(): string`
+
+Generated from
+
+````m
+```#️⃣#️⃣#️⃣#️⃣ async runSoftware => string
+```
+````
 
 ## CLI
 
