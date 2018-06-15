@@ -14,3 +14,4 @@ export default async function documentary() {
 //   // return Object.keys(structure)
 // }
 
+export { default as Toc } from './lib/Toc'

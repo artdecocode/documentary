@@ -15,7 +15,9 @@ const p = arg2 || path
 ;(async () => {
   LOG('Reading %s', p)
   const md = createReadStream(p)
-  const rs = new Toc(md)
+  const rs = new Toc()
+  md.pipe(rs)
+
   const { promise } = new Catchment({
     rs,
   })
