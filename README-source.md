@@ -172,9 +172,9 @@ Generate a title for a method, for example:
 
 `koa2Jsx({`<br/>&nbsp;&nbsp;`reducer: function,`<br/>&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;`render?: function,`<br/>`}): function` -->
 
-### `new Toc(readable: ReadableStream)`
+### `new Toc()`
 
-Toc is a reabable stream which can generate the table of contents.
+Toc is a transform stream which can generate a table of contents.
 
 ```js
 /* yarn example/toc.js */
@@ -195,7 +195,9 @@ const p = arg2 || path
 ;(async () => {
   LOG('Reading %s', p)
   const md = createReadStream(p)
-  const rs = new Toc(md)
+  const rs = new Toc()
+  md.pipe(rs)
+
   const { promise } = new Catchment({
     rs,
   })
