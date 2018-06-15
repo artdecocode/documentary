@@ -17,8 +17,8 @@ yarn add -E documentary
   * [Comments Stripping](#comments-stripping)
   * [Tables Display](#tables-display)
 - [CLI](#cli)
+- [VS Code Settings](#vs-code-settings)
 - [API](#api)
-    * [`koa2Jsx({`<br/>&nbsp;&nbsp;`reducer: function,`<br/>&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;`render?: function,`<br/>`}): function` -->](#koa2jsxreducer-functionview-containeractions-objectstatic-boolean--truerender-function-function---)
   * [`new Toc(readable: ReadableStream)`](#new-tocreadable-readablestream)
 
 ## Installation & Usage
@@ -108,6 +108,18 @@ When `NODE_DEBUG=doc` is set, the program will print debug information, e.g.,
 ```
 DOC 80734: stripping comment
 DOC 80734: could not parse the table
+```
+
+## VS Code Settings
+
+It might be confusing to have a source and ouput `README.md` file, therefore to prevent errors, the following snippet can be used to hide the compiled file from VS Code search (update the `.vscode/settings.json` file):
+
+```json
+{
+  "search.exclude": {
+    "**/README.md": true
+  }
+}
 ```
 
 ## API

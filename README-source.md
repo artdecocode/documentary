@@ -132,6 +132,18 @@ DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
 
+## VS Code Settings
+
+It might be confusing to have a source and ouput `README.md` file, therefore to prevent errors, the following snippet can be used to hide the compiled file from VS Code search (update the `.vscode/settings.json` file):
+
+```json
+{
+  "search.exclude": {
+    "**/README.md": true
+  }
+}
+```
+
 ## API
 
 The programmatic use of the `documentary` is intended for developers who want to use this software in their projects.
@@ -158,7 +170,7 @@ const md = {
 
 Generate a title for a method, for example:
 
-#### `koa2Jsx({`<br/>&nbsp;&nbsp;`reducer: function,`<br/>&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;`render?: function,`<br/>`}): function` -->
+`koa2Jsx({`<br/>&nbsp;&nbsp;`reducer: function,`<br/>&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;`render?: function,`<br/>`}): function` -->
 
 ### `new Toc(readable: ReadableStream)`
 
