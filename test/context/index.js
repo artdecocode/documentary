@@ -1,8 +1,9 @@
 import { debuglog } from 'util'
 import { fork } from 'spawncommand'
-import { resolve, relative } from 'path'
+import { resolve } from 'path'
 import { unlink, createReadStream } from 'fs'
 import Catchment from 'catchment'
+import { Readable } from 'stream'
 
 const LOG = debuglog('doc')
 const TEST_BUILD = process.env.BABEL_ENV == 'test-build'
@@ -12,7 +13,7 @@ const TEST_BUILD = process.env.BABEL_ENV == 'test-build'
  */
 export default class Context {
   async _init() {
-    LOG('init context')
+    // LOG('init context')
     await new Promise((r) => {
       unlink(this.OUTPUT, () => {
         r()
@@ -34,9 +35,21 @@ export default class Context {
   }
   async readOutput() {
     const rs = createReadStream(this.OUTPUT)
-    const { promise } = new Catchment({ rs })
-    const res = await promise
+    const res = await this.catchment(rs)
     return res
+  }
+  /**
+   * Create a readable stream which will push the passed string.
+   * @param {string} s The string to push.
+   */
+  createReadable(s) {
+    const rs = new Readable({
+      read() {
+        this.push(s)
+        this.push(null)
+      },
+    })
+    return rs
   }
   // get README() {
   //   return
@@ -75,6 +88,15 @@ export default class Context {
 
   }
   async _destroy() {
-    LOG('destroy context')
+    // LOG('destroy context')
+  }
+  /**
+   * Catch the output of the stream into a string.
+   * @param {Readable} rs
+   */
+  async catchment(rs) {
+    const { promise } = new Catchment({ rs })
+    const res = await promise
+    return res.trim()
   }
 }
