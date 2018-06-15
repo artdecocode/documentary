@@ -2,41 +2,56 @@
 
 [![npm version](https://badge.fury.io/js/documentary.svg)](https://badge.fury.io/js/documentary)
 
-`documentary` is a command-line tool and a library to manage documentation of Node.js packages.
-
-```sh
-# install doc binary
-npm i -g documentary
-```
+`documentary` is a command-line tool and a library to manage documentation of Node.js packages. It can be installed as a dependency, and run as a `package.json` script, using a `doc` command.
 
 ```sh
 yarn add -E documentary
 ```
 
-The features include generation of table of content, github live preview and title generator.
-
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
-- [CLI](#cli)
-  * [`-t`, `--toc`: Generate TOC](#-t---toc-generate-toc)
-  * [`-l`, `--live`: GitHub Live](#-l---live-github-live)
+- [Installation & Usage](#installation--usage)
+- [Features](#features)
+  * [TOC Generation](#toc-generation)
+  * [Comments Stripping](#comments-stripping)
+  * [Tables Display](#tables-display)
 - [API](#api)
-  * [generateTitle(method: MethodDescriptor): string](#generatetitlemethod-methoddescriptor-string)
-    * [`koa2Jsx({`<br/>&nbsp;&nbsp;`reducer: function,`<br/>&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;`render?: function,`<br/>`}): function`](#koa2jsxreducer-functionview-containeractions-objectstatic-boolean--truerender-function-function)
-  * [`toc(readable: ReadableStream): string`](#tocreadable-readablestream-string)
+    * [`koa2Jsx({`<br/>&nbsp;&nbsp;`reducer: function,`<br/>&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;`render?: function,`<br/>`}): function` -->](#koa2jsxreducer-functionview-containeractions-objectstatic-boolean--truerender-function-function---)
+  * [`new Toc(readable: ReadableStream)`](#new-tocreadable-readablestream)
 
-## CLI
+## Installation & Usage
 
-The `doc` client is available after installation.
+The `doc` client is available after installation. It can be used in a `doc` script of `package.json`, as follows:
 
-### `-t`, `--toc`: Generate TOC
+```json
+{
+  "scripts": {
+    "doc": "doc README-source.md -o README.md",
+    "dc": "git add README-source.md README.md && git commit -m ",
+  }
+}
+```
 
-Table of Contents for the README page can be generated with `documentary` TOC generator.
+Therefore, to run produce an output README.md, the following command will be used:
 
 ```sh
-doc -t input-source.md [-r] [-o output.md]
+yarn doc
 ```
+
+The `dc` command is just a convenience script to commit both source and output files with a passed commit message, such as:
+
+```sh
+yarn dc 'add copyright'
+```
+
+## Features
+
+The processed `README-source.md` file will have a generated table of contents, markdown tables and neat titles for API method descriptions.
+
+### TOC Generation
+
+Table of contents are useful for navigation the README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure.
 
 ```md
 - [Table Of Contents](#table-of-contents)
@@ -46,41 +61,38 @@ doc -t input-source.md [-r] [-o output.md]
 - [Copyright](#copyright)
 ```
 
-It will also include valid URLs used on GitHub to skip to the title when complex titles are given.
+### Comments Stripping
 
-When `-r` or `--replace` argument is passed, the `%TOC%` placeholder in the file will be replaced with the generated table of contents. Passing `-o` allows to save the output to the file, otherwise it is printed into the _stdout_.
+Since comments found in `<!—— comment ——>` sections are not visible to users, they can be removed from the output document.
 
-```sh
-doc -t README-source.md -r -o README.md
+### Tables Display
+
+To describe method arguments in a table, but prepare them in a more readable format, `documentary` will parse the code blocks with `table` language as a table. The blocks must be in `JSON` format and contain a single array of arrays which represent rows.
+
+````m
+```tаble
+[
+  ["arg", "description"],
+  ["-f", "Display only free domains"],
+  ["-z", "A list of zones to check"],
+]
 ```
+````
 
-```
-Saved README.md from README-source.md
-```
+Result:
 
-The command will also strip any markdown comments (e,g., `<!—— comment ——>`).
-
-### `-l`, `--live`: GitHub Live
-
-With GitHub live, `documentary` will monitor for any happening commits, push them to GitHub, extract the commit version, and refresh the page with open `README.md` file in Chrome browser. This allows to see the preview as it is viewed on GitHub.
-
-```sh
-doc live
-```
+| arg | description |
+| --- | ----------- |
+| -f | Display only free domains |
+| -z | A list of zones to check |
 
 ## API
 
 The programmatic use of the `documentary` is intended for developers who want to use this software in their projects.
 
-### generateTitle(method: MethodDescriptor): string
+### `new Toc(readable: ReadableStream)`
 
-Generate a title for a method, for example:
-
-#### `koa2Jsx({`<br/>&nbsp;&nbsp;`reducer: function,`<br/>&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;`render?: function,`<br/>`}): function`
-
-### `toc(readable: ReadableStream): string`
-
-Generate table of contents.
+Toc is a reabable stream which can generate the table of contents.
 
 ```js
 /* yarn example/toc.js */
