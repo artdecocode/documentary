@@ -1,27 +1,24 @@
 #!/usr/bin/env node
 import argufy from 'argufy'
 import { debuglog } from 'util'
-import runToc from './toc'
+import run from './run'
 
 const LOG = debuglog('doc')
 const DEBUG = /doc/.test(process.env.NODE_DEBUG)
 
 const {
-  toc,
-  replace,
-  out,
+  source,
+  output,
 } = argufy({
-  toc: 't',
-  replace: {
-    short: 'r',
-    boolean: true,
+  source: {
+    command: true,
   },
-  out: 'o',
+  output: 'o',
 }, process.argv)
 
 ;(async () => {
   try {
-    if (toc) await runToc(toc, out, replace)
+    await run(source, output)
   } catch ({ stack, message }) {
     DEBUG ? LOG(stack) : console.log(message)
   }
