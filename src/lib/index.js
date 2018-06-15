@@ -49,7 +49,7 @@ export const titleReplacer = (match, level, isAsync, method, returnType, title) 
 
     const lines = args.map(([name, type]) => {
       if (typeof type == 'string') {
-        return `\`${name}: ${type}\``
+        return `\`${name}: ${type},\``
       }
       const l = Object.keys(type)
         .map((key) => {
@@ -58,15 +58,15 @@ export const titleReplacer = (match, level, isAsync, method, returnType, title) 
           // static?: boolean = true,
           return `${key}: ${propType}${defaultValue ? ` = ${defaultValue}` : ''}`
         })
-        .map(line => `\`${line}\``)
-        .join(`,${nl}${i.repeat(2)}`)
-      const n = `\`${name}: {\`${nl}${i.repeat(2)}${l}${nl}${i.repeat(1)}\`}\``
+        .map(line => `\`${line},\``)
+        .join(`${nl}${i.repeat(2)}`)
+      const n = `\`${name}: {\`${nl}${i.repeat(2)}${l}${nl}${i.repeat(1)}\`},\``
       return n
     })
 
 
     const nls = `${nl}${i.repeat(1)}`
-    const s = lines.join(`,${nls}`)
+    const s = lines.join(nls)
 
     const res = `${sig}\`${nls}${s}${nl}\`${endSig}`
     return res
