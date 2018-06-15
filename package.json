@@ -15,7 +15,7 @@
     "start": "node build/bin",
     "example/": "yarn e example/example.js",
     "example/toc.js": "NODE_DEBUG=doc yarn e example/toc.js",
-    "build": "babel src --out-dir build --source-maps"
+    "build": "babel src --out-dir build --source-maps --ignore src/bin/register.js"
   },
   "bin": {
     "doc": "build/bin/index.js"

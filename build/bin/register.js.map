@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/bin/register.js"],"names":["require"],"mappings":";;AAAAA,QAAQ,iBAAR;;AACAA,QAAQ,GAAR","sourcesContent":["require('@babel/register')\nrequire('.')\n"],"file":"register.js"}
