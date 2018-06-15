@@ -13,12 +13,14 @@ const re = /^ *(#+) *((?:(?!\n)[\s\S])+)\n/gm;
 
 class Toc extends _stream.Transform {
   /**
-   * @param {Object} config
-   * @param {boolean} [config.skipLevelOne=true]
+   * A transform stream which will extract the titles in the markdown document and transform them into a markdown nested list with links.
+   * @param {Config} [config] Configuration object.
+   * @param {boolean} [config.skipLevelOne=true] Don't use the first title in the TOC (default `true`).
    */
-  constructor({
-    skipLevelOne = true
-  } = {}) {
+  constructor(config = {}) {
+    const {
+      skipLevelOne = true
+    } = config;
     super();
     this.skipLevelOne = skipLevelOne;
   }
@@ -50,6 +52,11 @@ class Toc extends _stream.Transform {
   }
 
 }
+/**
+ * @typedef {Object} Config
+ * @property {boolean} [skipLevelOne=true] Don't use the first title in the TOC (default `true`).
+ */
+
 
 exports.default = Toc;
 //# sourceMappingURL=Toc.js.map
