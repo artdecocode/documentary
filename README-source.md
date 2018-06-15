@@ -2,7 +2,9 @@
 
 [![npm version](https://badge.fury.io/js/documentary.svg)](https://badge.fury.io/js/documentary)
 
-`documentary` is a command-line tool and a library to manage documentation of Node.js packages. It can be installed as a dependency, and run as a `package.json` script, using a `doc` command.
+`documentary` is a command-line tool and a library to manage documentation of Node.js packages. Due to the fact that complex `README` files are harder to maintain, `documentary` serves as a pre-processor of documentation.
+
+<!-- It can be installed as a dependency, and run as a `package.json` script, using a `doc` command. -->
 
 ```sh
 yarn add -E documentary
@@ -59,7 +61,7 @@ doc -t input-source.md [-r] [-o output.md]
 
 ### Comments Stripping
 
-Since comments found in `<!—— comment ——>` sections are not visible to users, they can be removed from the output document.
+Since comments found in `<!—— comment ——>` sections are not visible to users, they will be removed from the output document.
 
 ### Tables Display
 
@@ -103,6 +105,32 @@ With GitHub live, `documentary` will monitor for any happening commits, push the
 ```sh
 doc live
 ``` -->
+
+## CLI
+
+The program is used from the CLI (or `package.json` script).
+
+```sh
+doc README-source.md [-o README.md] [-t] [-w]
+```
+
+The arguments it accepts are:
+
+```table
+[
+  ["argument", "Description"],
+  ["`-o`", "Where to save the processed `README` file. If not specified, the output is written to the `stdout`."],
+  ["`-t`", "Only extract and print the table of contents."],
+  ["`-w`", "Watch mode: re-run the program when changes to the source file are detected."]
+]
+```
+
+When `NODE_DEBUG=doc` is set, the program will print debug information, e.g.,
+
+```
+DOC 80734: stripping comment
+DOC 80734: could not parse the table
+```
 
 ## API
 

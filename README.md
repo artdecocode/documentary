@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/documentary.svg)](https://badge.fury.io/js/documentary)
 
-`documentary` is a command-line tool and a library to manage documentation of Node.js packages. It can be installed as a dependency, and run as a `package.json` script, using a `doc` command.
+`documentary` is a command-line tool and a library to manage documentation of Node.js packages. Due to the fact that complex `README` files are harder to maintain, `documentary` serves as a pre-processor of documentation.
 
 ```sh
 yarn add -E documentary
@@ -16,6 +16,7 @@ yarn add -E documentary
   * [TOC Generation](#toc-generation)
   * [Comments Stripping](#comments-stripping)
   * [Tables Display](#tables-display)
+- [CLI](#cli)
 - [API](#api)
     * [`koa2Jsx({`<br/>&nbsp;&nbsp;`reducer: function,`<br/>&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;`render?: function,`<br/>`}): function` -->](#koa2jsxreducer-functionview-containeractions-objectstatic-boolean--truerender-function-function---)
   * [`new Toc(readable: ReadableStream)`](#new-tocreadable-readablestream)
@@ -63,7 +64,7 @@ Table of contents are useful for navigation the README document. When a `%TOC%` 
 
 ### Comments Stripping
 
-Since comments found in `<!—— comment ——>` sections are not visible to users, they can be removed from the output document.
+Since comments found in `<!—— comment ——>` sections are not visible to users, they will be removed from the output document.
 
 ### Tables Display
 
@@ -85,6 +86,29 @@ Result:
 | --- | ----------- |
 | -f | Display only free domains |
 | -z | A list of zones to check |
+
+## CLI
+
+The program is used from the CLI (or `package.json` script).
+
+```sh
+doc README-source.md [-o README.md] [-t] [-w]
+```
+
+The arguments it accepts are:
+
+| argument | Description |
+| -------- | ----------- |
+| `-o` | Where to save the processed `README` file. If not specified, the output is written to the `stdout`. |
+| `-t` | Only extract and print the table of contents. |
+| `-w` | Watch mode: re-run the program when changes to the source file are detected. |
+
+When `NODE_DEBUG=doc` is set, the program will print debug information, e.g.,
+
+```
+DOC 80734: stripping comment
+DOC 80734: could not parse the table
+```
 
 ## API
 
