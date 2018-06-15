@@ -33,10 +33,16 @@ const getToc = async (path) => {
 /**
  * @param {string} path
  * @param {string} [out]
+ * @param {string} [out]
+ * @param {boolean} [toc]
  */
-export default async function run(path, out) {
+export default async function run(path, out, toc) {
   LOG('reading %s', path)
-  const toc = await getToc(path)
+  const t = await getToc(path)
+  if (toc) {
+    console.log(t)
+    process.exit()
+  }
 
-  replaceFile(path, toc, out)
+  replaceFile(path, t, out)
 }

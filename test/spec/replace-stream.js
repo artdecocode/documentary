@@ -25,7 +25,7 @@ console.log(s)
 const comment = '<!-- hello world -->'
 
 /** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
-export const GetLink = {
+const T = {
   context: [
     Context,
     SnapshotContext,
@@ -74,3 +74,5 @@ export const GetLink = {
     await test('add-toc.md', res.trim())
   },
 }
+
+export default T

@@ -9,16 +9,21 @@ const DEBUG = /doc/.test(process.env.NODE_DEBUG)
 const {
   source,
   output,
+  toc,
 } = argufy({
   source: {
     command: true,
+  },
+  toc: {
+    short: 't',
+    boolean: true,
   },
   output: 'o',
 }, process.argv)
 
 ;(async () => {
   try {
-    await run(source, output)
+    await run(source, output, toc)
   } catch ({ stack, message }) {
     DEBUG ? LOG(stack) : console.log(message)
   }

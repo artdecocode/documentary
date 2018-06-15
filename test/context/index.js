@@ -64,16 +64,17 @@ export default class Context {
     return resolve(__dirname, '../snapshot')
   }
   /**
-   * Run the toc command.
+   * Run the binary.
    * @param {string} input Path to the source readme file
    */
-  async toc(input, ...args) {
+  async doc(input, ...args) {
     const proc = fork(TEST_BUILD ?
       resolve(__dirname, '../../build/bin/index.js') :
       resolve(__dirname, '../../src/bin/register.js'),
-    ['-t', input, ...args], {
+    [input, ...args], {
       stdio: 'pipe',
     })
+    LOG(proc.spawnCommand)
     const { stdout, stderr } = await proc.promise
     return {
       stdout,

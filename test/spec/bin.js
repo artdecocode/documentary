@@ -8,25 +8,26 @@ const T = {
     Context,
     SnapshotContext,
   ],
-  async 'runs the toc command against source readme'({ SNAPSHOT_DIR, toc, README_PATH }, { setDir, test }) {
+  async 'generates correct markdown'({ SNAPSHOT_DIR, doc, README_PATH }, { setDir, test }) {
     setDir(SNAPSHOT_DIR)
-    const { stdout } = await toc(README_PATH)
-    await test('source-readme.md', stdout.trim())
+    const { stdout } = await doc(README_PATH)
+    await test('bin/markdown.md', stdout.trim())
   },
-  async 'replaces the %TOC% marker in the file'({ SNAPSHOT_DIR, toc, README_PATH }, { setDir, test }) {
-    setDir(SNAPSHOT_DIR)
-    const { stdout } = await toc(README_PATH, '-r')
-    await test('source-replace.md', stdout.trim())
-  },
-  async 'replaces the %TOC% marker in the file and saves to given output'(
-    { SNAPSHOT_DIR, toc, README_PATH, OUTPUT, readOutput }, { setDir, test }
+  async 'generates correct markdown and saves it to a file'(
+    { SNAPSHOT_DIR, doc, README_PATH, OUTPUT, readOutput }, { setDir, test }
   ) {
     setDir(SNAPSHOT_DIR)
-    const { stdout } = await toc(README_PATH, '-r', '-o', OUTPUT)
-    console.log(stdout)
+    const { stdout } = await doc(README_PATH, '-o', OUTPUT)
     ok(/Saved/.test(stdout))
-    const output = await readOutput()
-    await test('source-output.md', output.trim())
+    const res = await readOutput()
+    await test('bin/markdown.md', res.trim())
+  },
+  async 'prints the TOC with -t flag'(
+    { SNAPSHOT_DIR, doc, README_PATH }, { setDir, test }
+  ) {
+    setDir(SNAPSHOT_DIR)
+    const { stdout } = await doc(README_PATH, '-t')
+    await test('bin/toc.md', stdout.trim())
   },
 }
 
