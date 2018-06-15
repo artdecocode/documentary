@@ -102,7 +102,7 @@ It is possible to generate neat titles useful for API documentation with `docume
 
 ```#### async runSoftware => string
 [
-  ["string", "path"],
+  ["path", "string"],
   ["config", {
     "View": ["Container"],
     "actions": ["object"],
@@ -117,7 +117,7 @@ Generated from
 ````m
 ```#️⃣#️⃣#️⃣#️⃣ async runSoftware => string
 [
-  ["string", "path"],
+  ["path", "string"],
   ["config", {
     "View": ["Container"],
     "actions": ["object"],
@@ -130,7 +130,7 @@ Generated from
 
 ```#### async runSoftware
 [
-  ["string", "path"]
+  ["path", "string"]
 ]
 ```
 
@@ -139,7 +139,7 @@ Generated from
 ````m
 ```#️⃣#️⃣#️⃣#️⃣ async runSoftware => string
 [
-  ["string", "path"]
+  ["path", "string"]
 ]
 ```
 ````

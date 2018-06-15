@@ -18,8 +18,8 @@ yarn add -E documentary
   * [Comments Stripping](#comments-stripping)
   * [Tables Display](#tables-display)
   * [Method Title](#method-title)
-    * [`async runSoftware(string: path, config: object): string`](#async-runsoftwarestring-pathconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
-    * [`async runSoftware(string: path)`](#async-runsoftwarestring-path-void)
+    * [`async runSoftware(path: string, config: object): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
+    * [`async runSoftware(path: string)`](#async-runsoftwarepath-string-void)
     * [`runSoftware(): string`](#runsoftware-string)
 - [CLI](#cli)
 - [API](#api)
@@ -107,14 +107,14 @@ Result:
 
 It is possible to generate neat titles useful for API documentation with `documentary`. The method signature should be specified as a `JSON` array, where every member is an argument specified as an array. The first item in the argument array is the argument name, and the second one is type. Type can be either a string, or an object. If it is an object, each value in the object will first contain the property type, and the second one the default value. To mark a property as optional, the `?` symbol can be used at the end.
 
-#### `async runSoftware(`<br/>&nbsp;&nbsp;`string: path,`<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`render?: function,`<br/>&nbsp;&nbsp;`},`<br/>`): string`
+#### `async runSoftware(`<br/>&nbsp;&nbsp;`path: string,`<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`render?: function,`<br/>&nbsp;&nbsp;`},`<br/>`): string`
 
 Generated from
 
 ````m
 ```#️⃣#️⃣#️⃣#️⃣ async runSoftware => string
 [
-  ["string", "path"],
+  ["path", "string"],
   ["config", {
     "View": ["Container"],
     "actions": ["object"],
@@ -125,14 +125,14 @@ Generated from
 ```
 ````
 
-#### `async runSoftware(`<br/>&nbsp;&nbsp;`string: path,`<br/>`): void`
+#### `async runSoftware(`<br/>&nbsp;&nbsp;`path: string,`<br/>`): void`
 
 Generated from
 
 ````m
 ```#️⃣#️⃣#️⃣#️⃣ async runSoftware => string
 [
-  ["string", "path"]
+  ["path", "string"]
 ]
 ```
 ````
