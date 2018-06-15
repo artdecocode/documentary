@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 "use strict";
 
+var _fs = require("fs");
+
 var _argufy = _interopRequireDefault(require("argufy"));
 
 var _util = require("util");
@@ -14,7 +16,8 @@ const DEBUG = /doc/.test(process.env.NODE_DEBUG);
 const {
   source,
   output,
-  toc
+  toc,
+  watch
 } = (0, _argufy.default)({
   source: {
     command: true
@@ -23,10 +26,14 @@ const {
     short: 't',
     boolean: true
   },
+  watch: {
+    short: 'w',
+    boolean: true
+  },
   output: 'o'
 }, process.argv);
 
-(async () => {
+const doRun = async () => {
   try {
     await (0, _run.default)(source, output, toc);
   } catch ({
@@ -34,6 +41,22 @@ const {
     message
   }) {
     DEBUG ? LOG(stack) : console.log(message);
+  }
+};
+
+(async () => {
+  if (!source) {
+    console.log('Please specify an input file.'); // print usage
+
+    process.exit(1);
+  }
+
+  await doRun();
+
+  if (watch) {
+    (0, _fs.watchFile)(source, async () => {
+      await doRun();
+    });
   }
 })();
 //# sourceMappingURL=index.js.map
