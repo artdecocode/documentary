@@ -100,4 +100,52 @@ export default class Context {
     const res = await promise
     return res.trim()
   }
+  get table() {
+    return `
+The program accepts the following arguments:
+
+\`\`\`table
+${this.innerTable}
+\`\`\`
+`
+  }
+  get innerTable() {
+    return `[
+  ["arg", "description"],
+  ["-f", "Display only free domains"],
+  ["-z", "A list of zones to check"]
+]`
+  }
+  getTitle(a = true, args = true, ret = true) {
+    return `
+## API
+
+\`\`\`### ${a ? 'async ' : ''}runSoftware${ret ? ' => string' : ''}
+${args ? this.innerTitle: ''}
+\`\`\`
+`.trim()
+  }
+  get innerTitle() {
+    return `[
+  ["path", "string"],
+  ["config", {
+    "View": ["Container"],
+    "actions": ["object"],
+    "static?": ["boolean", true],
+    "render?": ["function"]
+  }]
+]`
+  }
+  get comment() {
+    return '<!-- hello world -->'
+  }
+  get codeBlock() {
+    return `
+\`\`\`
+const t = 'new test value: '
+const s = t + 'test'
+console.log(s)
+\`\`\`
+`
+  }
 }

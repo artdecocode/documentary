@@ -15,8 +15,8 @@
       },
       "console": "integratedTerminal",
       "args": [
-        "test/spec",
-        "--babel"
+        "test/spec/lib.js",
+        "-b"
       ]
     },
     {
@@ -29,9 +29,7 @@
         "NODE_DEBUG": "doc"
       },
       "args": [
-        "-t",
         "README-source.md",
-        "-r",
         "-o",
         "README.md"
       ],

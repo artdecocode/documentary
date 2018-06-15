@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "e": "node example",
     "dev": "NODE_DEBUG=doc node src/bin/register",
-    "doc": "NODE_DEBUG=doc node build/bin README-source.md -o README.md",
+    "doc": "yarn dev README-source.md -o README.md",
     "start": "node build/bin",
     "example/": "yarn e example/example.js",
     "example/toc.js": "NODE_DEBUG=doc yarn e example/toc.js",

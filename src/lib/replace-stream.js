@@ -1,5 +1,6 @@
 import { replaceStream } from 'restream'
 import { debuglog } from 'util'
+import { tableRule, titleRule } from '.'
 
 const LOG = debuglog('doc')
 
@@ -22,29 +23,9 @@ export default function createReplaceStream(toc = '') {
     },
     {
       re: /```table([\s\S]+?)```/g,
-      replacement(match, table) {
-        const t = table.trim()
-        try {
-          const res = JSON.parse(t)
-          const [header, ...rows] = res
-          const a = [
-            getRow(header),
-            getRow(header.map(({ length }) => '-'.repeat(length))),
-            ...rows.map(getRow),
-          ]
-          return a.join('\n')
-        } catch (err) {
-          LOG('could not parse the table')
-          return match
-        }
-      },
+      replacement: tableRule,
     },
+    titleRule,
   ])
-  return s
-}
-
-
-const getRow = (row) => {
-  const s = `| ${row.join(' | ')} |`
   return s
 }
