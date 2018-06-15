@@ -4,7 +4,7 @@ import { tableRule, titleRule } from '.'
 
 const LOG = debuglog('doc')
 
-export default function createReplaceStream() {
+export default function createReplaceStream(toc) {
   const s = replaceStream([
     {
       re: /<!--[\s\S]*?-->\n*/g,
@@ -12,6 +12,10 @@ export default function createReplaceStream() {
         LOG('stripping comment')
         return ''
       },
+    },
+    {
+      re: /^%TOC%$/gm,
+      replacement: toc,
     },
     {
       re: /```table([\s\S]+?)```/g,
