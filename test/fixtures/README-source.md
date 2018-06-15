@@ -35,6 +35,18 @@ import documentary from 'documentary'
 ]
 ```
 
+```#### async runSoftware => string
+[
+  ["string", "path"],
+  ["config", {
+    "View": ["Container"],
+    "actions": ["object"],
+    "static?": ["boolean", true],
+    "render?": ["function"]
+  }]
+]
+```
+
 ## Copyright
 
 [Art Deco Code](https://artdeco.bz) 2018

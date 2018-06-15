@@ -8,6 +8,7 @@ A package to manage documentation of Node.js packages.
 - [CLI](#cli)
   * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
 - [API](#api)
+    * [`async runSoftware(`<br/>&nbsp;&nbsp;`string: path`,<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`View: Container`,<br/>&nbsp;&nbsp;&nbsp;&nbsp;`actions: object`,<br/>&nbsp;&nbsp;&nbsp;&nbsp;`static?: boolean = true`,<br/>&nbsp;&nbsp;&nbsp;&nbsp;`render?: function`<br/>&nbsp;&nbsp;`}`<br/>`): string`](#async-runsoftwarestring-pathconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
 - [Copyright](#copyright)
 
 ## CLI
@@ -35,6 +36,8 @@ import documentary from 'documentary'
 | toc | Generates a table of contents |
 | tables | Display markdown tables |
 | comments | Removes comments |
+
+#### `async runSoftware(`<br/>&nbsp;&nbsp;`string: path`,<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`View: Container`,<br/>&nbsp;&nbsp;&nbsp;&nbsp;`actions: object`,<br/>&nbsp;&nbsp;&nbsp;&nbsp;`static?: boolean = true`,<br/>&nbsp;&nbsp;&nbsp;&nbsp;`render?: function`<br/>&nbsp;&nbsp;`}`<br/>`): string`
 
 ## Copyright
 
