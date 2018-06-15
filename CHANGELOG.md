@@ -1,3 +1,9 @@
+## 15 June 2018
+
+### 1.1.0
+
+- [feature] parsing tables, `watch` mode,
+
 ## 12 June 2018
 
 ### 1.0.1
