@@ -4,16 +4,8 @@ import { tableRule, titleRule } from '.'
 
 const LOG = debuglog('doc')
 
-/**
- *
- * @param {string} [toc] The table of contents.
- */
-export default function createReplaceStream(toc = '') {
+export default function createReplaceStream() {
   const s = replaceStream([
-    {
-      re: /^%TOC%$/gm,
-      replacement: toc,
-    },
     {
       re: /<!--[\s\S]*?-->\n*/g,
       replacement() {

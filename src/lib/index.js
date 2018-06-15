@@ -34,8 +34,6 @@ const getRow = (row) => {
   return s
 }
 
-// koa2Jsx({`<br/>&nbsp;&nbsp;`reducer: function,`<br/>&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;`render?: function,`<br/>`}
-
 export const titleReplacer = (match, level, isAsync, method, returnType, title) => {
   const t = title.trim()
   const sig = `${level} ${isAsync ? '`async ' : '`'}${method}(`

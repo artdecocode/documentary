@@ -49,18 +49,6 @@ const T = {
     const res = await catchment(s)
     await test('comments-strip.md', res.trim())
   },
-  async 'adds TOC'(
-    { SNAPSHOT_DIR, createReadable, catchment }, { setDir, test },
-  ) {
-    setDir(SNAPSHOT_DIR)
-    const toc = '## Table of Contents\n### Hello World'
-    const t = 'The program will perform the necessary operations.'
-    const rs = createReadable(`${t}\n%TOC%`)
-    const s = createReplaceStream(toc)
-    rs.pipe(s)
-    const res = await catchment(s)
-    await test('add-toc.md', res.trim())
-  },
 }
 
 export default T

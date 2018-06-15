@@ -1,5 +1,7 @@
-import { getLink } from '.'
 import { Transform } from 'stream'
+import Catchment from 'catchment'
+import { createReadStream } from 'fs'
+import { getLink } from '.'
 
 const re = /^ *(#+) *((?:(?!\n)[\s\S])+)\n/gm
 
@@ -35,6 +37,15 @@ export default class Toc extends Transform {
     }
     next()
   }
+}
+
+export const getToc = async (path) => {
+  const md = createReadStream(path)
+  const rs = new Toc()
+  md.pipe(rs)
+  const { promise } = new Catchment({ rs })
+  const t = await promise
+  return t.trim()
 }
 
 /**

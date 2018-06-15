@@ -1,33 +1,40 @@
-import Toc from '../lib/Toc'
+import Toc, { getToc } from '../lib/Toc'
 import { debuglog } from 'util'
+import { createReadStream, createWriteStream } from 'fs'
 import Catchment from 'catchment'
-import { createWriteStream, createReadStream } from 'fs'
 import createReplaceStream from '../lib/replace-stream'
 
 const LOG = debuglog('doc')
 
-const replaceFile = (path, toc, out) => {
+const replaceFile = async (path, out) => {
   const rs = createReadStream(path)
+  const s = createReplaceStream()
 
-  const s = createReplaceStream(toc)
+  const toc = new Toc()
 
-  const ws = out ? createWriteStream(out) : process.stdout
+  const { promise: tocPromise } = new Catchment({
+    rs: toc,
+  })
+  const { promise } = new Catchment({
+    rs: s,
+  })
 
-  rs.pipe(s).pipe(ws)
+  rs.pipe(s).pipe(toc)
+
+  const t = await tocPromise
+  const res = await promise
+
+  const realRes = res.replace(/^%TOC%$/gm, t.trim())
   if (out) {
+    const ws = createWriteStream(out)
+    ws.end(realRes)
+
     ws.on('close', () => {
       console.log('Saved %s from %s', out, path)
     })
+  } else {
+    console.log(realRes)
   }
-}
-
-const getToc = async (path) => {
-  const md = createReadStream(path)
-  const rs = new Toc()
-  md.pipe(rs)
-  const { promise } = new Catchment({ rs })
-  const t = await promise
-  return t.trim()
 }
 
 /**
@@ -38,11 +45,11 @@ const getToc = async (path) => {
  */
 export default async function run(path, out, toc) {
   LOG('reading %s', path)
-  const t = await getToc(path)
   if (toc) {
+    const t = await getToc(path)
     console.log(t)
     process.exit()
   }
 
-  replaceFile(path, t, out)
+  await replaceFile(path, out)
 }
