@@ -15,7 +15,7 @@ var _ = require(".");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const re = /^ *(#+) *((?:(?!\n)[\s\S])+)\n/gm;
+const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/;
 
 class Toc extends _stream.Transform {
   /**
@@ -33,27 +33,58 @@ class Toc extends _stream.Transform {
 
   _transform(buffer, enc, next) {
     let res;
+    const rre = new RegExp(`(?:${re.source})|(?:${_.methodTitleRe.source})`, 'g');
 
-    while ((res = re.exec(buffer)) !== null) {
-      const [, {
-        length: level
-      }, title] = res;
-      if (this.skipLevelOne && level == 1) continue;
-      const link = (0, _.getLink)(title);
-      const t = `[${title}](#${link})`;
+    while ((res = rre.exec(buffer)) !== null) {
+      let t;
+      let level;
+      let link;
+
+      if (res[1]) {
+        // normal title regex
+        const [, {
+          length
+        }, title] = res;
+        level = length;
+        if (this.skipLevelOne && level == 1) continue;
+        t = title;
+        link = (0, _.getLink)(title);
+      } else {
+        // the method title regex
+        try {
+          const l = res[3];
+          level = l.length;
+          const b = res.slice(4, 6).filter(a => a).join(' ').trim();
+          const json = res[7] || '[]';
+          const args = JSON.parse(json);
+          const s = args.map(([name, type]) => {
+            if (typeof type == 'string') return `${name}: ${type}`;
+            return `${name}: object`;
+          });
+          const fullTitle = (0, _.replaceTitle)(...res.slice(3)).replace(/^#+ +/, '');
+          link = (0, _.getLink)(fullTitle);
+          t = `\`${b}(${s.join(', ')})${res[6] ? `: ${res[6]}` : ''}\``;
+        } catch (err) {
+          // ok
+          continue;
+        }
+      }
+
+      const heading = `[${t}](#${link})`;
       let s;
 
       if (level == 2) {
-        s = `- ${t}`;
+        s = `- ${heading}`;
       } else {
         const p = '  '.repeat(level - 2);
-        s = `${p}* ${t}`;
+        s = `${p}* ${heading}`;
       }
 
       this.push(s);
       this.push('\n');
     }
 
+    re.lastIndex = -1;
     next();
   }
 

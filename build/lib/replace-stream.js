@@ -13,7 +13,7 @@ var _ = require(".");
 
 const LOG = (0, _util.debuglog)('doc');
 
-function createReplaceStream() {
+function createReplaceStream(toc) {
   const s = (0, _restream.replaceStream)([{
     re: /<!--[\s\S]*?-->\n*/g,
 
@@ -22,6 +22,9 @@ function createReplaceStream() {
       return '';
     }
 
+  }, {
+    re: /^%TOC%$/gm,
+    replacement: toc
   }, {
     re: /```table([\s\S]+?)```/g,
     replacement: _.tableRule
