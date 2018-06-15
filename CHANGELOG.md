@@ -1,5 +1,9 @@
 ## 15 June 2018
 
+### 1.2.0
+
+- [feature] method titles generation with shorthand TOC for them.
+
 ### 1.1.0
 
 - [feature] parsing tables, `watch` mode,
