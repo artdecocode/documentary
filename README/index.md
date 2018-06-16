@@ -8,6 +8,10 @@
 yarn add -E documentary
 ```
 
+## Table Of Contents
+
+%TOC%
+
 <!-- It will also include valid URLs used on GitHub to skip to the title when complex titles are given.
 
 When `-r` or `--replace` argument is passed, the `%TOC%` placeholder in the file will be replaced with the generated table of contents. Passing `-o` allows to save the output to the file, otherwise it is printed into the _stdout_.
@@ -53,9 +57,3 @@ const md = {
 Generate a title for a method, for example:
 
 -->
-
----
-
-(c) [Art Deco Code][1] 2018
-
-[1]: https://artdeco.bz

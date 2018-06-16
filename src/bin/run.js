@@ -1,38 +1,35 @@
 import { getToc } from '../lib/Toc'
-import { debuglog } from 'util'
-import { createReadStream, createWriteStream } from 'fs'
+import { createWriteStream } from 'fs'
 import createReplaceStream from '../lib/replace-stream'
+import { PassThrough } from 'stream'
 
-const LOG = debuglog('doc')
-
-const replaceFile = (path, toc, out) => {
-  const rs = createReadStream(path)
-
+const replaceFile = (stream, toc, out) => {
   const s = createReplaceStream(toc)
 
   const ws = out ? createWriteStream(out) : process.stdout
 
-  rs.pipe(s).pipe(ws)
+  stream.pipe(s).pipe(ws)
   if (out) {
     ws.on('close', () => {
-      console.log('Saved %s from %s', out, path)
+      console.log('Saved %s', out)
     })
   }
 }
 
 /**
- * @param {string} path
- * @param {string} [out]
- * @param {string} [out]
- * @param {boolean} [toc]
+ * @param {Readable} stream A readable stream.
+ * @param {string} [out] Path to the output file.
+ * @param {boolean} [toc] Just print the TOC.
  */
-export default async function run(path, out, toc) {
-  LOG('reading %s', path)
-  const t = await getToc(path)
+export default async function run(stream, out, toc) {
+  const pt = new PassThrough()
+  pt.pause()
+  stream.pipe(pt)
+  const t = await getToc(stream)
   if (toc) {
     console.log(t)
     process.exit()
   }
-
-  replaceFile(path, t, out)
+  pt.resume()
+  replaceFile(pt, t, out)
 }
