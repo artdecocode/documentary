@@ -22,6 +22,7 @@ yarn add -E documentary
     * [`runSoftware(): string`](#runsoftware-string)
   * [Comments Stripping](#comments-stripping)
   * [File Splitting](#file-splitting)
+  * [Replacement Rules](#replacement-rules)
 - [CLI](#cli)
 - [API](#api)
   * [`new Toc()`](#new-toc)
@@ -166,6 +167,13 @@ README
 ├── footer.md
 └── index.md
 ```
+### Replacement Rules
+
+There are some built-in rules for replacements.
+
+| Rule | Description |
+| ---- | ----------- |
+| `%NPM: package-name%` | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)` |
 ## CLI
 
 The program is used from the CLI (or `package.json` script).
