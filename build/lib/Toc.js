@@ -92,10 +92,9 @@ class Toc extends _stream.Transform {
 
 exports.default = Toc;
 
-const getToc = async path => {
-  const md = (0, _fs.createReadStream)(path);
+const getToc = async stream => {
   const rs = new Toc();
-  md.pipe(rs);
+  stream.pipe(rs);
   const {
     promise
   } = new _catchment.default({

@@ -7,45 +7,44 @@ exports.default = run;
 
 var _Toc = require("../lib/Toc");
 
-var _util = require("util");
-
 var _fs = require("fs");
 
 var _replaceStream = _interopRequireDefault(require("../lib/replace-stream"));
 
+var _stream = require("stream");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const LOG = (0, _util.debuglog)('doc');
-
-const replaceFile = (path, toc, out) => {
-  const rs = (0, _fs.createReadStream)(path);
+const replaceFile = (stream, toc, out) => {
   const s = (0, _replaceStream.default)(toc);
   const ws = out ? (0, _fs.createWriteStream)(out) : process.stdout;
-  rs.pipe(s).pipe(ws);
+  stream.pipe(s).pipe(ws);
 
   if (out) {
     ws.on('close', () => {
-      console.log('Saved %s from %s', out, path);
+      console.log('Saved %s', out);
     });
   }
 };
 /**
- * @param {string} path
- * @param {string} [out]
- * @param {string} [out]
- * @param {boolean} [toc]
+ * @param {Readable} stream A readable stream.
+ * @param {string} [out] Path to the output file.
+ * @param {boolean} [toc] Just print the TOC.
  */
 
 
-async function run(path, out, toc) {
-  LOG('reading %s', path);
-  const t = await (0, _Toc.getToc)(path);
+async function run(stream, out, toc) {
+  const pt = new _stream.PassThrough();
+  pt.pause();
+  stream.pipe(pt);
+  const t = await (0, _Toc.getToc)(stream);
 
   if (toc) {
     console.log(t);
     process.exit();
   }
 
-  replaceFile(path, t, out);
+  pt.resume();
+  replaceFile(pt, t, out);
 }
 //# sourceMappingURL=run.js.map

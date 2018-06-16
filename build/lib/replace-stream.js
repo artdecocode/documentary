@@ -11,6 +11,8 @@ var _util = require("util");
 
 var _ = require(".");
 
+var _rules = require("./rules");
+
 const LOG = (0, _util.debuglog)('doc');
 
 function createReplaceStream(toc) {
@@ -28,7 +30,7 @@ function createReplaceStream(toc) {
   }, {
     re: /```table([\s\S]+?)```/g,
     replacement: _.tableRule
-  }, _.titleRule]);
+  }, _.titleRule, _rules.badgeRule]);
   return s;
 }
 //# sourceMappingURL=replace-stream.js.map
