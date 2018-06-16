@@ -1,6 +1,7 @@
 import { replaceStream } from 'restream'
 import { debuglog } from 'util'
 import { tableRule, titleRule } from '.'
+import { badgeRule } from './rules'
 
 const LOG = debuglog('doc')
 
@@ -22,6 +23,7 @@ export default function createReplaceStream(toc) {
       replacement: tableRule,
     },
     titleRule,
+    badgeRule,
   ])
   return s
 }

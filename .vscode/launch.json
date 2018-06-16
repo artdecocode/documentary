@@ -15,7 +15,7 @@
       },
       "console": "integratedTerminal",
       "args": [
-        "test/spec/lib.js",
+        "test/spec/bin.js",
         "-b"
       ]
     },
@@ -29,9 +29,9 @@
         "NODE_DEBUG": "doc"
       },
       "args": [
-        "README-source.md",
+        "README",
         "-o",
-        "README.md"
+        "README-test.md"
       ],
       "console": "integratedTerminal",
       "skipFiles": [

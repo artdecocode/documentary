@@ -60,6 +60,9 @@ export default class Context {
   get README_PATH() {
     return resolve(__dirname, '../fixtures/README-source.md')
   }
+  get README_DIR_PATH() {
+    return resolve(__dirname, '../fixtures/README')
+  }
   get SNAPSHOT_DIR() {
     return resolve(__dirname, '../snapshot')
   }

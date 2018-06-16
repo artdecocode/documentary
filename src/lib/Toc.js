@@ -66,10 +66,9 @@ export default class Toc extends Transform {
   }
 }
 
-export const getToc = async (path) => {
-  const md = createReadStream(path)
+export const getToc = async (stream) => {
   const rs = new Toc()
-  md.pipe(rs)
+  stream.pipe(rs)
   const { promise } = new Catchment({ rs })
   const t = await promise
   return t.trim()
