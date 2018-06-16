@@ -15,7 +15,7 @@
       },
       "console": "integratedTerminal",
       "args": [
-        "test/spec/lib.js",
+        "test/spec/bin.js",
         "-b"
       ]
     },

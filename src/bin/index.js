@@ -44,7 +44,7 @@ const doc = async (source, output, toc) => {
   } catch (err) {
     const { code } = err
     if (code == 'ENOTDIR') {
-      stream = createReadStream()
+      stream = createReadStream(source)
     } else {
       throw err
     }

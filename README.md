@@ -21,6 +21,7 @@ yarn add -E documentary
     * [`async runSoftware(path: string)`](#async-runsoftwarepath-string-void)
     * [`runSoftware(): string`](#runsoftware-string)
   * [Comments Stripping](#comments-stripping)
+  * [File Splitting](#file-splitting)
 - [CLI](#cli)
 - [API](#api)
   * [`new Toc()`](#new-toc)
@@ -140,6 +141,31 @@ Generated from
 ### Comments Stripping
 
 Since comments found in `<!—— comment ——>` sections are not visible to users, they will be removed from the output document.
+### File Splitting
+
+`documentary` can read a directory and put files together into a single `README` file. The files will be sorted in alphabetical order, and their content merged into a single stream. The `index.md` and `footer.md` are special in this respect, so that the `index.md` of a directory will always go first, and the `footer.md` will go last.
+
+Example structure used in this project:
+
+```m
+README
+├── 1-installation-and-usage
+│   ├── 1-vs-code.md
+│   └── index.md
+├── 2-features
+│   ├── 1-TOC-generation.md
+│   ├── 2-table-display.md
+│   ├── 3-method-title.md
+│   ├── 4-comment-stripping.md
+│   ├── 5-file-splitting.md
+│   └── index.md
+├── 3-cli.md
+├── 4-api
+│   ├── 1-toc.md
+│   └── index.md
+├── footer.md
+└── index.md
+```
 ## CLI
 
 The program is used from the CLI (or `package.json` script).
