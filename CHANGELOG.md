@@ -1,5 +1,10 @@
 ## 18 June 2018
 
+### 1.3.1
+
+- [doc] specify install snippet as `-DE`
+- [package] rename `README` to `documentation`
+
 ### 1.3.0
 
 - [feature] splitting topics into folders, npm badge replace rule
