@@ -1,3 +1,10 @@
+## 18 June 2018
+
+### 1.3.0
+
+- [feature] splitting topics into folders, npm badge replace rule
+- [doc] split into files in the `README` directory
+
 ## 15 June 2018
 
 ### 1.2.0
