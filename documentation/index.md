@@ -5,7 +5,7 @@
 `documentary` is a command-line tool and a library to manage documentation of Node.js packages. Due to the fact that complex `README` files are harder to maintain, `documentary` serves as a pre-processor of documentation.
 
 ```sh
-yarn add -E documentary
+yarn add -DE documentary
 ```
 
 ## Table Of Contents
