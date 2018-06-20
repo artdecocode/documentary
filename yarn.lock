@@ -1918,9 +1918,9 @@ restream@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/restream/-/restream-1.2.0.tgz#fd13b031a54e80cc65d1878c43149f1b3a40efbb"
 
-restream@2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/restream/-/restream-2.0.3.tgz#35c032d02f57afacb4b78f6ae9b510f99a29a1d1"
+restream@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/restream/-/restream-2.1.0.tgz#934e177343e81bd6a64fc555f91085544da56db1"
 
 ret@~0.1.10:
   version "0.1.15"
