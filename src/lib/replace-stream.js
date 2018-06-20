@@ -1,29 +1,20 @@
-import { replaceStream } from 'restream'
-import { debuglog } from 'util'
-import { tableRule, titleRule } from '.'
-import { badgeRule } from './rules'
-
-const LOG = debuglog('doc')
+import { Replaceable } from 'restream'
+import { badgeRule, createTocRule, commentRule } from './rules'
+import tableRule from './rules/table'
+import titleRule from './rules/method-title'
+import exampleRule from './rules/example'
 
 export default function createReplaceStream(toc) {
-  const s = replaceStream([
-    {
-      re: /<!--[\s\S]*?-->\n*/g,
-      replacement() {
-        LOG('stripping comment')
-        return ''
-      },
-    },
-    {
-      re: /^%TOC%$/gm,
-      replacement: toc,
-    },
-    {
-      re: /```table([\s\S]+?)```/g,
-      replacement: tableRule,
-    },
-    titleRule,
+  const tocRule = createTocRule(toc)
+
+  const s = new Replaceable([
+    commentRule,
+    tocRule,
     badgeRule,
+    tableRule,
+    titleRule,
+    exampleRule,
   ])
+
   return s
 }

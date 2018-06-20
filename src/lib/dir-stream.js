@@ -2,6 +2,8 @@ import { resolve } from 'path'
 import { createReadStream } from 'fs'
 import { PassThrough } from 'stream'
 
+// this needs to go in `wrote` once it's rewritten
+
 const readFile = (path, name) => {
   const p = resolve(path, name)
   const rs = createReadStream(p)

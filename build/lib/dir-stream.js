@@ -11,6 +11,7 @@ var _fs = require("fs");
 
 var _stream = require("stream");
 
+// this needs to go in `wrote` once it's rewritten
 const readFile = (path, name) => {
   const p = (0, _path.resolve)(path, name);
   const rs = (0, _fs.createReadStream)(p);

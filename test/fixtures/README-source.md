@@ -47,6 +47,12 @@ import documentary from 'documentary'
 ]
 ```
 
+## Example
+
+This section will embed an example.
+
+%EXAMPLE: test/fixtures/example.js, ../src => documentation, javascript%
+
 ## Copyright
 
 [Art Deco Code](https://artdeco.bz) 2018

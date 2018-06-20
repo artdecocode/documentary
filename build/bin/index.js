@@ -15,8 +15,6 @@ var _dirStream = _interopRequireDefault(require("../lib/dir-stream"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import runFile from './file'
-// import runDir from './dir'
 const LOG = (0, _util.debuglog)('doc');
 const DEBUG = /doc/.test(process.env.NODE_DEBUG);
 const {
@@ -82,11 +80,12 @@ const doc = async (source, output, toc) => {
     }
 
     DEBUG ? LOG(stack) : console.log(message);
-  } // if (watch) {
-  //   watchFile(source, async () => {
-  //     await doRun()
-  //   })
-  // }
+  }
 
+  if (_watch) {
+    (0, _fs.watch)(_source, async () => {
+      await doc(_source, _output, _toc);
+    });
+  }
 })();
 //# sourceMappingURL=index.js.map

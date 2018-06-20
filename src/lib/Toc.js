@@ -1,7 +1,7 @@
 import { Transform } from 'stream'
 import Catchment from 'catchment'
-import { createReadStream } from 'fs'
-import { getLink, methodTitleRe, replaceTitle } from '.'
+import { getLink } from '.'
+import { methodTitleRe, replaceTitle } from './rules/method-title'
 
 const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/
 
