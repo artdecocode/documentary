@@ -1,3 +1,10 @@
+## 20 June 2018
+
+### 1.4.0
+
+- [feature] examples placement
+- [fix] re-enable watch mode
+
 ## 18 June 2018
 
 ### 1.3.1
