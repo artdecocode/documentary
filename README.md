@@ -23,7 +23,7 @@ yarn add -DE documentary
   * [Comments Stripping](#comments-stripping)
   * [File Splitting](#file-splitting)
   * [Replacement Rules](#replacement-rules)
-  * [Examples Injection](#examples-injection)
+  * [Examples Placement](#examples-placement)
 - [API Method](#api-method)
 - [API Method](#api-method)
 - [CLI](#cli)
@@ -177,7 +177,7 @@ There are some built-in rules for replacements.
 | Rule | Description |
 | ---- | ----------- |
 | `%NPM: package-name%` | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)` |
-### Examples Injection
+### Examples Placement
 
 `documentary` can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
 
