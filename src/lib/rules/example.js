@@ -1,9 +1,10 @@
 import { debuglog } from 'util'
 import { read } from 'wrote'
+import { parse } from 'path'
 
 const LOG = debuglog('doc')
 
-export const replacer = async (match, source, from, to, type = '') => {
+export const replacer = async (match, source, from, to, type) => {
   try {
     let f = await read(source)
     f = f.trim()
@@ -13,7 +14,7 @@ export const replacer = async (match, source, from, to, type = '') => {
         return m
       })
     }
-    return `\`\`\`${type}
+    return `\`\`\`${type || parse(source).ext.replace(/^\./, '')}
 ${f.trim()}
 \`\`\``
   } catch (err) {
