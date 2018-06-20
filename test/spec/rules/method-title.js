@@ -1,11 +1,11 @@
 import { equal } from 'zoroaster/assert'
 import SnapshotContext from 'snapshot-context'
-import { replaceStream } from 'restream'
+import { Replaceable } from 'restream'
 import Context from '../../context'
 import titleRule, { replacer } from '../../../src/lib/rules/method-title'
 
 /** @type {Object.<string, (c: Context, s: SnapshotContext)>} */
-export const TitleReplacer = {
+const T = {
   context: [
     Context,
     SnapshotContext,
@@ -25,7 +25,7 @@ export const TitleReplacer = {
     setDir(SNAPSHOT_DIR)
     const t = getTitle()
     const r = createReadable(t)
-    const rs = replaceStream(titleRule)
+    const rs = new Replaceable(titleRule)
     r.pipe(rs)
     const res = await catchment(rs)
     await test('method-title/async-return.md', res)
@@ -36,7 +36,7 @@ export const TitleReplacer = {
     setDir(SNAPSHOT_DIR)
     const t = getTitle(true, true, false)
     const r = createReadable(t)
-    const rs = replaceStream(titleRule)
+    const rs = new Replaceable(titleRule)
     r.pipe(rs)
     const res = await catchment(rs)
     await test('method-title/async.md', res)
@@ -47,7 +47,7 @@ export const TitleReplacer = {
     setDir(SNAPSHOT_DIR)
     const t = getTitle(false)
     const r = createReadable(t)
-    const rs = replaceStream(titleRule)
+    const rs = new Replaceable(titleRule)
     r.pipe(rs)
     const res = await catchment(rs)
     await test('method-title/return.md', res)
@@ -58,7 +58,7 @@ export const TitleReplacer = {
     setDir(SNAPSHOT_DIR)
     const t = getTitle(false, false)
     const r = createReadable(t)
-    const rs = replaceStream(titleRule)
+    const rs = new Replaceable(titleRule)
     r.pipe(rs)
     const res = await catchment(rs)
     await test('method-title/single-line.md', res)
@@ -69,3 +69,5 @@ export const TitleReplacer = {
     equal(res, m)
   },
 }
+
+export default T

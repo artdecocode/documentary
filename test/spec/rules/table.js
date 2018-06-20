@@ -4,7 +4,7 @@ import Context from '../../context'
 import { replacer } from '../../../src/lib/rules/table'
 
 /** @type {Object.<string, (c: Context, s: SnapshotContext)>} */
-export const TableRule = {
+const T = {
   context: [
     Context,
     SnapshotContext,
@@ -20,3 +20,5 @@ export const TableRule = {
     equal(res, m)
   },
 }
+
+export default T
