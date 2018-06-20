@@ -9,6 +9,7 @@ A package to manage documentation of Node.js packages.
   * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
 - [API](#api)
     * [`async runSoftware(string: path, config: object): string`](#async-runsoftwarestring-pathconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
+- [Example](#example)
 - [Copyright](#copyright)
 
 ## CLI
@@ -38,6 +39,19 @@ import documentary from 'documentary'
 | comments | Removes comments |
 
 #### `async runSoftware(`<br/>&nbsp;&nbsp;`string: path,`<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`render?: function,`<br/>&nbsp;&nbsp;`},`<br/>`): string`
+
+## Example
+
+This section will embed an example.
+
+```javascript
+import documentary from 'documentation'
+import Catchment from 'catchment'
+
+(async () => {
+  await documentary()
+})()
+```
 
 ## Copyright
 

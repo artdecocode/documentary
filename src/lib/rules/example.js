@@ -15,8 +15,7 @@ export const replacer = async (match, source, from, to, type = '') => {
     }
     return `\`\`\`${type}
 ${f.trim()}
-\`\`\`
-`
+\`\`\``
   } catch (err) {
     LOG(err)
     return match
