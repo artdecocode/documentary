@@ -9,9 +9,9 @@ var _stream = require("stream");
 
 var _catchment = _interopRequireDefault(require("catchment"));
 
-var _fs = require("fs");
-
 var _ = require(".");
+
+var _methodTitle = require("./rules/method-title");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,7 +33,7 @@ class Toc extends _stream.Transform {
 
   _transform(buffer, enc, next) {
     let res;
-    const rre = new RegExp(`(?:${re.source})|(?:${_.methodTitleRe.source})`, 'g');
+    const rre = new RegExp(`(?:${re.source})|(?:${_methodTitle.methodTitleRe.source})`, 'g');
 
     while ((res = rre.exec(buffer)) !== null) {
       let t;
@@ -61,7 +61,7 @@ class Toc extends _stream.Transform {
             if (typeof type == 'string') return `${name}: ${type}`;
             return `${name}: object`;
           });
-          const fullTitle = (0, _.replaceTitle)(...res.slice(3)).replace(/^#+ +/, '');
+          const fullTitle = (0, _methodTitle.replaceTitle)(...res.slice(3)).replace(/^#+ +/, '');
           link = (0, _.getLink)(fullTitle);
           t = `\`${b}(${s.join(', ')})${res[6] ? `: ${res[6]}` : ''}\``;
         } catch (err) {

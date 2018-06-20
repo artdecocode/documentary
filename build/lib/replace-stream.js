@@ -7,30 +7,19 @@ exports.default = createReplaceStream;
 
 var _restream = require("restream");
 
-var _util = require("util");
-
-var _ = require(".");
-
 var _rules = require("./rules");
 
-const LOG = (0, _util.debuglog)('doc');
+var _table = _interopRequireDefault(require("./rules/table"));
+
+var _methodTitle = _interopRequireDefault(require("./rules/method-title"));
+
+var _example = _interopRequireDefault(require("./rules/example"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function createReplaceStream(toc) {
-  const s = (0, _restream.replaceStream)([{
-    re: /<!--[\s\S]*?-->\n*/g,
-
-    replacement() {
-      LOG('stripping comment');
-      return '';
-    }
-
-  }, {
-    re: /^%TOC%$/gm,
-    replacement: toc
-  }, {
-    re: /```table([\s\S]+?)```/g,
-    replacement: _.tableRule
-  }, _.titleRule, _rules.badgeRule]);
+  const tocRule = (0, _rules.createTocRule)(toc);
+  const s = new _restream.Replaceable([_rules.commentRule, tocRule, _rules.badgeRule, _table.default, _methodTitle.default, _example.default]);
   return s;
 }
 //# sourceMappingURL=replace-stream.js.map
