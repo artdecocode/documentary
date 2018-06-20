@@ -15,8 +15,9 @@
       },
       "console": "integratedTerminal",
       "args": [
-        "test/spec/bin.js",
-        "-b"
+        "test/spec/rules/example.js",
+        "-b",
+        "-w"
       ]
     },
     {

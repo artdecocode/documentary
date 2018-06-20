@@ -1,6 +1,8 @@
-import documentary from '../src'
+```javascript
+import documentary from 'documentary'
 import Catchment from 'catchment'
 
 (async () => {
   await documentary()
 })()
+```

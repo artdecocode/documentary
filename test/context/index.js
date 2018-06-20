@@ -20,6 +20,15 @@ export default class Context {
       })
     })
   }
+  get examplePath() {
+    return 'test/fixtures/example.js'
+  }
+  /**
+   * @param {RegExp} re Regular expression to reset.
+   */
+  resetRe(re) {
+    re.lastIndex = -1
+  }
   /**
    * Example method.
    */
