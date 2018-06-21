@@ -80,6 +80,8 @@ Table of contents are useful for navigation the README document. When a `%TOC%` 
 - [Copyright](#copyright)
 ```
 
+[take me to hello world](#anchorName)
+
 ### Tables Display
 
 To describe method arguments in a table, but prepare them in a more readable format, `documentary` will parse the code blocks with `table` language as a table. The blocks must be in `JSON` format and contain a single array of arrays which represent rows.
@@ -301,9 +303,7 @@ DOC 13980: Reading /documentary/example/markdown.md
 
 <a href="#test-title-link123" id="test-title-link"> hello world </a>
 
-[take me to hello world](#anchorName)
-
-<a name="anchorName"></a>
+<a name="anchorName" id="anchorName"></a>
 
 ---
 
