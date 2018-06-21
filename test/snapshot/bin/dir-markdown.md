@@ -1,6 +1,9 @@
 # readme
 
 This is a composite documentation split into multiple files.
+## a hidden file
+
+is a real treasure
 ## Introduction
 
 Before software can be reusable it first has to be usable. (Ralph Johnson)

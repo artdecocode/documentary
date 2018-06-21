@@ -69,6 +69,9 @@ export default class Context {
   get README_PATH() {
     return resolve(__dirname, '../fixtures/README-source.md')
   }
+  get readme_path() {
+    return 'test/fixtures/README'
+  }
   get README_DIR_PATH() {
     return resolve(__dirname, '../fixtures/README')
   }
@@ -87,7 +90,6 @@ export default class Context {
       stdio: 'pipe',
       execArgv: [],
     })
-    LOG(proc.spawnCommand)
     const { stdout, stderr } = await proc.promise
     return {
       stdout,
@@ -108,10 +110,10 @@ export default class Context {
    * Catch the output of the stream into a string.
    * @param {Readable} rs
    */
-  async catchment(rs) {
+  async catchment(rs, noTrim) {
     const { promise } = new Catchment({ rs })
     const res = await promise
-    return res.trim()
+    return noTrim ? res : res.trim()
   }
   get table() {
     return `

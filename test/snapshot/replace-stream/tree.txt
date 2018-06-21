@@ -1,0 +1,12 @@
+Below is the directory structure:
+
+```m
+test/fixtures/README
+├── .hidden.md
+├── 1-intro.md
+├── 2-debug
+│   ├── 1-vs-code.md
+│   └── index.md
+├── footer.md
+└── index.md
+```

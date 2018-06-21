@@ -11,11 +11,12 @@
       "program": "${workspaceFolder}/node_modules/.bin/zoroaster",
       "env": {
         "BABEL_ENV": "debug",
-        "ZOROASTER_TIMEOUT": "9999999"
+        "ZOROASTER_TIMEOUT": "9999999",
+        "NODE_DEBUG": "doc",
       },
       "console": "integratedTerminal",
       "args": [
-        "test/spec/toc.js",
+        "test/spec/bin.js",
         "-b",
         "-w"
       ]
