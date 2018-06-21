@@ -31,7 +31,7 @@ import Catchment from 'catchment'
 
 The program will produce the following output:
 
-````
+````md
 ## API Method
 
 This method allows to generate documentation.

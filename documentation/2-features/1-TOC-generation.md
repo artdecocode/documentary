@@ -13,3 +13,5 @@ doc -t input-source.md [-r] [-o output.md]
 - [API](#api)
 - [Copyright](#copyright)
 ```
+
+<!-- To be able to include a link to a specific position in the text (i.e., create an "anchor"), `documentary` provides with a toc- -->
