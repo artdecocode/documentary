@@ -18,6 +18,9 @@ var _rules = require("./rules");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/;
+const rre = (0, _.makeARegexFromRule)({
+  re
+});
 
 class Toc extends _stream.Transform {
   /**
@@ -35,22 +38,16 @@ class Toc extends _stream.Transform {
 
   _transform(buffer, enc, next) {
     let res;
-    const matches = [];
-    const b = `${buffer}`.replace(new RegExp(_rules.commentRe, 'g'), '').replace(new RegExp(_methodTitle.methodTitleRe, 'g'), match => {
-      matches.push(match);
-      return match;
-    }).replace(new RegExp(_rules.codeRe, 'g'), match => {
-      const isMatch = _methodTitle.methodTitleRe.test(match);
-
-      if (isMatch) {
-        return matches.shift();
+    const b = `${buffer}`.replace(new RegExp(_rules.commentRe, 'g'), '').replace(new RegExp(_rules.codeRe, 'g'), match => {
+      if (_.exactMethodTitle.test(match) || rre.test(match)) {
+        return match;
       }
 
-      return '';
+      return ''; // ignore code blocks
     });
-    const rre = new RegExp(`(?:${re.source})|(?:${_methodTitle.methodTitleRe.source})`, 'g');
+    const superRe = new RegExp(`(?:${re.source})|(?:${_methodTitle.methodTitleRe.source})`, 'g');
 
-    while ((res = rre.exec(b)) !== null) {
+    while ((res = superRe.exec(b)) !== null) {
       let t;
       let level;
       let link;
@@ -69,7 +66,7 @@ class Toc extends _stream.Transform {
         try {
           const l = res[3];
           level = l.length;
-          const b = res.slice(4, 6).filter(a => a).join(' ').trim();
+          const bb = res.slice(4, 6).filter(a => a).join(' ').trim();
           const json = res[7] || '[]';
           const args = JSON.parse(json);
           const s = args.map(([name, type]) => {
@@ -78,7 +75,7 @@ class Toc extends _stream.Transform {
           });
           const fullTitle = (0, _methodTitle.replaceTitle)(...res.slice(3)).replace(/^#+ +/, '');
           link = (0, _.getLink)(fullTitle);
-          t = `\`${b}(${s.join(', ')})${res[6] ? `: ${res[6]}` : ''}\``;
+          t = `\`${bb}(${s.join(', ')})${res[6] ? `: ${res[6]}` : ''}\``;
         } catch (err) {
           // ok
           continue;

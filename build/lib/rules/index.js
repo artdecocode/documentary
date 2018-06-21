@@ -28,7 +28,7 @@ const createTocRule = toc => {
 exports.createTocRule = createTocRule;
 const commentRe = /<!--[\s\S]*?-->\n*/g;
 exports.commentRe = commentRe;
-const codeRe = /```(\w+\n)?[\s\S]*?\n```/g;
+const codeRe = /```(`)?(\w+\n)?[\s\S]*?\n```\1/g;
 exports.codeRe = codeRe;
 const commentRule = {
   re: commentRe,
