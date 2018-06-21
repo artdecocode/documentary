@@ -1,5 +1,10 @@
 ## 21 June 2018
 
+### 1.4.2
+
+- [fix] don't process code blocks for titles and other transforms.
+- [doc] build with properly escaped examples of `md` source code for method-title generation.
+
 ### 1.4.1
 
 - [fix] skip titles from code blocks and comments for Table Of Contents generation.
