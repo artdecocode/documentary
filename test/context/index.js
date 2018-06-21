@@ -126,6 +126,12 @@ ${this.rawTable}
 ${this.innerTable}
 \`\`\``.trim()
   }
+  getRawMethodTitle(isAsync = true, withArgs = true, returns = true) {
+    return `\`\`\`### ${isAsync ? 'async ' : ''}runSoftware${returns ? ' => string' : ''}
+${withArgs ? this.innerTitle: ''}
+\`\`\`
+    `.trim()
+  }
   get innerTable() {
     return `[
   ["arg", "description"],
@@ -137,10 +143,7 @@ ${this.innerTable}
     return `
 ## API
 
-\`\`\`### ${a ? 'async ' : ''}runSoftware${ret ? ' => string' : ''}
-${args ? this.innerTitle: ''}
-\`\`\`
-`.trim()
+${this.getRawMethodTitle(a, args, ret)}`
   }
   get innerTitle() {
     return `[
@@ -152,6 +155,9 @@ ${args ? this.innerTitle: ''}
     "render?": ["function"]
   }]
 ]`
+  }
+  escapeBackticks(block) {
+    return `\`\`\`\`\n${block}\n\`\`\`\``
   }
   get comment() {
     return '<!-- hello world -->'

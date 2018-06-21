@@ -61,10 +61,21 @@ const T = {
     const res = await catchment(s)
     await test('lib/replace-fixture.md', res.trim())
   },
-  async 'keeps 4 back-ticks as a code block'(
-    { createReadable, catchment, rawTable }
+  async 'keeps 4 back-ticks as a table code block'(
+    { createReadable, catchment, rawTable, escapeBackticks }
   ) {
-    const s = `\`\`\`\`\n${rawTable}\n\`\`\`\``
+    const s = escapeBackticks(rawTable)
+    const rs = createReadable(s)
+    const stream = createReplaceStream()
+    rs.pipe(stream)
+    const res = await catchment(stream)
+    equal(res, s)
+  },
+  async 'keeps 4 back-ticks as a method title'(
+    { createReadable, getRawMethodTitle, catchment, escapeBackticks }
+  ) {
+    const methodTitle = getRawMethodTitle()
+    const s = escapeBackticks(methodTitle)
     const rs = createReadable(s)
     const stream = createReplaceStream()
     rs.pipe(stream)
