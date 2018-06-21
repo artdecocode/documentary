@@ -1,5 +1,7 @@
+import { equal } from 'zoroaster/assert'
 import Context from '../context'
 import SnapshotContext from 'snapshot-context'
+import { createReadStream } from 'fs'
 import createReplaceStream from '../../src/lib/replace-stream'
 
 /** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
@@ -48,6 +50,26 @@ const T = {
     rs.pipe(s)
     const res = await catchment(s)
     await test('comments-strip.md', res.trim())
+  },
+  async 'runs against fixture'({
+    SNAPSHOT_DIR, README_PATH, catchment }, { setDir, test },
+  ) {
+    setDir(SNAPSHOT_DIR)
+    const rs = createReadStream(README_PATH)
+    const s = createReplaceStream()
+    rs.pipe(s)
+    const res = await catchment(s)
+    await test('lib/replace-fixture.md', res.trim())
+  },
+  async 'keeps 4 back-ticks as a code block'(
+    { createReadable, catchment, rawTable }
+  ) {
+    const s = `\`\`\`\`\n${rawTable}\n\`\`\`\``
+    const rs = createReadable(s)
+    const stream = createReplaceStream()
+    rs.pipe(stream)
+    const res = await catchment(stream)
+    equal(res, s)
   },
 }
 

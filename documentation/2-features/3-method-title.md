@@ -17,7 +17,7 @@ It is possible to generate neat titles useful for API documentation with `docume
 Generated from
 
 ````m
-```#️⃣#️⃣#️⃣#️⃣ async runSoftware => string
+```#### async runSoftware => string
 [
   ["path", "string"],
   ["config", {
@@ -30,7 +30,7 @@ Generated from
 ```
 ````
 
-```#### async runSoftware
+```#### async runSoftware => string
 [
   ["path", "string"]
 ]
@@ -39,7 +39,7 @@ Generated from
 Generated from
 
 ````m
-```#️⃣#️⃣#️⃣#️⃣ async runSoftware => string
+```#### async runSoftware => string
 [
   ["path", "string"]
 ]
@@ -52,6 +52,6 @@ Generated from
 Generated from
 
 ````m
-```#️⃣#️⃣#️⃣#️⃣ async runSoftware => string
+```#### runSoftware => string
 ```
 ````

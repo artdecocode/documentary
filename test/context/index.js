@@ -117,10 +117,14 @@ export default class Context {
     return `
 The program accepts the following arguments:
 
+${this.rawTable}
+`
+  }
+  get rawTable() {
+    return `
 \`\`\`table
 ${this.innerTable}
-\`\`\`
-`
+\`\`\``.trim()
   }
   get innerTable() {
     return `[

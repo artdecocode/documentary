@@ -15,7 +15,7 @@
       },
       "console": "integratedTerminal",
       "args": [
-        "test/spec/bin.js",
+        "test/spec/replace-stream.js",
         "-b",
         "-w"
       ]
@@ -31,6 +31,25 @@
       },
       "args": [
         "documentation",
+        "-o",
+        "debug.md"
+      ],
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch App 2",
+      "program": "${workspaceFolder}/src/bin/register.js",
+      "env": {
+        "BABEL_ENV": "debug",
+        "NODE_DEBUG": "doc"
+      },
+      "args": [
+        "documentation/2-features/2-table-display.md",
         "-o",
         "debug.md"
       ],
