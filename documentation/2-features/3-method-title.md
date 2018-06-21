@@ -30,7 +30,7 @@ Generated from
 ```
 ````
 
-```#### async runSoftware => string
+```#### async runSoftware
 [
   ["path", "string"]
 ]
@@ -39,7 +39,7 @@ Generated from
 Generated from
 
 ````m
-```#### async runSoftware => string
+```#### async runSoftware
 [
   ["path", "string"]
 ]

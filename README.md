@@ -82,7 +82,7 @@ Table of contents are useful for navigation the README document. When a `%TOC%` 
 To describe method arguments in a table, but prepare them in a more readable format, `documentary` will parse the code blocks with `table` language as a table. The blocks must be in `JSON` format and contain a single array of arrays which represent rows.
 
 ````m
-```tаble
+```table
 [
   ["arg", "description"],
   ["-f", "Display only free domains"],
@@ -97,7 +97,6 @@ Result:
 | --- | ----------- |
 | -f | Display only free domains |
 | -z | A list of zones to check |
-
 ### Method Title
 
 It is possible to generate neat titles useful for API documentation with `documentary`. The method signature should be specified as a `JSON` array, where every member is an argument specified as an array. The first item in the argument array is the argument name, and the second one is type. Type can be either a string, or an object. If it is an object, each value in the object will first contain the property type, and the second one the default value. To mark a property as optional, the `?` symbol can be used at the end.
@@ -107,7 +106,7 @@ It is possible to generate neat titles useful for API documentation with `docume
 Generated from
 
 ````m
-```#️⃣#️⃣#️⃣#️⃣ async runSoftware => string
+```#### async runSoftware => string
 [
   ["path", "string"],
   ["config", {
@@ -125,7 +124,7 @@ Generated from
 Generated from
 
 ````m
-```#️⃣#️⃣#️⃣#️⃣ async runSoftware => string
+```#### async runSoftware
 [
   ["path", "string"]
 ]
@@ -137,7 +136,7 @@ Generated from
 Generated from
 
 ````m
-```#️⃣#️⃣#️⃣#️⃣ async runSoftware => string
+```#### runSoftware => string
 ```
 ````
 ### Comments Stripping
