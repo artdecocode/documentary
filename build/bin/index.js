@@ -5,13 +5,11 @@ var _fs = require("fs");
 
 var _argufy = _interopRequireDefault(require("argufy"));
 
-var _wrote = require("wrote");
+var _pedantry = _interopRequireDefault(require("pedantry"));
 
 var _util = require("util");
 
 var _run = _interopRequireDefault(require("./run"));
-
-var _dirStream = _interopRequireDefault(require("../lib/dir-stream"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37,33 +35,23 @@ const {
   output: 'o'
 });
 
-const doc = async (source, output, toc) => {
+const doc = async (source, output, justToc = false) => {
   if (!source) {
     console.log('Please specify an input file.'); // print usage
 
     process.exit(1);
   }
 
+  const ls = (0, _fs.lstatSync)(source);
   let stream;
 
-  try {
-    const {
-      content
-    } = await (0, _wrote.readDirStructure)(source);
-    stream = (0, _dirStream.default)(source, content);
-  } catch (err) {
-    const {
-      code
-    } = err;
-
-    if (code == 'ENOTDIR') {
-      stream = (0, _fs.createReadStream)(source);
-    } else {
-      throw err;
-    }
+  if (ls.isDirectory()) {
+    stream = new _pedantry.default(source);
+  } else if (ls.isFile()) {
+    stream = (0, _fs.createReadStream)(source);
   }
 
-  await (0, _run.default)(stream, output, toc);
+  await (0, _run.default)(stream, output, justToc);
 };
 
 (async () => {
@@ -75,7 +63,7 @@ const doc = async (source, output, toc) => {
     code
   }) {
     if (code == 'ENOENT') {
-      console.log('File %s does not exist', _source);
+      console.log('File %s does not exist.', _source);
       process.exit(2);
     }
 

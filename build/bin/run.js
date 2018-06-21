@@ -29,17 +29,17 @@ const replaceFile = (stream, toc, out) => {
 /**
  * @param {Readable} stream A readable stream.
  * @param {string} [out] Path to the output file.
- * @param {boolean} [toc] Just print the TOC.
+ * @param {boolean} [justToc] Just print the TOC.
  */
 
 
-async function run(stream, out, toc) {
+async function run(stream, out, justToc) {
   const pt = new _stream.PassThrough();
   pt.pause();
   stream.pipe(pt);
   const t = await (0, _Toc.getToc)(stream);
 
-  if (toc) {
+  if (justToc) {
     console.log(t);
     process.exit();
   }
