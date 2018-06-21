@@ -1,6 +1,6 @@
 ### TOC Generation
 
-Table of contents are useful for navigation the README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure.
+Table of contents are useful for navigation the README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
 
 <!-- ```sh
 doc -t input-source.md [-r] [-o output.md]

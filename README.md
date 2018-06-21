@@ -24,8 +24,6 @@ yarn add -DE documentary
   * [File Splitting](#file-splitting)
   * [Replacement Rules](#replacement-rules)
   * [Examples Placement](#examples-placement)
-- [API Method](#api-method)
-- [API Method](#api-method)
 - [CLI](#cli)
 - [API](#api)
   * [`new Toc()`](#new-toc)
@@ -70,7 +68,7 @@ It might be confusing to have a source and output `README.md` file, therefore to
 The processed `README-source.md` file will have a generated table of contents, markdown tables and neat titles for API method descriptions.
 ### TOC Generation
 
-Table of contents are useful for navigation the README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure.
+Table of contents are useful for navigation the README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
 
 ```md
 - [Table Of Contents](#table-of-contents)
