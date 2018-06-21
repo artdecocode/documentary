@@ -1,10 +1,11 @@
 import { Transform } from 'stream'
 import Catchment from 'catchment'
-import { getLink } from '.'
+import { getLink, makeARegexFromRule, exactMethodTitle } from '.'
 import { methodTitleRe, replaceTitle } from './rules/method-title'
 import { commentRe, codeRe } from './rules'
 
 const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/
+const rre = makeARegexFromRule({ re })
 
 export default class Toc extends Transform {
   /**
@@ -21,22 +22,16 @@ export default class Toc extends Transform {
   }
   _transform(buffer, enc, next) {
     let res
-    const matches = []
     const b = `${buffer}`
       .replace(new RegExp(commentRe, 'g'), '')
-      .replace(new RegExp(methodTitleRe, 'g'), (match) => {
-        matches.push(match)
-        return match
-      })
       .replace(new RegExp(codeRe, 'g'), (match) => {
-        const isMatch = methodTitleRe.test(match)
-        if (isMatch) {
-          return matches.shift()
+        if (exactMethodTitle.test(match) || rre.test(match)) {
+          return match
         }
-        return ''
+        return '' // ignore code blocks
       })
-    const rre = new RegExp(`(?:${re.source})|(?:${methodTitleRe.source})`, 'g')
-    while ((res = rre.exec(b)) !== null) {
+    const superRe = new RegExp(`(?:${re.source})|(?:${methodTitleRe.source})`, 'g')
+    while ((res = superRe.exec(b)) !== null) {
       let t
       let level
       let link
@@ -50,7 +45,7 @@ export default class Toc extends Transform {
         try {
           const l = res[3]
           level = l.length
-          const b = res.slice(4, 6).filter(a => a).join(' ').trim()
+          const bb = res.slice(4, 6).filter(a => a).join(' ').trim()
           const json = res[7] || '[]'
           const args = JSON.parse(json)
           const s = args.map(([name, type]) => {
@@ -59,7 +54,7 @@ export default class Toc extends Transform {
           })
           const fullTitle = replaceTitle(...res.slice(3)).replace(/^#+ +/, '')
           link = getLink(fullTitle)
-          t = `\`${b}(${s.join(', ')})${res[6] ? `: ${res[6]}` : ''}\``
+          t = `\`${bb}(${s.join(', ')})${res[6] ? `: ${res[6]}` : ''}\``
         } catch (err) {
           // ok
           continue

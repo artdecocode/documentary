@@ -1,16 +1,10 @@
 import { Replaceable } from 'restream'
 import { badgeRule, createTocRule, commentRule, codeRe } from './rules'
+import { exactTable, exactMethodTitle } from '../lib'
 import tableRule from './rules/table'
 import titleRule from './rules/method-title'
 import exampleRule from './rules/example'
 
-const makeARegex = (rule) => {
-  const re = new RegExp(`^${rule.re.source}`)
-  return re
-}
-
-const ttableRule = makeARegex(tableRule)
-const ttileRule = makeARegex(titleRule)
 export default function createReplaceStream(toc) {
   const tocRule = createTocRule(toc)
 
@@ -21,7 +15,7 @@ export default function createReplaceStream(toc) {
     {
       re: new RegExp(codeRe, 'g'),
       replacement(match) {
-        if (ttableRule.test(match) || ttileRule.test(match)) {
+        if (exactTable.test(match) || exactMethodTitle.test(match)) {
           return match
         }
         codeBlocks.push(match)

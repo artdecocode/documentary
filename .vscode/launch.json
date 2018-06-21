@@ -15,7 +15,7 @@
       },
       "console": "integratedTerminal",
       "args": [
-        "test/spec/replace-stream.js",
+        "test/spec/toc.js",
         "-b",
         "-w"
       ]
