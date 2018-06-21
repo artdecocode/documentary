@@ -53,6 +53,12 @@ import Catchment from 'catchment'
 })()
 ```
 
+```js
+## titles from code blocks with language are not included
+```
+```
+## titles from code blocks without language are not included
+```
 ## Copyright
 
 [Art Deco Code](https://artdeco.bz) 2018

@@ -54,10 +54,10 @@ This section will embed an example.
 %EXAMPLE: test/fixtures/example.js, ../src => documentation, javascript%
 
 ```js
-## titles from code blocks are not included
+## titles from code blocks with language are not included
 ```
 ```
-## titles from code blocks are not included
+## titles from code blocks without language are not included
 ```
 <!--
 ## titles from comments are not included

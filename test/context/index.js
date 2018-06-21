@@ -85,6 +85,7 @@ export default class Context {
       resolve(__dirname, '../../src/bin/register.js'),
     [input, ...args], {
       stdio: 'pipe',
+      execArgv: [],
     })
     LOG(proc.spawnCommand)
     const { stdout, stderr } = await proc.promise

@@ -2,6 +2,7 @@ import { Transform } from 'stream'
 import Catchment from 'catchment'
 import { getLink } from '.'
 import { methodTitleRe, replaceTitle } from './rules/method-title'
+import { commentRe, codeRe } from './rules'
 
 const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/
 
@@ -20,8 +21,22 @@ export default class Toc extends Transform {
   }
   _transform(buffer, enc, next) {
     let res
+    const matches = []
+    const b = `${buffer}`
+      .replace(new RegExp(commentRe, 'g'), '')
+      .replace(new RegExp(methodTitleRe, 'g'), (match) => {
+        matches.push(match)
+        return match
+      })
+      .replace(new RegExp(codeRe, 'g'), (match) => {
+        const isMatch = methodTitleRe.test(match)
+        if (isMatch) {
+          return matches.shift()
+        }
+        return ''
+      })
     const rre = new RegExp(`(?:${re.source})|(?:${methodTitleRe.source})`, 'g')
-    while ((res = rre.exec(buffer)) !== null) {
+    while ((res = rre.exec(b)) !== null) {
       let t
       let level
       let link

@@ -16,8 +16,12 @@ export const createTocRule = (toc) => {
   }
 }
 
+export const commentRe = /<!--[\s\S]*?-->\n*/g
+
+export const codeRe = /```(\w+\n)?[\s\S]*?\n```/g
+
 export const commentRule = {
-  re: /<!--[\s\S]*?-->\n*/g,
+  re: commentRe,
   replacement() {
     LOG('stripping comment')
     return ''
