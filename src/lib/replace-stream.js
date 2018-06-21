@@ -1,11 +1,11 @@
 import { Replaceable } from 'restream'
 import { debuglog } from 'util'
+import spawncommand from 'spawncommand'
 import { badgeRule, createTocRule, commentRule, codeRe } from './rules'
 import { exactTable, exactMethodTitle } from '../lib'
 import tableRule from './rules/table'
 import titleRule from './rules/method-title'
 import exampleRule from './rules/example'
-import spawncommand from 'spawncommand'
 
 const LOG = debuglog('doc')
 
@@ -17,7 +17,7 @@ export default function createReplaceStream(toc) {
   const s = new Replaceable([
     commentRule,
     {
-      re: new RegExp(codeRe, 'g'),
+      re: codeRe,
       replacement(match) {
         if (exactTable.test(match) || exactMethodTitle.test(match)) {
           return match
@@ -37,7 +37,7 @@ export default function createReplaceStream(toc) {
             LOG('Could not generate a tree for %s', args.join(' '))
             return match
           }
-          return escape(stdout)
+          return codeSurround(stdout)
         } catch (err) {
           if (err.code == 'ENOENT') {
             console.warn('tree is not installed')
@@ -64,4 +64,4 @@ export default function createReplaceStream(toc) {
   return s
 }
 
-const escape = m => `\`\`\`m\n${m.trim()}\n\`\`\``
+const codeSurround = (m, lang = 'm') => `\`\`\`${lang}\n${m.trim()}\n\`\`\``

@@ -23,8 +23,8 @@ export default class Toc extends Transform {
   _transform(buffer, enc, next) {
     let res
     const b = `${buffer}`
-      .replace(new RegExp(commentRe, 'g'), '')
-      .replace(new RegExp(codeRe, 'g'), (match) => {
+      .replace(commentRe, '')
+      .replace(codeRe, (match) => {
         if (exactMethodTitle.test(match) || rre.test(match)) {
           return match
         }
