@@ -1,3 +1,10 @@
+## 21 June 2018
+
+### 1.4.1
+
+- [fix] skip titles from code blocks and comments for Table Of Contents generation.
+- [dep] switch from `dir-stream` to `Pedantry`.
+
 ## 20 June 2018
 
 ### 1.4.0
