@@ -181,6 +181,12 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
+"@wrote/read-dir-structure@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@wrote/read-dir-structure/-/read-dir-structure-1.0.0.tgz#11b827934b493b2f730a32a91551eadacd41b936"
+  dependencies:
+    makepromise "2.0.0"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -673,6 +679,12 @@ dreamopt@~0.6.0:
 erotic@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/erotic/-/erotic-0.2.0.tgz#4162384016281b1dd313bf1ecc87576f92d8e509"
+  dependencies:
+    clean-stack "1.3.0"
+
+erotic@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/erotic/-/erotic-1.0.1.tgz#222fedd8215937b9e5d0ec37abb27889af63776f"
   dependencies:
     clean-stack "1.3.0"
 
@@ -1439,6 +1451,12 @@ makepromise@1.1.1:
   dependencies:
     erotic "0.2.0"
 
+makepromise@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/makepromise/-/makepromise-2.0.0.tgz#3b91b9de3e36cd6979c94c38392f04ba4d8e1f18"
+  dependencies:
+    erotic "1.0.1"
+
 map-cache@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/map-cache/-/map-cache-0.2.2.tgz#c32abd0bd6525d9b051645bb4f26ac5dc98a0dbf"
@@ -1751,6 +1769,12 @@ path-is-inside@^1.0.1, path-is-inside@^1.0.2:
 path-parse@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.5.tgz#3c1adf871ea9cd6c9431b6ea2bd74a0ff055c4c1"
+
+pedantry@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pedantry/-/pedantry-1.0.0.tgz#68a3ddd647f59246c1275c428c00bc77c8349737"
+  dependencies:
+    "@wrote/read-dir-structure" "1.0.0"
 
 pify@^2.0.0:
   version "2.3.0"
