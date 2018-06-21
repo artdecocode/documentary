@@ -28,6 +28,7 @@ yarn add -DE documentary
 - [API](#api)
   * [`Toc` Type](#toc-type)
   * [`constructor(config?: object): Toc`](#constructorconfig-skiplevelone-boolean--false-toc)
+- [test](#test)
 
 ## Installation & Usage
 
@@ -167,6 +168,7 @@ documentation
 ├── 4-api
 │   ├── 1-toc.md
 │   └── index.md
+├── 9-ps.md
 ├── footer.md
 └── index.md
 ```
@@ -293,6 +295,10 @@ DOC 13980: Reading /documentary/example/markdown.md
 - [API](#api)
 - [Copyright](#copyright)
 ```
+
+## test
+
+<a href="#test-title-link" id="test-title-link"> hello world </a>
 
 ---
 
