@@ -26,7 +26,8 @@ yarn add -DE documentary
   * [Examples Placement](#examples-placement)
 - [CLI](#cli)
 - [API](#api)
-  * [`new Toc()`](#new-toc)
+  * [`Toc` Type](#toc-type)
+  * [`constructor(config?: object): Toc`](#constructorconfig-skiplevelone-boolean--false-toc)
 
 ## Installation & Usage
 
@@ -249,33 +250,32 @@ DOC 80734: could not parse the table
 ## API
 
 The programmatic use of the `documentary` is intended for developers who want to use this software in their projects.
-### `new Toc()`
+### `Toc` Type
 
-Toc is a transform stream which can generate a table of contents.
+`Toc` is a transform stream which can generate a table of contents for incoming markdown data. For every title that the transform sees, it will push the appropriate level of the table of contents.
 
-```js
+### `constructor(`<br/>&nbsp;&nbsp;`config?: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`skipLevelOne?: boolean = false,`<br/>&nbsp;&nbsp;`},`<br/>`): Toc`
+
+Create a new instance of a `Toc` stream.
+
+```javascript
 /* yarn example/toc.js */
 import { Toc } from 'documentary'
 import Catchment from 'catchment'
 import { createReadStream } from 'fs'
-import { resolve } from 'path'
-import { debuglog } from 'util'
 
-const LOG = debuglog('doc')
+(async () => {
+  try {
+    const md = createReadStream('example/markdown.md')
+    const rs = new Toc()
+    md.pipe(rs)
 
-const path = resolve(__dirname, 'markdown.md')
-
-;(async () => {
-  LOG('Reading %s', path)
-  const md = createReadStream(path)
-  const rs = new Toc()
-  md.pipe(rs)
-
-  const { promise } = new Catchment({
-    rs,
-  })
-  const res = await promise
-  console.log(res)
+    const { promise } = new Catchment({ rs })
+    const res = await promise
+    console.log(res)
+  } catch ({ stack }) {
+    console.log(stack)
+  }
 })()
 ```
 

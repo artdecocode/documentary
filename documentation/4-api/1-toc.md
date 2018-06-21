@@ -1,32 +1,18 @@
-### `new Toc()`
+### `Toc` Type
 
-Toc is a transform stream which can generate a table of contents.
+`Toc` is a transform stream which can generate a table of contents for incoming markdown data. For every title that the transform sees, it will push the appropriate level of the table of contents.
 
-```js
-/* yarn example/toc.js */
-import { Toc } from 'documentary'
-import Catchment from 'catchment'
-import { createReadStream } from 'fs'
-import { resolve } from 'path'
-import { debuglog } from 'util'
-
-const LOG = debuglog('doc')
-
-const path = resolve(__dirname, 'markdown.md')
-
-;(async () => {
-  LOG('Reading %s', path)
-  const md = createReadStream(path)
-  const rs = new Toc()
-  md.pipe(rs)
-
-  const { promise } = new Catchment({
-    rs,
-  })
-  const res = await promise
-  console.log(res)
-})()
+```### constructor => Toc
+[
+  ["config?", {
+    "skipLevelOne?": ["boolean", "false"]
+  }]
+]
 ```
+
+Create a new instance of a `Toc` stream.
+
+%EXAMPLE: example/toc.js, ../src => documentary, javascript%
 
 ```sh
 yarn example/toc.js
