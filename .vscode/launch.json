@@ -30,9 +30,9 @@
         "NODE_DEBUG": "doc"
       },
       "args": [
-        "README",
+        "documentation",
         "-o",
-        "README-test.md"
+        "debug.md"
       ],
       "console": "integratedTerminal",
       "skipFiles": [
