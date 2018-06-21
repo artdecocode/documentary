@@ -53,6 +53,17 @@ This section will embed an example.
 
 %EXAMPLE: test/fixtures/example.js, ../src => documentation, javascript%
 
+```js
+## titles from code blocks are not included
+```
+```
+## titles from code blocks are not included
+```
+<!--
+## titles from comments are not included
+```
+-->
+
 ## Copyright
 
 [Art Deco Code](https://artdeco.bz) 2018
