@@ -1,5 +1,10 @@
 ## 21 June 2018
 
+### 1.5.0
+
+- [feature] `tree` rule to embed directories structures representation
+- [doc] embed examples, generate trees
+
 ### 1.4.2
 
 - [fix] don't process code blocks for titles and other transforms.
