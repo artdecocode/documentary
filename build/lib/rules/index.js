@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.commentRule = exports.createTocRule = exports.badgeRule = void 0;
+exports.commentRule = exports.codeRe = exports.commentRe = exports.createTocRule = exports.badgeRule = void 0;
 
 var _util = require("util");
 
@@ -26,8 +26,12 @@ const createTocRule = toc => {
 };
 
 exports.createTocRule = createTocRule;
+const commentRe = /<!--[\s\S]*?-->\n*/g;
+exports.commentRe = commentRe;
+const codeRe = /```(\w+\n)?[\s\S]*?\n```/g;
+exports.codeRe = codeRe;
 const commentRule = {
-  re: /<!--[\s\S]*?-->\n*/g,
+  re: commentRe,
 
   replacement() {
     LOG('stripping comment');

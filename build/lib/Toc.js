@@ -13,6 +13,8 @@ var _ = require(".");
 
 var _methodTitle = require("./rules/method-title");
 
+var _rules = require("./rules");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/;
@@ -33,9 +35,22 @@ class Toc extends _stream.Transform {
 
   _transform(buffer, enc, next) {
     let res;
+    const matches = [];
+    const b = `${buffer}`.replace(new RegExp(_rules.commentRe, 'g'), '').replace(new RegExp(_methodTitle.methodTitleRe, 'g'), match => {
+      matches.push(match);
+      return match;
+    }).replace(new RegExp(_rules.codeRe, 'g'), match => {
+      const isMatch = _methodTitle.methodTitleRe.test(match);
+
+      if (isMatch) {
+        return matches.shift();
+      }
+
+      return '';
+    });
     const rre = new RegExp(`(?:${re.source})|(?:${_methodTitle.methodTitleRe.source})`, 'g');
 
-    while ((res = rre.exec(buffer)) !== null) {
+    while ((res = rre.exec(b)) !== null) {
       let t;
       let level;
       let link;
