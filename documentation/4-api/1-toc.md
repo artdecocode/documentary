@@ -5,7 +5,7 @@
 ```### constructor => Toc
 [
   ["config?", {
-    "skipLevelOne?": ["boolean", "false"]
+    "skipLevelOne?": ["boolean", "true"]
   }]
 ]
 ```

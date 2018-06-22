@@ -32,7 +32,7 @@ yarn add -DE documentary
 - [CLI](#cli)
 - [API](#api)
   * [`Toc` Type](#toc-type)
-  * [`constructor(config?: object): Toc`](#constructorconfig-skiplevelone-boolean--false-toc)
+  * [`constructor(config?: object): Toc`](#constructorconfig-skiplevelone-boolean--true-toc)
 
 ## Installation & Usage
 
@@ -268,7 +268,7 @@ The programmatic use of the `documentary` is intended for developers who want to
 
 `Toc` is a transform stream which can generate a table of contents for incoming markdown data. For every title that the transform sees, it will push the appropriate level of the table of contents.
 
-### `constructor(`<br/>&nbsp;&nbsp;`config?: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`skipLevelOne?: boolean = false,`<br/>&nbsp;&nbsp;`},`<br/>`): Toc`
+### `constructor(`<br/>&nbsp;&nbsp;`config?: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`skipLevelOne?: boolean = true,`<br/>&nbsp;&nbsp;`},`<br/>`): Toc`
 
 Create a new instance of a `Toc` stream.
 
