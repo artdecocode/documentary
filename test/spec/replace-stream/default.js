@@ -18,7 +18,7 @@ const T = {
     const s = createReplaceStream()
     rs.pipe(s)
     const res = await catchment(s)
-    await test('lib/replace-fixture.md', res.trim())
+    await test('replace-stream/fixture.md', res.trim())
   },
   async 'keeps 4 back-ticks with a table code block'(
     { createReadable, catchment, rawTable, escapeBackticks }
