@@ -90,9 +90,7 @@ To be able to include a link to a specific position in the text (i.e., create an
 
 This feature can be useful when presenting some data in a table in a section, but wanting to include a link to each row in the table of contents so that the structure is immediately visible.
 
-<a name="specific-level">Specific Level</a>
-
-If required, the level can be specified with a number of `#` symbols, such as `[Specific Level](######)`.
+**<a name="specific-level">Specific Level</a>**: if required, the level can be specified with a number of `#` symbols, such as `[Specific Level](######)`.
 ### Tables Display
 
 To describe method arguments in a table, but prepare them in a more readable format, `documentary` will parse the code blocks with `table` language as a table. The blocks must be in `JSON` format and contain a single array of arrays which represent rows.
