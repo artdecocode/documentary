@@ -40,6 +40,30 @@ const T = {
     const res = await catchment(toc)
     equal(res, '')
   },
+  async 'supports titles'({
+    createReadable, catchment, SNAPSHOT_DIR,
+  }, { setDir, test }) {
+    setDir(SNAPSHOT_DIR)
+    const title = 'Toc Title'
+    const t = `## Title\n Something's going on here. \n Hello this is a [${title}](t).`
+    const rs = createReadable(t)
+    const toc = new Toc()
+    rs.pipe(toc)
+    const res = await catchment(toc)
+    await test('toc/titles.md', res)
+  },
+  async 'supports titles with explicit level'({
+    createReadable, catchment, SNAPSHOT_DIR,
+  }, { setDir, test }) {
+    setDir(SNAPSHOT_DIR)
+    const title = 'Toc Title'
+    const t = `## Title\n Something's going on here. \n Hello this is a [${title}](##).`
+    const rs = createReadable(t)
+    const toc = new Toc()
+    rs.pipe(toc)
+    const res = await catchment(toc)
+    await test('toc/titles-explicit.md', res)
+  },
 }
 
 export default T

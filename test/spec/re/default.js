@@ -2,7 +2,8 @@ import { ok, equal } from 'zoroaster/assert'
 import SnapshotContext from 'snapshot-context'
 import Context from '../../context'
 import { tableRe } from '../../../src/lib/rules/table'
-import { innerCodeRe } from '../../../src/lib/rules'
+import { innerCodeRe, linkTitleRe } from '../../../src/lib/rules'
+import { deepEqual } from 'assert';
 
 /** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
 const T = {
@@ -74,6 +75,24 @@ const T = {
         \`\`\` -->`
     const res = re.test(s)
     ok(!res)
+  },
+  async 'detects link titles'({ cloneRe }) {
+    const re = cloneRe(linkTitleRe)
+    const s = '[Hello World](t)'
+    const res = re.exec(s)
+    ok(res)
+    const [, title, t] = res
+    equal(title, 'Hello World')
+    equal(t, 't')
+  },
+  async 'detects link titles with a level'({ cloneRe }) {
+    const re = cloneRe(linkTitleRe)
+    const s = '[Hello World](###)'
+    const res = re.exec(s)
+    ok(res)
+    const [, title, t] = res
+    equal(title, 'Hello World')
+    equal(t, '###')
   },
 }
 

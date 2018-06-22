@@ -2,8 +2,8 @@ import { Transform } from 'stream'
 import Catchment from 'catchment'
 import { getLink } from '.'
 import { methodTitleRe, replaceTitle } from './rules/method-title'
-import { codeRe, commentRule as stripComments, innerCodeRe } from './rules'
-import { Replaceable } from 'restream/build';
+import { codeRe, commentRule as stripComments, innerCodeRe, linkTitleRe } from './rules'
+import { Replaceable } from 'restream/build'
 import { makeInitialRule, makeRule, makeMarkers } from './markers'
 
 const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/
@@ -41,6 +41,7 @@ const getBuffer = async (buffer) => {
   const b = await c.promise
   return b
 }
+
 export default class Toc extends Transform {
   /**
    * A transform stream which will extract the titles in the markdown document and transform them into a markdown nested list with links.
@@ -53,27 +54,32 @@ export default class Toc extends Transform {
     } = config
     super()
     this.skipLevelOne = skipLevelOne
+    this.level = 0
   }
   async _transform(buffer, enc, next) {
     let res
 
     const b = await getBuffer(buffer)
     // create a single regex otherwise titles will always come before method titles
-    const superRe = new RegExp(`(?:${re.source})|(?:${methodTitleRe.source})`, 'g')
+    const superRe = new RegExp(`(?:${re.source})|(?:${methodTitleRe.source})|(?:${linkTitleRe.source})`, 'g')
     while ((res = superRe.exec(b)) !== null) {
       let t
       let level
       let link
-      if (res[1]) { // normal title regex
+      if (res[8] && res[9]) {
+        t = res[8]
+        level = res[9] != 't' ? parseInt(res[9]).length : this.level + 1
+        link = getLink(t)
+      } else if (res[1]) { // normal title regex
         const [, { length }, title] = res
-        level = length
-        if (this.skipLevelOne && level == 1) continue
+        this.level = length
+        if (this.skipLevelOne && this.level == 1) continue
         t = title
         link = getLink(title)
       } else { // the method title regex
         try {
-          const l = res[3]
-          level = l.length
+          const { length } = res[3]
+          this.level = length
           const bb = res.slice(4, 6).filter(a => a).join(' ').trim()
           const json = res[7] || '[]'
           const args = JSON.parse(json)
@@ -91,10 +97,11 @@ export default class Toc extends Transform {
       }
       const heading = `[${t}](#${link})`
       let s
+      if (!level) level = this.level
       if (level == 2) {
         s = `- ${heading}`
       } else {
-        const p = '  '.repeat(level - 2)
+        const p = '  '.repeat(Math.max(level - 2, 0))
         s = `${p}* ${heading}`
       }
       this.push(s)

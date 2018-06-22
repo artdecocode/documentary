@@ -15,6 +15,9 @@ yarn add -DE documentary
   * [VS Code Settings](#vs-code-settings)
 - [Features](#features)
   * [TOC Generation](#toc-generation)
+    * [TOC Titles](#toc-titles)
+      * [Toc Title](#toc-title)
+    * [`Specific Toc Title`](#specific-toc-title)
   * [Tables Display](#tables-display)
   * [Method Title](#method-title)
     * [`async runSoftware(path: string, config: object): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
@@ -78,6 +81,12 @@ Table of contents are useful for navigation the README document. When a `%TOC%` 
 - [API](#api)
 - [Copyright](#copyright)
 ```
+
+#### TOC Titles
+
+To be able to include a link to a specific position in the text (i.e., create an "anchor"), `documentary` supports a `TOC Titles` feature. Any text written as `[Toc Title](t)` will generate a relevant position in the table of contents. It will automatically detect the appropriate level and be contained inside the current section. Alternatively, the level can be specified with a number of `#` symbols, such as <a name="specific-toc-title">`Specific Toc Title`</a>.
+
+This feature can be useful when presenting some data in a table in a section, but wanting to include a link to each row in the table of contents so that the structure is immediately visible.
 ### Tables Display
 
 To describe method arguments in a table, but prepare them in a more readable format, `documentary` will parse the code blocks with `table` language as a table. The blocks must be in `JSON` format and contain a single array of arrays which represent rows.
@@ -178,7 +187,7 @@ There are some built-in rules for replacements.
 | ---- | ----------- |
 | `%NPM: package-name%` | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)` |
 | `%TREE directory ...args%` | Executes the `tree` command with the given arguments. If `tree` is not installed, warns and does not replace the match. |
-| `%FORK(-lang)? module ...args%` | Forks the Node.js process to execute the module using `child_process.fork`. The output is printed in the code block, with optionally given language. For example: `%FORK-json example.js -o%` |
+| <a name="fork-lang-module-args">`%FORK(-lang)? module ...args%`</a> | Forks the Node.js process to execute the module using `child_process.fork`. The output is printed in the code block, with optionally given language. For example: `%FORK-json example.js -o%` |
 ### Examples Placement
 
 `documentary` can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
