@@ -1,7 +1,7 @@
 import { Replaceable } from 'restream'
 import { badgeRule, createTocRule, commentRule as stripComments, codeRe, innerCodeRe } from './rules'
 import tableRule, { tableRe } from './rules/table'
-import titleRule, { methodTitleRe } from './rules/method-title'
+import methodTitleRule, { methodTitleRe } from './rules/method-title'
 import treeRule from './rules/tree'
 import exampleRule from './rules/example'
 import { makeRule, makeInitialRule, makeMarkers } from './markers'
@@ -36,16 +36,18 @@ export default function createReplaceStream(toc) {
     cutCode,
     cutInnerCode,
     stripComments,
-    insertInnerCode,
-    tocRule,
-    badgeRule,
-    exampleRule,
-    treeRule,
-    forkRule,
     insertTable,
-    insertMethodTitle,
     tableRule,
-    titleRule,
+    insertMethodTitle,
+    methodTitleRule,
+    // simple to detect but output a lot
+    badgeRule,
+    treeRule,
+    exampleRule,
+    forkRule,
+    tocRule,
+
+    insertInnerCode,
     insertCode,
     // those found inside of code blocks
     insertTable,
