@@ -1,67 +1,63 @@
 import { Replaceable } from 'restream'
-import { debuglog } from 'util'
-import spawncommand from 'spawncommand'
-import { badgeRule, createTocRule, commentRule, codeRe } from './rules'
-import { exactTable, exactMethodTitle } from '../lib'
-import tableRule from './rules/table'
-import titleRule from './rules/method-title'
+import { badgeRule, createTocRule, commentRule as stripComments, codeRe, innerCodeRe } from './rules'
+import tableRule, { tableRe } from './rules/table'
+import titleRule, { methodTitleRe } from './rules/method-title'
+import treeRule from './rules/tree'
 import exampleRule from './rules/example'
-
-const LOG = debuglog('doc')
+import { makeRule, makeInitialRule, makeMarkers } from './markers';
 
 export default function createReplaceStream(toc) {
   const tocRule = createTocRule(toc)
 
-  const codeBlocks = []
-  const marker = `%%_DOCUMENTARY_REPLACEMENT_${Date.now()}_%%`
+  const {
+    table, methodTitle, code, innerCode,
+  } = makeMarkers({
+    table: tableRe, // exactTable,
+    methodTitle: methodTitleRe,
+    code: codeRe,
+    innerCode: innerCodeRe,
+  })
+  // exact table
+
+  const [cutCode, cutTable, cutMethodTitle, cutInnerCode] =
+    [code, table, methodTitle, innerCode].map((marker) => {
+      const rule = makeInitialRule(marker)
+      return rule
+    })
+  const [insertCode, insertTable, insertMethodTitle, insertInnerCode] =
+    [code, table, methodTitle, innerCode].map((marker) => {
+      const rule = makeRule(marker)
+      return rule
+    })
+
   const s = new Replaceable([
-    commentRule,
-    {
-      re: codeRe,
-      replacement(match) {
-        if (exactTable.test(match) || exactMethodTitle.test(match)) {
-          return match
-        }
-        codeBlocks.push(match)
-        return marker
-      },
-    },
-    {
-      re: /%TREE (.+)%/mg,
-      async replacement(match, m) {
-        const args = m.split(' ')
-        const p = spawncommand('tree', ['--noreport', ...args])
-        try {
-          const { stdout } = await p.promise
-          if (/\[error opening dir\]/.test(stdout)) {
-            LOG('Could not generate a tree for %s', args.join(' '))
-            return match
-          }
-          return codeSurround(stdout)
-        } catch (err) {
-          if (err.code == 'ENOENT') {
-            console.warn('tree is not installed')
-            return match
-          }
-          LOG(err.message)
-          return match
-        }
-      },
-    },
+    cutTable,
+    cutMethodTitle,
+    cutCode,
+    cutInnerCode,
+    stripComments,
+    insertInnerCode,
     tocRule,
     badgeRule,
+    exampleRule,
+    treeRule,
+    insertTable,
+    insertMethodTitle,
     tableRule,
     titleRule,
-    exampleRule,
-    {
-      re: new RegExp(marker, 'g'),
-      replacement() {
-        return codeBlocks.shift()
-      },
-    },
+    insertCode,
+    // those found inside of code blocks
+    insertTable,
+    insertMethodTitle,
   ])
 
   return s
 }
 
-const codeSurround = (m, lang = 'm') => `\`\`\`${lang}\n${m.trim()}\n\`\`\``
+// const debugRule = {
+//   re: /[\s\S]*/,
+//   replacement(match) {
+//     debugger
+//     return match
+//   },
+// }

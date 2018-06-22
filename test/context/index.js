@@ -29,6 +29,9 @@ export default class Context {
   resetRe(re) {
     re.lastIndex = -1
   }
+  cloneRe(re) {
+    return new RegExp(re.source, 'g')
+  }
   /**
    * Example method.
    */
@@ -162,14 +165,23 @@ ${this.getRawMethodTitle(a, args, ret)}`
     return `\`\`\`\`\n${block}\n\`\`\`\``
   }
   get comment() {
-    return '<!-- hello world -->'
+    return this.getComment('hello world')
   }
   get codeBlock() {
-    return `
-\`\`\`
+    const code = `
 const t = 'new test value: '
 const s = t + 'test'
 console.log(s)
+    `.trim()
+    return this.getCodeBlock(code)
+  }
+  getComment(body) {
+    return `<!-- ${body} -->`
+  }
+  getCodeBlock(code, lang = '') {
+    return `
+\`\`\`${lang}
+${code}
 \`\`\`
 `
   }

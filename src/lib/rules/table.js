@@ -24,9 +24,13 @@ const getRow = (row) => {
   return s
 }
 
+const re = /```table([\s\S]+?)```/mg
+
 const tableRule = {
-  re: /```table([\s\S]+?)```/g,
+  re,
   replacement: replacer,
 }
+
+export { re as tableRe }
 
 export default tableRule

@@ -38,6 +38,16 @@ const T = {
     const res = await catchment(s)
     await test('tables-code.md', res)
   },
+  async 'writes short tables'(
+    { SNAPSHOT_DIR, createReadable, catchment }, { setDir, test },
+  ) {
+    setDir(SNAPSHOT_DIR)
+    const rs = createReadable('```table [["hello", "world"], ["test", "data"]]```')
+    const s = createReplaceStream()
+    rs.pipe(s)
+    const res = await catchment(s)
+    await test('replace-stream/tables/short.md', res)
+  },
 }
 
 export default T
