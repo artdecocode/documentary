@@ -68,6 +68,8 @@ This section will embed an example.
 ```
 -->
 
+%FORK-json test/fixtures/fork.js%
+
 ## Copyright
 
 [Art Deco Code](https://artdeco.bz) 2018

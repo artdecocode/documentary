@@ -5,6 +5,7 @@ import titleRule, { methodTitleRe } from './rules/method-title'
 import treeRule from './rules/tree'
 import exampleRule from './rules/example'
 import { makeRule, makeInitialRule, makeMarkers } from './markers'
+import forkRule from './rules/fork'
 
 export default function createReplaceStream(toc) {
   const tocRule = createTocRule(toc)
@@ -12,12 +13,11 @@ export default function createReplaceStream(toc) {
   const {
     table, methodTitle, code, innerCode,
   } = makeMarkers({
-    table: tableRe, // exactTable,
+    table: tableRe,
     methodTitle: methodTitleRe,
     code: codeRe,
     innerCode: innerCodeRe,
   })
-  // exact table
 
   const [cutCode, cutTable, cutMethodTitle, cutInnerCode] =
     [code, table, methodTitle, innerCode].map((marker) => {
@@ -41,6 +41,7 @@ export default function createReplaceStream(toc) {
     badgeRule,
     exampleRule,
     treeRule,
+    forkRule,
     insertTable,
     insertMethodTitle,
     tableRule,

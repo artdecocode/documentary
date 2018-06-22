@@ -81,6 +81,9 @@ export default class Context {
   get SNAPSHOT_DIR() {
     return resolve(__dirname, '../snapshot')
   }
+  get FORK_PATH() {
+    return resolve(__dirname, '../fixtures/fork.js')
+  }
   /**
    * Run the binary.
    * @param {string} input Path to the source readme file
