@@ -36,16 +36,16 @@ export default function createReplaceStream(toc) {
     cutCode,
     cutInnerCode,
     stripComments,
-    insertTable,
-    tableRule,
-    insertMethodTitle,
-    methodTitleRule,
-    // simple to detect but output a lot
     badgeRule,
     treeRule,
     exampleRule,
     forkRule,
     tocRule,
+
+    insertTable,
+    tableRule,
+    insertMethodTitle,
+    methodTitleRule,
 
     insertInnerCode,
     insertCode,

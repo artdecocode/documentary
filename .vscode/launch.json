@@ -54,7 +54,7 @@
         "NODE_DEBUG": "doc"
       },
       "args": [
-        "documentation/4-api/1-toc.md",
+        "documentation/2-features/1-TOC-generation.md",
         "-o",
         "debug.md"
       ],
