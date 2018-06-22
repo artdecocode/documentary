@@ -16,8 +16,7 @@ yarn add -DE documentary
 - [Features](#features)
   * [TOC Generation](#toc-generation)
     * [TOC Titles](#toc-titles)
-      * [Toc Title](#toc-title)
-    * [`Specific Toc Title`](#specific-toc-title)
+      * [Specific Level](#specific-level)
   * [Tables Display](#tables-display)
   * [Method Title](#method-title)
     * [`async runSoftware(path: string, config: object): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
@@ -26,6 +25,9 @@ yarn add -DE documentary
   * [Comments Stripping](#comments-stripping)
   * [File Splitting](#file-splitting)
   * [Replacement Rules](#replacement-rules)
+    * [`%NPM: package-name%`](#npm-package-name)
+    * [`%TREE directory ...args%`](#tree-directory-args)
+    * [`%FORK(-lang)? module ...args%`](#fork-lang-module-args)
   * [Examples Placement](#examples-placement)
 - [CLI](#cli)
 - [API](#api)
@@ -84,9 +86,13 @@ Table of contents are useful for navigation the README document. When a `%TOC%` 
 
 #### TOC Titles
 
-To be able to include a link to a specific position in the text (i.e., create an "anchor"), `documentary` supports a `TOC Titles` feature. Any text written as `[Toc Title](t)` will generate a relevant position in the table of contents. It will automatically detect the appropriate level and be contained inside the current section. Alternatively, the level can be specified with a number of `#` symbols, such as <a name="specific-toc-title">`Specific Toc Title`</a>.
+To be able to include a link to a specific position in the text (i.e., create an "anchor"), `documentary` supports a `TOC Titles` feature. Any text written as `[Toc Title](t)` will generate a relevant position in the table of contents. It will automatically detect the appropriate level and be contained inside the current section.
 
 This feature can be useful when presenting some data in a table in a section, but wanting to include a link to each row in the table of contents so that the structure is immediately visible.
+
+<a name="specific-level">Specific Level</a>
+
+If required, the level can be specified with a number of `#` symbols, such as `[Specific Level](######)`.
 ### Tables Display
 
 To describe method arguments in a table, but prepare them in a more readable format, `documentary` will parse the code blocks with `table` language as a table. The blocks must be in `JSON` format and contain a single array of arrays which represent rows.
@@ -185,8 +191,8 @@ There are some built-in rules for replacements.
 
 | Rule | Description |
 | ---- | ----------- |
-| `%NPM: package-name%` | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)` |
-| `%TREE directory ...args%` | Executes the `tree` command with the given arguments. If `tree` is not installed, warns and does not replace the match. |
+| <a name="npm-package-name">`%NPM: package-name%`</a> | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)` |
+| <a name="tree-directory-args">`%TREE directory ...args%`</a> | Executes the `tree` command with the given arguments. If `tree` is not installed, warns and does not replace the match. |
 | <a name="fork-lang-module-args">`%FORK(-lang)? module ...args%`</a> | Forks the Node.js process to execute the module using `child_process.fork`. The output is printed in the code block, with optionally given language. For example: `%FORK-json example.js -o%` |
 ### Examples Placement
 
