@@ -1,12 +1,46 @@
 import { Transform } from 'stream'
 import Catchment from 'catchment'
-import { getLink, makeARegexFromRule, exactMethodTitle } from '.'
+import { getLink } from '.'
 import { methodTitleRe, replaceTitle } from './rules/method-title'
-import { commentRe, codeRe } from './rules'
+import { codeRe, commentRule as stripComments, innerCodeRe } from './rules'
+import { Replaceable } from 'restream/build';
+import { makeInitialRule, makeRule, makeMarkers } from './markers'
 
 const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/
-const rre = makeARegexFromRule({ re })
 
+const getBuffer = async (buffer) => {
+  const {
+    methodTitle, code, innerCode,
+  } = makeMarkers({
+    methodTitle: methodTitleRe,
+    code: codeRe,
+    innerCode: innerCodeRe,
+  })
+
+  const [cutCode, cutMethodTitle, cutInnerCode] =
+    [code, methodTitle, innerCode].map((marker) => {
+      const rule = makeInitialRule(marker)
+      return rule
+    })
+  const [insertMethodTitle, insertInnerCode] =
+    [methodTitle, innerCode].map((marker) => {
+      const rule = makeRule(marker)
+      return rule
+    })
+
+  const rs = new Replaceable([
+    cutMethodTitle,
+    cutCode,
+    cutInnerCode,
+    stripComments,
+    insertInnerCode,
+    insertMethodTitle,
+  ])
+  const c = new Catchment({ rs })
+  rs.end(buffer)
+  const b = await c.promise
+  return b
+}
 export default class Toc extends Transform {
   /**
    * A transform stream which will extract the titles in the markdown document and transform them into a markdown nested list with links.
@@ -20,16 +54,11 @@ export default class Toc extends Transform {
     super()
     this.skipLevelOne = skipLevelOne
   }
-  _transform(buffer, enc, next) {
+  async _transform(buffer, enc, next) {
     let res
-    const b = `${buffer}`
-      .replace(commentRe, '')
-      .replace(codeRe, (match) => {
-        if (exactMethodTitle.test(match) || rre.test(match)) {
-          return match
-        }
-        return '' // ignore code blocks
-      })
+
+    const b = await getBuffer(buffer)
+    // create a single regex otherwise titles will always come before method titles
     const superRe = new RegExp(`(?:${re.source})|(?:${methodTitleRe.source})`, 'g')
     while ((res = superRe.exec(b)) !== null) {
       let t
@@ -71,7 +100,6 @@ export default class Toc extends Transform {
       this.push(s)
       this.push('\n')
     }
-    re.lastIndex = -1
     next()
   }
 }

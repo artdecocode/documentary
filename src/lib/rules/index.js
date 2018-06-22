@@ -18,9 +18,9 @@ export const createTocRule = (toc) => {
 
 export const commentRe = /<!--[\s\S]*?-->\n*/g
 
-export const codeRe = /^```(`)?(\w+\n)?[\s\S]*?\n```\1/gm
+export const codeRe = /^```(`)?(\w+)?\n[\s\S]*?\n```\1/gm
 
-export const innerCodeRe = /`[^`]+?`/g
+export const innerCodeRe = /`[^`\n]+?`/gm
 
 export const commentRule = {
   re: commentRe,

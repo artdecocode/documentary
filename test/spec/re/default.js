@@ -67,6 +67,14 @@ const T = {
     }
     equal(matches.length, 2)
   },
+  async 'does not match blocks in comments'({ cloneRe }) {
+    const re = cloneRe(innerCodeRe)
+    const s = `<!-- \`\`\`sh
+        doc -t input-source.md [-r] [-o output.md]
+        \`\`\` -->`
+    const res = re.test(s)
+    ok(!res)
+  },
 }
 
 export default T

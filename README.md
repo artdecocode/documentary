@@ -142,7 +142,7 @@ Generated from
 ````
 ### Comments Stripping
 
-Since comments found in `<!—— comment ——>` sections are not visible to users, they will be removed from the output document.
+Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the output document.
 ### File Splitting
 
 `documentary` can read a directory and put files together into a single `README` file. The files will be sorted in alphabetical order, and their content merged into a single stream. The `index.md` and `footer.md` are special in this respect, so that the `index.md` of a directory will always go first, and the `footer.md` will go last.

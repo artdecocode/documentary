@@ -18,7 +18,7 @@
       "args": [
         // "test/spec/bin.js",
         // "test/spec/replace-stream",
-        "test/spec/replace-stream/comments.js",
+        "test/spec/Toc.js",
         // "test/spec/replace-stream/tables.js",
         // "test/spec/re/default.js",
         "-b",

@@ -29,6 +29,17 @@ const T = {
     const res = await catchment(toc)
     equal(res, '')
   },
+  async 'does not generate titles for titles in comments'({
+    createReadable, getComment, catchment,
+  }) {
+    const t = '\n## Hello World\n'
+    const s = getComment(t)
+    const rs = createReadable(s)
+    const toc = new Toc()
+    rs.pipe(toc)
+    const res = await catchment(toc)
+    equal(res, '')
+  },
 }
 
 export default T

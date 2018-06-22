@@ -1,4 +1,3 @@
-import { notEqual } from 'assert'
 import { equal } from 'zoroaster/assert'
 import SnapshotContext from 'snapshot-context'
 import Context from '../../context'
@@ -20,6 +19,16 @@ const T = {
     rs.pipe(s)
     const res = await catchment(s)
     await test('comments-strip.md', res.trim())
+  },
+  async 'removes comments from different places'(
+    { createReadable, catchment, getComment }
+  ) {
+    const t = 'Hello World'
+    const rs = createReadable(`${getComment('test')}${t}${getComment('test')}`)
+    const s = createReplaceStream()
+    rs.pipe(s)
+    const res = await catchment(s)
+    equal(res, t)
   },
   async 'does not remove non-comments because of back-ticks'({ createReadable, catchment }) {
     const t = 'Text surrounded by the `<!--` and `-->` blocks is not removed.'

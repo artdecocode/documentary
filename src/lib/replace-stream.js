@@ -4,7 +4,7 @@ import tableRule, { tableRe } from './rules/table'
 import titleRule, { methodTitleRe } from './rules/method-title'
 import treeRule from './rules/tree'
 import exampleRule from './rules/example'
-import { makeRule, makeInitialRule, makeMarkers } from './markers';
+import { makeRule, makeInitialRule, makeMarkers } from './markers'
 
 export default function createReplaceStream(toc) {
   const tocRule = createTocRule(toc)
@@ -54,10 +54,10 @@ export default function createReplaceStream(toc) {
   return s
 }
 
-// const debugRule = {
+// {
 //   re: /[\s\S]*/,
 //   replacement(match) {
 //     debugger
 //     return match
 //   },
-// }
+// },

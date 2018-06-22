@@ -16,6 +16,10 @@ Update the file to include jsdoc documentation. E.g., can be used to update buil
 
 By keeping JSDoc types separate, and automatically adding them to the build files, it is easier to maintain the JSDoc documentation, as types can be put into the `types` folder.
 
+<!-- ```sh
+doc -t input-source.md [-r] [-o output.md]
+``` -->
+
 ## API
 
 To require documentary, use `import` statement:
