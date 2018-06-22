@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.replacer = exports.methodTitleRe = exports.replaceTitle = void 0;
+exports.default = exports.methodTitleRe = exports.replacer = exports.replaceTitle = void 0;
 
 var _util = require("util");
 
@@ -42,8 +42,8 @@ const replaceTitle = (level, isAsync, method, returnType, title) => {
 };
 
 exports.replaceTitle = replaceTitle;
-const methodTitleRe = /```(#+)( async)? (\w+)(?: => (.+)\n)?([\s\S]*?)```/g;
-exports.methodTitleRe = methodTitleRe;
+const re = /```(#+)( async)? (\w+)(?: => (.+)\n)?([\s\S]*?)```/g;
+exports.methodTitleRe = re;
 
 const replacer = (match, level, isAsync, method, returnType, title) => {
   try {
@@ -57,7 +57,7 @@ const replacer = (match, level, isAsync, method, returnType, title) => {
 
 exports.replacer = replacer;
 const titleRule = {
-  re: methodTitleRe,
+  re,
   replacement: replacer
 };
 var _default = titleRule;

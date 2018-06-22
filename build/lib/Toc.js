@@ -15,12 +15,55 @@ var _methodTitle = require("./rules/method-title");
 
 var _rules = require("./rules");
 
+var _build = require("restream/build");
+
+var _markers = require("./markers");
+
+var _table = require("./rules/table");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/;
-const rre = (0, _.makeARegexFromRule)({
-  re
-});
+
+const getBuffer = async buffer => {
+  const {
+    title,
+    methodTitle,
+    code,
+    innerCode,
+    table,
+    linkTitle
+  } = (0, _markers.makeMarkers)({
+    title: /^ *#+.+/gm,
+    methodTitle: _methodTitle.methodTitleRe,
+    code: _rules.codeRe,
+    innerCode: _rules.innerCodeRe,
+    table: _table.tableRe,
+    linkTitle: _rules.linkTitleRe
+  });
+  const [cutTitle, cutLinkTitle, cutCode, cutMethodTitle, cutInnerCode, cutTable] = [title, linkTitle, code, methodTitle, innerCode, table].map(marker => {
+    const rule = (0, _markers.makeInitialRule)(marker);
+    return rule;
+  });
+  const [insertTitle, insertLinkTitle, insertMethodTitle, insertInnerCode, insertTable] = [title, linkTitle, methodTitle, innerCode, table].map(marker => {
+    const rule = (0, _markers.makeRule)(marker);
+    return rule;
+  });
+  const rs = new _build.Replaceable([cutTitle, cutInnerCode, cutLinkTitle, {
+    re: innerCode.regExp,
+
+    replacement() {
+      return '';
+    }
+
+  }, cutTable, cutMethodTitle, cutCode, _rules.commentRule, insertMethodTitle, insertTable, insertLinkTitle, insertInnerCode, insertTitle]);
+  const c = new _catchment.default({
+    rs
+  });
+  rs.end(buffer);
+  const b = await c.promise;
+  return b;
+};
 
 class Toc extends _stream.Transform {
   /**
@@ -34,38 +77,40 @@ class Toc extends _stream.Transform {
     } = config;
     super();
     this.skipLevelOne = skipLevelOne;
+    this.level = 0;
   }
 
-  _transform(buffer, enc, next) {
+  async _transform(buffer, enc, next) {
     let res;
-    const b = `${buffer}`.replace(new RegExp(_rules.commentRe, 'g'), '').replace(new RegExp(_rules.codeRe, 'g'), match => {
-      if (_.exactMethodTitle.test(match) || rre.test(match)) {
-        return match;
-      }
+    const b = await getBuffer(buffer); // create a single regex otherwise titles will always come before method titles
 
-      return ''; // ignore code blocks
-    });
-    const superRe = new RegExp(`(?:${re.source})|(?:${_methodTitle.methodTitleRe.source})`, 'g');
+    const superRe = new RegExp(`(?:${re.source})|(?:${_methodTitle.methodTitleRe.source})|(?:${_rules.linkTitleRe.source})`, 'g');
 
     while ((res = superRe.exec(b)) !== null) {
       let t;
       let level;
       let link;
 
-      if (res[1]) {
+      if (res[8] && res[9]) {
+        t = res[8];
+        level = res[9] != 't' ? res[9].length : this.level + 1;
+        link = (0, _.getLink)(t);
+      } else if (res[1]) {
         // normal title regex
         const [, {
           length
         }, title] = res;
-        level = length;
-        if (this.skipLevelOne && level == 1) continue;
+        this.level = length;
+        if (this.skipLevelOne && this.level == 1) continue;
         t = title;
         link = (0, _.getLink)(title);
       } else {
         // the method title regex
         try {
-          const l = res[3];
-          level = l.length;
+          const {
+            length
+          } = res[3];
+          this.level = length;
           const bb = res.slice(4, 6).filter(a => a).join(' ').trim();
           const json = res[7] || '[]';
           const args = JSON.parse(json);
@@ -84,11 +129,12 @@ class Toc extends _stream.Transform {
 
       const heading = `[${t}](#${link})`;
       let s;
+      if (!level) level = this.level;
 
       if (level == 2) {
         s = `- ${heading}`;
       } else {
-        const p = '  '.repeat(level - 2);
+        const p = '  '.repeat(Math.max(level - 2, 0));
         s = `${p}* ${heading}`;
       }
 
@@ -96,7 +142,6 @@ class Toc extends _stream.Transform {
       this.push('\n');
     }
 
-    re.lastIndex = -1;
     next();
   }
 

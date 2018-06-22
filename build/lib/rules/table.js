@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.replacer = void 0;
+exports.default = exports.tableRe = exports.replacer = void 0;
 
 var _util = require("util");
 
@@ -32,8 +32,10 @@ const getRow = row => {
   return s;
 };
 
+const re = /```table([\s\S]+?)```/mg;
+exports.tableRe = re;
 const tableRule = {
-  re: /```table([\s\S]+?)```/g,
+  re,
   replacement: replacer
 };
 var _default = tableRule;

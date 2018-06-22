@@ -70,9 +70,19 @@ const doc = async (source, output, justToc = false) => {
     DEBUG ? LOG(stack) : console.log(message);
   }
 
+  let debounce = false;
+
   if (_watch) {
-    (0, _fs.watch)(_source, async () => {
-      await doc(_source, _output, _toc);
+    (0, _fs.watch)(_source, {
+      recursive: true
+    }, async () => {
+      if (!debounce) {
+        debounce = true;
+        await doc(_source, _output, _toc);
+        setTimeout(() => {
+          debounce = false;
+        }, 100);
+      }
     });
   }
 })();
