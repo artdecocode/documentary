@@ -54,8 +54,8 @@
         "NODE_DEBUG": "doc"
       },
       "args": [
-        "documentation/2-features/6-rules.md",
-        // "documentation/2-features/1-TOC-generation.md",
+        // "documentation/2-features/6-rules.md",
+        "documentation/2-features/1-TOC-generation.md",
         "-o",
         "debug.md"
       ],

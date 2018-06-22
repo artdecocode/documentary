@@ -84,7 +84,7 @@ export default class Toc extends Transform {
       let link
       if (res[8] && res[9]) {
         t = res[8]
-        level = res[9] != 't' ? parseInt(res[9]).length : this.level + 1
+        level = res[9] != 't' ? res[9].length : this.level + 1
         link = getLink(t)
       } else if (res[1]) { // normal title regex
         const [, { length }, title] = res

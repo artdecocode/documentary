@@ -50,7 +50,7 @@ export default function createReplaceStream(toc) {
     {
       re: linkTitleRe,
       replacement(match, title) {
-        const ic = innerCode.regExp.exec(title)
+        const ic = new RegExp(innerCode.regExp.source).exec(title) // test please
         let link
         if (!ic) {
           link = getLink(title)
