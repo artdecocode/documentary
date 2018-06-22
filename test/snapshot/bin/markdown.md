@@ -59,6 +59,12 @@ import Catchment from 'catchment'
 ```
 ## titles from code blocks without language are not included
 ```
+```json
+{
+  "hello": "world"
+}
+```
+
 ## Copyright
 
 [Art Deco Code](https://artdeco.bz) 2018
