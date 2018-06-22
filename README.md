@@ -279,14 +279,7 @@ import { createReadStream } from 'fs'
 })()
 ```
 
-```sh
-yarn example/toc.js
-```
-
 ```fs
-$ NODE_DEBUG=doc yarn e example/toc.js
-$ node example example/toc.js
-DOC 13980: Reading /documentary/example/markdown.md
 - [Table Of Contents](#table-of-contents)
 - [CLI](#cli)
   * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
