@@ -21,22 +21,22 @@ export default function createReplaceStream(toc) {
     linkTitle: linkTitleRe,
   })
 
-  const [cutCode, cutTable, cutMethodTitle, cutInnerCode, cutLinkTitle] =
+  const [cutCode, cutTable, cutMethodTitle, cutInnerCode] =
     [code, table, methodTitle, innerCode, linkTitle].map((marker) => {
       const rule = makeInitialRule(marker)
       return rule
     })
-  const [insertCode, insertTable, insertMethodTitle, insertInnerCode, insertLinkTitle] =
+  const [insertCode, insertTable, insertMethodTitle, insertInnerCode] =
     [code, table, methodTitle, innerCode, linkTitle].map((marker) => {
       const rule = makeRule(marker)
       return rule
     })
 
   const s = new Replaceable([
+    cutInnerCode,
     cutTable,
     cutMethodTitle,
     cutCode,
-    cutInnerCode,
     stripComments,
 
     badgeRule,
@@ -65,8 +65,8 @@ export default function createReplaceStream(toc) {
     insertMethodTitle,
     methodTitleRule,
 
-    insertInnerCode,
     insertCode,
+    insertInnerCode,
     // those found inside of code blocks
     insertTable,
     insertMethodTitle,

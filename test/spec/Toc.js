@@ -64,6 +64,21 @@ const T = {
     const res = await catchment(toc)
     await test('toc/titles-explicit.md', res)
   },
+  async 'supports titles found in a table'(
+    { createReadable, catchment, SNAPSHOT_DIR, makeTable }, { setDir, test },
+  ){
+    setDir(SNAPSHOT_DIR)
+    const title = '`Toc Title`'
+    const table = makeTable(
+      ['hello `[no match](t)`', 'world'],
+      [`[${title}](t)`, 'test'],
+    )
+    const rs = createReadable(`## \`Hello World\` 123${table}`)
+    const toc = new Toc()
+    rs.pipe(toc)
+    const res = await catchment(toc)
+    await test('toc/titles-table.md', res)
+  },
 }
 
 export default T

@@ -18,8 +18,8 @@
       "args": [
         // "test/spec/bin.js",
         // "test/spec/replace-stream",
-        // "test/spec/Toc.js",
-        "test/spec/replace-stream/toc-titles.js",
+        "test/spec/Toc.js",
+        "test/spec/replace-stream/code.js",
         // "test/spec/re/default.js",
         "-b",
         "-w"

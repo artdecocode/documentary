@@ -1,5 +1,5 @@
 import { fork } from 'spawncommand'
-import { debuglog } from 'util'
+// import { debuglog } from 'util'
 
 // const LOG = debuglog('doc')
 

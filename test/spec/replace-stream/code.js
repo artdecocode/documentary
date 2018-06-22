@@ -19,6 +19,14 @@ const T = {
     const res = await catchment(s, true)
     equal(res, code.replace(/^\s+/, '')) // comments re also strips new lines
   },
+  async 'keeps inner code blocks'({ getCodeBlock, createReadable, catchment }) {
+    const code = getCodeBlock('`this is a test`')
+    const rs = createReadable(code)
+    const s = createReplaceStream()
+    rs.pipe(s)
+    const res = await catchment(s, true)
+    equal(res, code)
+  },
 }
 
 export default T

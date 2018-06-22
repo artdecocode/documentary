@@ -18,14 +18,21 @@ const T = {
     const res = await catchment(stream)
     equal(res, `<a name="hello-world">${t}</a>`)
   },
-  async 'replaces a title within a table row'({ createReadable, catchment }) {
+  async 'replaces a title within a table row'(
+    { SNAPSHOT_DIR, createReadable, catchment, makeTable }, { setDir, test }
+  ) {
+    setDir(SNAPSHOT_DIR)
     const t = '`Hello World`'
     const s = `["[${t}](t)"]`
-    const rs = createReadable(s)
+    const table = makeTable(
+      ['hello `[no-replace](t)`', 'world'],
+      [s, 'test'],
+    )
+    const rs = createReadable(table)
     const stream = createReplaceStream()
     rs.pipe(stream)
     const res = await catchment(stream)
-    equal(res, `["<a name="hello-world">${t}</a>"]`)
+    await test('replace-stream/toc-title-within-table.md', res)
   },
 }
 

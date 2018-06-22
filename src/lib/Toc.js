@@ -5,36 +5,52 @@ import { methodTitleRe, replaceTitle } from './rules/method-title'
 import { codeRe, commentRule as stripComments, innerCodeRe, linkTitleRe } from './rules'
 import { Replaceable } from 'restream/build'
 import { makeInitialRule, makeRule, makeMarkers } from './markers'
+import { tableRe } from './rules/table'
 
 const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/
 
 const getBuffer = async (buffer) => {
   const {
-    methodTitle, code, innerCode,
+    title, methodTitle, code, innerCode, table, linkTitle,
   } = makeMarkers({
+    title: /^ *#+.+/gm,
     methodTitle: methodTitleRe,
     code: codeRe,
     innerCode: innerCodeRe,
+    table: tableRe,
+    linkTitle: linkTitleRe,
   })
 
-  const [cutCode, cutMethodTitle, cutInnerCode] =
-    [code, methodTitle, innerCode].map((marker) => {
+  const [cutTitle, cutLinkTitle, cutCode, cutMethodTitle, cutInnerCode, cutTable] =
+    [title, linkTitle, code, methodTitle, innerCode, table].map((marker) => {
       const rule = makeInitialRule(marker)
       return rule
     })
-  const [insertMethodTitle, insertInnerCode] =
-    [methodTitle, innerCode].map((marker) => {
+  const [insertTitle, insertLinkTitle, insertMethodTitle, insertInnerCode, insertTable] =
+    [title, linkTitle, methodTitle, innerCode, table].map((marker) => {
       const rule = makeRule(marker)
       return rule
     })
 
   const rs = new Replaceable([
+    cutTitle,
+    cutInnerCode,
+    cutLinkTitle,
+    {
+      re: innerCode.regExp,
+      replacement() {
+        return ''
+      },
+    },
+    cutTable,
     cutMethodTitle,
     cutCode,
-    cutInnerCode,
     stripComments,
-    insertInnerCode,
     insertMethodTitle,
+    insertTable,
+    insertLinkTitle,
+    insertInnerCode,
+    insertTitle,
   ])
   const c = new Catchment({ rs })
   rs.end(buffer)

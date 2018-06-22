@@ -3,7 +3,6 @@ import SnapshotContext from 'snapshot-context'
 import Context from '../../context'
 import { tableRe } from '../../../src/lib/rules/table'
 import { innerCodeRe, linkTitleRe } from '../../../src/lib/rules'
-import { deepEqual } from 'assert';
 
 /** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
 const T = {

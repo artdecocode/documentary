@@ -1,11 +1,11 @@
-import { debuglog } from 'util'
+// import { debuglog } from 'util'
 import { fork } from 'spawncommand'
 import { resolve } from 'path'
 import { unlink, createReadStream } from 'fs'
 import Catchment from 'catchment'
 import { Readable } from 'stream'
 
-const LOG = debuglog('doc')
+// const LOG = debuglog('doc')
 const TEST_BUILD = process.env.BABEL_ENV == 'test-build'
 
 /**
@@ -127,6 +127,12 @@ The program accepts the following arguments:
 
 ${this.rawTable}
 `
+  }
+  makeTable(...rows) {
+    return `
+\`\`\`table
+${JSON.stringify(rows, null, 2)}
+\`\`\``
   }
   get rawTable() {
     return `
