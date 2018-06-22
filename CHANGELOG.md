@@ -1,3 +1,11 @@
+## 22 June 2018
+
+### 1.6.0
+
+- [feature] Embed the output of a Node.js module with `FORK`.
+- [feature] Link titles - add a link and reference it in the table of contents.
+- [fix] Don't process text in inner code (`inner`), testing, finer replacements order.
+
 ## 21 June 2018
 
 ### 1.5.0
