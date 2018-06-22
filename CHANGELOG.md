@@ -1,5 +1,10 @@
 ## 22 June 2018
 
+### 1.6.1
+
+- [dep] Remove `wrote`, implement simple file read.
+- [fix] `skipLevelOne=true` in documentation.
+
 ### 1.6.0
 
 - [feature] Embed the output of a Node.js module with `FORK`.
