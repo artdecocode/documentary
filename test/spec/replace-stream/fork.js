@@ -21,7 +21,7 @@ Below is the output of the program:
     const stream = createReplaceStream()
     rs.pipe(stream)
     const res = await catchment(stream)
-    await test('replace-stream/fork.txt', res.trim())
+    await test('replace-stream/fork.txt', res)
   },
   async 'forks a node.js process with language'(
     { createReadable, catchment, FORK_PATH, SNAPSHOT_DIR }, { setDir, test }
@@ -36,7 +36,7 @@ Below is the output of the program:
     const stream = createReplaceStream()
     rs.pipe(stream)
     const res = await catchment(stream)
-    await test('replace-stream/fork-language.txt', res.trim())
+    await test('replace-stream/fork-language.txt', res)
   },
 }
 

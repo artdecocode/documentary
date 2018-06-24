@@ -7,6 +7,7 @@ import exampleRule from './rules/example'
 import { makeRule, makeInitialRule, makeMarkers } from './markers'
 import forkRule from './rules/fork'
 import { getLink } from '.'
+import gifRule from './rules/gif'
 
 export default function createReplaceStream(toc) {
   const tocRule = createTocRule(toc)
@@ -44,6 +45,7 @@ export default function createReplaceStream(toc) {
     exampleRule,
     forkRule,
     tocRule,
+    gifRule,
 
     insertTable,
     tableRule,

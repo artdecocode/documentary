@@ -28,6 +28,7 @@ yarn add -DE documentary
     * [`%NPM: package-name%`](#npm-package-name)
     * [`%TREE directory ...args%`](#tree-directory-args)
     * [`%FORK(-lang)? module ...args%`](#fork-lang-module-args)
+    * [Gif Detail](#gif-detail)
   * [Examples Placement](#examples-placement)
 - [CLI](#cli)
 - [API](#api)
@@ -192,6 +193,48 @@ There are some built-in rules for replacements.
 | <a name="npm-package-name">`%NPM: package-name%`</a> | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)` |
 | <a name="tree-directory-args">`%TREE directory ...args%`</a> | Executes the `tree` command with the given arguments. If `tree` is not installed, warns and does not replace the match. |
 | <a name="fork-lang-module-args">`%FORK(-lang)? module ...args%`</a> | Forks the Node.js process to execute the module using `child_process.fork`. The output is printed in the code block, with optionally given language. For example: `%FORK-json example.js -o%` |
+
+#### Gif Detail
+
+```
+%GIF path/to/file.gif
+Alt attribute
+Summary of the detail.
+%
+```
+
+The `GIF` rule will inserts a gif animation inside of a `<detail> block:
+
+<details>
+  <summary><code>yarn doc</code></summary>
+  <table>
+  <tr><td>
+    <img alt="Generating documentation." src="doc/doc.gif" />
+  </td></tr>
+  </table>
+</details>
+
+Which was generated with the following `documentary` block:
+
+```md
+%GIF documentation/doc.gif
+Generating documentation.
+<code>yarn doc</code>
+%
+```
+
+The actual markdown looks like the one below:
+
+```html
+<details>
+  <summary><code>yarn doc</code></summary>
+  <table>
+  <tr><td>
+    <img alt="Generating documentation." src="documentation/doc.gif" />
+  </td></tr>
+  </table>
+</details>
+```
 ### Examples Placement
 
 `documentary` can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
