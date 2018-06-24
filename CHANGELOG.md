@@ -1,3 +1,9 @@
+## 24 June 2018
+
+### 1.7.0
+
+- [feat] Gif detail replacements.
+
 ## 22 June 2018
 
 ### 1.6.1
