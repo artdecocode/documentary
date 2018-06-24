@@ -16,7 +16,7 @@
     "start": "node build/bin",
     "example/": "yarn e example/example.js",
     "example/toc.js": "NODE_DEBUG=doc yarn e example/toc.js",
-    "build-src": "babel src --out-dir build --source-maps --ignore src/bin/register.js",
+    "build-src": "b --source-maps --ignore src/bin/register.js",
     "build": "yarn-s build-src doc"
   },
   "bin": {
@@ -40,13 +40,6 @@
   },
   "homepage": "https://github.com/artdecocode/documentary#readme",
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.51",
-    "@babel/core": "7.0.0-beta.51",
-    "@babel/plugin-syntax-object-rest-spread": "7.0.0-beta.51",
-    "@babel/plugin-transform-modules-commonjs": "7.0.0-beta.51",
-    "@babel/register": "7.0.0-beta.51",
-    "babel-plugin-transform-rename-import": "2.2.0",
-    "eslint": "4.19.1",
     "eslint-config-artdeco": "1.0.0",
     "snapshot-context": "2.0.1",
     "yarn-s": "1.1.0",
