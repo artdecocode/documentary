@@ -12,7 +12,6 @@ yarn add -DE documentary
 
 - [Table Of Contents](#table-of-contents)
 - [Installation & Usage](#installation--usage)
-  * [VS Code Settings](#vs-code-settings)
 - [Features](#features)
   * [TOC Generation](#toc-generation)
     * [TOC Titles](#toc-titles)
@@ -63,17 +62,6 @@ The `dc` command is just a convenience script to commit both source and output f
 ```sh
 yarn dc 'add copyright'
 ```
-### VS Code Settings
-
-It might be confusing to have a source and output `README.md` file, therefore to prevent errors, the following snippet can be used to hide the compiled file from VS Code search (update the `.vscode/settings.json` file):
-
-```json
-{
-  "search.exclude": {
-    "**/README.md": true
-  }
-}
-```
 ## Features
 
 The processed `README-source.md` file will have a generated table of contents, markdown tables and neat titles for API method descriptions.
@@ -118,7 +106,7 @@ Result:
 | -z | A list of zones to check |
 ### Method Title
 
-It is possible to generate neat titles useful for API documentation with `documentary`. The method signature should be specified as a `JSON` array, where every member is an argument specified as an array. The first item in the argument array is the argument name, and the second one is type. Type can be either a string, or an object. If it is an object, each value in the object will first contain the property type, and the second one the default value. To mark a property as optional, the `?` symbol can be used at the end. The third item is the short name for the table of contents (so that a complex object can be referenced to its type).
+It is possible to generate neat titles useful for API documentation with `documentary`. The method signature should be specified as a `JSON` array, where every member is an argument specified as an array. The first item in the argument array is the argument name, and the second one is type. Type can be either a string, or an object. If it is an object, each value in the object will be an array and first contain the property type, secondly - the default value. To mark a property as optional, the `?` symbol can be used at the end. The third item is the short name for the table of contents (so that a complex object can be referenced to its type).
 
 #### `async runSoftware(`<br/>&nbsp;&nbsp;`path: string,`<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`render?: function,`<br/>&nbsp;&nbsp;`},`<br/>`): string`
 
