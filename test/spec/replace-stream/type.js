@@ -1,4 +1,3 @@
-import { equal } from 'zoroaster/assert'
 import SnapshotContext from 'snapshot-context'
 import Context from '../../context'
 import createReplaceStream from '../../../src/lib/replace-stream'
@@ -9,34 +8,31 @@ const T = {
     Context,
     SnapshotContext,
   ],
-  async 'replaces a tree'(
-    { createReadable, catchment, readme_path, SNAPSHOT_DIR }, { setDir, test }
+  async 'replaces a type'(
+    { createReadable, catchment, type, SNAPSHOT_DIR }, { setDir, test }
   ) {
     setDir(SNAPSHOT_DIR)
-    const s = `
-Below is the directory structure:
-
-%TREE ${readme_path} -a%
-`
+    const s = `%TYPE
+${type}
+%`
     const rs = createReadable(s)
     const stream = createReplaceStream()
     rs.pipe(stream)
     const res = await catchment(stream)
-    await test('replace-stream/tree.txt', res)
+    await test('replace-stream/type.txt', res)
   },
-  async 'does not replace a tree when file not found'(
-    { createReadable, catchment }
+  async 'replaces a type for toc headings'(
+    { createReadable, catchment, type, SNAPSHOT_DIR }, { setDir, test }
   ) {
-    const s = `
-Below is the directory structure:
-
-%TREE unknown_file%
-`
+    setDir(SNAPSHOT_DIR)
+    const s = `%TYPE true
+${type}
+%`
     const rs = createReadable(s)
     const stream = createReplaceStream()
     rs.pipe(stream)
-    const res = await catchment(stream, true)
-    equal(res, s)
+    const res = await catchment(stream)
+    await test('replace-stream/type-headings.txt', res)
   },
 }
 

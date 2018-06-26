@@ -194,4 +194,31 @@ ${code}
 \`\`\`
 `
   }
+  get type() {
+    return `
+<p name="title" type="string" required>
+  <d>Question title.</d>
+</p>
+<p name="validation" type="(async) function">
+  <d>Validation Function.</d>
+  <e>A function will throw an error if validation does not pass.
+
+\`\`\`js
+const q = {
+  validation(val) {
+    if (!val.length) throw new Error('Name required.')
+  }
+}
+\`\`\`
+  </e>
+</p>
+<p name="postProcess" type="(async) function">
+  <e>
+
+\`\`\`js
+console.log('test')
+\`\`\`
+</e>
+</p>`
+  }
 }
