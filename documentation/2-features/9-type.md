@@ -4,7 +4,7 @@ Often, it is required to document a type of an object, which methods can use. To
 
 Its signature is as follows:
 
-```
+```xml
 %TYPE addToToc(true|false)
 <p name="propertyName" type="propertyType" required>
   <d>Property Description.</d>
@@ -74,3 +74,17 @@ const q = {
   </e>
 </p>
 %
+
+When required to use the markdown syntax in tables (such as `__`, links, _etc_), an extra space should be left after the `d` or `e` tags like so:
+
+```
+%TYPE true
+<p name="skipLevelOne" type="boolean">
+  <d>
+
+Start the table of contents from level 2, i.e., excluding the `#` title.</d>
+</p>
+%
+```
+
+Otherwise, the content will not be processed by `GitHub`. However, it will add an extra margin to the content of the cell as it will be transformed into a paragraph.

@@ -34,7 +34,9 @@ yarn add -DE documentary
   * [`Type` Definition](#type-definition)
 - [CLI](#cli)
 - [API](#api)
-  * [`Toc` Type](#toc-type)
+  * [`Toc` Stream](#toc-stream)
+  * [`TocConfig` Type](#tocconfig-type)
+    * [<code>skipLevelOne</code>](#skiplevelone)
   * [`constructor(config?: object): Toc`](#constructorconfig-skiplevelone-boolean--true-toc)
 
 ## Installation & Usage
@@ -283,7 +285,7 @@ Often, it is required to document a type of an object, which methods can use. To
 
 Its signature is as follows:
 
-```
+```xml
 %TYPE addToToc(true|false)
 <p name="propertyName" type="propertyType" required>
   <d>Property Description.</d>
@@ -374,6 +376,20 @@ const q = {
 </tr>
 </table>
 
+
+When required to use the markdown syntax in tables (such as `__`, links, _etc_), an extra space should be left after the `d` or `e` tags like so:
+
+```
+%TYPE true
+<p name="skipLevelOne" type="boolean">
+  <d>
+
+Start the table of contents from level 2, i.e., excluding the `#` title.</d>
+</p>
+%
+```
+
+Otherwise, the content will not be processed by `GitHub`. However, it will add an extra margin to the content of the cell as it will be transformed into a paragraph.
 ## CLI
 
 The program is used from the CLI (or `package.json` script).
@@ -399,9 +415,33 @@ DOC 80734: could not parse the table
 ## API
 
 The programmatic use of the `documentary` is intended for developers who want to use this software in their projects.
-### `Toc` Type
+### `Toc` Stream
 
 `Toc` is a transform stream which can generate a table of contents for incoming markdown data. For every title that the transform sees, it will push the appropriate level of the table of contents.
+
+### `TocConfig` Type
+
+When creating a new `Toc` instance, it will accept the following configuration object.
+<table>
+  <tr>
+    <th>Property</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  
+<tr>
+  <td><a name="skiplevelone"><code>skipLevelOne</code></a></td>
+
+  <td><em>boolean</em></td>
+  <td>Start the table of contents from level 2, i.e., excluding the <code>#</code> title.</td>
+  <td>
+
+ABC
+  </td>
+</tr>
+</table>
+
 
 ### `constructor(`<br/>&nbsp;&nbsp;`config?: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`skipLevelOne?: boolean = true,`<br/>&nbsp;&nbsp;`},`<br/>`): Toc`
 
