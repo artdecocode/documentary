@@ -20,14 +20,14 @@ When creating a new `Toc` instance, it will accept the following configuration o
 
 will be compiled to
 
-%FORK-md example example/toc2.js%
-
-when `skipLevelOne` is not set (default true), and to
-
 %FORK-md example example/toc2.js -s%
 
+when `skipLevelOne` is not set (by default), and to
+
+%FORK-md example example/toc2.js%
+
 when `skipLevelOne` is set to `false`.
-</e>
+  </e>
 </p>
 %
 

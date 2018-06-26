@@ -343,8 +343,6 @@ will display the following table:
   <td>Display text. Required.</td>
   <td>
 
-
-
 ```js
 const q = {
   text: 'What is your name',
@@ -360,8 +358,6 @@ const q = {
   <td><em>(async) function</em></td>
   <td>A function which needs to throw an error if validation does not pass.</td>
   <td>
-
-
 
 ```js
 const q = {
@@ -435,9 +431,7 @@ When creating a new `Toc` instance, it will accept the following configuration o
 
   <td><em>boolean</em></td>
   <td>Start the table of contents from level 2, i.e., excluding the <code>#</code> title.</td>
-  <td>
-
-For example, the following code:
+  <td>For example, the following code:
 
 ```md
 # Hello World
@@ -450,20 +444,20 @@ For example, the following code:
 will be compiled to
 
 ```md
+- [Table Of Contents](#table-of-contents)
+- [Introduction](#introduction)
+```
+
+when `skipLevelOne` is not set (by default), and to
+
+```md
 - [Hello World](#hello-world)
   * [Table Of Contents](#table-of-contents)
   * [Introduction](#introduction)
 ```
 
-when `skipLevelOne` is not set (default true), and to
-
-```md
-- [Table Of Contents](#table-of-contents)
-- [Introduction](#introduction)
-```
-
 when `skipLevelOne` is set to `false`.
-
+  
   </td>
 </tr>
 </table>
