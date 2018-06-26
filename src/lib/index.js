@@ -3,6 +3,8 @@ import titleRule from './rules/method-title'
 
 export const getLink = (title) => {
   const l = title
+    .replace(/<\/?code>/g, '')
+    .replace(/<\/?strong>/g, '')
     .replace(/<br\/>/g, '')
     .replace(/&nbsp;/g, '')
     .replace(/[^\w-\d ]/g, '')

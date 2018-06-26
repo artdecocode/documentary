@@ -6,6 +6,7 @@ import { codeRe, commentRule as stripComments, innerCodeRe, linkTitleRe } from '
 import { Replaceable } from 'restream/build'
 import { makeInitialRule, makeRule, makeMarkers } from './markers'
 import { tableRe } from './rules/table'
+import typeRule from './rules/type'
 
 const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/
 
@@ -46,6 +47,7 @@ const getBuffer = async (buffer) => {
     cutMethodTitle,
     cutCode,
     stripComments,
+    typeRule,
     insertMethodTitle,
     insertTable,
     insertLinkTitle,
