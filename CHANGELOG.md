@@ -1,3 +1,11 @@
+## 26 June 2018
+
+### 1.8.0
+
+- [feat] Document types with `%TYPE%` marker.
+- [feat] Use short argument type for TOC from method titles.
+- [doc] document `skipLevelOne` better, remove VS Code ignoring README note.
+
 ## 24 June 2018
 
 ### 1.7.0
