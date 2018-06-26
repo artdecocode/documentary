@@ -12,7 +12,7 @@ var _methodTitle = _interopRequireDefault(require("./rules/method-title"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const getLink = title => {
-  const l = title.replace(/<br\/>/g, '').replace(/&nbsp;/g, '').replace(/[^\w-\d ]/g, '').toLowerCase().replace(/[, ]/g, '-');
+  const l = title.replace(/<\/?code>/g, '').replace(/<\/?strong>/g, '').replace(/<br\/>/g, '').replace(/&nbsp;/g, '').replace(/[^\w-\d ]/g, '').toLowerCase().replace(/[, ]/g, '-');
   return l;
 };
 
