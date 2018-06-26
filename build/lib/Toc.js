@@ -113,12 +113,14 @@ class Toc extends _stream.Transform {
             length
           } = res[3];
           this.level = length;
+          if (this.skipLevelOne && this.level == 1) continue;
           const bb = res.slice(4, 6).filter(a => a).join(' ').trim();
           const json = res[7] || '[]';
           const args = JSON.parse(json);
-          const s = args.map(([name, type]) => {
-            if (typeof type == 'string') return `${name}: ${type}`;
-            return `${name}: object`;
+          const s = args.map(([name, type, shortType]) => {
+            let tt;
+            if (shortType) tt = shortType;else if (typeof type == 'string') tt = type;else tt = 'object';
+            return `${name}: ${tt}`;
           });
           const fullTitle = (0, _methodTitle.replaceTitle)(...res.slice(3)).replace(/^#+ +/, '');
           link = (0, _.getLink)(fullTitle);
@@ -132,11 +134,12 @@ class Toc extends _stream.Transform {
       const heading = `[${t}](#${link})`;
       let s;
       if (!level) level = this.level;
+      level = this.skipLevelOne ? level - 1 : level;
 
-      if (level == 2) {
+      if (level == 1) {
         s = `- ${heading}`;
       } else {
-        const p = '  '.repeat(Math.max(level - 2, 0));
+        const p = '  '.repeat(Math.max(level - 1, 0));
         s = `${p}* ${heading}`;
       }
 
