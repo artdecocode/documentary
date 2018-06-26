@@ -437,7 +437,33 @@ When creating a new `Toc` instance, it will accept the following configuration o
   <td>Start the table of contents from level 2, i.e., excluding the <code>#</code> title.</td>
   <td>
 
-ABC
+For example, the following code:
+
+```md
+# Hello World
+
+## Table Of Contents
+
+## Introduction
+```
+
+will be compiled to
+
+```md
+- [Hello World](#hello-world)
+  * [Table Of Contents](#table-of-contents)
+  * [Introduction](#introduction)
+```
+
+when `skipLevelOne` is not set (default true), and to
+
+```md
+- [Table Of Contents](#table-of-contents)
+- [Introduction](#introduction)
+```
+
+when `skipLevelOne` is set to `false`.
+
   </td>
 </tr>
 </table>

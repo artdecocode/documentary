@@ -98,6 +98,7 @@ export default class Toc extends Transform {
         try {
           const { length } = res[3]
           this.level = length
+          if (this.skipLevelOne && this.level == 1) continue
           const bb = res.slice(4, 6).filter(a => a).join(' ').trim()
           const json = res[7] || '[]'
           const args = JSON.parse(json)
@@ -116,10 +117,11 @@ export default class Toc extends Transform {
       const heading = `[${t}](#${link})`
       let s
       if (!level) level = this.level
-      if (level == 2) {
+      level = this.skipLevelOne ? level - 1 : level
+      if (level == 1) {
         s = `- ${heading}`
       } else {
-        const p = '  '.repeat(Math.max(level - 2, 0))
+        const p = '  '.repeat(Math.max(level - 1, 0))
         s = `${p}* ${heading}`
       }
       this.push(s)

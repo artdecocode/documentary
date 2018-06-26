@@ -8,7 +8,26 @@ When creating a new `Toc` instance, it will accept the following configuration o
 %TYPE true
 <p name="skipLevelOne" type="boolean">
   <d>Start the table of contents from level 2, i.e., excluding the <code>#</code> title.</d>
-  <e>ABC</e>
+  <e>For example, the following code:
+
+```md
+# Hello World
+
+## Table Of Contents
+
+## Introduction
+```
+
+will be compiled to
+
+%FORK-md example example/toc2.js%
+
+when `skipLevelOne` is not set (default true), and to
+
+%FORK-md example example/toc2.js -s%
+
+when `skipLevelOne` is set to `false`.
+</e>
 </p>
 %
 

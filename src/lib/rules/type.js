@@ -82,9 +82,7 @@ const makeTable = (properties, tocTitles) => {
 
   <td>${tag('em', type)}</td>
   <td>${description}</td>
-  <td>
-
-${example}
+  <td>${example.startsWith('```') ? '\n\n': ''}${example}
   </td>
 </tr>`
   })
