@@ -35,7 +35,7 @@ when `skipLevelOne` is set to `false`.
 [
   ["config?", {
     "skipLevelOne?": ["boolean", "true"]
-  }]
+  }, "TocConfig"]
 ]
 ```
 

@@ -19,7 +19,7 @@ yarn add -DE documentary
       * [Specific Level](#specific-level)
   * [Tables Display](#tables-display)
   * [Method Title](#method-title)
-    * [`async runSoftware(path: string, config: object): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
+    * [`async runSoftware(path: string, config: Config): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
     * [`async runSoftware(path: string)`](#async-runsoftwarepath-string-void)
     * [`runSoftware(): string`](#runsoftware-string)
   * [Comments Stripping](#comments-stripping)
@@ -37,7 +37,7 @@ yarn add -DE documentary
   * [`Toc` Stream](#toc-stream)
   * [`TocConfig` Type](#tocconfig-type)
     * [<code>skipLevelOne</code>](#skiplevelone)
-  * [`constructor(config?: object): Toc`](#constructorconfig-skiplevelone-boolean--true-toc)
+  * [`constructor(config?: TocConfig): Toc`](#constructorconfig-skiplevelone-boolean--true-toc)
 
 ## Installation & Usage
 
@@ -118,7 +118,7 @@ Result:
 | -z | A list of zones to check |
 ### Method Title
 
-It is possible to generate neat titles useful for API documentation with `documentary`. The method signature should be specified as a `JSON` array, where every member is an argument specified as an array. The first item in the argument array is the argument name, and the second one is type. Type can be either a string, or an object. If it is an object, each value in the object will first contain the property type, and the second one the default value. To mark a property as optional, the `?` symbol can be used at the end.
+It is possible to generate neat titles useful for API documentation with `documentary`. The method signature should be specified as a `JSON` array, where every member is an argument specified as an array. The first item in the argument array is the argument name, and the second one is type. Type can be either a string, or an object. If it is an object, each value in the object will first contain the property type, and the second one the default value. To mark a property as optional, the `?` symbol can be used at the end. The third item is the short name for the table of contents (so that a complex object can be referenced to its type).
 
 #### `async runSoftware(`<br/>&nbsp;&nbsp;`path: string,`<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`render?: function,`<br/>&nbsp;&nbsp;`},`<br/>`): string`
 
@@ -133,7 +133,7 @@ Generated from
     "actions": ["object"],
     "static?": ["boolean", true],
     "render?": ["function"]
-  }]
+  }, "Config"]
 ]
 ```
 ````

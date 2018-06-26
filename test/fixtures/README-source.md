@@ -47,7 +47,7 @@ import documentary from 'documentary'
     "actions": ["object"],
     "static?": ["boolean", true],
     "render?": ["function"]
-  }]
+  }, "Config"]
 ]
 ```
 

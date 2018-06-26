@@ -102,9 +102,12 @@ export default class Toc extends Transform {
           const bb = res.slice(4, 6).filter(a => a).join(' ').trim()
           const json = res[7] || '[]'
           const args = JSON.parse(json)
-          const s = args.map(([name, type]) => {
-            if (typeof type == 'string') return `${name}: ${type}`
-            return `${name}: object`
+          const s = args.map(([name, type, shortType]) => {
+            let tt
+            if (shortType) tt = shortType
+            else if (typeof type == 'string') tt = type
+            else tt = 'object'
+            return `${name}: ${tt}`
           })
           const fullTitle = replaceTitle(...res.slice(3)).replace(/^#+ +/, '')
           link = getLink(fullTitle)
