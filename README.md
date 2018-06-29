@@ -317,35 +317,33 @@ const q = {
 will display the following table:
 
 <table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Example</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong><code>text</code></strong></td>
-      <td><em>string</em></td>
-      <td>Display text. Required.</td>
-      <td>
+ <thead>
+  <tr>
+   <th>Property</th>
+   <th>Type</th>
+   <th>Description</th>
+   <th>Example</th>
+  </tr>
+ </thead>
+ <tbody>
+   <tr>
+  <td><strong><code>text</code></strong></td>
+  <td><em>string</em></td>
+  <td>Display text. Required.</td>
+  <td>
 
 ```js
 const q = {
   text: 'What is your name',
 }
 ```
-  
-      </td>
-    </tr>
-
-    <tr>
-      <td><code>validation</code></td>
-      <td><em>(async) function</em></td>
-      <td>A function which needs to throw an error if validation does not pass.</td>
-      <td>
+  </td>
+ </tr>
+ <tr>
+  <td><code>validation</code></td>
+  <td><em>(async) function</em></td>
+  <td>A function which needs to throw an error if validation does not pass.</td>
+  <td>
 
 ```js
 const q = {
@@ -355,10 +353,9 @@ const q = {
   },
 }
 ```
-  
-      </td>
-    </tr>
-  </tbody>
+  </td>
+ </tr>
+ </tbody>
 </table>
 
 
@@ -408,20 +405,20 @@ The programmatic use of the `documentary` is intended for developers who want to
 
 When creating a new `Toc` instance, it will accept the following configuration object.
 <table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Example</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a name="skiplevelone"><code>skipLevelOne</code></a></td>
-      <td><em>boolean</em></td>
-      <td>Start the table of contents from level 2, i.e., excluding the <code>#</code> title.</td>
-      <td>For example, the following code:
+ <thead>
+  <tr>
+   <th>Property</th>
+   <th>Type</th>
+   <th>Description</th>
+   <th>Example</th>
+  </tr>
+ </thead>
+ <tbody>
+   <tr>
+  <td><a name="skiplevelone"><code>skipLevelOne</code></a></td>
+  <td><em>boolean</em></td>
+  <td>Start the table of contents from level 2, i.e., excluding the <code>#</code> title.</td>
+  <td>For example, the following code:
 
 ```md
 # Hello World
@@ -447,10 +444,9 @@ when `skipLevelOne` is not set (by default), and to
 ```
 
 when `skipLevelOne` is set to `false`.
-  
-      </td>
-    </tr>
-  </tbody>
+  </td>
+ </tr>
+ </tbody>
 </table>
 
 
