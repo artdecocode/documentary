@@ -361,7 +361,7 @@ const q = {
 
 When required to use the markdown syntax in tables (such as `__`, links, _etc_), an extra space should be left after the `d` or `e` tags like so:
 
-```
+```xml
 %TYPE true
 <p name="skipLevelOne" type="boolean">
   <d>
