@@ -1,4 +1,10 @@
-## 26 June 2018
+## 30 June 2018
+
+### 1.8.1
+
+- [fix] tidy up table markup spacing
+- [doc] xml type to `Type` examples
+- [package] easy commit `doc` commands
 
 ### 1.8.0
 
