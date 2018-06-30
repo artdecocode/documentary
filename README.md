@@ -317,16 +317,17 @@ const q = {
 will display the following table:
 
 <table>
+ <thead>
   <tr>
-    <th>Property</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Example</th>
+   <th>Property</th>
+   <th>Type</th>
+   <th>Description</th>
+   <th>Example</th>
   </tr>
-  
-<tr>
+ </thead>
+ <tbody>
+   <tr>
   <td><strong><code>text</code></strong></td>
-
   <td><em>string</em></td>
   <td>Display text. Required.</td>
   <td>
@@ -336,13 +337,10 @@ const q = {
   text: 'What is your name',
 }
 ```
-  
   </td>
-</tr>
-
-<tr>
+ </tr>
+ <tr>
   <td><code>validation</code></td>
-
   <td><em>(async) function</em></td>
   <td>A function which needs to throw an error if validation does not pass.</td>
   <td>
@@ -355,15 +353,15 @@ const q = {
   },
 }
 ```
-  
   </td>
-</tr>
+ </tr>
+ </tbody>
 </table>
 
 
 When required to use the markdown syntax in tables (such as `__`, links, _etc_), an extra space should be left after the `d` or `e` tags like so:
 
-```
+```xml
 %TYPE true
 <p name="skipLevelOne" type="boolean">
   <d>
@@ -407,16 +405,17 @@ The programmatic use of the `documentary` is intended for developers who want to
 
 When creating a new `Toc` instance, it will accept the following configuration object.
 <table>
+ <thead>
   <tr>
-    <th>Property</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Example</th>
+   <th>Property</th>
+   <th>Type</th>
+   <th>Description</th>
+   <th>Example</th>
   </tr>
-  
-<tr>
+ </thead>
+ <tbody>
+   <tr>
   <td><a name="skiplevelone"><code>skipLevelOne</code></a></td>
-
   <td><em>boolean</em></td>
   <td>Start the table of contents from level 2, i.e., excluding the <code>#</code> title.</td>
   <td>For example, the following code:
@@ -445,9 +444,9 @@ when `skipLevelOne` is not set (by default), and to
 ```
 
 when `skipLevelOne` is set to `false`.
-  
   </td>
-</tr>
+ </tr>
+ </tbody>
 </table>
 
 
