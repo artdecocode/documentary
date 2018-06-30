@@ -6,6 +6,8 @@
 - [doc] xml type to `Type` examples
 - [package] easy commit `doc` commands
 
+## 26 June 2018
+
 ### 1.8.0
 
 - [feat] Document types with `%TYPE%` marker.
