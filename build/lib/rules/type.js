@@ -98,24 +98,26 @@ const makeTable = (properties, tocTitles) => {
     const t = `<code>${name}</code>`;
     const n = required ? strong(t) : t;
     const nn = tocTitles ? `[${n}](t)` : n;
-    return `
-<tr>
+    const e = example.startsWith('```') ? `\n\n${example}` : example;
+    return ` <tr>
   <td>${nn}</td>
-
   <td>${tag('em', type)}</td>
   <td>${description}</td>
-  <td>${example.startsWith('```') ? '\n\n' : ''}${example}
-  </td>
-</tr>`;
+  <td>${e}</td>
+ </tr>`;
   });
   return `<table>
+ <thead>
   <tr>
-    <th>Property</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Example</th>
+   <th>Property</th>
+   <th>Type</th>
+   <th>Description</th>
+   <th>Example</th>
   </tr>
+ </thead>
+ <tbody>
   ${rows.join('\n')}
+ </tbody>
 </table>
 `;
 };
