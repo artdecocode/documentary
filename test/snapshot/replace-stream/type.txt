@@ -1,23 +1,21 @@
 <table>
+ <thead>
   <tr>
-    <th>Property</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Example</th>
+   <th>Property</th>
+   <th>Type</th>
+   <th>Description</th>
+   <th>Example</th>
   </tr>
-  
-<tr>
+ </thead>
+ <tbody>
+   <tr>
   <td><strong><code>title</code></strong></td>
-
   <td><em>string</em></td>
   <td>Question title.</td>
-  <td>
-  </td>
-</tr>
-
-<tr>
+  <td></td>
+ </tr>
+ <tr>
   <td><code>validation</code></td>
-
   <td><em>(async) function</em></td>
   <td>Validation Function.</td>
   <td>A function will throw an error if validation does not pass.
@@ -29,13 +27,10 @@ const q = {
   }
 }
 ```
-  
   </td>
-</tr>
-
-<tr>
+ </tr>
+ <tr>
   <td><code>postProcess</code></td>
-
   <td><em>(async) function</em></td>
   <td></td>
   <td>
@@ -43,7 +38,7 @@ const q = {
 ```js
 console.log('test')
 ```
-
-  </td>
-</tr>
+</td>
+ </tr>
+ </tbody>
 </table>
