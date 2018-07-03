@@ -1,14 +1,10 @@
 import { equal } from 'zoroaster/assert'
-import SnapshotContext from 'snapshot-context'
 import Context from '../../context'
 import { badgeRe } from '../../../src/lib/rules/badge'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
+/** @type {Object.<string, (c: Context)>} */
 const T = {
-  context: [
-    Context,
-    SnapshotContext,
-  ],
+  context: Context,
   async 'matches the badge snippet with an org scope'({ getMatches }) {
     const p = '@adc/documentary'
     const g = `%NPM: ${p}%`

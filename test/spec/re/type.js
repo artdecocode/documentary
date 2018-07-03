@@ -9,29 +9,19 @@ const T = {
     Context,
     SnapshotContext,
   ],
-  async 'matches the TYPE snippet'({ type }) {
+  async 'matches the TYPE snippet'({ type, getMatches }) {
     const g = `%TYPE true
 ${type}
 %`
-    let t
-    let b
-    g.replace(typeRe, (match, p1, p2) => {
-      t = p1
-      b = p2
-    })
+    const { t, b } = getMatches(g, typeRe, ['t', 'b'])
     equal(t, ' true')
     equal(b, type)
   },
-  async 'matches the TYPE snippet without toc'({ type }) {
+  async 'matches the TYPE snippet without toc'({ type, getMatches }) {
     const g = `%TYPE
 ${type}
 %`
-    let t
-    let b
-    g.replace(typeRe, (match, p1, p2) => {
-      t = p1
-      b = p2
-    })
+    const { t, b } = getMatches(g, typeRe, ['t', 'b'])
     equal(t, undefined)
     equal(b, type)
   },

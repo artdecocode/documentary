@@ -222,13 +222,28 @@ console.log('test')
 </p>`
   }
 
+  /**
+   * Extract matches from the string using `replace` and return an object with keys.
+   * @param {string} s String to find matches in
+   * @param {RegExp} re Regular Expression
+   * @param {string[]} keys The sequence of keys corresponding to the matches.
+   * @return {Object.<string, string>} The parsed matches in a hash.
+   * @example
+   *
+   * export default {
+   *  context: Context,
+   *  async 'matches the badge snippet'({ getMatches }) {
+   *    const p = 'documentary'
+   *    const g = `%NPM: ${p}%`
+   *    const { pack } = getMatches(g, badgeRe, ['pack'])
+   *    equal(pack, p)
+   *  },
+   * }
+   */
   getMatches(s, re, keys) {
-    const o = keys.reduce((a, c) => {
-      a[c] = undefined
-      return a
-    }, {})
+    const o = {}
     s.replace(re, (match, ...args) => {
-      const p = args.slice(0, keys.length)
+      const p = args.slice(0, args.length - 2)
       for (let i = 0; i < p.length; i++) {
         const a = p[i]
         const c = keys[i]
@@ -236,5 +251,31 @@ console.log('test')
       }
     })
     return o
+  }
+  assertNoMatch(s, re) {
+    let matched = false
+    s.replace(re, (match) => {
+      matched = match
+    })
+    if (matched) throw new Error(`The string was matched: ${matched}`)
+  }
+  countMatches(s, re) {
+    let matched = 0
+    s.replace(re, () => {
+      matched += 1
+    })
+    return matched
+  }
+  assertNMatches(s, re, n) {
+    const c = this.countMatches(s, re)
+    if (c != n) throw new Error(`Expected ${n} matches, but the string was matched ${c} times.`)
+  }
+  assertSingleMatch(s, re) {
+    const c = this.countMatches(s, re)
+    if (c != 1) throw new Error(`Expected 1 match, but the string was matched ${c} times.`)
+  }
+  makeInnerCode(code) {
+    const s = `\`${code}\``
+    return s
   }
 }

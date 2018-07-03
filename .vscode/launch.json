@@ -20,7 +20,7 @@
         // "test/spec/replace-stream",
         // "test/spec/Toc.js",
         // "test/spec/replace-stream/code.js",
-        "test/spec/re/badge.js",
+        "test/spec/re/inner-code.js",
         "-b",
         "-w"
       ]
