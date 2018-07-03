@@ -1,5 +1,5 @@
 import { Replaceable } from 'restream'
-import { badgeRule, createTocRule, commentRule as stripComments, codeRe, innerCodeRe, linkTitleRe } from './rules'
+import { createTocRule, commentRule as stripComments, codeRe, innerCodeRe, linkTitleRe } from './rules'
 import tableRule, { tableRe } from './rules/table'
 import methodTitleRule, { methodTitleRe } from './rules/method-title'
 import treeRule from './rules/tree'
@@ -9,6 +9,7 @@ import forkRule from './rules/fork'
 import { getLink } from '.'
 import gifRule from './rules/gif'
 import typeRule from './rules/type'
+import badgeRule from './rules/badge'
 
 export default function createReplaceStream(toc) {
   const tocRule = createTocRule(toc)

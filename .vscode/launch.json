@@ -18,9 +18,9 @@
       "args": [
         // "test/spec/bin.js",
         // "test/spec/replace-stream",
-        "test/spec/Toc.js",
-        "test/spec/replace-stream/code.js",
-        // "test/spec/re/default.js",
+        // "test/spec/Toc.js",
+        // "test/spec/replace-stream/code.js",
+        "test/spec/re/badge.js",
         "-b",
         "-w"
       ]
