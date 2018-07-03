@@ -1,5 +1,7 @@
 # documentary
 
+%NPM: @adc/documentary%
+
 A package to manage documentation of Node.js packages.
 
 ## Table Of Contents
@@ -72,4 +74,4 @@ This section will embed an example.
 
 ## Copyright
 
-[Art Deco Code](https://artdeco.bz) 2018
+[Art Deco](https://artdeco.bz) 2018
