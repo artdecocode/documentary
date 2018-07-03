@@ -1,3 +1,10 @@
+## 3 July 2018
+
+### 1.8.2
+
+- [fix] Enable `npm` badge for the scoped packages.
+- [tests] Assertions in context for regular expression matching.
+
 ## 30 June 2018
 
 ### 1.8.1
