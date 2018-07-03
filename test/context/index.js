@@ -92,10 +92,10 @@ export default class Context {
     const proc = fork(TEST_BUILD ?
       resolve(__dirname, '../../build/bin/index.js') :
       resolve(__dirname, '../../src/bin/register.js'),
-    [input, ...args], {
-      stdio: 'pipe',
-      execArgv: [],
-    })
+      [input, ...args], {
+        stdio: 'pipe',
+        execArgv: [],
+      })
     const { stdout, stderr } = await proc.promise
     return {
       stdout,
@@ -142,7 +142,7 @@ ${this.innerTable}
   }
   getRawMethodTitle(isAsync = true, withArgs = true, returns = true) {
     return `\`\`\`### ${isAsync ? 'async ' : ''}runSoftware${returns ? ' => string' : ''}
-${withArgs ? this.innerTitle: ''}
+${withArgs ? this.innerTitle : ''}
 \`\`\`
     `.trim()
   }
@@ -220,5 +220,21 @@ console.log('test')
 \`\`\`
 </e>
 </p>`
+  }
+
+  getMatches(s, re, keys) {
+    const o = keys.reduce((a, c) => {
+      a[c] = undefined
+      return a
+    }, {})
+    s.replace(re, (match, ...args) => {
+      const p = args.slice(0, keys.length)
+      for (let i = 0; i < p.length; i++) {
+        const a = p[i]
+        const c = keys[i]
+        o[c] = a
+      }
+    })
+    return o
   }
 }
