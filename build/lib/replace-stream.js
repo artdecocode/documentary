@@ -27,6 +27,8 @@ var _gif = _interopRequireDefault(require("./rules/gif"));
 
 var _type = _interopRequireDefault(require("./rules/type"));
 
+var _badge = _interopRequireDefault(require("./rules/badge"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -54,7 +56,7 @@ function createReplaceStream(toc) {
     const rule = (0, _markers.makeRule)(marker);
     return rule;
   });
-  const s = new _restream.Replaceable([cutInnerCode, cutTable, cutMethodTitle, cutCode, _rules.commentRule, _rules.badgeRule, _tree.default, _example.default, _fork.default, tocRule, _gif.default, _type.default, insertTable, _table.default, {
+  const s = new _restream.Replaceable([cutInnerCode, cutTable, cutMethodTitle, cutCode, _rules.commentRule, _badge.default, _tree.default, _example.default, _fork.default, tocRule, _gif.default, _type.default, insertTable, _table.default, {
     re: _rules.linkTitleRe,
 
     replacement(match, title) {
