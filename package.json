@@ -1,6 +1,6 @@
 {
   "name": "documentary",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "A library to manage documentation, such as README, usage, man pages and changelog.",
   "main": "build",
   "scripts": {
