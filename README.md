@@ -32,6 +32,11 @@ yarn add -DE documentary
     * [<code>yarn doc</code>](#yarn-doc)
   * [`Type` Definition](#type-definition)
 - [CLI](#cli)
+  * [Output Location](#output-location)
+  * [Only TOC](#only-toc)
+  * [Watch Mode](#watch-mode)
+  * [Automatic Push](#automatic-push)
+  * [`NODE_DEBUG=doc`](#node_debugdoc)
 - [API](#api)
   * [`Toc` Stream](#toc-stream)
   * [`TocConfig` Type](#tocconfig-type)
@@ -382,14 +387,14 @@ doc README-source.md [-o README.md] [-t] [-w]
 
 The arguments it accepts are:
 
-| argument | Description |
-| -------- | ----------- |
-| `-o` | Where to save the processed `README` file. If not specified, the output is written to the `stdout`. |
-| `-t` | Only extract and print the table of contents. |
-| `-w` | Watch mode: re-run the program when changes to the source file are detected. |
-| `-p` | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit. |
+| Flag | Meaning | Description |
+| ---- | ------- | ----------- |
+| `-o` | <a name="output-location">Output Location</a> | Where to save the processed `README` file. If not specified, the output is written to the `stdout`. |
+| `-t` | <a name="only-toc">Only TOC</a> | Only extract and print the table of contents. |
+| `-w` | <a name="watch-mode">Watch Mode</a> | Watch mode: re-run the program when changes to the source file are detected. |
+| `-p` | <a name="automatic-push">Automatic Push</a> | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit. |
 
-When `NODE_DEBUG=doc` is set, the program will print debug information, e.g.,
+When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print debug information, e.g.,
 
 ```
 DOC 80734: stripping comment
