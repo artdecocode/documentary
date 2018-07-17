@@ -156,7 +156,7 @@ Since comments found in `<!-- comment -->` sections are not visible to users, th
 Example structure used in this project:
 
 ```m
-documentation
+documentary
 ├── 1-installation-and-usage
 │   ├── 1-vs-code.md
 │   └── index.md
@@ -387,6 +387,7 @@ The arguments it accepts are:
 | `-o` | Where to save the processed `README` file. If not specified, the output is written to the `stdout`. |
 | `-t` | Only extract and print the table of contents. |
 | `-w` | Watch mode: re-run the program when changes to the source file are detected. |
+| `-p` | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit. |
 
 When `NODE_DEBUG=doc` is set, the program will print debug information, e.g.,
 
@@ -485,6 +486,6 @@ import { createReadStream } from 'fs'
 
 ---
 
-(c) [Art Deco Code][1] 2018
+(c) [Art Deco][1] 2018
 
 [1]: https://artdeco.bz

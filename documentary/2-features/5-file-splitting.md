@@ -4,4 +4,4 @@
 
 Example structure used in this project:
 
-%TREE documentation%
+%TREE documentary%
