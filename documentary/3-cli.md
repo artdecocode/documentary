@@ -13,7 +13,8 @@ The arguments it accepts are:
   ["argument", "Description"],
   ["`-o`", "Where to save the processed `README` file. If not specified, the output is written to the `stdout`."],
   ["`-t`", "Only extract and print the table of contents."],
-  ["`-w`", "Watch mode: re-run the program when changes to the source file are detected."]
+  ["`-w`", "Watch mode: re-run the program when changes to the source file are detected."],
+  ["`-p`", "Watch + push: automatically push changes to a remote git branch by squashing them into a single commit."]
 ]
 ```
 
