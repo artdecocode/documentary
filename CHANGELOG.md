@@ -1,3 +1,9 @@
+## 17 July 2018
+
+### 1.9.0
+
+- [feature] Automatic `git` push during watch with `-p` argument.
+
 ## 3 July 2018
 
 ### 1.8.2
