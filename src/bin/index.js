@@ -71,6 +71,7 @@ const doc = async (source, output, justToc = false) => {
         debounce = true
         await doc(_source, _output, _toc)
         if (_push) {
+          console.log('Pushing documentation changes')
           await gitPush(_source, _output, _push)
         }
         setTimeout(() => { debounce = false }, 100)
@@ -80,11 +81,18 @@ const doc = async (source, output, justToc = false) => {
 })()
 
 const gitPush = async (source, output, message) => {
-  const { stdout } = (await spawn('git', ['log', '--format=%B', '-n', '1'])).trim()
-  if (stdout == message) {
-    await spawn('git', ['reset', 'HEAD~1'])
+  const { promise } = spawn('git', ['log', '--format=%B', '-n', '1'])
+  const { stdout } = await promise
+  const s = stdout.trim()
+  if (s == message) {
+    await git('reset', 'HEAD~1')
   }
-  await spawn('git', ['add', source, output])
-  await spawn('git', ['commit', '-m', message])
-  await spawn('git', ['push', '-f'])
+  await git('add', source, output)
+  await git('commit', '-m', message)
+  await git('push', '-f')
+}
+
+const git = async (...args) => {
+  const { promise } = spawn('git', args, { stdio: 'inherit' })
+  await promise
 }

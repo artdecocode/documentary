@@ -3,17 +3,23 @@ import { createWriteStream } from 'fs'
 import createReplaceStream from '../lib/replace-stream'
 import { PassThrough } from 'stream'
 
-const replaceFile = (stream, toc, out) => {
-  const s = createReplaceStream(toc)
+const replaceFile = async (stream, toc, out) => {
+  await new Promise((r, j) => {
+    const s = createReplaceStream(toc)
 
-  const ws = out ? createWriteStream(out) : process.stdout
+    const ws = out ? createWriteStream(out) : process.stdout
 
-  stream.pipe(s).pipe(ws)
-  if (out) {
-    ws.on('close', () => {
-      console.log('Saved %s', out)
-    })
-  }
+    stream.pipe(s).pipe(ws)
+    if (out) {
+      ws.on('close', () => {
+        console.log('Saved %s', out)
+        r()
+      })
+      ws.on('error', j)
+    } else {
+      r()
+    }
+  })
 }
 
 /**
@@ -31,5 +37,5 @@ export default async function run(stream, out, justToc) {
     process.exit()
   }
   pt.resume()
-  replaceFile(pt, t, out)
+  await replaceFile(pt, t, out)
 }
