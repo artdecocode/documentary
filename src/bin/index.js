@@ -65,7 +65,7 @@ const doc = async (source, output, justToc = false) => {
     DEBUG ? LOG(stack) : console.log(message)
   }
   let debounce = false
-  if (_watch) {
+  if (_watch || _push) {
     watch(_source, { recursive: true }, async () => {
       if (!debounce) {
         debounce = true
