@@ -15,16 +15,22 @@ var _stream = require("stream");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const replaceFile = (stream, toc, out) => {
-  const s = (0, _replaceStream.default)(toc);
-  const ws = out ? (0, _fs.createWriteStream)(out) : process.stdout;
-  stream.pipe(s).pipe(ws);
+const replaceFile = async (stream, toc, out) => {
+  await new Promise((r, j) => {
+    const s = (0, _replaceStream.default)(toc);
+    const ws = out ? (0, _fs.createWriteStream)(out) : process.stdout;
+    stream.pipe(s).pipe(ws);
 
-  if (out) {
-    ws.on('close', () => {
-      console.log('Saved %s', out);
-    });
-  }
+    if (out) {
+      ws.on('close', () => {
+        console.log('Saved %s', out);
+        r();
+      });
+      ws.on('error', j);
+    } else {
+      r();
+    }
+  });
 };
 /**
  * @param {Readable} stream A readable stream.
@@ -45,6 +51,6 @@ async function run(stream, out, justToc) {
   }
 
   pt.resume();
-  replaceFile(pt, t, out);
+  await replaceFile(pt, t, out);
 }
 //# sourceMappingURL=run.js.map

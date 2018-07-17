@@ -4,6 +4,7 @@ import argufy from 'argufy'
 import { lstatSync, createReadStream } from 'fs'
 import Pedantry from 'pedantry'
 import { debuglog } from 'util'
+import spawn from 'spawncommand'
 import run from './run'
 
 const LOG = debuglog('doc')
@@ -14,6 +15,7 @@ const {
   output: _output,
   toc: _toc,
   watch: _watch,
+  push: _push,
 } = argufy({
   source: {
     command: true,
@@ -27,7 +29,15 @@ const {
     boolean: true,
   },
   output: 'o',
+  push: {
+    short: 'p',
+  },
 })
+
+if (process.argv.find(a => a == '-p') && !_push) {
+  console.log('Please specify a commit message.')
+  process.exit(1)
+}
 
 const doc = async (source, output, justToc = false) => {
   if (!source) {
@@ -55,13 +65,34 @@ const doc = async (source, output, justToc = false) => {
     DEBUG ? LOG(stack) : console.log(message)
   }
   let debounce = false
-  if (_watch) {
+  if (_watch || _push) {
     watch(_source, { recursive: true }, async () => {
       if (!debounce) {
         debounce = true
         await doc(_source, _output, _toc)
+        if (_push) {
+          console.log('Pushing documentation changes')
+          await gitPush(_source, _output, _push)
+        }
         setTimeout(() => { debounce = false }, 100)
       }
     })
   }
 })()
+
+const gitPush = async (source, output, message) => {
+  const { promise } = spawn('git', ['log', '--format=%B', '-n', '1'])
+  const { stdout } = await promise
+  const s = stdout.trim()
+  if (s == message) {
+    await git('reset', 'HEAD~1')
+  }
+  await git('add', source, output)
+  await git('commit', '-m', message)
+  await git('push', '-f')
+}
+
+const git = async (...args) => {
+  const { promise } = spawn('git', args, { stdio: 'inherit' })
+  await promise
+}
