@@ -63,22 +63,24 @@ export const extractTag = (tag, string) => {
 const tag = (t, s) => `<${t}>${s}</${t}>`
 const strong = s => tag('strong', s)
 
-const getDescAndExample = (description, example, isExampleRow) => {
+const getDescAndExample = (description, example, isExampleRow, hasExamples) => {
+  const span2 = hasExamples ? ' colspan="2"' : ''
   if (!example) {
-    return `<td colspan="2">${description}</td>`
+    return `<td${span2}>${description}</td>`
   }
   if (isExampleRow) {
-    return `<td colspan="2">${description}</td>
+    return `<td${span2}>${description}</td>
   </tr>
   <tr></tr>
   <tr>
-   <td colspan="4">${example}</td>`
+   <td colspan="${hasExamples ? 4 : 3}">${example}</td>`
   }
   return `<td>${description}</td>
    <td>${example}</td>`
 }
 
 const makeTable = (properties, tocTitles) => {
+  const hasExamples = properties.some(({ example, isExampleRow }) => example && !isExampleRow)
   const rows = properties.map(({ name, type, required, description = '', example = '', isExampleRow }) => {
     const t = `<code>${name}</code>`
     const n = required ? strong(t) : t
@@ -87,7 +89,7 @@ const makeTable = (properties, tocTitles) => {
     return `  <tr>
    <td>${nn}</td>
    <td>${tag('em', type)}</td>
-   ${getDescAndExample(description, e, isExampleRow)}
+   ${getDescAndExample(description, e, isExampleRow, hasExamples)}
   </tr>`
   })
   return `<table>
@@ -95,8 +97,7 @@ const makeTable = (properties, tocTitles) => {
   <tr>
    <th>Property</th>
    <th>Type</th>
-   <th>Description</th>
-   <th>Example</th>
+   <th>Description</th>${hasExamples ? '\n   <th>Example</th>' : ''}
   </tr>
  </thead>
  <tbody>
