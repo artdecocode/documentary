@@ -7,14 +7,8 @@ exports.default = exports.extractTag = exports.typeRe = void 0;
 
 var _util = require("util");
 
-const LOG = (0, _util.debuglog)('doc'); // `%TYPE Name
-// <p>
-// </p>
-// <p>
-// </p>
-// %`
-
-const typeRe = /^%TYPE( .+)?\n([\s\S]+)\n%$/mg;
+const LOG = (0, _util.debuglog)('doc');
+const typeRe = /^%TYPE( .+)?\n([\s\S]+?)\n%$/mg;
 exports.typeRe = typeRe;
 
 const execRes = (re, s) => {
@@ -87,36 +81,58 @@ const tag = (t, s) => `<${t}>${s}</${t}>`;
 
 const strong = s => tag('strong', s);
 
+const getDescAndExample = (description, example, isExampleRow, hasExamples) => {
+  const span2 = hasExamples ? ' colspan="2"' : '';
+
+  if (!example) {
+    return `<td${span2}>${description}</td>`;
+  }
+
+  if (isExampleRow) {
+    return `<td${span2}>${description}</td>
+  </tr>
+  <tr></tr>
+  <tr>
+   <td colspan="${hasExamples ? 4 : 3}">${example}</td>`;
+  }
+
+  return `<td>${description}</td>
+   <td>${example}</td>`;
+};
+
 const makeTable = (properties, tocTitles) => {
+  const hasExamples = properties.some(({
+    example,
+    isExampleRow
+  }) => example && !isExampleRow);
   const rows = properties.map(({
     name,
     type,
     required,
     description = '',
-    example = ''
+    example = '',
+    isExampleRow
   }) => {
     const t = `<code>${name}</code>`;
     const n = required ? strong(t) : t;
     const nn = tocTitles ? `[${n}](t)` : n;
     const e = example.startsWith('```') ? `\n\n${example}` : example;
-    return ` <tr>
-  <td>${nn}</td>
-  <td>${tag('em', type)}</td>
-  <td>${description}</td>
-  <td>${e}</td>
- </tr>`;
+    return `  <tr>
+   <td>${nn}</td>
+   <td>${tag('em', type)}</td>
+   ${getDescAndExample(description, e, isExampleRow, hasExamples)}
+  </tr>`;
   });
   return `<table>
  <thead>
   <tr>
    <th>Property</th>
    <th>Type</th>
-   <th>Description</th>
-   <th>Example</th>
+   <th>Description</th>${hasExamples ? '\n   <th>Example</th>' : ''}
   </tr>
  </thead>
  <tbody>
-  ${rows.join('\n')}
+${rows.join('\n')}
  </tbody>
 </table>
 `;
@@ -135,11 +151,15 @@ const typeRule = {
           content: description
         } = {}] = extractTag('d', content);
         const [{
-          content: example
+          content: example,
+          props: {
+            row: isExampleRow = false
+          } = {}
         } = {}] = extractTag('e', content);
         return {
           description,
           example,
+          isExampleRow,
           ...props
         };
       });
