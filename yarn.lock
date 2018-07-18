@@ -150,6 +150,10 @@ restream@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/restream/-/restream-2.1.0.tgz#934e177343e81bd6a64fc555f91085544da56db1"
 
+rexml@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/rexml/-/rexml-1.0.0.tgz#1e6ff59c4692552c9f8b87e011d5d7ad01546a08"
+
 snapshot-context@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/snapshot-context/-/snapshot-context-2.0.1.tgz#3a3e622808f89d3f7723d4009df7f9f07436ead8"
