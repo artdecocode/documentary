@@ -52,6 +52,7 @@
     "catchment": "2.0.1",
     "pedantry": "1.0.1",
     "restream": "2.1.0",
+    "rexml": "1.0.0",
     "spawncommand": "2.0.1"
   }
 }
