@@ -1,3 +1,9 @@
+## 18 July 2018
+
+### 1.10.0
+
+- [feature] Dedicated example row in `Type` definition, skip `Examples` header when no non-row examples are given, non-greedy type regex.
+
 ## 17 July 2018
 
 ### 1.9.0
