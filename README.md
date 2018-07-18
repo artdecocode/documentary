@@ -32,9 +32,12 @@ yarn add -DE documentary
     * [<code>yarn doc</code>](#yarn-doc)
   * [`Type` Definition](#type-definition)
     * [Dedicated Example Row](#dedicated-example-row)
+  * [`@typedef` Generation](#typedef-generation)
+    * [`doc src/config-static.js -T`](#doc-srcconfig-staticjs--t)
 - [CLI](#cli)
   * [Output Location](#output-location)
   * [Only TOC](#only-toc)
+  * [Insert Types](#insert-types)
   * [Watch Mode](#watch-mode)
   * [Automatic Push](#automatic-push)
   * [`NODE_DEBUG=doc`](#node_debugdoc)
@@ -176,6 +179,7 @@ documentary
 │   ├── 7-examples.md
 │   ├── 8-gif.md
 │   ├── 9-type.md
+│   ├── 91-types-xml.md
 │   └── index.md
 ├── 3-cli.md
 ├── 4-api
@@ -273,6 +277,7 @@ The actual html placed in the `README` looks like the one below:
   </table>
 </details>
 ```
+
 ### `Type` Definition
 
 Often, it is required to document a type of an object, which methods can use. To display the information about type's properties in a table, the `TYPE` macro can be used. It allows to show all possible properties that an object can contain, show which ones are required, give examples and link them in the table of contents (disabled by default).
@@ -504,6 +509,72 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
  </tbody>
 </table>
 
+
+### `@typedef` Generation
+
+For the purpose of easier maintenance of `JSDoc` `@typedef` declarations, `documentary` allows to keep them in a separate xml file, and then place the compiled versions into both source code as well as documentation. By doing this, more flexibility is achieved as types are kept in one place but can be reused for various purposes across multiple files. It is different from _TypeScript_ type declarations as `documentary` will generate a JSDoc rather than type definitions which means that the project does not have to be written in _TypeScript_.
+
+Types are kept in an `xml` file, for example:
+
+```xml
+<types>
+  <t name="SetHeaders" type="(res: import('http').ServerResponse, path: string, stats: import('fs').Stats) => any" desc="Function to set custom headers on response." />
+  <t name="StaticConfig">
+    <p string name="root">Root directory string.</p>
+    <p opt number name="maxage" default="0">Browser cache max-age in milliseconds.</p>
+    <p opt boolean name="hidden" default="false">Allow transfer of hidden files.</p>
+    <p opt string name="index" default="index.html">Default file name.</p>
+    <p opt type="SetHeaders" name="setHeaders">Function to set custom headers on response.</p>
+  </t>
+</types>
+```
+
+Here, `import('http').ServerResponse` is a feature of _TypeScript_ that allows to reference an external type in VS Code. It does not require the project to be written in _TypeScript_, but will enable correct IntelliSense completions and hits (available since VS Code at least `1.25`).
+
+To place the compiled declaration into a source code, the following line should be placed in the `.js` file (where `types/static.xml` file existing in the project directory from which `doc` will be run):
+
+```js
+/* documentary types/static.xml */
+```
+
+```js
+import Static from 'koa-static'
+/**
+ * Configure the middleware.
+ * @param {StaticConfig} config
+ */
+function configure(config) {
+  const middleware = Static(config)
+  return middleware
+}
+
+/* documentary types/static.xml */
+```
+
+The JavaScript file is then processed with <a name="doc-srcconfig-staticjs--t">`doc src/config-static.js -T`</a> command. After the processing is done, the `.js` file will be transformed to include the types specified in the XML file. This routine can be repeated whenever types are updated in their `xml` specifications.
+
+```js
+import Static from 'koa-static'
+/**
+ * Configure the middleware.
+ * @param {StaticConfig} config
+ */
+function configure(config) {
+  const middleware = Static(config)
+  return middleware
+}
+
+/* documentary types/static.xml */
+/**
+ * @typedef {(res: import('http').ServerResponse, path: string, stats: import('fs').Stats) => any} SetHeaders Function to set custom headers on response.
+ * @typedef {Object} StaticConfig
+ * @prop {string} root Root directory string.
+ * @prop {number} [maxage="0"] Browser cache max-age in milliseconds. Default `0`.
+ * @prop {boolean} [hidden="false"] Allow transfer of hidden files. Default `false`.
+ * @prop {string} [index="index.html"] Default filename. Default `index.html`.
+ * @prop {SetHeaders} [setHeaders] Function to set custom headers on response.
+ */
+```
 ## CLI
 
 The program is used from the CLI (or `package.json` script).
@@ -514,12 +585,16 @@ doc README-source.md [-o README.md] [-t] [-w]
 
 The arguments it accepts are:
 
-| Flag | Meaning | Description |
-| ---- | ------- | ----------- |
-| `-o` | <a name="output-location">Output Location</a> | Where to save the processed `README` file. If not specified, the output is written to the `stdout`. |
-| `-t` | <a name="only-toc">Only TOC</a> | Only extract and print the table of contents. |
-| `-w` | <a name="watch-mode">Watch Mode</a> | Watch mode: re-run the program when changes to the source file are detected. |
-| `-p` | <a name="automatic-push">Automatic Push</a> | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit. |
+```table
+[
+  ["Flag", "Meaning", "Description"],
+  ["`-o`", "<a name="output-location">Output Location</a>", "Where to save the processed `README` file. If not specified, the output is written to the `stdout`."],
+  ["`-t`", "<a name="only-toc">Only TOC</a>", "Only extract and print the table of contents."],
+  ["`-T`", "<a name="insert-types">Insert Types</a>", "Insert `@typedef` JSDoc into JavaScript files."]
+  ["`-w`", "<a name="watch-mode">Watch Mode</a>", "Watch mode: re-run the program when changes to the source file are detected."],
+  ["`-p`", "<a name="automatic-push">Automatic Push</a>", "Watch + push: automatically push changes to a remote git branch by squashing them into a single commit."]
+]
+```
 
 When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print debug information, e.g.,
 
