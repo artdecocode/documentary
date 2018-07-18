@@ -449,6 +449,61 @@ In addition, any properties which do not contain examples will not have an examp
  </tbody>
 </table>
 
+
+Finally, when no examples which are not rows are given, there will be no `Example` heading.
+
+````xml
+%TYPE
+<p name="data" type="object">
+  <d>Optional data to send to the server with the request.</d>
+  <e row>
+
+```js
+{
+  name: 'test',
+}
+```
+  </e>
+</p>
+<p name="method" type="string">
+  <d>What HTTP method to use to send data (only works when <code>data</code> is set).</d>
+</p>
+%
+````
+
+<table>
+ <thead>
+  <tr>
+   <th>Property</th>
+   <th>Type</th>
+   <th>Description</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td><code>data</code></td>
+   <td><em>object</em></td>
+   <td>Optional data to send to the server with the request.</td>
+  </tr>
+  <tr></tr>
+  <tr>
+   <td colspan="3">
+
+```js
+{
+  name: 'test',
+}
+```
+  </td>
+  </tr>
+  <tr>
+   <td><code>method</code></td>
+   <td><em>string</em></td>
+   <td>What HTTP method to use to send data (only works when <code>data</code> is set).</td>
+  </tr>
+ </tbody>
+</table>
+
 ## CLI
 
 The program is used from the CLI (or `package.json` script).

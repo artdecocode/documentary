@@ -139,3 +139,41 @@ In addition, any properties which do not contain examples will not have an examp
   <e><code>200</code></e>
 </p>
 %
+
+Finally, when no examples which are not rows are given, there will be no `Example` heading.
+
+````xml
+%TYPE
+<p name="data" type="object">
+  <d>Optional data to send to the server with the request.</d>
+  <e row>
+
+```js
+{
+  name: 'test',
+}
+```
+  </e>
+</p>
+<p name="method" type="string">
+  <d>What HTTP method to use to send data (only works when <code>data</code> is set).</d>
+</p>
+%
+````
+
+%TYPE
+<p name="data" type="object">
+  <d>Optional data to send to the server with the request.</d>
+  <e row>
+
+```js
+{
+  name: 'test',
+}
+```
+  </e>
+</p>
+<p name="method" type="string">
+  <d>What HTTP method to use to send data (only works when <code>data</code> is set).</d>
+</p>
+%
