@@ -5,21 +5,7 @@ For the purpose of easier maintenance of `JSDoc` `@typedef` declarations, `docum
 
 Types are kept in an `xml` file, for example:
 
-```xml
-<types>
-  <t name="ServerResponse" type="import('http').ServerResponse">
-  <t name="SetHeaders"
-    type="(res: ServerResponse) => any"
-    desc="Function to set custom headers on response." />
-  <t name="StaticConfig">
-    <p string name="root">Root directory string.</p>
-    <p opt number name="maxage" default="0">Browser cache max-age in milliseconds.</p>
-    <p opt boolean name="hidden" default="false">Allow transfer of hidden files.</p>
-    <p opt string name="index" default="index.html">Default file name.</p>
-    <p opt type="SetHeaders" name="setHeaders">Function to set custom headers on response.</p>
-  </t>
-</types>
-```
+%EXAMPLE: test/fixtures/types.xml, ../src => types, xml%
 
 Here, `import('http').ServerResponse` is a feature of _TypeScript_ that allows to reference an external type in VS Code. It does not require the project to be written in _TypeScript_, but will enable correct IntelliSense completions and hits (available since VS Code at least `1.25`).
 
