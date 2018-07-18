@@ -31,6 +31,7 @@ yarn add -DE documentary
   * [Gif Detail](#gif-detail)
     * [<code>yarn doc</code>](#yarn-doc)
   * [`Type` Definition](#type-definition)
+    * [Dedicated Example Row](#dedicated-example-row)
 - [CLI](#cli)
   * [Output Location](#output-location)
   * [Only TOC](#only-toc)
@@ -331,11 +332,11 @@ will display the following table:
   </tr>
  </thead>
  <tbody>
-   <tr>
-  <td><strong><code>text</code></strong></td>
-  <td><em>string</em></td>
-  <td>Display text. Required.</td>
-  <td>
+  <tr>
+   <td><strong><code>text</code></strong></td>
+   <td><em>string</em></td>
+   <td>Display text. Required.</td>
+   <td>
 
 ```js
 const q = {
@@ -343,12 +344,12 @@ const q = {
 }
 ```
   </td>
- </tr>
- <tr>
-  <td><code>validation</code></td>
-  <td><em>(async) function</em></td>
-  <td>A function which needs to throw an error if validation does not pass.</td>
-  <td>
+  </tr>
+  <tr>
+   <td><code>validation</code></td>
+   <td><em>(async) function</em></td>
+   <td>A function which needs to throw an error if validation does not pass.</td>
+   <td>
 
 ```js
 const q = {
@@ -359,7 +360,7 @@ const q = {
 }
 ```
   </td>
- </tr>
+  </tr>
  </tbody>
 </table>
 
@@ -377,6 +378,77 @@ Start the table of contents from level 2, i.e., excluding the `#` title.</d>
 ```
 
 Otherwise, the content will not be processed by `GitHub`. However, it will add an extra margin to the content of the cell as it will be transformed into a paragraph.
+
+#### Dedicated Example Row
+
+Because examples occupy a lot of space which causes table squeezing on GitHub and scrolling on NPM, `documentary` allows to dedicate a special row to an example. It can be achieved by adding a `row` attribute to the `e` element, like so:
+
+````xml
+%TYPE
+<p name="headers" type="object">
+  <d>Incoming headers returned by the server.</d>
+  <e row>
+
+```json
+{
+  "server": "GitHub.com",
+  "content-type": "application/json",
+  "content-length": "2",
+  "connection": "close",
+  "status": "200 OK"
+}
+```
+  </e>
+</p>
+%
+````
+
+In addition, any properties which do not contain examples will not have an example column at all.
+
+<table>
+ <thead>
+  <tr>
+   <th>Property</th>
+   <th>Type</th>
+   <th>Description</th>
+   <th>Example</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td><code>body</code></td>
+   <td><em>string|object|Buffer</em></td>
+   <td colspan="2">The return from the server.</td>
+  </tr>
+  <tr>
+   <td><code>headers</code></td>
+   <td><em>object</em></td>
+   <td colspan="2">Incoming headers returned by the server.</td>
+  </tr>
+  <tr></tr>
+  <tr>
+   <td colspan="4">
+
+```json
+{
+  "server": "GitHub.com",
+  "content-type": "application/json",
+  "content-length": "2",
+  "connection": "close",
+  "status": "200 OK"
+}
+```
+  </td>
+  </tr>
+  <tr>
+   <td><code>statusCode</code></td>
+   <td><em>number</em></td>
+   <td>The status code returned by the server.</td>
+   <td><code>200</code></td>
+  </tr>
+ </tbody>
+</table>
+
 ## CLI
 
 The program is used from the CLI (or `package.json` script).
@@ -420,11 +492,11 @@ When creating a new `Toc` instance, it will accept the following configuration o
   </tr>
  </thead>
  <tbody>
-   <tr>
-  <td><a name="skiplevelone"><code>skipLevelOne</code></a></td>
-  <td><em>boolean</em></td>
-  <td>Start the table of contents from level 2, i.e., excluding the <code>#</code> title.</td>
-  <td>For example, the following code:
+  <tr>
+   <td><a name="skiplevelone"><code>skipLevelOne</code></a></td>
+   <td><em>boolean</em></td>
+   <td>Start the table of contents from level 2, i.e., excluding the <code>#</code> title.</td>
+   <td>For example, the following code:
 
 ```md
 # Hello World
@@ -451,7 +523,7 @@ when `skipLevelOne` is not set (by default), and to
 
 when `skipLevelOne` is set to `false`.
   </td>
- </tr>
+  </tr>
  </tbody>
 </table>
 
