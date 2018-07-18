@@ -7,7 +7,10 @@ Types are kept in an `xml` file, for example:
 
 ```xml
 <types>
-  <t name="SetHeaders" type="(res: import('http').ServerResponse, path: string, stats: import('fs').Stats) => any" desc="Function to set custom headers on response." />
+  <t name="ServerResponse" type="import('http').ServerResponse">
+  <t name="SetHeaders"
+    type="(res: ServerResponse) => any"
+    desc="Function to set custom headers on response." />
   <t name="StaticConfig">
     <p string name="root">Root directory string.</p>
     <p opt number name="maxage" default="0">Browser cache max-age in milliseconds.</p>
@@ -27,7 +30,10 @@ To place the compiled declaration into a source code, the following line should 
 ```
 
 ```js
+/* src/config-static.js */
+
 import Static from 'koa-static'
+
 /**
  * Configure the middleware.
  * @param {StaticConfig} config
@@ -55,7 +61,8 @@ function configure(config) {
 
 /* documentary types/static.xml */
 /**
- * @typedef {(res: import('http').ServerResponse, path: string, stats: import('fs').Stats) => any} SetHeaders Function to set custom headers on response.
+ * @typedef {import('http').ServerResponse} ServerResponse
+ * @typedef {(res: ServerResponse) => any} SetHeaders Function to set custom headers on response.
  * @typedef {Object} StaticConfig
  * @prop {string} root Root directory string.
  * @prop {number} [maxage="0"] Browser cache max-age in milliseconds. Default `0`.

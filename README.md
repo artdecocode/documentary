@@ -518,7 +518,10 @@ Types are kept in an `xml` file, for example:
 
 ```xml
 <types>
-  <t name="SetHeaders" type="(res: import('http').ServerResponse, path: string, stats: import('fs').Stats) => any" desc="Function to set custom headers on response." />
+  <t name="ServerResponse" type="import('http').ServerResponse">
+  <t name="SetHeaders"
+    type="(res: ServerResponse) => any"
+    desc="Function to set custom headers on response." />
   <t name="StaticConfig">
     <p string name="root">Root directory string.</p>
     <p opt number name="maxage" default="0">Browser cache max-age in milliseconds.</p>
@@ -538,7 +541,10 @@ To place the compiled declaration into a source code, the following line should 
 ```
 
 ```js
+/* src/config-static.js */
+
 import Static from 'koa-static'
+
 /**
  * Configure the middleware.
  * @param {StaticConfig} config
@@ -566,7 +572,8 @@ function configure(config) {
 
 /* documentary types/static.xml */
 /**
- * @typedef {(res: import('http').ServerResponse, path: string, stats: import('fs').Stats) => any} SetHeaders Function to set custom headers on response.
+ * @typedef {import('http').ServerResponse} ServerResponse
+ * @typedef {(res: ServerResponse) => any} SetHeaders Function to set custom headers on response.
  * @typedef {Object} StaticConfig
  * @prop {string} root Root directory string.
  * @prop {number} [maxage="0"] Browser cache max-age in milliseconds. Default `0`.
@@ -580,21 +587,18 @@ function configure(config) {
 The program is used from the CLI (or `package.json` script).
 
 ```sh
-doc README-source.md [-o README.md] [-t] [-w]
+doc README-source.md [-o README.md] [-twpT]
 ```
 
 The arguments it accepts are:
 
-```table
-[
-  ["Flag", "Meaning", "Description"],
-  ["`-o`", "<a name="output-location">Output Location</a>", "Where to save the processed `README` file. If not specified, the output is written to the `stdout`."],
-  ["`-t`", "<a name="only-toc">Only TOC</a>", "Only extract and print the table of contents."],
-  ["`-T`", "<a name="insert-types">Insert Types</a>", "Insert `@typedef` JSDoc into JavaScript files."]
-  ["`-w`", "<a name="watch-mode">Watch Mode</a>", "Watch mode: re-run the program when changes to the source file are detected."],
-  ["`-p`", "<a name="automatic-push">Automatic Push</a>", "Watch + push: automatically push changes to a remote git branch by squashing them into a single commit."]
-]
-```
+| Flag | Meaning | Description |
+| ---- | ------- | ----------- |
+| `-o` | <a name="output-location">Output Location</a> | Where to save the processed `README` file. If not specified, the output is written to the `stdout`. |
+| `-t` | <a name="only-toc">Only TOC</a> | Only extract and print the table of contents. |
+| `-T` | <a name="insert-types">Insert Types</a> | Insert `@typedef` JSDoc into JavaScript files. |
+| `-w` | <a name="watch-mode">Watch Mode</a> | Watch mode: re-run the program when changes to the source file are detected. |
+| `-p` | <a name="automatic-push">Automatic Push</a> | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit. |
 
 When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print debug information, e.g.,
 
