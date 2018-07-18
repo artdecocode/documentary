@@ -88,3 +88,92 @@ Start the table of contents from level 2, i.e., excluding the `#` title.</d>
 ```
 
 Otherwise, the content will not be processed by `GitHub`. However, it will add an extra margin to the content of the cell as it will be transformed into a paragraph.
+
+#### Dedicated Example Row
+
+Because examples occupy a lot of space which causes table squeezing on GitHub and scrolling on NPM, `documentary` allows to dedicate a special row to an example. It can be achieved by adding a `row` attribute to the `e` element, like so:
+
+````xml
+%TYPE
+<p name="headers" type="object">
+  <d>Incoming headers returned by the server.</d>
+  <e row>
+
+```json
+{
+  "server": "GitHub.com",
+  "content-type": "application/json",
+  "content-length": "2",
+  "connection": "close",
+  "status": "200 OK"
+}
+```
+  </e>
+</p>
+%
+````
+
+In addition, any properties which do not contain examples will not have an example column at all.
+
+%TYPE
+<p name="body" type="string|object|Buffer">
+  <d>The return from the server.</d>
+</p>
+<p name="headers" type="object">
+  <d>Incoming headers returned by the server.</d>
+  <e row>
+
+```json
+{
+  "server": "GitHub.com",
+  "content-type": "application/json",
+  "content-length": "2",
+  "connection": "close",
+  "status": "200 OK"
+}
+```
+  </e>
+</p>
+<p name="statusCode" type="number">
+  <d>The status code returned by the server.</d>
+  <e><code>200</code></e>
+</p>
+%
+
+Finally, when no examples which are not rows are given, there will be no `Example` heading.
+
+````xml
+%TYPE
+<p name="data" type="object">
+  <d>Optional data to send to the server with the request.</d>
+  <e row>
+
+```js
+{
+  name: 'test',
+}
+```
+  </e>
+</p>
+<p name="method" type="string">
+  <d>What HTTP method to use to send data (only works when <code>data</code> is set).</d>
+</p>
+%
+````
+
+%TYPE
+<p name="data" type="object">
+  <d>Optional data to send to the server with the request.</d>
+  <e row>
+
+```js
+{
+  name: 'test',
+}
+```
+  </e>
+</p>
+<p name="method" type="string">
+  <d>What HTTP method to use to send data (only works when <code>data</code> is set).</d>
+</p>
+%

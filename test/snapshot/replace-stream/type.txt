@@ -8,17 +8,16 @@
   </tr>
  </thead>
  <tbody>
-   <tr>
-  <td><strong><code>title</code></strong></td>
-  <td><em>string</em></td>
-  <td>Question title.</td>
-  <td></td>
- </tr>
- <tr>
-  <td><code>validation</code></td>
-  <td><em>(async) function</em></td>
-  <td>Validation Function.</td>
-  <td>A function will throw an error if validation does not pass.
+  <tr>
+   <td><strong><code>title</code></strong></td>
+   <td><em>string</em></td>
+   <td colspan="2">Question title.</td>
+  </tr>
+  <tr>
+   <td><code>validation</code></td>
+   <td><em>(async) function</em></td>
+   <td>Validation Function.</td>
+   <td>A function will throw an error if validation does not pass.
 
 ```js
 const q = {
@@ -28,17 +27,17 @@ const q = {
 }
 ```
   </td>
- </tr>
- <tr>
-  <td><code>postProcess</code></td>
-  <td><em>(async) function</em></td>
-  <td></td>
-  <td>
+  </tr>
+  <tr>
+   <td><code>postProcess</code></td>
+   <td><em>(async) function</em></td>
+   <td></td>
+   <td>
 
 ```js
 console.log('test')
 ```
 </td>
- </tr>
+  </tr>
  </tbody>
 </table>
