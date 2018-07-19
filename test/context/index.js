@@ -278,4 +278,8 @@ console.log('test')
     const s = `\`${code}\``
     return s
   }
+  /** Absolute location of the types fixture. */
+  get typesLocation() {
+    return resolve(__dirname, '../fixtures/types.xml')
+  }
 }

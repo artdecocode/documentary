@@ -1,9 +1,9 @@
 <types>
-  <t name="ServerResponse" type="import('http').ServerResponse">
+  <t name="ServerResponse" type="import('http').ServerResponse" />
   <t name="SetHeaders"
     type="(res: ServerResponse) => any"
     desc="Function to set custom headers on response." />
-  <t name="StaticConfig">
+  <t name="StaticConfig" desc="Options to setup `koa-static`.">
     <p string name="root">Root directory string.</p>
     <p opt number name="maxage" default="0">Browser cache max-age in milliseconds.</p>
     <p opt boolean name="hidden" default="false">Allow transfer of hidden files.</p>
