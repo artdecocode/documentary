@@ -518,11 +518,11 @@ Types are kept in an `xml` file, for example:
 
 ```xml
 <types>
-  <t name="ServerResponse" type="import('http').ServerResponse">
+  <t name="ServerResponse" type="import('http').ServerResponse" />
   <t name="SetHeaders"
     type="(res: ServerResponse) => any"
     desc="Function to set custom headers on response." />
-  <t name="StaticConfig">
+  <t name="StaticConfig" desc="Options to setup `koa-static`.">
     <p string name="root">Root directory string.</p>
     <p opt number name="maxage" default="0">Browser cache max-age in milliseconds.</p>
     <p opt boolean name="hidden" default="false">Allow transfer of hidden files.</p>
@@ -542,7 +542,6 @@ To place the compiled declaration into a source code, the following line should 
 
 ```js
 /* src/config-static.js */
-
 import Static from 'koa-static'
 
 /**
@@ -555,15 +554,26 @@ function configure(config) {
 }
 
 /* documentary types/static.xml */
+
+export default configure
 ```
 
-The JavaScript file is then processed with <a name="doc-srcconfig-staticjs--t">`doc src/config-static.js -T`</a> command. After the processing is done, the `.js` file will be transformed to include the types specified in the XML file. This routine can be repeated whenever types are updated in their `xml` specifications.
+> Please note that the types marker must be placed before `export default` is done (or just `export`) as there's currently a bug in VS Code.
+
+The JavaScript file is then processed with <a name="doc-srcconfig-staticjs--t">`doc src/config-static.js -T`</a> command. After the processing is done, the `.js` file will be transformed to include all types specified in the XML file. On top of that, _JSDoc_ for any method that has an included type as one of its parameters will be updated to its expanded form so that a preview of options is available. This routine can be repeated whenever types are updated.
 
 ```js
+/* src/config-static.js */
 import Static from 'koa-static'
+
 /**
  * Configure the middleware.
- * @param {StaticConfig} config
+ * @param {StaticConfig} config Options to setup `koa-static`.
+ * @param {string} config.root Root directory string.
+ * @param {number} [config.maxage="0"] Browser cache max-age in milliseconds. Default `0`.
+ * @param {boolean} [config.hidden="false"] Allow transfer of hidden files. Default `false`.
+ * @param {string} [config.index="index.html"] Default file name. Default `index.html`.
+ * @param {SetHeaders} [config.setHeaders] Function to set custom headers on response.
  */
 function configure(config) {
   const middleware = Static(config)
@@ -574,14 +584,24 @@ function configure(config) {
 /**
  * @typedef {import('http').ServerResponse} ServerResponse
  * @typedef {(res: ServerResponse) => any} SetHeaders Function to set custom headers on response.
- * @typedef {Object} StaticConfig
+ * @typedef {Object} StaticConfig Options to setup `koa-static`.
  * @prop {string} root Root directory string.
  * @prop {number} [maxage="0"] Browser cache max-age in milliseconds. Default `0`.
  * @prop {boolean} [hidden="false"] Allow transfer of hidden files. Default `false`.
- * @prop {string} [index="index.html"] Default filename. Default `index.html`.
+ * @prop {string} [index="index.html"] Default file name. Default `index.html`.
  * @prop {SetHeaders} [setHeaders] Function to set custom headers on response.
  */
+
+export default configure
 ```
+
+The `StaticConfig` type will be previewed as:
+
+![preview of the StaticConfig](doc/types.gif)
+
+And the `configure` function will be seen as:
+
+![preview of the configure function](doc/configure.gif)
 ## CLI
 
 The program is used from the CLI (or `package.json` script).
