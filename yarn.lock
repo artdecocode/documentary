@@ -8,9 +8,9 @@
   dependencies:
     makepromise "2.0.0"
 
-argufy@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/argufy/-/argufy-1.1.2.tgz#e99107e00e84b6272bedc0b9a93e42014edd5a72"
+argufy@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/argufy/-/argufy-1.2.1.tgz#34985fe1087dee7fd96c92fad17c0dd137991d95"
 
 assert-diff@1.2.6:
   version "1.2.6"
@@ -98,9 +98,9 @@ es5-ext@0.8.x:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.8.2.tgz#aba8d9e1943a895ac96837a62a39b3f55ecd94ab"
 
-eslint-config-artdeco@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-artdeco/-/eslint-config-artdeco-1.0.0.tgz#1bbd25e738badb49e76faf6b934f925dfc094c9c"
+eslint-config-artdeco@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-artdeco/-/eslint-config-artdeco-1.0.1.tgz#4451c9d0ed1ce4d33dfd43a6315f12c8bfb04274"
 
 "heap@>= 0.2.0":
   version "0.2.6"
@@ -150,9 +150,9 @@ restream@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/restream/-/restream-2.1.0.tgz#934e177343e81bd6a64fc555f91085544da56db1"
 
-rexml@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/rexml/-/rexml-1.0.0.tgz#1e6ff59c4692552c9f8b87e011d5d7ad01546a08"
+rexml@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/rexml/-/rexml-1.1.0.tgz#d005c515528aa0c81a39cd456a0da40321ab3fe8"
 
 snapshot-context@2.0.1:
   version "2.0.1"

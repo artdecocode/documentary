@@ -42,17 +42,17 @@
   },
   "homepage": "https://github.com/artdecocode/documentary#readme",
   "devDependencies": {
-    "eslint-config-artdeco": "1.0.0",
+    "eslint-config-artdeco": "1.0.1",
     "snapshot-context": "2.0.1",
     "yarn-s": "1.1.0",
     "zoroaster": "2.1.0"
   },
   "dependencies": {
-    "argufy": "1.1.2",
+    "argufy": "1.2.1",
     "catchment": "2.0.1",
     "pedantry": "1.0.1",
     "restream": "2.1.0",
-    "rexml": "1.0.0",
+    "rexml": "1.1.0",
     "spawncommand": "2.0.1"
   }
 }
