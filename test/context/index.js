@@ -4,6 +4,7 @@ import { resolve } from 'path'
 import { unlink, createReadStream } from 'fs'
 import Catchment from 'catchment'
 import { Readable } from 'stream'
+import createReplaceStream from '../../src/lib/replace-stream';
 
 // const LOG = debuglog('doc')
 const TEST_BUILD = process.env.BABEL_ENV == 'test-build'
@@ -281,5 +282,9 @@ console.log('test')
   /** Absolute location of the types fixture. */
   get typesLocation() {
     return resolve(__dirname, '../fixtures/types.xml')
+  }
+  get replaceStream() {
+    const rs = createReplaceStream()
+    return rs
   }
 }
