@@ -615,7 +615,7 @@ To place a type definition as a table into a `README` file, the `TYPEDEF` snippe
 %TYPEDEF path/definitions.xml TypeName%
 ```
 
-For example, using previously defined `StaticConfig` type from `types/static.xml` file, `documentary` will process the following marker:
+For example, using previously defined `StaticConfig` type from `types/static.xml` file, `documentary` will process the following markers:
 
 ```
 %TYPEDEF types/static.xml ServerResponse%
@@ -623,15 +623,19 @@ For example, using previously defined `StaticConfig` type from `types/static.xml
 %TYPEDEF types/static.xml StaticConfig%
 ```
 
-and embed it as a table:
+or a single marker to include all types in order in which they appear in the `xml` file (doing this also allows to reference other types from properties):
+
+```
+%TYPEDEF types/static.xml%
+```
+
+and embed resulting type definitions:
 
 `import('http').ServerResponse` __<a name="serverresponse">`ServerResponse`</a>__
 
-
 `(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 
-
-`Object` __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
+__<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
 | Name | Type | Description | Default |
 | ---- | ---- | ----------- | ------- |
@@ -639,7 +643,7 @@ and embed it as a table:
 | maxage | _number_ | Browser cache max-age in milliseconds. | `0` |
 | hidden | _boolean_ | Allow transfer of hidden files. | `false` |
 | index | _string_ | Default file name. | `index.html` |
-| setHeaders | _SetHeaders_ | Function to set custom headers on response. | - |
+| setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | - |
 ## CLI
 
 The program is used from the CLI (or `package.json` script).
