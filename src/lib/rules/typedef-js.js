@@ -16,7 +16,7 @@ const makeProp = (name, opt, type = '*', defaultValue, desc = '') => {
   return p
 }
 
-const getPropType = ({ number, string, boolean, type }) => {
+export const getPropType = ({ number, string, boolean, type }) => {
   if (string) return 'string'
   if (number) return 'number'
   if (boolean) return 'boolean'
