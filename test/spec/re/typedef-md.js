@@ -19,6 +19,14 @@ const T = {
       type,
     })
   },
+  async 'matches the TYPEDEF marker without specific type'({ getMatches }) {
+    const loc = 'types/static.xml'
+    const g = `%TYPEDEF ${loc}%`
+    const res = getMatches(g, typedefMdRe, ['loc'])
+    deepEqual(res, {
+      loc,
+    })
+  },
 }
 
 export default T

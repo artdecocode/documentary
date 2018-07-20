@@ -248,7 +248,7 @@ console.log('test')
       for (let i = 0; i < p.length; i++) {
         const a = p[i]
         const c = keys[i]
-        o[c] = a
+        if (c || a) o[c] = a
       }
     })
     return o
