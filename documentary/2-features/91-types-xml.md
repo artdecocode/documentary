@@ -89,9 +89,13 @@ To place a type definition as a table into a `README` file, the `TYPEDEF` snippe
 For example, using previously defined `StaticConfig` type from `types/static.xml` file, `documentary` will process the following marker:
 
 ```
+%TYPEDEF types/static.xml ServerResponse%
+%TYPEDEF types/static.xml SetHeaders%
 %TYPEDEF types/static.xml StaticConfig%
 ```
 
 and embed it as a table:
 
+%TYPEDEF test/fixtures/types.xml ServerResponse%
+%TYPEDEF test/fixtures/types.xml SetHeaders%
 %TYPEDEF test/fixtures/types.xml StaticConfig%

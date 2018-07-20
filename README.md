@@ -35,6 +35,8 @@ yarn add -DE documentary
   * [`@typedef` Generation](#typedef-generation)
     * [`doc src/config-static.js -T`](#doc-srcconfig-staticjs--t)
     * [`README` placement](#readme-placement)
+      * [`ServerResponse`](#serverresponse)
+      * [`SetHeaders`](#setheaders)
       * [`StaticConfig`](#staticconfig)
 - [CLI](#cli)
   * [Output Location](#output-location)
@@ -616,12 +618,20 @@ To place a type definition as a table into a `README` file, the `TYPEDEF` snippe
 For example, using previously defined `StaticConfig` type from `types/static.xml` file, `documentary` will process the following marker:
 
 ```
+%TYPEDEF types/static.xml ServerResponse%
+%TYPEDEF types/static.xml SetHeaders%
 %TYPEDEF types/static.xml StaticConfig%
 ```
 
 and embed it as a table:
 
-<a name="staticconfig">`StaticConfig`</a>: Options to setup `koa-static`.
+`import('http').ServerResponse` __<a name="serverresponse">`ServerResponse`</a>__
+
+
+`(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
+
+
+`Object` __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
 | Name | Type | Description | Default |
 | ---- | ---- | ----------- | ------- |
