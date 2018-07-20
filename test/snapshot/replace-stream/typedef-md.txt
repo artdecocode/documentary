@@ -1,4 +1,4 @@
-<a name="staticconfig">`StaticConfig`</a>: Options to setup `koa-static`.
+`Object` __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
 | Name | Type | Description | Default |
 | ---- | ---- | ----------- | ------- |

@@ -20,13 +20,13 @@ const makeTable = (props) => {
   return JSON.stringify(res)
 }
 
-const getTypeDef = ({ content, props: { desc, name } }) => {
+const getTypeDef = ({ content, props: { desc, name, type = 'Object' } }) => {
   const props = extractTags('p', content)
-  const t = `[\`${name}\`](t): ${desc}`
+  const t = `\`${type}\` __[\`${name}\`](t)__${desc ? `: ${desc}` : ''}`
   const table = makeTable(props)
-  const tb = `\`\`\`table
+  const tb = props.length ? `\`\`\`table
 ${table}
-\`\`\``
+\`\`\`` : ''
   const res = `${t}
 
 ${tb}`
