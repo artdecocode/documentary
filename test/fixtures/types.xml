@@ -1,5 +1,5 @@
 <types>
-  <t name="ServerResponse" type="import('http').ServerResponse" />
+  <t name="ServerResponse" type="import('http').ServerResponse" noToc />
   <t name="SetHeaders"
     type="(res: ServerResponse) => any"
     desc="Function to set custom headers on response." />

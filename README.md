@@ -35,7 +35,6 @@ yarn add -DE documentary
   * [`@typedef` Generation](#typedef-generation)
     * [`doc src/config-static.js -T`](#doc-srcconfig-staticjs--t)
     * [`README` placement](#readme-placement)
-      * [`ServerResponse`](#serverresponse)
       * [`SetHeaders`](#setheaders)
       * [`StaticConfig`](#staticconfig)
 - [CLI](#cli)
@@ -522,7 +521,7 @@ Types are kept in an `xml` file, for example:
 
 ```xml
 <types>
-  <t name="ServerResponse" type="import('http').ServerResponse" />
+  <t name="ServerResponse" type="import('http').ServerResponse" noToc />
   <t name="SetHeaders"
     type="(res: ServerResponse) => any"
     desc="Function to set custom headers on response." />
@@ -609,7 +608,7 @@ And the `configure` function will be seen as:
 
 #### `README` placement
 
-To place a type definition as a table into a `README` file, the `TYPEDEF` snippet can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed:
+To place a type definition as a table into a `README` file, the `TYPEDEF` snippet can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed. Moreover, links to the type descriptions will be created in the table of contents using the [__TOC Titles__](#toc-titles), but to prevent this, the `noToc` attribute should be set for a type.
 
 ```
 %TYPEDEF path/definitions.xml TypeName%
@@ -631,7 +630,7 @@ or a single marker to include all types in order in which they appear in the `xm
 
 and embed resulting type definitions:
 
-`import('http').ServerResponse` __<a name="serverresponse">`ServerResponse`</a>__
+`import('http').ServerResponse` __`ServerResponse`__
 
 `(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 

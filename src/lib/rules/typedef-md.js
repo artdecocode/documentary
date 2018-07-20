@@ -28,10 +28,12 @@ const makeTable = (props, allTypes = []) => {
   return JSON.stringify(res)
 }
 
-const getTypeDef = ({ content, props: { desc, name, type } }, allTypes = []) => {
+const getTypeDef = ({ content, props: { desc, name, type, noToc } }, allTypes = []) => {
   const props = extractTags('p', content)
   const t = type ? `\`${type}\` ` : ''
-  const line = `${t}__[\`${name}\`](t)__${desc ? `: ${desc}` : ''}`
+  const n = `\`${name}\``
+  const nn = noToc ? n : `[${n}](t)`
+  const line = `${t}__${nn}__${desc ? `: ${desc}` : ''}`
   const table = makeTable(props, allTypes)
   const tb = props.length ? `\`\`\`table
 ${table}
