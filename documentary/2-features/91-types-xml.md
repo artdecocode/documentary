@@ -77,3 +77,21 @@ The `StaticConfig` type will be previewed as:
 And the `configure` function will be seen as:
 
 ![preview of the configure function](doc/configure.gif)
+
+#### `README` placement
+
+To place a type definition as a table into a `README` file, the `TYPEDEF` snippet can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed:
+
+```
+%TYPEDEF path/definitions.xml TypeName%
+```
+
+For example, using previously defined `StaticConfig` type from `types/static.xml` file, `documentary` will process the following marker:
+
+```
+%TYPEDEF types/static.xml StaticConfig%
+```
+
+and embed it as a table:
+
+%TYPEDEF test/fixtures/types.xml StaticConfig%

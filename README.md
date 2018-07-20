@@ -34,6 +34,8 @@ yarn add -DE documentary
     * [Dedicated Example Row](#dedicated-example-row)
   * [`@typedef` Generation](#typedef-generation)
     * [`doc src/config-static.js -T`](#doc-srcconfig-staticjs--t)
+    * [`README` placement](#readme-placement)
+      * [`StaticConfig`](#staticconfig)
 - [CLI](#cli)
   * [Output Location](#output-location)
   * [Only TOC](#only-toc)
@@ -602,6 +604,32 @@ The `StaticConfig` type will be previewed as:
 And the `configure` function will be seen as:
 
 ![preview of the configure function](doc/configure.gif)
+
+#### `README` placement
+
+To place a type definition as a table into a `README` file, the `TYPEDEF` snippet can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed:
+
+```
+%TYPEDEF path/definitions.xml TypeName%
+```
+
+For example, using previously defined `StaticConfig` type from `types/static.xml` file, `documentary` will process the following marker:
+
+```
+%TYPEDEF types/static.xml StaticConfig%
+```
+
+and embed it as a table:
+
+<a name="staticconfig">`StaticConfig`</a>: Options to setup `koa-static`.
+
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| __root*__ | _string_ | Root directory string. | - |
+| maxage | _number_ | Browser cache max-age in milliseconds. | `0` |
+| hidden | _boolean_ | Allow transfer of hidden files. | `false` |
+| index | _string_ | Default file name. | `index.html` |
+| setHeaders | _SetHeaders_ | Function to set custom headers on response. | - |
 ## CLI
 
 The program is used from the CLI (or `package.json` script).
