@@ -9,32 +9,13 @@ var _util = require("util");
 
 var _path = require("path");
 
-var _fs = require("fs");
-
-var _catchment = _interopRequireDefault(require("catchment"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _ = require("..");
 
 const LOG = (0, _util.debuglog)('doc');
 
-const read = async source => {
-  const rs = (0, _fs.createReadStream)(source);
-  const data = await new Promise(async (r, j) => {
-    const {
-      promise
-    } = new _catchment.default({
-      rs
-    });
-    rs.on('error', j);
-    const res = await promise;
-    r(res);
-  });
-  return data;
-};
-
 const replacer = async (match, source, from, to, type) => {
   try {
-    let f = await read(source);
+    let f = await (0, _.read)(source);
     f = f.trim();
 
     if (from && to) {
@@ -54,7 +35,7 @@ ${f.trim()}
 };
 
 exports.replacer = replacer;
-const re = /^%EXAMPLE: (.[^,]+)(?:, (.+?) => (.[^,]+))?(?:, (.+))?%$/gm;
+const re = /^%EXAMPLE: (.[^\n,]+)(?:, (.+?) => (.[^\s,]+))?(?:, (.+))?%$/gm;
 exports.re = re;
 const exampleRule = {
   re,
