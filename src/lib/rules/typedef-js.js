@@ -4,12 +4,19 @@ import { read } from '..'
 
 const LOG = debuglog('doc')
 
-export const typedefJsRe = /^\/\* documentary (.+?) \*\/\n([\s\S]+?\n)?\n$/mg
+export const typedefJsRe = /^\/\* documentary (.+?) \*\/(?:\n|([\s\S]+?\n))$/mg
+
+const getDefaultName = (name, hasDefault, defaultValue, type) => {
+  if (!hasDefault) return name
+  const d = ['number', 'boolean'].includes(type) ? defaultValue : `"${defaultValue}"`
+  const n = `${name}=${d}`
+  return n
+}
 
 const makeProp = (name, opt, type = '*', defaultValue, desc = '') => {
   if (!name) throw new Error('Property does not have a value.')
   const hasDefault = defaultValue !== undefined
-  const n = hasDefault ? `${name}="${defaultValue}"` : name
+  const n = getDefaultName(name, hasDefault, defaultValue, type)
   const nn = opt ? `[${n}]` : n
   const d = hasDefault ? ` Default \`${defaultValue}\`.` : ''
   const p = ` * @prop {${type}} ${nn} ${desc}${d}`
@@ -24,9 +31,21 @@ export const getPropType = ({ number, string, boolean, type }) => {
   return 'any'
 }
 
-const makeType = (name, type = 'Object', desc = '', props) => {
+const makePropsDesc = (props) => {
+  return ''
+  // if (!props.length) return ''
+  // const l = props.map(({ props: { name, opt } }) => {
+  //   const n = opt ? `[${name}]` : name
+  //   return `\`${n}\``
+  // })
+  // return `Has properties: ${l.join(', ')}.`
+}
+
+const makeType = (name, type = 'Object', desc, props) => {
   if (!name) throw new Error('Type does not have a name.')
-  const t = ` * @typedef {${type}} ${name}${desc ? ` ${desc}` : desc}`
+  const pd = makePropsDesc(props)
+
+  const t = ` * @typedef {${type}} ${name}${desc ? ` ${desc}` : desc}${pd ? ` ${pd}` : pd}`
   const ps = props.map(({ content, props: { name: propName, opt, default: defaultVal, ...propType } }) => {
     const pt = getPropType(propType)
     const p = makeProp(propName, opt, pt, defaultVal, content)
@@ -40,7 +59,8 @@ const makeType = (name, type = 'Object', desc = '', props) => {
 const makeBlock = (s) => {
   return `/**
 ${s}
- */`
+ */
+`
 }
 
 /**
@@ -51,9 +71,8 @@ const typedefRule = {
   re: typedefJsRe,
   async replacement(match, location) {
     try {
-      // debugger
+      LOG('Detected type marker: %s', location)
       const xml = await read(location)
-      // console.log(xml)
       const types = extractTags('types', xml)
       if (!types.length) throw new Error('XML file should contain root types element.')
 
@@ -65,7 +84,7 @@ const typedefRule = {
         return makeType(name, type, desc, ps)
       })
       const t = s.join('\n')
-      const typedef = makeBlock(t)
+      const typedef = `/* documentary ${location} */\n${makeBlock(t)}`
       return typedef
     } catch (e) {
       LOG('(%s) Could not process typdef-js: %s', location, e.message)

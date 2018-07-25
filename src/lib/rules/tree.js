@@ -1,4 +1,4 @@
-import spawncommand from 'spawncommand'
+import spawn from 'spawncommand'
 import { debuglog } from 'util'
 
 const LOG = debuglog('doc')
@@ -7,7 +7,7 @@ const treeRule = {
   re: /%TREE (.+)%/mg,
   async replacement(match, m) {
     const args = m.split(' ')
-    const p = spawncommand('tree', ['--noreport', ...args])
+    const p = spawn('tree', ['--noreport', ...args])
     try {
       const { stdout } = await p.promise
       if (/\[error opening dir\]/.test(stdout)) {
