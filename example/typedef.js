@@ -1,14 +1,9 @@
-/* src/config-static.js */
+/* yarn example/typedef.js */
 import Static from 'koa-static'
 
 /**
  * Configure the middleware.
  * @param {StaticConfig} config Options to setup `koa-static`.
- * @param {string} config.root Root directory string.
- * @param {number} [config.maxage="0"] Browser cache max-age in milliseconds. Default `0`.
- * @param {boolean} [config.hidden="false"] Allow transfer of hidden files. Default `false`.
- * @param {string} [config.index="index.html"] Default file name. Default `index.html`.
- * @param {SetHeaders} [config.setHeaders] Function to set custom headers on response.
  */
 function configure(config) {
   const middleware = Static(config)
