@@ -22,7 +22,7 @@ ${f.trim()}
     return match
   }
 }
-export const re = /^%EXAMPLE: (.[^,]+)(?:, (.+?) => (.[^,]+))?(?:, (.+))?%$/gm
+export const re = /^%EXAMPLE: (.[^\n,]+)(?:, (.+?) => (.[^\s,]+))?(?:, (.+))?%$/gm
 
 const exampleRule = {
   re,
