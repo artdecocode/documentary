@@ -68,11 +68,11 @@ export default configure
 
 The `StaticConfig` type will be previewed as:
 
-![preview of the StaticConfig](doc/types.gif)
+![preview of the StaticConfig](doc/typedef-Type.gif)
 
 And the `configure` function will be seen as:
 
-![preview of the configure function](doc/configure.gif)
+![preview of the configure function](doc/typedef-config.gif)
 
 #### `README` placement
 

@@ -566,17 +566,12 @@ export default configure
 The JavaScript file is then processed with <a name="doc-srcconfig-staticjs--t">`doc src/config-static.js -T`</a> command. After the processing is done, the `.js` file will be transformed to include all types specified in the XML file. On top of that, _JSDoc_ for any method that has an included type as one of its parameters will be updated to its expanded form so that a preview of options is available. This routine can be repeated whenever types are updated.
 
 ```js
-/* src/config-static.js */
+/* yarn example/typedef.js */
 import Static from 'koa-static'
 
 /**
  * Configure the middleware.
  * @param {StaticConfig} config Options to setup `koa-static`.
- * @param {string} config.root Root directory string.
- * @param {number} [config.maxage="0"] Browser cache max-age in milliseconds. Default `0`.
- * @param {boolean} [config.hidden="false"] Allow transfer of hidden files. Default `false`.
- * @param {string} [config.index="index.html"] Default file name. Default `index.html`.
- * @param {SetHeaders} [config.setHeaders] Function to set custom headers on response.
  */
 function configure(config) {
   const middleware = Static(config)
@@ -600,11 +595,11 @@ export default configure
 
 The `StaticConfig` type will be previewed as:
 
-![preview of the StaticConfig](doc/types.gif)
+![preview of the StaticConfig](doc/typedef-Type.gif)
 
 And the `configure` function will be seen as:
 
-![preview of the configure function](doc/configure.gif)
+![preview of the configure function](doc/typedef-config.gif)
 
 #### `README` placement
 
