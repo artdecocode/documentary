@@ -29,7 +29,7 @@ const getDescAndExample = (description, example, isExampleRow, hasExamples) => {
 const makeTable = (properties, tocTitles) => {
   const hasExamples = properties.some(({ example, isExampleRow }) => example && !isExampleRow)
   const rows = properties.map(({ name, type, required, description = '', example = '', isExampleRow }) => {
-    const t = `<code>${name}</code>`
+    const t = `<code>${required ? `${name}*` : name}</code>`
     const n = required ? strong(t) : t
     const nn = tocTitles ? `[${n}](t)` : n
     const e = example.startsWith('```') ? `\n\n${example}`: example
