@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 import { watch } from 'fs'
-import argufy from 'argufy'
 import { lstatSync, createReadStream } from 'fs'
 import Pedantry from 'pedantry'
 import { debuglog } from 'util'
 import spawn from 'spawncommand'
 import run from './run'
+import getArgs from './get-args'
+import runJs from './run-js'
 
 const LOG = debuglog('doc')
 const DEBUG = /doc/.test(process.env.NODE_DEBUG)
@@ -16,23 +17,8 @@ const {
   toc: _toc,
   watch: _watch,
   push: _push,
-} = argufy({
-  source: {
-    command: true,
-  },
-  toc: {
-    short: 't',
-    boolean: true,
-  },
-  watch: {
-    short: 'w',
-    boolean: true,
-  },
-  output: 'o',
-  push: {
-    short: 'p',
-  },
-})
+  typedef: _typedef,
+} = getArgs()
 
 if (process.argv.find(a => a == '-p') && !_push) {
   console.log('Please specify a commit message.')
@@ -54,7 +40,25 @@ const doc = async (source, output, justToc = false) => {
   await run(stream, output, justToc)
 }
 
+const docJs = async (source, output) => {
+  if (!source) {
+    console.log('Please specify a JavaScript file.')
+    process.exit(1)
+  }
+  try {
+    await runJs(source, output)
+  } catch ({ stack, message }) {
+    DEBUG ? LOG(stack) : console.log(message)
+    process.exit(1)
+  }
+}
+
+
 (async () => {
+  if (_typedef) {
+    await docJs(_source, _output)
+    return
+  }
   try {
     await doc(_source, _output, _toc)
   } catch ({ stack, message, code }) {
