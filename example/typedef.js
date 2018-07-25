@@ -15,10 +15,6 @@ function configure(config) {
   return middleware
 }
 
-// configure({
-//   setHeader
-// })
-
 /* documentary types/static.xml */
 /**
  * @typedef {import('http').ServerResponse} ServerResponse
