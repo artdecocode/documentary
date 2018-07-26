@@ -1,6 +1,6 @@
 // import { debuglog } from 'util'
 import { fork } from 'spawncommand'
-import { resolve } from 'path'
+import { resolve, relative } from 'path'
 import { unlink, createReadStream } from 'fs'
 import Catchment from 'catchment'
 import { Readable } from 'stream'
@@ -281,7 +281,8 @@ console.log('test')
   }
   /** Absolute location of the types fixture. */
   get typesLocation() {
-    return resolve(__dirname, '../fixtures/types.xml')
+    const r = resolve(__dirname, '../fixtures/types.xml')
+    return relative('', r)
   }
   get replaceStream() {
     const rs = createReplaceStream()
