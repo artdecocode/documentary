@@ -22,6 +22,10 @@ const getArgs = () => {
       boolean: true,
       description: 'Process a JavaScript file to include typedef documentation in their source code. The target file should contain `/* documentary path/to/types.xml */` marker in place where types are to be inserted.',
     },
+    version: {
+      short: 'v',
+      boolean: true,
+    },
   })
 }
 

@@ -7,6 +7,7 @@ import spawn from 'spawncommand'
 import run from './run'
 import getArgs from './get-args'
 import runJs from './run-js'
+import { version } from '../../package.json'
 
 const LOG = debuglog('doc')
 const DEBUG = /doc/.test(process.env.NODE_DEBUG)
@@ -18,7 +19,14 @@ const {
   watch: _watch,
   push: _push,
   typedef: _typedef,
+  version: _version,
 } = getArgs()
+
+
+if(_version) {
+  console.log(version)
+  process.exit(0)
+}
 
 if (process.argv.find(a => a == '-p') && !_push) {
   console.log('Please specify a commit message.')

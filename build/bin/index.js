@@ -15,6 +15,8 @@ var _getArgs = _interopRequireDefault(require("./get-args"));
 
 var _runJs = _interopRequireDefault(require("./run-js"));
 
+var _package = require("../../package.json");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const LOG = (0, _util.debuglog)('doc');
@@ -25,8 +27,14 @@ const {
   toc: _toc,
   watch: _watch,
   push: _push,
-  typedef: _typedef
+  typedef: _typedef,
+  version: _version
 } = (0, _getArgs.default)();
+
+if (_version) {
+  console.log(_package.version);
+  process.exit(0);
+}
 
 if (process.argv.find(a => a == '-p') && !_push) {
   console.log('Please specify a commit message.');
