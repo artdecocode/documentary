@@ -51,7 +51,7 @@ const makeTable = (properties, tocTitles) => {
     example = '',
     isExampleRow
   }) => {
-    const t = `<code>${name}</code>`;
+    const t = `<code>${required ? `${name}*` : name}</code>`;
     const n = required ? strong(t) : t;
     const nn = tocTitles ? `[${n}](t)` : n;
     const e = example.startsWith('```') ? `\n\n${example}` : example;

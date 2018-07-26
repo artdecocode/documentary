@@ -18,6 +18,7 @@
     "example/": "yarn e example/example.js",
     "example/toc.js": "NODE_DEBUG=doc yarn e example/toc.js",
     "example/toc2.js": "NODE_DEBUG=doc yarn e example/toc2.js",
+    "example/typedef.js": "yarn dev example/typedef.js -T",
     "b": "b --source-maps --ignore src/bin/register.js",
     "build": "yarn-s b doc"
   },
@@ -42,17 +43,17 @@
   },
   "homepage": "https://github.com/artdecocode/documentary#readme",
   "devDependencies": {
-    "eslint-config-artdeco": "1.0.0",
+    "eslint-config-artdeco": "1.0.1",
     "snapshot-context": "2.0.1",
     "yarn-s": "1.1.0",
     "zoroaster": "2.1.0"
   },
   "dependencies": {
-    "argufy": "1.1.2",
-    "catchment": "2.0.1",
+    "argufy": "1.2.1",
+    "catchment": "3.0.0",
     "pedantry": "1.0.1",
-    "restream": "2.1.0",
-    "rexml": "1.0.0",
+    "restream": "3.0.0",
+    "rexml": "1.1.0",
     "spawncommand": "2.0.1"
   }
 }

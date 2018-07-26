@@ -23,6 +23,8 @@ var _table = require("./rules/table");
 
 var _type = _interopRequireDefault(require("./rules/type"));
 
+var _typedefMd = _interopRequireDefault(require("./rules/typedef-md"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/;
@@ -58,7 +60,7 @@ const getBuffer = async buffer => {
       return '';
     }
 
-  }, cutTable, cutMethodTitle, cutCode, _rules.commentRule, _type.default, insertMethodTitle, insertTable, insertLinkTitle, insertInnerCode, insertTitle]);
+  }, cutTable, cutMethodTitle, cutCode, _rules.commentRule, _typedefMd.default, _type.default, insertMethodTitle, insertTable, insertLinkTitle, insertInnerCode, insertTitle]);
   const c = new _catchment.default({
     rs
   });

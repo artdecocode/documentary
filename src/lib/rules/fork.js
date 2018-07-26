@@ -7,11 +7,11 @@ const forkRule = {
   re: /%FORK(?:-(\w+))? (.+)%/mg,
   async replacement(match, lang, m) {
     const [mod, ...args] = m.split(' ')
-    const f = fork(mod, args, {
+    const { promise } = fork(mod, args, {
       execArgv: [],
       stdio: 'pipe',
     })
-    const { stdout } = await f.promise
+    const { stdout } = await promise
     return codeSurround(stdout, lang)
   },
 }

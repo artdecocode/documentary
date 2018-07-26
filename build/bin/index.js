@@ -3,8 +3,6 @@
 
 var _fs = require("fs");
 
-var _argufy = _interopRequireDefault(require("argufy"));
-
 var _pedantry = _interopRequireDefault(require("pedantry"));
 
 var _util = require("util");
@@ -12,6 +10,10 @@ var _util = require("util");
 var _spawncommand = _interopRequireDefault(require("spawncommand"));
 
 var _run = _interopRequireDefault(require("./run"));
+
+var _getArgs = _interopRequireDefault(require("./get-args"));
+
+var _runJs = _interopRequireDefault(require("./run-js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22,24 +24,9 @@ const {
   output: _output,
   toc: _toc,
   watch: _watch,
-  push: _push
-} = (0, _argufy.default)({
-  source: {
-    command: true
-  },
-  toc: {
-    short: 't',
-    boolean: true
-  },
-  watch: {
-    short: 'w',
-    boolean: true
-  },
-  output: 'o',
-  push: {
-    short: 'p'
-  }
-});
+  push: _push,
+  typedef: _typedef
+} = (0, _getArgs.default)();
 
 if (process.argv.find(a => a == '-p') && !_push) {
   console.log('Please specify a commit message.');
@@ -65,7 +52,29 @@ const doc = async (source, output, justToc = false) => {
   await (0, _run.default)(stream, output, justToc);
 };
 
+const docJs = async (source, output) => {
+  if (!source) {
+    console.log('Please specify a JavaScript file.');
+    process.exit(1);
+  }
+
+  try {
+    await (0, _runJs.default)(source, output);
+  } catch ({
+    stack,
+    message
+  }) {
+    DEBUG ? LOG(stack) : console.log(message);
+    process.exit(1);
+  }
+};
+
 (async () => {
+  if (_typedef) {
+    await docJs(_source, _output);
+    return;
+  }
+
   try {
     await doc(_source, _output, _toc);
   } catch ({

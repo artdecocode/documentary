@@ -7,6 +7,7 @@ import { Replaceable } from 'restream/build'
 import { makeInitialRule, makeRule, makeMarkers } from './markers'
 import { tableRe } from './rules/table'
 import typeRule from './rules/type'
+import typedefMdRule from './rules/typedef-md'
 
 const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/
 
@@ -47,6 +48,7 @@ const getBuffer = async (buffer) => {
     cutMethodTitle,
     cutCode,
     stripComments,
+    typedefMdRule,
     typeRule,
     insertMethodTitle,
     insertTable,

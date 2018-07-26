@@ -10,6 +10,7 @@ import { getLink } from '.'
 import gifRule from './rules/gif'
 import typeRule from './rules/type'
 import badgeRule from './rules/badge'
+import typedefMdRule from './rules/typedef-md'
 
 export default function createReplaceStream(toc) {
   const tocRule = createTocRule(toc)
@@ -24,6 +25,9 @@ export default function createReplaceStream(toc) {
     linkTitle: linkTitleRe,
   })
 
+  /* below have ``` in them, therefore we want more control over handling them
+   * so that Replaceable does not confuse them with the code blocks.
+   */
   const [cutCode, cutTable, cutMethodTitle, cutInnerCode] =
     [code, table, methodTitle, innerCode, linkTitle].map((marker) => {
       const rule = makeInitialRule(marker)
@@ -51,6 +55,7 @@ export default function createReplaceStream(toc) {
     typeRule,
 
     insertTable,
+    typedefMdRule, // places a table hence just before table
     tableRule,
     {
       re: linkTitleRe,

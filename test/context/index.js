@@ -1,9 +1,10 @@
 // import { debuglog } from 'util'
 import { fork } from 'spawncommand'
-import { resolve } from 'path'
+import { resolve, relative } from 'path'
 import { unlink, createReadStream } from 'fs'
 import Catchment from 'catchment'
 import { Readable } from 'stream'
+import createReplaceStream from '../../src/lib/replace-stream';
 
 // const LOG = debuglog('doc')
 const TEST_BUILD = process.env.BABEL_ENV == 'test-build'
@@ -247,7 +248,7 @@ console.log('test')
       for (let i = 0; i < p.length; i++) {
         const a = p[i]
         const c = keys[i]
-        o[c] = a
+        if (c || a) o[c] = a
       }
     })
     return o
@@ -277,5 +278,14 @@ console.log('test')
   makeInnerCode(code) {
     const s = `\`${code}\``
     return s
+  }
+  /** Absolute location of the types fixture. */
+  get typesLocation() {
+    const r = resolve(__dirname, '../fixtures/types.xml')
+    return relative('', r)
+  }
+  get replaceStream() {
+    const rs = createReplaceStream()
+    return rs
   }
 }

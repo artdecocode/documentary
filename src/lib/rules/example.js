@@ -1,20 +1,8 @@
 import { debuglog } from 'util'
 import { parse } from 'path'
-import { createReadStream } from 'fs'
-import Catchment from 'catchment'
+import { read } from '..'
 
 const LOG = debuglog('doc')
-
-const read = async (source) => {
-  const rs = createReadStream(source)
-  const data = await new Promise(async (r, j) => {
-    const { promise } = new Catchment({ rs })
-    rs.on('error', j)
-    const res = await promise
-    r(res)
-  })
-  return data
-}
 
 export const replacer = async (match, source, from, to, type) => {
   try {
@@ -34,7 +22,7 @@ ${f.trim()}
     return match
   }
 }
-export const re = /^%EXAMPLE: (.[^,]+)(?:, (.+?) => (.[^,]+))?(?:, (.+))?%$/gm
+export const re = /^%EXAMPLE: (.[^\n,]+)(?:, (.+?) => (.[^\s,]+))?(?:, (.+))?%$/gm
 
 const exampleRule = {
   re,

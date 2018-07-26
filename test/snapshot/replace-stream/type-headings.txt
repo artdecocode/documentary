@@ -9,7 +9,7 @@
  </thead>
  <tbody>
   <tr>
-   <td><a name="title"><strong><code>title</code></strong></a></td>
+   <td><a name="title"><strong><code>title*</code></strong></a></td>
    <td><em>string</em></td>
    <td colspan="2">Question title.</td>
   </tr>

@@ -14,13 +14,15 @@ const forkRule = {
 
   async replacement(match, lang, m) {
     const [mod, ...args] = m.split(' ');
-    const f = (0, _spawncommand.fork)(mod, args, {
+    const {
+      promise
+    } = (0, _spawncommand.fork)(mod, args, {
       execArgv: [],
       stdio: 'pipe'
     });
     const {
       stdout
-    } = await f.promise;
+    } = await promise;
     return codeSurround(stdout, lang);
   }
 
