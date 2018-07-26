@@ -4,7 +4,7 @@ import { read } from '..'
 
 const LOG = debuglog('doc')
 
-export const typedefJsRe = /^\/\* documentary (.+?) \*\/\n(?:([\s\S]+?\n))?$/mg
+export const typedefJsRe = /^\/\* documentary (.+?) \*\/\n(?:([^\n][\s\S]+?\n))?$/mg
 
 const getDefaultName = (name, hasDefault, defaultValue, type) => {
   if (!hasDefault) return name

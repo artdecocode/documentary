@@ -12,12 +12,32 @@ const T = {
     { createReadable, catchment, typesLocation, SNAPSHOT_DIR }, { setDir, test }
   ) {
     setDir(SNAPSHOT_DIR)
-    const s = `/* documentary ${typesLocation} */\n\n`
+    const s = `/* documentary ${typesLocation} */
+
+`
     const rs = createReadable(s)
     const stream = createJsReplaceStream()
     rs.pipe(stream)
     const res = await catchment(stream)
     await test('replace-stream/typedef-js.txt', res)
+  },
+  async 'places types declaration with existing typedef'(
+    { createReadable, catchment, typesLocation, SNAPSHOT_DIR }, { setDir, test }
+  ) {
+    setDir(SNAPSHOT_DIR)
+    const s = `/* documentary ${typesLocation} */
+
+/**
+ * @typedef {Object} TypeDef Existing typedef.
+ * @prop {string} [test=true] If test or not.
+ */
+
+export default test`
+    const rs = createReadable(s)
+    const stream = createJsReplaceStream()
+    rs.pipe(stream)
+    const res = await catchment(stream)
+    await test('replace-stream/typedef-existing.txt', res)
   },
 }
 
