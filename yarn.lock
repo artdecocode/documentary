@@ -34,6 +34,10 @@ catchment@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/catchment/-/catchment-2.0.1.tgz#df0a05ac2e1194cf280c2444d5bb564a9cc8f488"
 
+catchment@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/catchment/-/catchment-3.0.0.tgz#b909a59639c37201c3d0ee550062e2ade0ff0a80"
+
 catchment@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/catchment/-/catchment-1.0.0.tgz#3061f71be0102710be84328d2f94363a165f8c4b"
@@ -146,9 +150,9 @@ restream@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/restream/-/restream-1.2.0.tgz#fd13b031a54e80cc65d1878c43149f1b3a40efbb"
 
-restream@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/restream/-/restream-2.1.0.tgz#934e177343e81bd6a64fc555f91085544da56db1"
+restream@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/restream/-/restream-3.0.0.tgz#39c07a3f4bc70979e5804135b0822001c9bb6322"
 
 rexml@1.1.0:
   version "1.1.0"
