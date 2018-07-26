@@ -61,7 +61,7 @@ const makePropsDesc = props => {
 const makeType = (name, type = 'Object', desc, props) => {
   if (!name) throw new Error('Type does not have a name.');
   const pd = makePropsDesc(props);
-  const t = ` * @typedef {${type}} ${name}${desc ? ` ${desc}` : desc}${pd ? ` ${pd}` : pd}`;
+  const t = ` * @typedef {${type}} ${name}${desc ? ` ${desc}` : ''}${pd ? ` ${pd}` : ''}`;
   const ps = props.map(({
     content,
     props: {
