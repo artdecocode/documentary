@@ -14,7 +14,7 @@ var _ = require("..");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const LOG = (0, _util.debuglog)('doc');
-const typedefJsRe = /^\/\* documentary (.+?) \*\/(?:\n|([\s\S]+?\n))$/mg;
+const typedefJsRe = /^\/\* documentary (.+?) \*\/\n(?:([\s\S]+?\n))?$/mg;
 exports.typedefJsRe = typedefJsRe;
 
 const getDefaultName = (name, hasDefault, defaultValue, type) => {
