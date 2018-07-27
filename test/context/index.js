@@ -25,6 +25,12 @@ export default class Context {
     return 'test/fixtures/example.js'
   }
   /**
+   * Path to a JavaScript file containing `@typedef`s.
+   */
+  get extractJsPath() {
+    return resolve(__dirname, '../fixtures/extract.js')
+  }
+  /**
    * @param {RegExp} re Regular expression to reset.
    */
   resetRe(re) {

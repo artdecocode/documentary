@@ -23,7 +23,9 @@ const keys = ['type', 'opt', 'name', 'quote', 'defaultValue', 'description', 'De
 const makeT = (type, name, description, properties) => {
   const hasProps = properties.length
   const tt = type && type != 'Object' ? ` type="${type}"` : ''
-  const t = `  <t name="${name}"${tt} desc="${description}"${hasProps ? '' : ' /'}>\n`
+  const d = description ? ` desc="${description}"` : ''
+  const i = ' '.repeat(2)
+  const t = `${i}<t name="${name}"${tt}${d}${hasProps ? '' : ' /'}>\n`
   return t
 }
 
@@ -32,7 +34,8 @@ const makeP = (type, name, defaultValue, optional, description) => {
   const def = defaultValue !== undefined ? ` default="${defaultValue}"` : ''
   const o = optional ? ' opt' : ''
   const desc = description ? `>${description}</p>` : '/>'
-  const p = `    <p${o}${t} name="${name}"${def}${desc}\n`
+  const i = ' '.repeat(4)
+  const p = `${i}<p${o}${t} name="${name}"${def}${desc}\n`
   return p
 }
 
@@ -115,13 +118,18 @@ class Properties extends Transform {
 }
 
 /**
- * Process a JavaScript file.
- * @param {string} source Path to the source JavaScript file.
+ * Process a JavaScript file to extract typedefs and place them in an XML file.
+ * @param {Config} config Configuration object.
+ * @param {string} config.source Input file from which to extract typedefs.
+ * @param {string} [config.extract="-"] Output file to where to write XML. `-` will write to `stdout`.
+ * @param {string} [config.stream] An output stream to which to write instead of a location from `extract`.
  */
-export default async function runExtract({
-  source,
-  extract = '-',
-}) {
+async function runExtract(config) {
+  const {
+    source,
+    extract = '-',
+    stream: st,
+  } = config
   try {
     const s = createReadStream(source)
     const ts = createRegexTransformStream(typedefRe)
@@ -134,7 +142,9 @@ export default async function runExtract({
     s.pipe(ts).pipe(ps).pipe(xml).pipe(stream, { end: false })
 
     let p = Promise.resolve()
-    if (extract == '-') {
+    if (st) {
+      stream.pipe(st)
+    } else if (extract == '-') {
       stream.pipe(process.stdout)
     } else {
       const ws = createWriteStream(extract)
@@ -154,9 +164,18 @@ export default async function runExtract({
       xml.on('end', r)
     })
 
-    await writeOnce(stream, '</types>\n')
+    await new Promise(r => stream.end('</types>\n', r))
     await p
   } catch (err) {
     catcher(err)
   }
 }
+
+/**
+ * @typedef {Object} Config Configuration object.
+ * @prop {string} [source] Input file from which to extract typedefs.
+ * @prop {string} [extract="-"] Output file to where to write XML. `-` will write to `stdout`.
+ * @prop {Readable} [stream] An output stream to which to write instead of a location from `extract`.
+ */
+
+export default runExtract
