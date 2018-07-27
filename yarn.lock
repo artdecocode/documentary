@@ -130,6 +130,10 @@ makepromise@2.0.0:
   dependencies:
     erotic "1.0.1"
 
+mismatch@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/mismatch/-/mismatch-1.0.1.tgz#edf28129b34cfc94f009d0619894dc03237006ed"
+
 pedantry@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/pedantry/-/pedantry-1.0.1.tgz#d32d78a3dfcf130c402fa65dce819c199c29ddbe"
