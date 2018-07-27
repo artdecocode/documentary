@@ -1,4 +1,4 @@
-import { createWriteStream, createReadStream } from 'fs'
+import { createReadStream } from 'fs'
 import createRegexTransformStream from 'restream'
 import { Transform, PassThrough } from 'stream'
 import mismatch from 'mismatch'
@@ -6,6 +6,7 @@ import catcher from '../catcher'
 import { debuglog } from 'util'
 import typedefRe from '../../lib/typedef/re'
 import { getNameWithDefault } from '../../lib/typedef'
+import whichStream from './which-stream'
 
 const LOG = debuglog('doc')
 
@@ -121,13 +122,13 @@ class Properties extends Transform {
  * Process a JavaScript file to extract typedefs and place them in an XML file.
  * @param {Config} config Configuration object.
  * @param {string} config.source Input file from which to extract typedefs.
- * @param {string} [config.extract="-"] Output file to where to write XML. `-` will write to `stdout`.
- * @param {string} [config.stream] An output stream to which to write instead of a location from `extract`.
+ * @param {string} [config.extractFrom="-"] Output file to where to write XML. `-` will write to `stdout`. Default `-`.
+ * @param {string} [config.stream] An output stream to which to write instead of a location from `extractFrom`.
  */
 async function runExtract(config) {
   const {
     source,
-    extract = '-',
+    extractFrom = '-',
     stream: st,
   } = config
   try {
@@ -141,19 +142,7 @@ async function runExtract(config) {
 
     s.pipe(ts).pipe(ps).pipe(xml).pipe(stream, { end: false })
 
-    let p = Promise.resolve()
-    if (st) {
-      stream.pipe(st)
-    } else if (extract == '-') {
-      stream.pipe(process.stdout)
-    } else {
-      const ws = createWriteStream(extract)
-      p = new Promise((r, j) => {
-        ws.on('close', r)
-        ws.on('error', j)
-      })
-      stream.pipe(ws)
-    }
+    const { p } = whichStream(stream, st, extractFrom)
 
     await new Promise((r, j) => {
       s.on('error', e => { LOG('Error in Read'); j(e) })
@@ -174,7 +163,7 @@ async function runExtract(config) {
 /**
  * @typedef {Object} Config Configuration object.
  * @prop {string} [source] Input file from which to extract typedefs.
- * @prop {string} [extract="-"] Output file to where to write XML. `-` will write to `stdout`.
+ * @prop {string} [extractFrom="-"] Output file to where to write XML. `-` will write to `stdout`.
  * @prop {Readable} [stream] An output stream to which to write instead of a location from `extract`.
  */
 

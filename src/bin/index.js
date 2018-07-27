@@ -4,7 +4,7 @@ import { debuglog } from 'util'
 import { lstatSync } from 'fs'
 import run from './run'
 import getArgs from './get-args'
-import runJs from './run/js'
+import generateTypedef from './run/generate'
 import runExtract from './run/extract'
 import { version } from '../../package.json'
 import catcher from './catcher'
@@ -19,9 +19,13 @@ const {
   toc: _toc,
   watch: _watch,
   push: _push,
-  typedef: _typedef,
   version: _version,
   extract: _extract,
+} = getArgs()
+
+let {
+  generate: _generate,
+  _argv,
 } = getArgs()
 
 if (_version) {
@@ -33,7 +37,11 @@ if (process.argv.find(a => a == '-p') && !_push) {
   catcher('Please specify a commit message.')
 }
 if (process.argv.find(a => a == '-e') && !_extract) {
-  catcher('Please specify where to extract typedefs.')
+  catcher('Please specify where to extract typedefs (- for stdout).')
+}
+
+if (_argv.find(g => g == '-g') && !_generate) {
+  _generate = _source
 }
 
 if (_source) {
@@ -57,14 +65,14 @@ const doc = async (source, output, justToc = false) => {
   if (_extract) {
     await runExtract({
       source: _source,
-      extract: _extract,
+      extractFrom: _extract,
     })
     return
   }
-  if (_typedef) {
-    await runJs({
+  if (_generate) {
+    await generateTypedef({
       source: _source,
-      output: _output,
+      generateTo: _generate,
     })
     return
   }
