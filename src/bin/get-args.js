@@ -27,7 +27,7 @@ const getArgs = () => {
       boolean: true,
     },
     extract: {
-      short: 'x',
+      short: 'e',
       description: 'Extract @typedef JSDoc comments and place them in a file.',
     },
   })

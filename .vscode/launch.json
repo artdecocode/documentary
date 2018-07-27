@@ -35,9 +35,9 @@
         "NODE_DEBUG": "doc"
       },
       "args": [
-        "documentation",
-        "-o",
-        "debug.md"
+        "src/index.js",
+        "-e",
+        "types"
       ],
       "console": "integratedTerminal",
       "skipFiles": [
