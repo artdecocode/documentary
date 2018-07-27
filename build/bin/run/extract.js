@@ -31,7 +31,7 @@ const getVal = val => {
   return v !== undefined ? v : val;
 };
 
-const propExtractRe = /^ \* @prop {(.+?)} (\[)?(.+?)(?:=(["'])?(.+?)\4)?(?:])? (.+?)(?: Default `(.+?)`.)?$/gm;
+const propExtractRe = /^ \* @prop {(.+?)} (\[)?(.+?)(?:=(["'])?(.+?)\4)?(?:])?(?: (.+?))?(?: Default `(.+?)`.)?$/gm;
 exports.propExtractRe = propExtractRe;
 const keys = ['type', 'opt', 'name', 'quote', 'defaultValue', 'description', 'Default'];
 
