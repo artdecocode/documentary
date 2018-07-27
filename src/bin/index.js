@@ -6,7 +6,8 @@ import { debuglog } from 'util'
 import spawn from 'spawncommand'
 import run from './run'
 import getArgs from './get-args'
-import runJs from './run-js'
+import runJs from './run/js'
+import runExtract from './run/extract'
 import { version } from '../../package.json'
 
 const LOG = debuglog('doc')
@@ -20,6 +21,7 @@ const {
   push: _push,
   typedef: _typedef,
   version: _version,
+  extract: _extract,
 } = getArgs()
 
 
@@ -30,6 +32,10 @@ if(_version) {
 
 if (process.argv.find(a => a == '-p') && !_push) {
   console.log('Please specify a commit message.')
+  process.exit(1)
+}
+if (process.argv.find(a => a == '-x') && !_extract) {
+  console.log('Please specify where to extract typedefs.')
   process.exit(1)
 }
 
@@ -48,13 +54,25 @@ const doc = async (source, output, justToc = false) => {
   await run(stream, output, justToc)
 }
 
-const docJs = async (source, output) => {
+const docJs = async ({
+  source,
+  output,
+  extract,
+}) => {
   if (!source) {
     console.log('Please specify a JavaScript file.')
     process.exit(1)
   }
+
   try {
-    await runJs(source, output)
+    if (extract) {
+      await runExtract({ source, extract })
+    } else {
+      await runJs({
+        source,
+        output,
+      })
+    }
   } catch ({ stack, message }) {
     DEBUG ? LOG(stack) : console.log(message)
     process.exit(1)
@@ -64,7 +82,11 @@ const docJs = async (source, output) => {
 
 (async () => {
   if (_typedef) {
-    await docJs(_source, _output)
+    await docJs({
+      source: _source,
+      output: _output,
+      extract: _extract,
+    })
     return
   }
   try {

@@ -6,7 +6,10 @@ import createJsReplaceStream from '../lib/js-replace-stream'
  * Process a JavaScript file.
  * @param {string} source Path to the source JavaScript file.
  */
-export default async function runJs(source, output = source) {
+export default async function runJs({
+  source,
+  output = source,
+}) {
   const s = createReadStream(source)
   const rs = createJsReplaceStream()
   s.pipe(rs)
