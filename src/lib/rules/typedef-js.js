@@ -1,24 +1,18 @@
 import { debuglog } from 'util'
 import extractTags from 'rexml'
 import { read } from '..'
+import { getNameWithDefault } from '../typedef'
 
 const LOG = debuglog('doc')
 
 export const typedefJsRe = /^\/\* documentary (.+?) \*\/\n(?:([^\n][\s\S]+?\n))?$/mg
 
-const getDefaultName = (name, hasDefault, defaultValue, type) => {
-  if (!hasDefault) return name
-  const d = ['number', 'boolean'].includes(type) ? defaultValue : `"${defaultValue}"`
-  const n = `${name}=${d}`
-  return n
-}
 
 const makeProp = (name, opt, type = '*', defaultValue, desc = '') => {
   if (!name) throw new Error('Property does not have a value.')
-  const hasDefault = defaultValue !== undefined
-  const n = getDefaultName(name, hasDefault, defaultValue, type)
+  const n = getNameWithDefault(name, defaultValue, type)
   const nn = opt ? `[${n}]` : n
-  const d = hasDefault ? ` Default \`${defaultValue}\`.` : ''
+  const d = defaultValue !== undefined ? ` Default \`${defaultValue}\`.` : ''
   const p = ` * @prop {${type}} ${nn} ${desc}${d}`
   return p
 }
