@@ -15,7 +15,7 @@ var _methodTitle = require("./rules/method-title");
 
 var _rules = require("./rules");
 
-var _build = require("restream/build");
+var _restream = require("restream");
 
 var _markers = require("./markers");
 
@@ -53,7 +53,7 @@ const getBuffer = async buffer => {
     const rule = (0, _markers.makeRule)(marker);
     return rule;
   });
-  const rs = new _build.Replaceable([cutTitle, cutInnerCode, cutLinkTitle, {
+  const rs = new _restream.Replaceable([cutTitle, cutInnerCode, cutLinkTitle, {
     re: innerCode.regExp,
 
     replacement() {

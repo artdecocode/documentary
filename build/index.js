@@ -29,4 +29,17 @@ async function documentary() {
 //   // const t = new Tran
 //   // return Object.keys(structure)
 // }
+
+/**
+ * @typedef {Object} Test This is test description.
+ * @typedef {Object} SessionConfig Description of Session Config.
+ * @prop {string} key cookie key.
+ * @prop {number|'session'} [maxAge=86400000] maxAge in ms. Default is 1 day. `session` will result in a cookie that expires when session/browser is closed. Warning: If a session cookie is stolen, this cookie will never expire. Default `86400000`.
+ * @prop {boolean} [overwrite] Can overwrite or not. Default `true`.
+ * @prop {boolean} [httpOnly] httpOnly or not or not. Default `true`.
+ * @prop {boolean} [signed=false] Signed or not. Default `true`.
+ * @prop {boolean} [rolling] Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. Default `false`.
+ * @prop {boolean} [renew] Renew session when session is nearly expired, so we can always keep user logged in. Default `false`.
+ */
+// console.log('test')
 //# sourceMappingURL=index.js.map

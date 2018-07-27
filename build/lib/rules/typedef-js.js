@@ -11,25 +11,19 @@ var _rexml = _interopRequireDefault(require("rexml"));
 
 var _ = require("..");
 
+var _typedef = require("../typedef");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const LOG = (0, _util.debuglog)('doc');
 const typedefJsRe = /^\/\* documentary (.+?) \*\/\n(?:([^\n][\s\S]+?\n))?$/mg;
 exports.typedefJsRe = typedefJsRe;
 
-const getDefaultName = (name, hasDefault, defaultValue, type) => {
-  if (!hasDefault) return name;
-  const d = ['number', 'boolean'].includes(type) ? defaultValue : `"${defaultValue}"`;
-  const n = `${name}=${d}`;
-  return n;
-};
-
 const makeProp = (name, opt, type = '*', defaultValue, desc = '') => {
   if (!name) throw new Error('Property does not have a value.');
-  const hasDefault = defaultValue !== undefined;
-  const n = getDefaultName(name, hasDefault, defaultValue, type);
+  const n = (0, _typedef.getNameWithDefault)(name, defaultValue, type);
   const nn = opt ? `[${n}]` : n;
-  const d = hasDefault ? ` Default \`${defaultValue}\`.` : '';
+  const d = defaultValue !== undefined ? ` Default \`${defaultValue}\`.` : '';
   const p = ` * @prop {${type}} ${nn} ${desc}${d}`;
   return p;
 };

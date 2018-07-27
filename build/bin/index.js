@@ -3,19 +3,21 @@
 
 var _fs = require("fs");
 
-var _pedantry = _interopRequireDefault(require("pedantry"));
-
 var _util = require("util");
-
-var _spawncommand = _interopRequireDefault(require("spawncommand"));
 
 var _run = _interopRequireDefault(require("./run"));
 
 var _getArgs = _interopRequireDefault(require("./get-args"));
 
-var _runJs = _interopRequireDefault(require("./run-js"));
+var _js = _interopRequireDefault(require("./run/js"));
+
+var _extract2 = _interopRequireDefault(require("./run/extract"));
 
 var _package = require("../../package.json");
+
+var _catcher = _interopRequireDefault(require("./catcher"));
+
+var _lib = require("../lib");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28,7 +30,8 @@ const {
   watch: _watch,
   push: _push,
   typedef: _typedef,
-  version: _version
+  version: _version,
+  extract: _extract
 } = (0, _getArgs.default)();
 
 if (_version) {
@@ -37,49 +40,45 @@ if (_version) {
 }
 
 if (process.argv.find(a => a == '-p') && !_push) {
-  console.log('Please specify a commit message.');
-  process.exit(1);
+  (0, _catcher.default)('Please specify a commit message.');
+}
+
+if (process.argv.find(a => a == '-e') && !_extract) {
+  (0, _catcher.default)('Please specify where to extract typedefs.');
+}
+
+if (_source) {
+  try {
+    (0, _fs.lstatSync)(_source);
+  } catch (err) {
+    if (err.message) err.message = `Could not read input ${_source}: ${err.message}`;
+    (0, _catcher.default)(err);
+  }
 }
 
 const doc = async (source, output, justToc = false) => {
   if (!source) {
-    console.log('Please specify an input file.'); // print usage
-
-    process.exit(1);
+    throw new Error('Please specify an input file.');
   }
 
-  const ls = (0, _fs.lstatSync)(source);
-  let stream;
-
-  if (ls.isDirectory()) {
-    stream = new _pedantry.default(source);
-  } else if (ls.isFile()) {
-    stream = (0, _fs.createReadStream)(source);
-  }
-
+  const stream = (0, _lib.getStream)(source);
   await (0, _run.default)(stream, output, justToc);
 };
 
-const docJs = async (source, output) => {
-  if (!source) {
-    console.log('Please specify a JavaScript file.');
-    process.exit(1);
-  }
-
-  try {
-    await (0, _runJs.default)(source, output);
-  } catch ({
-    stack,
-    message
-  }) {
-    DEBUG ? LOG(stack) : console.log(message);
-    process.exit(1);
-  }
-};
-
 (async () => {
+  if (_extract) {
+    await (0, _extract2.default)({
+      source: _source,
+      extract: _extract
+    });
+    return;
+  }
+
   if (_typedef) {
-    await docJs(_source, _output);
+    await (0, _js.default)({
+      source: _source,
+      output: _output
+    });
     return;
   }
 
@@ -90,17 +89,13 @@ const docJs = async (source, output) => {
     message,
     code
   }) {
-    if (code == 'ENOENT') {
-      console.log('File %s does not exist.', _source);
-      process.exit(2);
-    }
-
     DEBUG ? LOG(stack) : console.log(message);
   }
 
   let debounce = false;
 
   if (_watch || _push) {
+    // also watch referenced example files.
     (0, _fs.watch)(_source, {
       recursive: true
     }, async () => {
@@ -109,42 +104,13 @@ const docJs = async (source, output) => {
         await doc(_source, _output, _toc);
 
         if (_push) {
-          console.log('Pushing documentation changes');
-          await gitPush(_source, _output, _push);
+          console.log('Pushing documentation changes.');
+          await (0, _lib.gitPush)(_source, _output, _push);
         }
 
-        setTimeout(() => {
-          debounce = false;
-        }, 100);
+        debounce = false;
       }
     });
   }
 })();
-
-const gitPush = async (source, output, message) => {
-  const {
-    promise
-  } = (0, _spawncommand.default)('git', ['log', '--format=%B', '-n', '1']);
-  const {
-    stdout
-  } = await promise;
-  const s = stdout.trim();
-
-  if (s == message) {
-    await git('reset', 'HEAD~1');
-  }
-
-  await git('add', source, output);
-  await git('commit', '-m', message);
-  await git('push', '-f');
-};
-
-const git = async (...args) => {
-  const {
-    promise
-  } = (0, _spawncommand.default)('git', args, {
-    stdio: 'inherit'
-  });
-  await promise;
-};
 //# sourceMappingURL=index.js.map
