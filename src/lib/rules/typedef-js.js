@@ -77,7 +77,7 @@ const typedefRule = {
         const ps = extractTags('p', content)
         return makeType(name, type, desc, ps)
       })
-      const t = s.join('\n')
+      const t = s.join('\n *\n')
       const typedef = `/* documentary ${location} */\n${makeBlock(t)}`
       return typedef
     } catch (e) {

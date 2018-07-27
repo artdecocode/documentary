@@ -4,13 +4,16 @@ import createJsReplaceStream from '../../lib/js-replace-stream'
 import catcher from '../catcher'
 
 /**
- * Process a JavaScript file.
- * @param {string} source Path to the source JavaScript file.
+ * Process a JavaScript file to include `@typedef`s found with the `/* documentary types.xml *\/` marker.
+ * @param {Config} config Configuration Object.
+ * @param {string} config.source Path to the source JavaScript file.
+ * @param {string} [config.output] Path to the source JavaScript file.
  */
-export default async function runJs({
-  source,
-  output = source,
-}) {
+async function runJs(config) {
+  const {
+    source,
+    output = source,
+  } = config
   try {
     if (!source) {
       console.log('Please specify a JavaScript file.')
@@ -33,3 +36,11 @@ export default async function runJs({
     catcher(err)
   }
 }
+
+/**
+ * @typedef {Object} Config
+ * @prop {string} source Path to the source JavaScript file.
+ * @prop {string} [output] Path to the source JavaScript file.
+ */
+
+export default runJs
