@@ -17,7 +17,7 @@ const getVal = (val) => {
   return v !== undefined ? v : val
 }
 
-export const propExtractRe = /^ \* @prop {(.+?)} (\[)?(.+?)(?:=(["'])?(.+?)\4)?(?:])? (.+?)(?: Default `(.+?)`.)?$/gm
+export const propExtractRe = /^ \* @prop {(.+?)} (\[)?(.+?)(?:=(["'])?(.+?)\4)?(?:])?(?: (.+?))?(?: Default `(.+?)`.)?$/gm
 const keys = ['type', 'opt', 'name', 'quote', 'defaultValue', 'description', 'Default']
 
 const makeT = (type, name, description, properties) => {
