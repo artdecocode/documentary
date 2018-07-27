@@ -4,7 +4,7 @@ import { resolve, relative } from 'path'
 import { unlink, createReadStream } from 'fs'
 import Catchment from 'catchment'
 import { Readable } from 'stream'
-import createReplaceStream from '../../src/lib/replace-stream';
+import createReplaceStream from '../../src/lib/replace-stream'
 
 // const LOG = debuglog('doc')
 const TEST_BUILD = process.env.BABEL_ENV == 'test-build'
@@ -284,6 +284,9 @@ console.log('test')
     const r = resolve(__dirname, '../fixtures/types.xml')
     return relative('', r)
   }
+  /**
+   * Returns a reference to a new replace stream.
+   */
   get replaceStream() {
     const rs = createReplaceStream()
     return rs
