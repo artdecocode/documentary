@@ -1,7 +1,9 @@
+import { createReadStream, lstatSync } from 'fs'
+import spawn from 'spawncommand'
+import Catchment from 'catchment'
+import Pedantry from 'pedantry'
 import tableRule from './rules/table'
 import titleRule from './rules/method-title'
-import { createReadStream } from 'fs'
-import Catchment from 'catchment'
 
 export const getLink = (title) => {
   const l = title
@@ -32,4 +34,32 @@ export const read = async (source) => {
     r(res)
   })
   return data
+}
+
+export const getStream = (path) => {
+  const ls = lstatSync(path)
+  let stream
+  if (ls.isDirectory()) {
+    stream = new Pedantry(path)
+  } else if (ls.isFile()) {
+    stream = createReadStream(path)
+  }
+  return stream
+}
+
+export const gitPush = async (source, output, message) => {
+  const { promise } = spawn('git', ['log', '--format=%B', '-n', '1'])
+  const { stdout } = await promise
+  const s = stdout.trim()
+  if (s == message) {
+    await git('reset', 'HEAD~1')
+  }
+  await git('add', source, output)
+  await git('commit', '-m', message)
+  await git('push', '-f')
+}
+
+export const git = async (...args) => {
+  const { promise } = spawn('git', args, { stdio: 'inherit' })
+  await promise
 }
