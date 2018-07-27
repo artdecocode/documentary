@@ -99,3 +99,11 @@ or a single marker to include all types in order in which they appear in the `xm
 and embed resulting type definitions:
 
 %TYPEDEF test/fixtures/types.xml%
+
+#### `<import name="Type" from="package" />`
+
+A special `import` element can be used to import a Type using Visual Code's TypeScript engine. An import looks like `/** @typedef {import('package').Type} Type */`, so that `name` attribute is the name of the type in the referenced package, and `from` attribute is the name of the module from which to import the type. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
+
+%EXAMPLE: test/fixtures/typedef/generate-import.js, ../src => src, js%
+
+%FORK-xml src/bin/register test/fixtures/typedef/generate-import.js -T -%

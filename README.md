@@ -37,6 +37,9 @@ yarn add -DE documentary
     * [`README` placement](#readme-placement)
       * [`SetHeaders`](#setheaders)
       * [`StaticConfig`](#staticconfig)
+    * [`<import name="Type" from="package" />`](#import-nametype-frompackage-)
+  * [`@typedef` Extraction](#typedef-extraction)
+    * [`doc src/index.js -e types/index.xml`](#doc-srcindexjs--e-typesindexxml)
 - [CLI](#cli)
   * [Output Location](#output-location)
   * [Only TOC](#only-toc)
@@ -49,6 +52,10 @@ yarn add -DE documentary
   * [`TocConfig` Type](#tocconfig-type)
     * [<code>skipLevelOne</code>](#skiplevelone)
   * [`constructor(config?: TocConfig): Toc`](#constructorconfig-skiplevelone-boolean--true-toc)
+- [Glossary](#glossary)
+  * [Online Documentation](#online-documentation)
+  * [Editor Documentation](#editor-documentation)
+- [Copyright](#copyright)
 
 ## Installation & Usage
 
@@ -183,6 +190,7 @@ documentary
 │   ├── 8-gif.md
 │   ├── 9-type.md
 │   ├── 91-types-xml.md
+│   ├── 92-types-extraction.md
 │   └── index.md
 ├── 3-cli.md
 ├── 4-api
@@ -638,6 +646,99 @@ __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 | hidden | _boolean_ | Allow transfer of hidden files. | `false` |
 | index | _string_ | Default file name. | `index.html` |
 | setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | - |
+
+#### `<import name="Type" from="package" />`
+
+A special `import` element can be used to import a Type using Visual Code's TypeScript engine. An import looks like `/** @typedef {import('package').Type} Type */`, so that `name` attribute is the name of the type in the referenced package, and `from` attribute is the name of the module from which to import the type. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
+
+%EXAMPLE: test/fixtures/typedef/generate-import.js, ../src => src, js%
+
+```xml
+
+```
+
+### `@typedef` Extraction
+
+A JavaScript file can be scanned for the presence of `@typedef` JSDoc comments, and then extracted to a `types.xml` file. This can be done with the <a name="doc-srcindexjs--e-typesindexxml">`doc src/index.js -e types/index.xml`</a> command. This is primarily a tool to migrate older software to using `types.xml` files which can be used both for [online documentation](#online-documentation) and [editor documentation](#editor-documentation).
+
+For example, types can be extracted from a JavaScript file which contains JSDoc in form of comments:
+
+```js
+async function test() {
+  process.stdout.write('ttt')
+}
+
+/**
+ * @typedef {Object} Test This is test description.
+ * @typedef {Object} SessionConfig Description of Session Config.
+ * @prop {string} key cookie key.
+ * @prop {number|'session'} [maxAge=86400000] maxAge in ms. Default is 1 day. `session` will result in a cookie that expires when session/browser is closed. Warning: If a session cookie is stolen, this cookie will never expire. Default `86400000`.
+ * @prop {boolean} [overwrite] Can overwrite or not. Default `true`.
+ * @prop {boolean} [httpOnly] httpOnly or not or not. Default `true`.
+ * @prop {boolean} [signed=false] Signed or not. Default `false`.
+ * @prop {boolean} [rolling] Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. Default `false`.
+ * @prop {boolean} [renew] Renew session when session is nearly expired, so we can always keep user logged in. Default `false`.
+ */
+
+/**
+ * @typedef {Object} Limits
+ * @prop {number} [fieldNameSize] Max field name size (Default: 100 bytes).
+ * @prop {number} [fieldSize] Max field value size (Default: 1MB).
+ * @prop {number} [fields] Max number of non- file fields (Default: Infinity).
+ * @prop {number} [fileSize] For multipart forms, the max file size (in bytes)(Default: Infinity).
+ * @prop {number} [files] For multipart forms, the max number of file fields (Default: Infinity).
+ * @prop {number} [parts] For multipart forms, the max number of parts (fields + files)(Default: Infinity).
+ * @prop {number} [headerPairs] For multipart forms, the max number of header key=> value pairs to parse Default: 2000 (same as node's http).
+ *
+ * @typedef {import('koa-multer').StorageEngine} StorageEngine
+ * @typedef {import('http').IncomingMessage} IncomingMessage
+ * @typedef {import('koa-multer').File} File
+ * @typedef {Object} MulterConfig
+ * @prop {string} [dest] Where to store the files.
+ * @prop {StorageEngine} [storage] Where to store the files.
+ * @prop {(req: IncomingMessage, file: File, callback: (error: Error | null, acceptFile: boolean)) => void} [fileFilter] Function to control which files are accepted.
+ * @prop {Limits} [limits] Limits of the uploaded data.
+ * @prop {boolean} [preservePath=false]  Keep the full path of files instead of just the base name.
+ */
+
+export default test
+```
+
+When a description ends with `Default \`true\``, type can also be parsed from there.
+
+```xml
+<types>
+  <t name="Test" desc="This is test description." />
+  <t name="SessionConfig" desc="Description of Session Config.">
+    <p string name="key">cookie key.</p>
+    <p opt type="number|'session'" name="maxAge" default="86400000">maxAge in ms. Default is 1 day. `session` will result in a cookie that expires when session/browser is closed. Warning: If a session cookie is stolen, this cookie will never expire.</p>
+    <p opt boolean name="overwrite" default="true">Can overwrite or not.</p>
+    <p opt boolean name="httpOnly" default="true">httpOnly or not or not.</p>
+    <p opt boolean name="signed" default="false">Signed or not.</p>
+    <p opt boolean name="rolling" default="false">Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown.</p>
+    <p opt boolean name="renew" default="false">Renew session when session is nearly expired, so we can always keep user logged in.</p>
+  </t>
+  <t name="Limits">
+    <p opt number name="fieldNameSize">Max field name size (Default: 100 bytes).</p>
+    <p opt number name="fieldSize">Max field value size (Default: 1MB).</p>
+    <p opt number name="fields">Max number of non- file fields (Default: Infinity).</p>
+    <p opt number name="fileSize">For multipart forms, the max file size (in bytes)(Default: Infinity).</p>
+    <p opt number name="files">For multipart forms, the max number of file fields (Default: Infinity).</p>
+    <p opt number name="parts">For multipart forms, the max number of parts (fields + files)(Default: Infinity).</p>
+    <p opt number name="headerPairs">For multipart forms, the max number of header key=> value pairs to parse Default: 2000 (same as node's http).</p>
+  </t>
+  <t name="StorageEngine" type="import('koa-multer').StorageEngine" />
+  <t name="IncomingMessage" type="import('http').IncomingMessage" />
+  <t name="File" type="import('koa-multer').File" />
+  <t name="MulterConfig">
+    <p opt string name="dest">Where to store the files.</p>
+    <p opt type="StorageEngine" name="storage">Where to store the files.</p>
+    <p opt type="(req: IncomingMessage, file: File, callback: (error: Error | null, acceptFile: boolean)) => void" name="fileFilter">Function to control which files are accepted.</p>
+    <p opt type="Limits" name="limits">Limits of the uploaded data.</p>
+    <p opt boolean name="preservePath" default="false"> Keep the full path of files instead of just the base name.</p>
+  </t>
+</types>
+```
 ## CLI
 
 The program is used from the CLI (or `package.json` script).
@@ -751,8 +852,14 @@ import { createReadStream } from 'fs'
 - [Copyright](#copyright)
 ```
 
----
+## Glossary
+
+- **<a name="online-documentation">Online Documentation</a>**: documentation which is accessible online, such as on a GitHub website, or a language reference, e.g., [Node.js Documentation](https://nodejs.org/api/stream.html).
+- **<a name="editor-documentation">Editor Documentation</a>**: hints available to the users of an IDE, or an editor, in form of suggestions and descriptive hints on hover over variables' names.
+
+## Copyright
 
 (c) [Art Deco][1] 2018
 
 [1]: https://artdeco.bz
+
