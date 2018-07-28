@@ -653,6 +653,17 @@ __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
 A special `i` (for `import`) element can be used to import a Type using Visual Code's TypeScript engine. An import looks like `/** @typedef {import('package').Type} Type */`, so that `name` attribute is the name of the type in the referenced package, and `from` attribute is the name of the module from which to import the type. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
 
+<table>
+<thead>
+<tr>
+<th>Original Source</th>
+<th>Types Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr/>
+<tr><td>
+
 ```js
 async function example() {
   process.stdout.write('example\n')
@@ -662,6 +673,8 @@ async function example() {
 
 export default example
 ```
+</td>
+<td>
 
 ```xml
 <types>
@@ -671,6 +684,14 @@ export default example
    <i name="File" from="koa-multer" />
 </types>
 ```
+</td>
+</tr>
+<tr>
+<td colspan="2" align="center">
+<strong>Output</strong>
+</td></tr>
+<tr>
+<td colspan="2">
 
 ```js
 async function example() {
@@ -687,6 +708,11 @@ async function example() {
 
 export default example
 ```
+</td>
+</tr>
+</tbody>
+</table>
+
 
 ### `@typedef` Extraction
 
