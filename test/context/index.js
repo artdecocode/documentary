@@ -309,4 +309,10 @@ console.log('test')
   get generateImports() {
     return resolve(__dirname, '../fixtures/typedef/generate-imports.js')
   }
+  /**
+   * A JavaScript file has been generated typedefs, i.e., it has a /* documentary types.xml *\/ marker AND the generated JSDoc under it.
+   */
+  get generateImportsAfter() {
+    return resolve(__dirname, '../fixtures/typedef/generate-imports-after.js')
+  }
 }

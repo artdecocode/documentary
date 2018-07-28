@@ -19,10 +19,14 @@
         // "test/spec/bin.js",
         // "test/spec/replace-stream",
         // "test/spec/Toc.js",
-        "test/spec/replace-stream/typedef-md.js",
+        // "test/spec/replace-stream/typedef-md.js",
         // "test/spec/re/inner-code.js",
+        "test/spec/typedef/generate.js",
         "-b",
         "-w"
+      ],
+      "skipFiles": [
+        "<node_internals>/**/*.js"
       ]
     },
     {
