@@ -20,11 +20,11 @@ const T = {
     const c = await p
     await test('extract.xml', c)
   },
-  async 'extracts properties'({ SNAPSHOT_DIR, typedefJsPropPath: source, catchment }, { setDir, test }) {
+  async 'extracts properties without descriptions'({ SNAPSHOT_DIR, typedefJsPropPath: source, catchment }, { setDir, test }) {
     setDir(SNAPSHOT_DIR)
     const stream = new PassThrough()
     const p = catchment(stream)
-    await runExtract({
+    await extractTypedef({
       stream,
       source,
     })
