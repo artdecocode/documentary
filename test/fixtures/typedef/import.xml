@@ -1,0 +1,6 @@
+<types>
+   <i name="IncomingMessage" from="http" />
+   <i name="ServerResponse" from="http" />
+   <i name="StorageEngine" from="koa-multer" />
+   <i name="File" from="koa-multer" />
+</types>

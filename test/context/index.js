@@ -303,4 +303,10 @@ console.log('test')
     const rs = createReplaceStream()
     return rs
   }
+  /**
+   * A JavaScript file which is suitable for generating typedefs, i.e., it has a /* documentary types.xml *\/ marker.
+   */
+  get generateImports() {
+    return resolve(__dirname, '../fixtures/typedef/generate-imports.js')
+  }
 }

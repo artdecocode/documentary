@@ -1,6 +1,6 @@
 import SnapshotContext from 'snapshot-context'
 import Context from '../../context'
-import runExtract from '../../../src/bin/run/extract'
+import extractTypedef from '../../../src/bin/run/extract'
 import { PassThrough } from 'stream'
 
 /** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
@@ -13,7 +13,7 @@ const T = {
     setDir(SNAPSHOT_DIR)
     const stream = new PassThrough()
     const p = catchment(stream)
-    await runExtract({
+    await extractTypedef({
       stream,
       source,
     })
