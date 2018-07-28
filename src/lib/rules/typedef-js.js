@@ -81,7 +81,7 @@ const typedefRule = {
 
       const is = extractTags('i', Types).map(({ props: { name, from } }) => ` * @typedef {import('${from}').${name}} ${name}`)
       const iss = is.join('\n')
-      const b = makeBlock(`${is.length ? `${iss}\n` : ''}${t ? t : ''}`)
+      const b = makeBlock(`${is.length ? `${iss}` : ''}${t || ''}`)
       const typedef = `/* documentary ${location} */\n${b}`
       return typedef
     } catch (e) {
