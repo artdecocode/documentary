@@ -122,13 +122,13 @@ class Properties extends Transform {
  * Process a JavaScript file to extract typedefs and place them in an XML file.
  * @param {Config} config Configuration object.
  * @param {string} config.source Input file from which to extract typedefs.
- * @param {string} [config.extractTo="-"] Output file to where to write XML. `-` will write to `stdout`. Default `-`.
+ * @param {string} [config.destination="-"] Output file to where to write XML. `-` will write to `stdout`. Default `-`.
  * @param {string} [config.stream] An output stream to which to write instead of a location from `extractTo`.
  */
-async function runExtract(config) {
+async function extractTypedef(config) {
   const {
     source,
-    extractTo = '-',
+    destination,
     stream,
   } = config
   try {
@@ -146,7 +146,7 @@ async function runExtract(config) {
       readable,
       source,
       stream,
-      destination: extractTo,
+      destination,
     })
 
     await new Promise((r, j) => {
@@ -168,8 +168,8 @@ async function runExtract(config) {
 /**
  * @typedef {Object} Config Configuration object.
  * @prop {string} [source] Input file from which to extract typedefs.
- * @prop {string} [extractTo="-"] Output file to where to write XML. `-` will write to `stdout`.
+ * @prop {string} [destination="-"] Output file to where to write XML. `-` will write to `stdout`.
  * @prop {Readable} [stream] An output stream to which to write instead of a location from `extract`.
  */
 
-export default runExtract
+export default extractTypedef

@@ -10,7 +10,7 @@ const LOG = debuglog('doc')
  * Process a JavaScript file to include `@typedef`s found with the `/* documentary types.xml *\/` marker.
  * @param {Config} config Configuration Object.
  * @param {string} config.source Path to the source JavaScript file.
- * @param {string} [config.generateTo] Path to the source JavaScript file. If not specified, source is assumed (overwriting the original file).
+ * @param {string} [config.destination] Path to the source JavaScript file. If not specified, source is assumed (overwriting the original file).
  * @param {string} [config.stream] An output stream to which to write instead of a location from `generateTo`.
  */
 async function generateTypedef(config) {
