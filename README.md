@@ -37,7 +37,7 @@ yarn add -DE documentary
     * [`README` placement](#readme-placement)
       * [`SetHeaders`](#setheaders)
       * [`StaticConfig`](#staticconfig)
-    * [`<import name="Type" from="package" />`](#import-nametype-frompackage-)
+    * [`<i name="Type" from="package" />`](#i-nametype-frompackage-)
   * [`@typedef` Extraction](#typedef-extraction)
     * [`doc src/index.js -e types/index.xml`](#doc-srcindexjs--e-typesindexxml)
 - [CLI](#cli)
@@ -579,7 +579,7 @@ import Static from 'koa-static'
 
 /**
  * Configure the middleware.
- * @param {StaticConfig} config Options to setup `koa-static`.
+ * @param {StaticConfig} config
  */
 function configure(config) {
   const middleware = Static(config)
@@ -589,7 +589,9 @@ function configure(config) {
 /* documentary types/static.xml */
 /**
  * @typedef {import('http').ServerResponse} ServerResponse
+ *
  * @typedef {(res: ServerResponse) => any} SetHeaders Function to set custom headers on response.
+ *
  * @typedef {Object} StaticConfig Options to setup `koa-static`.
  * @prop {string} root Root directory string.
  * @prop {number} [maxage=0] Browser cache max-age in milliseconds. Default `0`.
@@ -647,14 +649,43 @@ __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 | index | _string_ | Default file name. | `index.html` |
 | setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | - |
 
-#### `<import name="Type" from="package" />`
+#### `<i name="Type" from="package" />`
 
-A special `import` element can be used to import a Type using Visual Code's TypeScript engine. An import looks like `/** @typedef {import('package').Type} Type */`, so that `name` attribute is the name of the type in the referenced package, and `from` attribute is the name of the module from which to import the type. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
+A special `i` (for `import`) element can be used to import a Type using Visual Code's TypeScript engine. An import looks like `/** @typedef {import('package').Type} Type */`, so that `name` attribute is the name of the type in the referenced package, and `from` attribute is the name of the module from which to import the type. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
 
-%EXAMPLE: test/fixtures/typedef/generate-import.js, ../src => src, js%
+```js
+async function example() {
+  process.stdout.write('example\n')
+}
+
+/* documentary types/import.xml */
+
+export default example
+```
 
 ```xml
+<types>
+   <i name="IncomingMessage" from="http" />
+   <i name="ServerResponse" from="http" />
+   <i name="StorageEngine" from="koa-multer" />
+   <i name="File" from="koa-multer" />
+</types>
+```
 
+```js
+async function example() {
+  process.stdout.write('example\n')
+}
+
+/* documentary types/import.xml */
+/**
+ * @typedef {import('http').IncomingMessage} IncomingMessage
+ * @typedef {import('http').ServerResponse} ServerResponse
+ * @typedef {import('koa-multer').StorageEngine} StorageEngine
+ * @typedef {import('koa-multer').File} File
+ */
+
+export default example
 ```
 
 ### `@typedef` Extraction
