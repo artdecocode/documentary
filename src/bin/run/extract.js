@@ -122,38 +122,43 @@ class Properties extends Transform {
  * Process a JavaScript file to extract typedefs and place them in an XML file.
  * @param {Config} config Configuration object.
  * @param {string} config.source Input file from which to extract typedefs.
- * @param {string} [config.extractFrom="-"] Output file to where to write XML. `-` will write to `stdout`. Default `-`.
- * @param {string} [config.stream] An output stream to which to write instead of a location from `extractFrom`.
+ * @param {string} [config.extractTo="-"] Output file to where to write XML. `-` will write to `stdout`. Default `-`.
+ * @param {string} [config.stream] An output stream to which to write instead of a location from `extractTo`.
  */
 async function runExtract(config) {
   const {
     source,
-    extractFrom = '-',
-    stream: st,
+    extractTo = '-',
+    stream,
   } = config
   try {
     const s = createReadStream(source)
     const ts = createRegexTransformStream(typedefRe)
     const ps = new Properties()
-    const stream = new PassThrough()
+    const readable = new PassThrough()
     const xml = new XML()
 
-    await writeOnce(stream, '<types>\n')
+    await writeOnce(readable, '<types>\n')
 
-    s.pipe(ts).pipe(ps).pipe(xml).pipe(stream, { end: false })
+    s.pipe(ts).pipe(ps).pipe(xml).pipe(readable, { end: false })
 
-    const { p } = whichStream(stream, st, extractFrom)
+    const p = whichStream({
+      readable,
+      source,
+      stream,
+      destination: extractTo,
+    })
 
     await new Promise((r, j) => {
       s.on('error', e => { LOG('Error in Read'); j(e) })
       ts.on('error', e => { LOG('Error in Transform'); j(e) })
       ps.on('error', e => { LOG('Error in RegexTransform'); j(e) })
       xml.on('error', e => { LOG('Error in XML'); j(e) })
-      stream.on('error', e => { LOG('Error in Stream'); j(e) })
+      readable.on('error', e => { LOG('Error in Stream'); j(e) })
       xml.on('end', r)
     })
 
-    await new Promise(r => stream.end('</types>\n', r))
+    await new Promise(r => readable.end('</types>\n', r))
     await p
   } catch (err) {
     catcher(err)
@@ -163,7 +168,7 @@ async function runExtract(config) {
 /**
  * @typedef {Object} Config Configuration object.
  * @prop {string} [source] Input file from which to extract typedefs.
- * @prop {string} [extractFrom="-"] Output file to where to write XML. `-` will write to `stdout`.
+ * @prop {string} [extractTo="-"] Output file to where to write XML. `-` will write to `stdout`.
  * @prop {Readable} [stream] An output stream to which to write instead of a location from `extract`.
  */
 

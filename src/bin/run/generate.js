@@ -1,7 +1,10 @@
 import { createReadStream } from 'fs'
+import { debuglog } from 'util'
 import createJsReplaceStream from '../../lib/js-replace-stream'
 import catcher from '../catcher'
 import whichStream from './which-stream'
+
+const LOG = debuglog('doc')
 
 /**
  * Process a JavaScript file to include `@typedef`s found with the `/* documentary types.xml *\/` marker.
@@ -13,23 +16,35 @@ import whichStream from './which-stream'
 async function generateTypedef(config) {
   const {
     source,
-    generateTo = source,
-    stream: st,
+    destination = source,
+    stream,
   } = config
   try {
-    if (!source && !st) {
+    if (!source && !stream) {
       console.log('Please specify a JavaScript file or a pass a stream.')
       process.exit(1)
     }
 
     const s = createReadStream(source)
-    const rs = createJsReplaceStream()
-    s.pipe(rs)
+    const readable = createJsReplaceStream()
+    s.pipe(readable)
 
-    const { p } = whichStream(rs, st, generateTo)
+    const p = whichStream({
+      source,
+      stream,
+      readable,
+      destination,
+    })
+
+    await new Promise((r, j) => {
+      readable.on('error', e => { LOG('Error in Replaceable'); j(e) })
+      s.on('error', e => { LOG('Error in Read'); j(e) })
+      readable.on('end', r)
+    })
+
     await p
 
-    console.error(...(source == generateTo ? ['Updated %s to include types.', source] : ['Saved output to %s', generateTo]))
+    console.error(...(source == destination ? ['Updated %s to include types.', source] : ['Saved output to %s', destination]))
   } catch (err) {
     catcher(err)
   }
