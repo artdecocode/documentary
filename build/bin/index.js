@@ -9,7 +9,7 @@ var _run = _interopRequireDefault(require("./run"));
 
 var _getArgs = _interopRequireDefault(require("./get-args"));
 
-var _js = _interopRequireDefault(require("./run/js"));
+var _generate2 = _interopRequireDefault(require("./run/generate"));
 
 var _extract2 = _interopRequireDefault(require("./run/extract"));
 
@@ -29,9 +29,12 @@ const {
   toc: _toc,
   watch: _watch,
   push: _push,
-  typedef: _typedef,
   version: _version,
   extract: _extract
+} = (0, _getArgs.default)();
+let {
+  generate: _generate,
+  _argv
 } = (0, _getArgs.default)();
 
 if (_version) {
@@ -44,7 +47,11 @@ if (process.argv.find(a => a == '-p') && !_push) {
 }
 
 if (process.argv.find(a => a == '-e') && !_extract) {
-  (0, _catcher.default)('Please specify where to extract typedefs.');
+  (0, _catcher.default)('Please specify where to extract typedefs (- for stdout).');
+}
+
+if (_argv.find(g => g == '-g') && !_generate) {
+  _generate = _source;
 }
 
 if (_source) {
@@ -69,15 +76,15 @@ const doc = async (source, output, justToc = false) => {
   if (_extract) {
     await (0, _extract2.default)({
       source: _source,
-      extract: _extract
+      destination: _extract
     });
     return;
   }
 
-  if (_typedef) {
-    await (0, _js.default)({
+  if (_generate) {
+    await (0, _generate2.default)({
       source: _source,
-      output: _output
+      destination: _generate
     });
     return;
   }

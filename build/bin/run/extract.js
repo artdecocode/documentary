@@ -21,6 +21,8 @@ var _re = _interopRequireDefault(require("../../lib/typedef/re"));
 
 var _typedef = require("../../lib/typedef");
 
+var _whichStream = _interopRequireDefault(require("./which-stream"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const LOG = (0, _util.debuglog)('doc');
@@ -163,43 +165,34 @@ class Properties extends _stream.Transform {
  * Process a JavaScript file to extract typedefs and place them in an XML file.
  * @param {Config} config Configuration object.
  * @param {string} config.source Input file from which to extract typedefs.
- * @param {string} [config.extract="-"] Output file to where to write XML. `-` will write to `stdout`.
- * @param {string} [config.stream] An output stream to which to write instead of a location from `extract`.
+ * @param {string} [config.destination="-"] Output file to where to write XML. `-` will write to `stdout`. Default `-`.
+ * @param {string} [config.stream] An output stream to which to write instead of a location from `extractTo`.
  */
 
 
-async function runExtract(config) {
+async function extractTypedef(config) {
   const {
     source,
-    extract = '-',
-    stream: st
+    destination,
+    stream
   } = config;
 
   try {
     const s = (0, _fs.createReadStream)(source);
     const ts = (0, _restream.default)(_re.default);
     const ps = new Properties();
-    const stream = new _stream.PassThrough();
+    const readable = new _stream.PassThrough();
     const xml = new XML();
-    await writeOnce(stream, '<types>\n');
-    s.pipe(ts).pipe(ps).pipe(xml).pipe(stream, {
+    await writeOnce(readable, '<types>\n');
+    s.pipe(ts).pipe(ps).pipe(xml).pipe(readable, {
       end: false
     });
-    let p = Promise.resolve();
-
-    if (st) {
-      stream.pipe(st);
-    } else if (extract == '-') {
-      stream.pipe(process.stdout);
-    } else {
-      const ws = (0, _fs.createWriteStream)(extract);
-      p = new Promise((r, j) => {
-        ws.on('close', r);
-        ws.on('error', j);
-      });
-      stream.pipe(ws);
-    }
-
+    const p = (0, _whichStream.default)({
+      readable,
+      source,
+      stream,
+      destination
+    });
     await new Promise((r, j) => {
       s.on('error', e => {
         LOG('Error in Read');
@@ -217,13 +210,13 @@ async function runExtract(config) {
         LOG('Error in XML');
         j(e);
       });
-      stream.on('error', e => {
+      readable.on('error', e => {
         LOG('Error in Stream');
         j(e);
       });
       xml.on('end', r);
     });
-    await new Promise(r => stream.end('</types>\n', r));
+    await new Promise(r => readable.end('</types>\n', r));
     await p;
   } catch (err) {
     (0, _catcher.default)(err);
@@ -232,11 +225,11 @@ async function runExtract(config) {
 /**
  * @typedef {Object} Config Configuration object.
  * @prop {string} [source] Input file from which to extract typedefs.
- * @prop {string} [extract="-"] Output file to where to write XML. `-` will write to `stdout`.
+ * @prop {string} [destination="-"] Output file to where to write XML. `-` will write to `stdout`.
  * @prop {Readable} [stream] An output stream to which to write instead of a location from `extract`.
  */
 
 
-var _default = runExtract;
+var _default = extractTypedef;
 exports.default = _default;
 //# sourceMappingURL=extract.js.map
