@@ -34,7 +34,16 @@
     "url": "git://github.com/artdecocode/documentary.git"
   },
   "keywords": [
-    "documentary"
+    "documentary",
+    "documentation",
+    "readme",
+    "examples",
+    "github",
+    "doc",
+    "docs",
+    "generator",
+    "jsdoc",
+    "typedef"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
