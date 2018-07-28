@@ -1,6 +1,6 @@
 import { ok } from 'assert'
 import SnapshotContext from 'snapshot-context'
-import Context from '../context'
+import Context from '../../context'
 
 /** @type {Object.<string, (c: Context, s: SnapshotContext)>} */
 const T = {
