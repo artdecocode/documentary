@@ -1,6 +1,8 @@
 <types>
-   <i name="IncomingMessage" from="http" />
-   <i name="ServerResponse" from="http" />
-   <i name="StorageEngine" from="koa-multer" />
-   <i name="File" from="koa-multer" />
+  <i name="IncomingMessage" from="http" />
+  <i name="ServerResponse" from="http" />
+  <i name="StorageEngine" from="koa-multer" />
+  <i name="File" from="koa-multer" />
+  <t type="(f: File) => void" name="Function"
+    desc="A function to save a file." />
 </types>
