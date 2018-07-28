@@ -78,7 +78,11 @@ const typedefRule = {
         return makeType(name, type, desc, ps)
       })
       const t = s.join('\n *\n')
-      const typedef = `/* documentary ${location} */\n${makeBlock(t)}`
+
+      const is = extractTags('i', Types).map(({ props: { name, from } }) => ` * @typedef {import('${from}').${name}} ${name}`)
+      const iss = is.join('\n')
+      const b = makeBlock(`${is.length ? `${iss}\n` : ''}${t ? t : ''}`)
+      const typedef = `/* documentary ${location} */\n${b}`
       return typedef
     } catch (e) {
       LOG('(%s) Could not process typdef-js: %s', location, e.message)

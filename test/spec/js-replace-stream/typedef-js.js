@@ -19,7 +19,7 @@ const T = {
     const stream = createJsReplaceStream()
     rs.pipe(stream)
     const res = await catchment(stream)
-    await test('replace-stream/typedef-js.txt', res)
+    await test('replace-stream/typedef-js.js', res)
   },
   async 'places types declaration with existing typedef'(
     { createReadable, catchment, typesLocation, SNAPSHOT_DIR }, { setDir, test }
@@ -37,7 +37,7 @@ export default test`
     const stream = createJsReplaceStream()
     rs.pipe(stream)
     const res = await catchment(stream)
-    await test('replace-stream/typedef-existing.txt', res)
+    await test('replace-stream/typedef-existing.js', res)
   },
 }
 

@@ -44,7 +44,15 @@ async function generateTypedef(config) {
 
     await p
 
-    console.error(...(source == destination ? ['Updated %s to include types.', source] : ['Saved output to %s', destination]))
+    if (stream) {
+      LOG('%s written to stream', source)
+    } else if (source == destination) {
+      console.error('Updated %s to include types.', source)
+    } else if (destination == '-') {
+      console.error('Written %s to stdout.', source)
+    } else {
+      console.error('Saved output to %s', destination)
+    }
   } catch (err) {
     catcher(err)
   }
