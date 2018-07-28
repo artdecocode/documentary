@@ -5,7 +5,7 @@ import { lstatSync } from 'fs'
 import run from './run'
 import getArgs from './get-args'
 import generateTypedef from './run/generate'
-import runExtract from './run/extract'
+import extractTypedef from './run/extract'
 import { version } from '../../package.json'
 import catcher from './catcher'
 import { getStream, gitPush } from '../lib'
@@ -63,16 +63,16 @@ const doc = async (source, output, justToc = false) => {
 
 (async () => {
   if (_extract) {
-    await runExtract({
+    await extractTypedef({
       source: _source,
-      extractFrom: _extract,
+      destination: _extract,
     })
     return
   }
   if (_generate) {
     await generateTypedef({
       source: _source,
-      generateTo: _generate,
+      destination: _generate,
     })
     return
   }

@@ -8,10 +8,10 @@ async function whichStream({
   destination,
 }) {
   if (stream) {
+    readable.pipe(stream) // push to stream
     await new Promise((r, j) => {
       stream.once('error', j).once('end', r)
     })
-    readable.pipe(stream) // push to stream
   } else if (destination == '-') { // printing to stdout
     readable.pipe(process.stdout)
   } else if (source == destination) { // overwriting file
@@ -23,10 +23,10 @@ async function whichStream({
     })
   } else {
     const ws = createWriteStream(destination)
+    readable.pipe(ws)
     await new Promise((r, j) => {
       ws.on('error', j).on('close', r)
     })
-    readable.pipe(ws)
   }
 }
 
