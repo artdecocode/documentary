@@ -20,7 +20,7 @@ const T = {
     })
     const c = await p
     ok(/@typedef/.test(c), 'Does not include a @typedef.')
-    await test('generate-imports.js', c)
+    await test('typedef/generate-imports.js', c)
   },
   async 'generates @typedefs with imports with existing'({ catchment, SNAPSHOT_DIR, generateImportsAfter: source }, { setDir, test }) {
     setDir(SNAPSHOT_DIR)
@@ -32,7 +32,7 @@ const T = {
     })
     const c = await p
     ok(/@typedef/.test(c), 'Does not include a @typedef.')
-    await test('generate-imports.js', c)
+    await test('typedef/generate-imports.js', c)
   },
 }
 
