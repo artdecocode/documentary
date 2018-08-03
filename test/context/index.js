@@ -293,7 +293,7 @@ console.log('test')
   }
   /** Absolute location of the types fixture. */
   get typesLocation() {
-    const r = resolve(__dirname, '../fixtures/types.xml')
+    const r = resolve(__dirname, '../fixtures/typedef/types.xml')
     return relative('', r)
   }
   /**
