@@ -678,10 +678,12 @@ export default example
 
 ```xml
 <types>
-   <i name="IncomingMessage" from="http" />
-   <i name="ServerResponse" from="http" />
-   <i name="StorageEngine" from="koa-multer" />
-   <i name="File" from="koa-multer" />
+  <i name="IncomingMessage" from="http" />
+  <i name="ServerResponse" from="http" />
+  <i name="StorageEngine" from="koa-multer" />
+  <i name="File" from="koa-multer" />
+  <t type="(f: File) => void" name="Function"
+    desc="A function to save a file." />
 </types>
 ```
 </td>
@@ -704,6 +706,7 @@ async function example() {
  * @typedef {import('http').ServerResponse} ServerResponse
  * @typedef {import('koa-multer').StorageEngine} StorageEngine
  * @typedef {import('koa-multer').File} File
+ * @typedef {(f: File) => void} Function A function to save a file.
  */
 
 export default example

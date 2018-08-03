@@ -98,7 +98,7 @@ or a single marker to include all types in order in which they appear in the `xm
 
 and embed resulting type definitions:
 
-%TYPEDEF test/fixtures/types.xml%
+%TYPEDEF types/static.xml%
 
 #### `<i name="Type" from="package" />`
 

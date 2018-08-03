@@ -1,4 +1,4 @@
-/* documentary test/fixtures/types.xml */
+/* documentary test/fixtures/typedef/types.xml */
 /**
  * @typedef {import('http').ServerResponse} ServerResponse
  *
