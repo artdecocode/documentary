@@ -1,7 +1,7 @@
 import { debuglog } from 'util'
 import extractTags from 'rexml'
 import { read, getLink } from '..'
-import { getPropType } from './typedef-js'
+import { getPropType } from '../typedef'
 
 const LOG = debuglog('doc')
 

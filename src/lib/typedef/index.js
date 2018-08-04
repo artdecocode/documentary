@@ -7,13 +7,33 @@
  *
  * requiredParam
  * [optionalDefaultParam=false]
- * [optionalDefaultParamString='test']
+ * [optionalDefaultParamString="test"]
  * [optionalParam]
+ *
+ * parentParam.requiredParam
+ * [parentParam.optionalDefaultParam=false]
+ * [parentParam.optionalDefaultParamString="test"]
+ * [parentParam.optionalParam]
  */
-export const getNameWithDefault = (name, defaultValue, type) => {
+export const getNameWithDefault = (name, defaultValue, type, parentParam) => {
+  const n = `${parentParam ? `${parentParam}.` : ''}${name}`
+
   const hasDefault = defaultValue !== undefined
-  if (!hasDefault) return name
-  const d = ['number', 'boolean'].includes(type) ? defaultValue : `"${defaultValue}"`
-  const n = `${name}=${d}`
-  return n
+  if (!hasDefault) return n
+
+  const isPrimitive = Number.isInteger(defaultValue)
+    || defaultValue === true
+    || defaultValue === false
+    || ['number', 'boolean'].includes(type)
+  const d = isPrimitive ? defaultValue : `"${defaultValue}"`
+  const nn = `${n}=${d}`
+  return nn
+}
+
+export const getPropType = ({ number, string, boolean, type }) => {
+  if (string) return 'string'
+  if (number) return 'number'
+  if (boolean) return 'boolean'
+  if (type) return type
+  return '*'
 }
