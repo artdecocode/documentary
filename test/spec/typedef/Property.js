@@ -86,8 +86,7 @@ const PropertyFromXml = {
       name,
     })
   },
-  'throws an error when no name is given'() {
-    const p = new Property()
+  'throws an error when no name is given'({ p }) {
     throws(() => {
       p.fromXML('test', {})
     }, 'Property does not have a name.')

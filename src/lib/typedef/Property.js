@@ -4,8 +4,8 @@ class Property {
   constructor() {}
   fromXML(content, { name, string, boolean, opt, number, type, default: def }) {
     if (!name) throw new Error('Property does not have a name.')
-    this.description = content
     this.name = name
+    if (content) this.description = content
     const t = getPropType({ number, string, boolean, type })
     this.type = t
     if (def !== undefined) this.hasDefault = true
