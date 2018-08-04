@@ -44,9 +44,15 @@ const typedefRule = {
       const typedefs = ts.map(({ content, props }) => {
         const tt = new Type()
         tt.fromXML(content, props)
-        return tt.toTypedef()
+        return tt
       })
-      const t = typedefs.join('\n *\n')
+
+      // remember types for js-replace-stream
+      this.emit('types', typedefs)
+
+      const t = typedefs
+        .map(tt => tt.toTypedef())
+        .join('\n *\n')
 
       // imports
       const is = extractTags('i', Root)
