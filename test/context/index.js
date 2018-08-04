@@ -4,6 +4,7 @@ import { resolve, relative } from 'path'
 import { unlink, createReadStream } from 'fs'
 import Catchment from 'catchment'
 import { Readable } from 'stream'
+import mismatch from 'mismatch'
 import createReplaceStream from '../../src/lib/replace-stream'
 
 // const LOG = debuglog('doc')
@@ -96,6 +97,9 @@ export default class Context {
   }
   get FORK_PATH() {
     return resolve(__dirname, '../fixtures/fork.js')
+  }
+  get mismatch() {
+    return mismatch
   }
   /**
    * Run the binary.
