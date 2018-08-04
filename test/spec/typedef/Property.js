@@ -2,80 +2,6 @@ import { throws } from 'assert'
 import { equal, deepEqual } from 'zoroaster/assert'
 import Property from '../../../src/lib/typedef/Property'
 
-const PropertyFromXml = {
-  'creates a string property'() {
-    const p = new Property()
-    const content = 'Root directory string.'
-    const props = { string: true, name: 'root' }
-    p.fromXML(content, props)
-    deepEqual(p, {
-      type: 'string',
-      name: 'root',
-      description: content,
-    })
-  },
-  'creates a number property'() {
-    const p = new Property()
-    const content = 'Browser cache max-age in milliseconds.'
-    const props = { number: true, name: 'maxage', default: 0, opt: true }
-    p.fromXML(content, props)
-    deepEqual(p, {
-      hasDefault: true,
-      type: 'number',
-      name: 'maxage',
-      description: content,
-      default: 0,
-      optional: true,
-    })
-  },
-  'creates a boolean property'() {
-    const p = new Property()
-    const content = 'Allow transfer of hidden files.'
-    const props = { boolean: true, name: 'hidden', default: false }
-    p.fromXML(content, props)
-    deepEqual(p, {
-      hasDefault: true,
-      optional: true,
-      type: 'boolean',
-      name: 'hidden',
-      description: content,
-      default: false,
-    })
-  },
-  'creates a custom type property'() {
-    const p = new Property()
-    const content = 'Function to set custom headers on response.'
-    const name = 'setHeaders'
-    const type = 'SetHeaders'
-    const props = { name, type, opt: true }
-    p.fromXML(content, props)
-    deepEqual(p, {
-      type,
-      name,
-      description: content,
-      optional: true,
-    })
-  },
-  'creates any type property'() {
-    const p = new Property()
-    const content = 'Configuration from the database.'
-    const name = 'config'
-    const props = { name }
-    p.fromXML(content, props)
-    deepEqual(p, {
-      type: '*',
-      name,
-      description: content,
-    })
-  },
-  'throws an error when no name is given'() {
-    const p = new Property()
-    throws(() => {
-      p.fromXML('test', {})
-    }, 'Property does not have a name.')
-  },
-}
-
 class context {
   get desc() {
     return 'Test description.'
@@ -84,6 +10,7 @@ class context {
   get name() {
     return 'test'
   }
+  /** A property instance. */
   get p() {
     return new Property()
   }
@@ -94,6 +21,77 @@ class context {
   get parentParam() {
     return 'config'
   }
+}
+
+/** @type {Object.<string, (c: context)>} */
+const PropertyFromXml = {
+  context,
+  'creates a string property'({ p, name, desc }) {
+    const props = { string: true, name }
+    p.fromXML(desc, props)
+    deepEqual(p, {
+      name,
+      type: 'string',
+      description: desc,
+    })
+  },
+  'creates a number property with default'({ p, name, desc }) {
+    const props = { number: true, name, default: 0 }
+    p.fromXML(desc, props)
+    deepEqual(p, {
+      name,
+      hasDefault: true,
+      type: 'number',
+      description: desc,
+      default: 0,
+      optional: true,
+    })
+  },
+  'creates a boolean property'({ p, name, desc }) {
+    const props = { boolean: true, name, default: false }
+    p.fromXML(desc, props)
+    deepEqual(p, {
+      name,
+      hasDefault: true,
+      optional: true,
+      type: 'boolean',
+      description: desc,
+      default: false,
+    })
+  },
+  'creates a custom type property'({ p, name, type, desc }) {
+    const props = { name, type, opt: true }
+    p.fromXML(desc, props)
+    deepEqual(p, {
+      type,
+      name,
+      description: desc,
+      optional: true,
+    })
+  },
+  'creates any type property'({ p, name, desc }) {
+    const props = { name }
+    p.fromXML(desc, props)
+    deepEqual(p, {
+      name,
+      type: '*',
+      description: desc,
+    })
+  },
+  'creates a property without description'({ p, name }) {
+    const props = { name }
+    p.fromXML('', props)
+    deepEqual(p, {
+      type: '*',
+      name,
+    })
+  },
+  'throws an error when no name is given'() {
+    const p = new Property()
+    throws(() => {
+      p.fromXML('test', {})
+    }, 'Property does not have a name.')
+  },
 }
 
 /** @type {Object.<string, Object.<string, (c: context )>>} */
