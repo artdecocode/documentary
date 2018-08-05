@@ -34,10 +34,10 @@ yarn add -DE documentary
     * [Dedicated Example Row](#dedicated-example-row)
   * [`@typedef` Organisation](#typedef-organisation)
     * [JS Placement](#js-placement)
-    * [import](#import)
     * [README placement](#readme-placement)
       * [`SetHeaders`](#setheaders)
       * [`StaticConfig`](#staticconfig)
+    * [Importing Types](#importing-types)
     * [XML Schema](#xml-schema)
     * [Migration](#migration)
       * [`doc src/index.js -e types/index.xml`](#doc-srcindexjs--e-typesindexxml)
@@ -192,8 +192,8 @@ documentary
 │   ├── 9-type.md
 │   ├── 91-typedef
 │   │   ├── 1-js.md
-│   │   ├── 2-imports.md
-│   │   ├── 3-readme.md
+│   │   ├── 2-readme.md
+│   │   ├── 3-imports.md
 │   │   ├── 4-schema.md
 │   │   ├── 9-extraction.md
 │   │   └── index.md
@@ -637,9 +637,47 @@ This is in contrast to the preview without _JSDoc_ expansion:
 
 ![preview of the configure function without expanded params](doc/no-expansion.gif)
 
-#### import
+#### README placement
 
-A special `import` element can be used to import a type using _VS Code_'s _TypeScript_ engine. An import looks like `/** @typedef {import('package').Type} Type */`, so that the `name` attribute is the name of the type in the referenced package, and `from` attribute is the name of the module from which to import the type. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
+To place a type definition as a table into a `README` file, the `TYPEDEF` snippet can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed. Moreover, links to the type descriptions will be created in the table of contents using the [__TOC Titles__](#toc-titles), but to prevent this, the `noToc` attribute should be set for a type.
+
+```
+%TYPEDEF path/definitions.xml TypeName%
+```
+
+For example, using previously defined `StaticConfig` type from `types/static.xml` file, `documentary` will process the following markers:
+
+```
+%TYPEDEF types/static.xml ServerResponse%
+%TYPEDEF types/static.xml SetHeaders%
+%TYPEDEF types/static.xml StaticConfig%
+```
+
+or a single marker to include all types in order in which they appear in the `xml` file (doing this also allows to reference other types from properties):
+
+```
+%TYPEDEF types/static.xml%
+```
+
+and embed resulting type definitions:
+
+`import('http').ServerResponse` __`ServerResponse`__
+
+`(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
+
+__<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
+
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| __root*__ | _string_ | Root directory string. | - |
+| maxage | _number_ | Browser cache max-age in milliseconds. | `0` |
+| hidden | _boolean_ | Allow transfer of hidden files. | `false` |
+| index | _string_ | Default file name. | `index.html` |
+| setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | - |
+
+#### Importing Types
+
+A special `import` element can be used to import a type using _VS Code_'s _TypeScript_ engine. An import is just a typedef which looks like `/** @typedef {import('package').Type} Type */`. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
 
 <table>
 <thead>
@@ -704,44 +742,6 @@ export default example
 </tr>
 </tbody>
 </table>
-
-#### README placement
-
-To place a type definition as a table into a `README` file, the `TYPEDEF` snippet can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed. Moreover, links to the type descriptions will be created in the table of contents using the [__TOC Titles__](#toc-titles), but to prevent this, the `noToc` attribute should be set for a type.
-
-```
-%TYPEDEF path/definitions.xml TypeName%
-```
-
-For example, using previously defined `StaticConfig` type from `types/static.xml` file, `documentary` will process the following markers:
-
-```
-%TYPEDEF types/static.xml ServerResponse%
-%TYPEDEF types/static.xml SetHeaders%
-%TYPEDEF types/static.xml StaticConfig%
-```
-
-or a single marker to include all types in order in which they appear in the `xml` file (doing this also allows to reference other types from properties):
-
-```
-%TYPEDEF types/static.xml%
-```
-
-and embed resulting type definitions:
-
-`import('http').ServerResponse` __`ServerResponse`__
-
-`(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
-
-__<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
-
-| Name | Type | Description | Default |
-| ---- | ---- | ----------- | ------- |
-| __root*__ | _string_ | Root directory string. | - |
-| maxage | _number_ | Browser cache max-age in milliseconds. | `0` |
-| hidden | _boolean_ | Allow transfer of hidden files. | `false` |
-| index | _string_ | Default file name. | `index.html` |
-| setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | - |
 
 #### XML Schema
 
