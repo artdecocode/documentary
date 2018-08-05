@@ -84,7 +84,7 @@ const makePropsTable = (props = [], allTypes = []) => {
   const h = ['Name', 'Type', 'Description', 'Default']
   const ps = props.map((prop) => {
     const link = getLinkToType(allTypes, prop.type)
-    const t = `_${prop.type}_`
+    const t = `_${escapePipe(prop.type)}_`
     const typeWithLink = link ? `[${t}](#${link})` : t
     const name = prop.optional ? prop.name : `__${prop.name}*__`
     const d = !prop.hasDefault ? '-' : `\`${prop.default}\``
@@ -97,6 +97,10 @@ const makePropsTable = (props = [], allTypes = []) => {
 \`\`\`table
 ${j}
 \`\`\``
+}
+
+const escapePipe = (s) => {
+  return s.replace(/\|/g, '\\|')
 }
 
 const getLinkToType = (allTypes, type) => {

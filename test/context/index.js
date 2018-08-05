@@ -300,6 +300,11 @@ console.log('test')
     const r = resolve(__dirname, '../fixtures/typedef/types.xml')
     return relative('', r)
   }
+  /** Absolute location of the types with a pipe fixture. */
+  get typesPipeLocation() {
+    const r = resolve(__dirname, '../fixtures/typedef/types-pipe.xml')
+    return relative('', r)
+  }
   /**
    * Returns a reference to a new replace stream.
    */

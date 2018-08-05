@@ -1,0 +1,7 @@
+<types>
+  <type name="SessionConfig" desc="Options to setup `koa-session`.">
+    <prop type="number|'session'" name="maxAge">
+      maxAge in ms with default of 1 day.
+    </prop>
+  </type>
+</types>
