@@ -7,6 +7,6 @@ For example, types can be extracted from a JavaScript file which contains JSDoc 
 
 %EXAMPLE: test/fixtures/typedef/extract.js, ../src => src, js%
 
-When a description ends with `Default \`true\``, type can also be parsed from there.
+When a description ends with <code>Default `true`</code>, the default value of a type can also be parsed from there.
 
 %FORK-xml src/bin/register test/fixtures/typedef/extract.js -e -%

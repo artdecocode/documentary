@@ -7,10 +7,6 @@ Types are kept in an `xml` file, for example:
 
 %EXAMPLE: types/static.xml%
 
-<!--
-
-Here, `import('http').ServerResponse` is a feature of _TypeScript_ that allows to reference an external type in VS Code. It does not require the project to be written in _TypeScript_, but will enable correct IntelliSense completions and hits (available since VS Code at least `1.25`). -->
-
 To include a compiled declaration into a source code, the following line should be placed in the `.js` file (where the `types/static.xml` file exists in the project directory from which the `doc` command will be run):
 
 ```js
@@ -23,15 +19,11 @@ For example, an unprocessed _JavaScript_ file can look like this:
 
 > Please note that the types marker must be placed before `export default` is done (or just `export`) as there's currently a bug in VS Code.
 
-The file is then processed with [`doc src/config-static.js -g`](#insert-types) command and updated in place, unless `-` is given as an argument, which will print the output to _stdout_.
+The file is then processed with [`doc src/config-static.js -g`](#insert-types) command and updated in place, unless `-` is given as an argument, which will print the output to _stdout_, or the path to the output file is specified.
 
 After the processing is done, the source code will be transformed to include all types specified in the XML file. On top of that, _JSDoc_ for any method that has an included type as one of its parameters will be updated to its expanded form so that a preview of options is available. This routine can be repeated whenever types are updated.
 
 %FORK-js src/bin/register example/typedef-raw.js -g -%
-
-<!-- The `StaticConfig` type will be previewed as:
-
-![preview of the StaticConfig](doc/typedef-Type.gif) -->
 
 Because the `@param` _JSDoc_ has been expanded, the properties of the argument to the `configure` function will be seen fully:
 

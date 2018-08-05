@@ -585,7 +585,7 @@ export default configure
 
 > Please note that the types marker must be placed before `export default` is done (or just `export`) as there's currently a bug in VS Code.
 
-The file is then processed with [`doc src/config-static.js -g`](#insert-types) command and updated in place, unless `-` is given as an argument, which will print the output to _stdout_.
+The file is then processed with [`doc src/config-static.js -g`](#insert-types) command and updated in place, unless `-` is given as an argument, which will print the output to _stdout_, or the path to the output file is specified.
 
 After the processing is done, the source code will be transformed to include all types specified in the XML file. On top of that, _JSDoc_ for any method that has an included type as one of its parameters will be updated to its expanded form so that a preview of options is available. This routine can be repeated whenever types are updated.
 
@@ -672,7 +672,7 @@ __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
 #### import
 
-A special `i` (for `import`) element can be used to import a Type using Visual Code's TypeScript engine. An import looks like `/** @typedef {import('package').Type} Type */`, so that `name` attribute is the name of the type in the referenced package, and `from` attribute is the name of the module from which to import the type. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
+A special `import` element can be used to import a type using _VS Code_'s _TypeScript_ engine. An import looks like `/** @typedef {import('package').Type} Type */`, so that the `name` attribute is the name of the type in the referenced package, and `from` attribute is the name of the module from which to import the type. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
 
 <table>
 <thead>
@@ -781,6 +781,7 @@ A `@typedef` definition.</th>
 - _name_: A name of the type.</li>
 - _desc_: A Description of the type.</li>
 - _type_: A type of the type, if different from `Object`.</li>
+- _noToc_: Do not include link to the type in the table of contents.</li>
   </td>
  </tr>
  <tr>
@@ -850,7 +851,7 @@ async function test() {
 export default test
 ```
 
-When a description ends with `Default \`true\``, type can also be parsed from there.
+When a description ends with <code>Default `true`</code>, the default value of a type can also be parsed from there.
 
 ```xml
 <types>

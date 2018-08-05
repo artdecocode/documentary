@@ -42,6 +42,7 @@ A `@typedef` definition.</th>
 - _name_: A name of the type.</li>
 - _desc_: A Description of the type.</li>
 - _type_: A type of the type, if different from `Object`.</li>
+- _noToc_: Do not include link to the type in the table of contents.</li>
   </td>
  </tr>
  <tr>
