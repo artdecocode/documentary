@@ -19,7 +19,8 @@ class Type {
     type,
     desc,
     noToc,
-    spread
+    spread,
+    noExpand
   }) {
     if (!name) throw new Error('Type does not have a name.');
     this.name = name;
@@ -27,6 +28,7 @@ class Type {
     if (desc) this.description = desc.trim();
     if (noToc) this.noToc = true;
     if (spread) this.spread = true;
+    if (noExpand) this.noExpand = true;
 
     if (content) {
       const ps = (0, _rexml.default)('prop', content);
@@ -60,7 +62,7 @@ class Type {
     const nn = this.spread ? getSpread(this.properties) : this.name;
     const pn = optional ? `[${paramName}]` : paramName;
     const s = ` * @param {${nn}} ${pn}${d}`;
-    const p = this.properties ? this.properties.map(pr => {
+    const p = this.properties && !this.noExpand ? this.properties.map(pr => {
       const sp = pr.toParam(paramName);
       return sp;
     }) : [];

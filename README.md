@@ -667,6 +667,8 @@ Compare that to the preview without _JSDoc_ expansion:
 
 ![preview of the configure function without expanded params](doc/no-expansion.gif)
 
+To prevent the expansion, the `noExpand` attribute should be added to the type.
+
 ##### Spread `@param`
 
 Moreover, when the type of the type is just object, it also can be spread into a notation which contains its properties for even better visibility. To do that, the `spread` attribute must be added to the type definition in the `xml` file.
@@ -863,6 +865,7 @@ A `@typedef` definition.</th>
 - _type_: A type of the type, if different from `Object`.</li>
 - _noToc_: Do not include link to the type in the table of contents.</li>
 - _spread_: Spread the type to the `{ prop: Type, prop2: Type2 }` notation when used as a `@param`.</li>
+- _noExpand_: Do not expand the type when writing as a `@param` in _JSDoc_.</li>
   </td>
  </tr>
  <tr>
