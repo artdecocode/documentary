@@ -43,6 +43,7 @@ A `@typedef` definition.</th>
 - _desc_: A Description of the type.</li>
 - _type_: A type of the type, if different from `Object`.</li>
 - _noToc_: Do not include link to the type in the table of contents.</li>
+- _spread_: Spread the type to the `{ prop: Type, prop2: Type2 }` notation when used as a `@param`.</li>
   </td>
  </tr>
  <tr>

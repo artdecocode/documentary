@@ -66,7 +66,7 @@ Compare that to the preview without _JSDoc_ expansion:
 
 ##### Spread `@param`
 
-Moreover, when the type of the type is just object, it also can be spread into a notation which contains its properties for even better visibility.
+Moreover, when the type of the type is just object, it also can be spread into a notation which contains its properties for even better visibility. To do that, the `spread` attribute must be added to the type definition in the `xml` file.
 
 Again, a raw function with JSDoc:
 
