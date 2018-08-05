@@ -523,7 +523,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 
 ### `@typedef` Generation
 
-For the purpose of easier maintenance of `JSDoc` `@typedef` declarations, `documentary` allows to keep them in a separate xml file, and then place the compiled versions into both source code as well as documentation. By doing this, more flexibility is achieved as types are kept in one place but can be reused for various purposes across multiple files. It is different from _TypeScript_ type declarations as `documentary` will generate a JSDoc rather than type definitions which means that the project does not have to be written in _TypeScript_.
+For the purpose of easier maintenance of _JSDoc_ `@typedef` declarations, `documentary` allows to keep them in a separate XML file, and then place compiled versions into both source code as well as documentation. By doing this, more flexibility is achieved as types are kept in one place but can be reused for various purposes across multiple files. It is different from _TypeScript_ type declarations as `documentary` will generate _JSDoc_ comments rather than type definitions which means that a project does not have to be written in _TypeScript_.
 
 Types are kept in an `xml` file, for example:
 
@@ -535,9 +535,9 @@ Types are kept in an `xml` file, for example:
     desc="Function to set custom headers on response." />
   <t name="StaticConfig" desc="Options to setup `koa-static`.">
     <p string name="root">Root directory string.</p>
-    <p opt number name="maxage" default="0">Browser cache max-age in milliseconds.</p>
-    <p opt boolean name="hidden" default="false">Allow transfer of hidden files.</p>
-    <p opt string name="index" default="index.html">Default file name.</p>
+    <p number name="maxage" default="0">Browser cache max-age in milliseconds.</p>
+    <p boolean name="hidden" default="false">Allow transfer of hidden files.</p>
+    <p string name="index" default="index.html">Default file name.</p>
     <p opt type="SetHeaders" name="setHeaders">Function to set custom headers on response.</p>
   </t>
 </types>
@@ -644,9 +644,9 @@ __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 | Name | Type | Description | Default |
 | ---- | ---- | ----------- | ------- |
 | __root*__ | _string_ | Root directory string. | - |
-| maxage | _number_ | Browser cache max-age in milliseconds. | `0` |
-| hidden | _boolean_ | Allow transfer of hidden files. | `false` |
-| index | _string_ | Default file name. | `index.html` |
+| __maxage*__ | _number_ | Browser cache max-age in milliseconds. | `0` |
+| __hidden*__ | _boolean_ | Allow transfer of hidden files. | `false` |
+| __index*__ | _string_ | Default file name. | `index.html` |
 | setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | - |
 
 #### `<i name="Type" from="package" />`
