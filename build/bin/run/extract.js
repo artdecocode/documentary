@@ -37,22 +37,24 @@ const propExtractRe = /^ \* @prop {(.+?)} (\[)?(.+?)(?:=(["'])?(.+?)\4)?(?:])?(?
 exports.propExtractRe = propExtractRe;
 const keys = ['type', 'opt', 'name', 'quote', 'defaultValue', 'description', 'Default'];
 
-const makeT = (type, name, description, properties) => {
+const makeType = (type, name, description, properties) => {
   const hasProps = properties.length;
   const tt = type && type != 'Object' ? ` type="${type}"` : '';
   const d = description ? ` desc="${description}"` : '';
   const i = ' '.repeat(2);
-  const t = `${i}<t name="${name}"${tt}${d}${hasProps ? '' : ' /'}>\n`;
+  const t = `${i}<type name="${name}"${tt}${d}${hasProps ? '' : ' /'}>\n`;
   return t;
 };
 
 const makeP = (type, name, defaultValue, optional, description) => {
   const t = ['string', 'number', 'boolean'].includes(type) ? ` ${type}` : ` type="${type}"`;
-  const def = defaultValue !== undefined ? ` default="${defaultValue}"` : '';
-  const o = optional ? ' opt' : '';
-  const desc = description ? `>${description}</p>` : '/>';
+  const hasDefault = defaultValue !== undefined;
+  const def = hasDefault ? ` default="${defaultValue}"` : '';
+  const o = optional && !hasDefault ? ' opt' : '';
   const i = ' '.repeat(4);
-  const p = `${i}<p${o}${t} name="${name}"${def}${desc}\n`;
+  const ii = ' '.repeat(6);
+  const desc = description ? `>\n${ii}${description}\n${i}</prop>` : '/>';
+  const p = `${i}<prop${o}${t} name="${name}"${def}${desc}\n`;
   return p;
 };
 
@@ -83,7 +85,7 @@ class XML extends _stream.Transform {
     description,
     properties
   }, enc, next) {
-    const t = makeT(type, name, description, properties);
+    const t = type && type.startsWith('import') ? makeImport(type, name) : makeType(type, name, description, properties);
     this.push(t);
     properties.forEach(({
       type: pType,
@@ -95,11 +97,19 @@ class XML extends _stream.Transform {
       const p = makeP(pType, pName, d, optional, pDesc);
       this.push(p);
     });
-    if (properties.length) this.push('  </t>\n');
+    if (properties.length) this.push('  </type>\n');
     next();
   }
 
 }
+
+const makeImport = (type, name) => {
+  const f = /import\((['"])(.+?)\1\)/.exec(type);
+  if (!f) throw new Error(`Could not extract package from "${type}"`);
+  const [,, from] = f;
+  const i = ' '.repeat(2);
+  return `${i}<import name="${name}" from="${from}" />\n`;
+};
 /**
  * Parses properties from a RegExp stream.
  */
@@ -138,7 +148,7 @@ class Properties extends _stream.Transform {
         if (!d) {
           const dn = (0, _typedef.getNameWithDefault)(pr.name, D, pr.type);
           LOG('%s[%s] got from Default.', name, dn);
-        } else if (d != D) {
+        } else if (d !== D && pr.Default !== undefined) {
           const dn = (0, _typedef.getNameWithDefault)(pr.name, D, pr.type);
           LOG('%s[%s] does not match Default `%s`.', name, dn, pr.Default);
         }

@@ -21,7 +21,7 @@ class Property {
   }) {
     if (!name) throw new Error('Property does not have a name.');
     this.name = name;
-    if (content) this.description = content;
+    if (content) this.description = content.trim();
     const t = (0, _.getPropType)({
       number,
       string,

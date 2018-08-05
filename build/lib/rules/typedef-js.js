@@ -52,31 +52,33 @@ const typedefRule = {
       const [{
         content: Root
       }] = root;
-      const ts = (0, _rexml.default)('t', Root);
-      const typedefs = ts.map(({
+      const types = (0, _rexml.default)('type', Root);
+      const typedefs = types.map(({
         content,
         props
       }) => {
         const tt = new _Type.default();
         tt.fromXML(content, props);
         return tt;
-      }); // remember types for js-replace-stream
+      });
+      this.emit('types', typedefs); // remember types for js-replace-stream
 
-      this.emit('types', typedefs);
-      const t = typedefs.map(tt => tt.toTypedef()).join('\n *\n'); // imports
+      const ts = typedefs.map(tt => tt.toTypedef()); // imports
 
-      const is = (0, _rexml.default)('i', Root).map(({
+      const is = (0, _rexml.default)('import', Root).map(({
         props: {
           name,
           from
         }
       }) => ` * @typedef {import('${from}').${name}} ${name}`);
       const iss = is.join('\n');
-      const b = makeBlock(`${is.length ? `${iss}${t ? '\n' : ''}` : ''}${t || ''}`);
+      const tss = ts.join('\n *\n');
+      const importsAndTypes = `${is.length ? `${iss}\n *\n` : ''}${tss}`;
+      const b = makeBlock(importsAndTypes);
       const typedef = `/* documentary ${location} */\n${b}`;
       return typedef;
     } catch (e) {
-      LOG('(%s) Could not process typdef-js: %s', location, e.message);
+      LOG('(%s) Could not process typedef-js: %s', location, e.message);
       return match;
     }
   }
