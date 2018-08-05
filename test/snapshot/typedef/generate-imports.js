@@ -8,6 +8,7 @@ async function test() {
  * @typedef {import('http').ServerResponse} ServerResponse
  * @typedef {import('koa-multer').StorageEngine} StorageEngine
  * @typedef {import('koa-multer').File} File
+ *
  * @typedef {(f: File) => void} Function A function to save a file.
  */
 

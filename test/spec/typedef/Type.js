@@ -18,8 +18,8 @@ class context {
   }
   get content() {
     const c = `
-<p string name="root">Root directory string.</p>
-<p number name="maxage" default="0">Browser cache max-age in milliseconds.</p>
+<prop string name="root">Root directory string.</prop>
+<prop number name="maxage" default="0">Browser cache max-age in milliseconds.</prop>
 `
       .trim()
     return c
@@ -33,10 +33,11 @@ class context {
 const TypeFromXml = {
   context,
   'creates a type without properties'({ t, name, desc }) {
-    const props = { name, desc }
+    const props = { name, desc, noToc: true }
     t.fromXML('', props)
     deepEqual(t, {
       name,
+      noToc: true,
       description: desc,
     })
   },
@@ -113,10 +114,36 @@ const TypeToParam = {
   },
 }
 
+/** @type {Object.<string, (c: context)>} */
+const TypeToMarkdown = {
+  context,
+  'writes a markdown without props'({ t, name, desc }) {
+    t.fromXML('', { name, desc })
+    const res = t.toMarkdown()
+    equal(res, '__[`Type`](t)__: A test type.')
+  },
+  'writes a markdown with a type'({ t, name, desc, type }) {
+    t.fromXML('', { name, desc, type })
+    const res = t.toMarkdown()
+    equal(res, '`Object` __[`Type`](t)__: A test type.')
+  },
+  'writes a markdown with props'({ t, name, desc, content }) {
+    t.fromXML(content, { name, desc })
+    const res = t.toMarkdown()
+    const expected = `__[\`Type\`](t)__: A test type.
+
+\`\`\`table
+[["Name","Type","Description","Default"],["__root*__","_string_","Root directory string.","-"],["maxage","_number_","Browser cache max-age in milliseconds.","\`0\`"]]
+\`\`\``
+    equal(res, expected)
+  },
+}
+
 const T = {
   'type from xml': TypeFromXml,
   'type to typedef': TypeToTypedef,
   'type to param': TypeToParam,
+  'type to markdown': TypeToMarkdown,
 }
 
 export default T

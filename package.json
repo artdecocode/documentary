@@ -4,7 +4,7 @@
   "description": "A library to manage documentation, such as README, usage, man pages and changelog.",
   "main": "build",
   "scripts": {
-    "t": "zoroaster -b",
+    "t": "NODE_DEBUG=doc zoroaster -b",
     "test": "zoroaster -b test/spec",
     "test-build": "BABEL_ENV=test-build yarn test",
     "test-all": "yarn-s test test-build",

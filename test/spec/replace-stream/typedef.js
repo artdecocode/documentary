@@ -7,7 +7,7 @@ const T = {
     Context,
     SnapshotContext,
   ],
-  async 'places types table'(
+  async 'places a single type'(
     { createReadable, catchment, typesLocation, SNAPSHOT_DIR, replaceStream }, { setDir, test }
   ) {
     setDir(SNAPSHOT_DIR)
@@ -15,9 +15,9 @@ const T = {
     const rs = createReadable(s)
     rs.pipe(replaceStream)
     const res = await catchment(replaceStream)
-    await test('replace-stream/typedef-md.txt', res)
+    await test('replace-stream/typedef.md', res)
   },
-  async 'places types line'(
+  async 'places a single type without properties'(
     { createReadable, catchment, typesLocation, SNAPSHOT_DIR, replaceStream }, { setDir, test }
   ) {
     setDir(SNAPSHOT_DIR)
@@ -25,7 +25,7 @@ const T = {
     const rs = createReadable(s)
     rs.pipe(replaceStream)
     const res = await catchment(replaceStream)
-    await test('replace-stream/typedef-md-line.txt', res)
+    await test('replace-stream/typedef-line.md', res)
   },
   async 'places all types from a file'(
     { createReadable, catchment, typesLocation, SNAPSHOT_DIR, replaceStream }, { setDir, test }
@@ -35,7 +35,7 @@ const T = {
     const rs = createReadable(s)
     rs.pipe(replaceStream)
     const res = await catchment(replaceStream)
-    await test('replace-stream/typedef-md-file.txt', res)
+    await test('replace-stream/typedef-file.md', res)
   },
 }
 

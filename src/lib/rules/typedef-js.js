@@ -40,30 +40,31 @@ const typedefRule = {
 
       const [{ content: Root }] = root
 
-      const ts = extractTags('t', Root)
-      const typedefs = ts.map(({ content, props }) => {
+      const types = extractTags('type', Root)
+      const typedefs = types.map(({ content, props }) => {
         const tt = new Type()
         tt.fromXML(content, props)
         return tt
       })
 
-      // remember types for js-replace-stream
-      this.emit('types', typedefs)
+      this.emit('types', typedefs) // remember types for js-replace-stream
 
-      const t = typedefs
+      const ts = typedefs
         .map(tt => tt.toTypedef())
-        .join('\n *\n')
 
       // imports
-      const is = extractTags('i', Root)
+      const is = extractTags('import', Root)
         .map(({ props: { name, from } }) => ` * @typedef {import('${from}').${name}} ${name}`)
-      const iss = is.join('\n')
 
-      const b = makeBlock(`${is.length ? `${iss}${t ? '\n' : ''}` : ''}${t || ''}`)
+      const iss = is.join('\n')
+      const tss = ts.join('\n *\n')
+      const importsAndTypes = `${is.length ? `${iss}\n *\n` : ''}${tss}`
+
+      const b = makeBlock(importsAndTypes)
       const typedef = `/* documentary ${location} */\n${b}`
       return typedef
     } catch (e) {
-      LOG('(%s) Could not process typdef-js: %s', location, e.message)
+      LOG('(%s) Could not process typedef-js: %s', location, e.message)
       return match
     }
   },
