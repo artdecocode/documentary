@@ -40,7 +40,6 @@ yarn add -DE documentary
     * [Importing Types](#importing-types)
     * [XML Schema](#xml-schema)
     * [Migration](#migration)
-      * [`doc src/index.js -e types/index.xml`](#doc-srcindexjs--e-typesindexxml)
 - [CLI](#cli)
   * [Output Location](#output-location)
   * [Only TOC](#only-toc)
@@ -195,7 +194,7 @@ documentary
 │   │   ├── 2-readme.md
 │   │   ├── 3-imports.md
 │   │   ├── 4-schema.md
-│   │   ├── 9-extraction.md
+│   │   ├── 9-migration.md
 │   │   └── index.md
 │   └── index.md
 ├── 3-cli.md
@@ -811,7 +810,7 @@ Property of a `@typedef` definition.</th>
 
 #### Migration
 
-A JavaScript file can be scanned for the presence of `@typedef` JSDoc comments, and then extracted to a `types.xml` file. This can be done with the <a name="doc-srcindexjs--e-typesindexxml">`doc src/index.js -e types/index.xml`</a> command. This is primarily a tool to migrate older software to using `types.xml` files which can be used both for [online documentation](#online-documentation) and [editor documentation](#editor-documentation).
+A JavaScript file can be scanned for the presence of `@typedef` JSDoc comments, which are then extracted to a `types.xml` file. This can be done with the [`doc src/index.js -e types/index.xml`](#extract-types) command. This is primarily a tool to migrate older software to using `types.xml` files which can be used both for [online documentation](#online-documentation) and [editor documentation](#editor-documentation).
 
 For example, types can be extracted from a JavaScript file which contains JSDoc in form of comments:
 
@@ -819,6 +818,12 @@ For example, types can be extracted from a JavaScript file which contains JSDoc 
 async function test() {
   process.stdout.write('ttt')
 }
+
+/**
+ * @typedef {import('koa-multer').StorageEngine} StorageEngine
+ * @typedef {import('http').IncomingMessage} IncomingMessage
+ * @typedef {import('koa-multer').File} File
+ */
 
 /**
  * @typedef {Object} Test This is test description.
@@ -842,15 +847,12 @@ async function test() {
  * @prop {number} [parts] For multipart forms, the max number of parts (fields + files)(Default: Infinity).
  * @prop {number} [headerPairs] For multipart forms, the max number of header key=> value pairs to parse Default: 2000 (same as node's http).
  *
- * @typedef {import('koa-multer').StorageEngine} StorageEngine
- * @typedef {import('http').IncomingMessage} IncomingMessage
- * @typedef {import('koa-multer').File} File
  * @typedef {Object} MulterConfig
  * @prop {string} [dest] Where to store the files.
  * @prop {StorageEngine} [storage] Where to store the files.
  * @prop {(req: IncomingMessage, file: File, callback: (error: Error | null, acceptFile: boolean)) => void} [fileFilter] Function to control which files are accepted.
  * @prop {Limits} [limits] Limits of the uploaded data.
- * @prop {boolean} [preservePath=false]  Keep the full path of files instead of just the base name.
+ * @prop {boolean} [preservePath=false] Keep the full path of files instead of just the base name.
  */
 
 export default test
@@ -860,35 +862,35 @@ When a description ends with <code>Default `true`</code>, the default value of a
 
 ```xml
 <types>
-  <t name="Test" desc="This is test description." />
-  <t name="SessionConfig" desc="Description of Session Config.">
-    <p string name="key">cookie key.</p>
-    <p opt type="number|'session'" name="maxAge" default="86400000">maxAge in ms. Default is 1 day. `session` will result in a cookie that expires when session/browser is closed. Warning: If a session cookie is stolen, this cookie will never expire.</p>
-    <p opt boolean name="overwrite" default="true">Can overwrite or not.</p>
-    <p opt boolean name="httpOnly" default="true">httpOnly or not or not.</p>
-    <p opt boolean name="signed" default="false">Signed or not.</p>
-    <p opt boolean name="rolling" default="false">Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown.</p>
-    <p opt boolean name="renew" default="false">Renew session when session is nearly expired, so we can always keep user logged in.</p>
-  </t>
-  <t name="Limits">
-    <p opt number name="fieldNameSize">Max field name size (Default: 100 bytes).</p>
-    <p opt number name="fieldSize">Max field value size (Default: 1MB).</p>
-    <p opt number name="fields">Max number of non- file fields (Default: Infinity).</p>
-    <p opt number name="fileSize">For multipart forms, the max file size (in bytes)(Default: Infinity).</p>
-    <p opt number name="files">For multipart forms, the max number of file fields (Default: Infinity).</p>
-    <p opt number name="parts">For multipart forms, the max number of parts (fields + files)(Default: Infinity).</p>
-    <p opt number name="headerPairs">For multipart forms, the max number of header key=> value pairs to parse Default: 2000 (same as node's http).</p>
-  </t>
-  <t name="StorageEngine" type="import('koa-multer').StorageEngine" />
-  <t name="IncomingMessage" type="import('http').IncomingMessage" />
-  <t name="File" type="import('koa-multer').File" />
-  <t name="MulterConfig">
-    <p opt string name="dest">Where to store the files.</p>
-    <p opt type="StorageEngine" name="storage">Where to store the files.</p>
-    <p opt type="(req: IncomingMessage, file: File, callback: (error: Error | null, acceptFile: boolean)) => void" name="fileFilter">Function to control which files are accepted.</p>
-    <p opt type="Limits" name="limits">Limits of the uploaded data.</p>
-    <p opt boolean name="preservePath" default="false"> Keep the full path of files instead of just the base name.</p>
-  </t>
+  <import name="StorageEngine" from="koa-multer" />
+  <import name="IncomingMessage" from="http" />
+  <import name="File" from="koa-multer" />
+  <type name="Test" desc="This is test description." />
+  <type name="SessionConfig" desc="Description of Session Config.">
+    <prop string name="key">cookie key.</prop>
+    <prop opt type="number|'session'" name="maxAge" default="86400000">maxAge in ms. Default is 1 day. `session` will result in a cookie that expires when session/browser is closed. Warning: If a session cookie is stolen, this cookie will never expire.</prop>
+    <prop opt boolean name="overwrite" default="true">Can overwrite or not.</prop>
+    <prop opt boolean name="httpOnly" default="true">httpOnly or not or not.</prop>
+    <prop opt boolean name="signed" default="false">Signed or not.</prop>
+    <prop opt boolean name="rolling" default="false">Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown.</prop>
+    <prop opt boolean name="renew" default="false">Renew session when session is nearly expired, so we can always keep user logged in.</prop>
+  </type>
+  <type name="Limits">
+    <prop opt number name="fieldNameSize">Max field name size (Default: 100 bytes).</prop>
+    <prop opt number name="fieldSize">Max field value size (Default: 1MB).</prop>
+    <prop opt number name="fields">Max number of non- file fields (Default: Infinity).</prop>
+    <prop opt number name="fileSize">For multipart forms, the max file size (in bytes)(Default: Infinity).</prop>
+    <prop opt number name="files">For multipart forms, the max number of file fields (Default: Infinity).</prop>
+    <prop opt number name="parts">For multipart forms, the max number of parts (fields + files)(Default: Infinity).</prop>
+    <prop opt number name="headerPairs">For multipart forms, the max number of header key=> value pairs to parse Default: 2000 (same as node's http).</prop>
+  </type>
+  <type name="MulterConfig">
+    <prop opt string name="dest">Where to store the files.</prop>
+    <prop opt type="StorageEngine" name="storage">Where to store the files.</prop>
+    <prop opt type="(req: IncomingMessage, file: File, callback: (error: Error | null, acceptFile: boolean)) => void" name="fileFilter">Function to control which files are accepted.</prop>
+    <prop opt type="Limits" name="limits">Limits of the uploaded data.</prop>
+    <prop opt boolean name="preservePath" default="false">Keep the full path of files instead of just the base name.</prop>
+  </type>
 </types>
 ```
 ## CLI
