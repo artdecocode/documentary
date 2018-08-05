@@ -32,8 +32,9 @@ const makeType = (type, name, description, properties) => {
 
 const makeP = (type, name, defaultValue, optional, description) => {
   const t = ['string', 'number', 'boolean'].includes(type) ? ` ${type}` : ` type="${type}"`
-  const def = defaultValue !== undefined ? ` default="${defaultValue}"` : ''
-  const o = optional ? ' opt' : ''
+  const hasDefault = defaultValue !== undefined
+  const def = hasDefault ? ` default="${defaultValue}"` : ''
+  const o = (optional && !hasDefault) ? ' opt' : ''
   const desc = description ? `>${description}</prop>` : '/>'
   const i = ' '.repeat(4)
   const p = `${i}<prop${o}${t} name="${name}"${def}${desc}\n`
