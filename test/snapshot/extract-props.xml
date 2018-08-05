@@ -1,10 +1,10 @@
 <types>
-  <t name="CSRFConfig">
-    <p opt string name="invalidSessionSecretMessage"/>
-    <p opt number name="invalidSessionSecretStatusCode"/>
-    <p opt string name="invalidTokenMessage"/>
-    <p opt number name="invalidTokenStatusCode"/>
-    <p opt type="string[]" name="excludedMethods"/>
-    <p opt boolean name="disableQuery"/>
-  </t>
+  <type name="CSRFConfig">
+    <prop opt string name="invalidSessionSecretMessage"/>
+    <prop opt number name="invalidSessionSecretStatusCode"/>
+    <prop opt string name="invalidTokenMessage"/>
+    <prop opt number name="invalidTokenStatusCode"/>
+    <prop opt type="string[]" name="excludedMethods"/>
+    <prop opt boolean name="disableQuery"/>
+  </type>
 </types>

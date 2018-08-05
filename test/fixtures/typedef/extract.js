@@ -3,6 +3,12 @@ async function test() {
 }
 
 /**
+ * @typedef {import('koa-multer').StorageEngine} StorageEngine
+ * @typedef {import('http').IncomingMessage} IncomingMessage
+ * @typedef {import('koa-multer').File} File
+ */
+
+/**
  * @typedef {Object} Test This is test description.
  * @typedef {Object} SessionConfig Description of Session Config.
  * @prop {string} key cookie key.
@@ -24,15 +30,12 @@ async function test() {
  * @prop {number} [parts] For multipart forms, the max number of parts (fields + files)(Default: Infinity).
  * @prop {number} [headerPairs] For multipart forms, the max number of header key=> value pairs to parse Default: 2000 (same as node's http).
  *
- * @typedef {import('koa-multer').StorageEngine} StorageEngine
- * @typedef {import('http').IncomingMessage} IncomingMessage
- * @typedef {import('koa-multer').File} File
  * @typedef {Object} MulterConfig
  * @prop {string} [dest] Where to store the files.
  * @prop {StorageEngine} [storage] Where to store the files.
  * @prop {(req: IncomingMessage, file: File, callback: (error: Error | null, acceptFile: boolean)) => void} [fileFilter] Function to control which files are accepted.
  * @prop {Limits} [limits] Limits of the uploaded data.
- * @prop {boolean} [preservePath=false]  Keep the full path of files instead of just the base name.
+ * @prop {boolean} [preservePath=false] Keep the full path of files instead of just the base name.
  */
 
 export default test

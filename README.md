@@ -32,18 +32,21 @@ yarn add -DE documentary
     * [<code>yarn doc</code>](#yarn-doc)
   * [`Type` Definition](#type-definition)
     * [Dedicated Example Row](#dedicated-example-row)
-  * [`@typedef` Generation](#typedef-generation)
-    * [`doc src/config-static.js -T`](#doc-srcconfig-staticjs--t)
-    * [`README` placement](#readme-placement)
+  * [`@typedef` Organisation](#typedef-organisation)
+    * [JS Placement](#js-placement)
+      * [Expanded `@param`](#expanded-param)
+      * [Spread `@param`](#spread-param)
+    * [README placement](#readme-placement)
       * [`SetHeaders`](#setheaders)
       * [`StaticConfig`](#staticconfig)
-    * [`<i name="Type" from="package" />`](#i-nametype-frompackage-)
-  * [`@typedef` Extraction](#typedef-extraction)
-    * [`doc src/index.js -e types/index.xml`](#doc-srcindexjs--e-typesindexxml)
+    * [Importing Types](#importing-types)
+    * [XML Schema](#xml-schema)
+    * [Migration](#migration)
 - [CLI](#cli)
   * [Output Location](#output-location)
   * [Only TOC](#only-toc)
-  * [Insert Types](#insert-types)
+  * [Generate Types](#generate-types)
+  * [Extract Types](#extract-types)
   * [Watch Mode](#watch-mode)
   * [Automatic Push](#automatic-push)
   * [`NODE_DEBUG=doc`](#node_debugdoc)
@@ -64,26 +67,23 @@ The `doc` client is available after installation. It can be used in a `doc` scri
 ```json
 {
   "scripts": {
-    "doc": "doc README-source.md -o README.md",
-    "dc": "git add README-source.md README.md && git commit -m ",
+    "doc": "doc documentary -o README.md"
   }
 }
 ```
 
-Therefore, to run produce an output README.md, the following command will be used:
+The first argument, `documentary` is a path to a directory containing source documentation files, or a path to a single file to be processed, e.g., `README-source.md`.
+
+Therefore, to produce an output `README.md`, the following command will be used:
 
 ```sh
 yarn doc
 ```
 
-The `dc` command is just a convenience script to commit both source and output files with a passed commit message, such as:
-
-```sh
-yarn dc 'add copyright'
-```
+When actively working on documentation, it is possible to use the `watch` mode with `-w` flag, or `-p` flag to also automatically push changes to a remote git repository, merging them into a single commit every time.
 ## Features
 
-The processed `README-source.md` file will have a generated table of contents, markdown tables and neat titles for API method descriptions.
+The processed `README.md` file will have a generated table of contents, markdown tables and neat titles for API method descriptions, as well as other possible features described in this section.
 ### TOC Generation
 
 Table of contents are useful for navigation the README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
@@ -189,8 +189,13 @@ documentary
 │   ├── 7-examples.md
 │   ├── 8-gif.md
 │   ├── 9-type.md
-│   ├── 91-types-xml.md
-│   ├── 92-types-extraction.md
+│   ├── 91-typedef
+│   │   ├── 1-js.md
+│   │   ├── 2-readme.md
+│   │   ├── 3-imports.md
+│   │   ├── 4-schema.md
+│   │   ├── 9-migration.md
+│   │   └── index.md
 │   └── index.md
 ├── 3-cli.md
 ├── 4-api
@@ -521,11 +526,11 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 </table>
 
 
-### `@typedef` Generation
+### `@typedef` Organisation
 
 For the purpose of easier maintenance of _JSDoc_ `@typedef` declarations, `documentary` allows to keep them in a separate XML file, and then place compiled versions into both source code as well as documentation. By doing this, more flexibility is achieved as types are kept in one place but can be reused for various purposes across multiple files. It is different from _TypeScript_ type declarations as `documentary` will generate _JSDoc_ comments rather than type definitions which means that a project does not have to be written in _TypeScript_.
 
-Types are kept in an `xml` file, for example:
+Types are kept in a separate `xml` file, for example:
 
 ```xml
 <types>
@@ -553,13 +558,17 @@ Types are kept in an `xml` file, for example:
 </types>
 ```
 
-Here, `import('http').ServerResponse` is a feature of _TypeScript_ that allows to reference an external type in VS Code. It does not require the project to be written in _TypeScript_, but will enable correct IntelliSense completions and hits (available since VS Code at least `1.25`).
+They are then included in both JavaScript source code and markdown documentation.
 
-To place the compiled declaration into a source code, the following line should be placed in the `.js` file (where `types/static.xml` file existing in the project directory from which `doc` will be run):
+#### JS Placement
+
+To include a compiled declaration into a source code, the following line should be placed in the `.js` file (where the `types/static.xml` file exists in the project directory from which the `doc` command will be run):
 
 ```js
 /* documentary types/static.xml */
 ```
+
+For example, an unprocessed _JavaScript_ file can look like this:
 
 ```js
 /* src/config-static.js */
@@ -567,7 +576,6 @@ import Static from 'koa-static'
 
 /**
  * Configure the middleware.
- * @param {StaticConfig} config
  */
 function configure(config) {
   const middleware = Static(config)
@@ -581,15 +589,14 @@ export default configure
 
 > Please note that the types marker must be placed before `export default` is done (or just `export`) as there's currently a bug in VS Code.
 
-The JavaScript file is then processed with <a name="doc-srcconfig-staticjs--t">`doc src/config-static.js -T`</a> command. After the processing is done, the `.js` file will be transformed to include all types specified in the XML file. On top of that, _JSDoc_ for any method that has an included type as one of its parameters will be updated to its expanded form so that a preview of options is available. This routine can be repeated whenever types are updated.
+The file is then processed with [`doc src/config-static.js -g`](#generate-types) command and updated in place, unless `-` is given as an argument, which will print the output to _stdout_, or the path to the output file is specified. After the processing is done, the source code will be transformed to include all types specified in the XML file. This routine can be repeated whenever types are updated.
 
 ```js
-/* yarn example/typedef.js */
+/* src/config-static.js */
 import Static from 'koa-static'
 
 /**
  * Configure the middleware.
- * @param {StaticConfig} config
  */
 function configure(config) {
   const middleware = Static(config)
@@ -613,15 +620,99 @@ function configure(config) {
 export default configure
 ```
 
-The `StaticConfig` type will be previewed as:
+##### Expanded `@param`
 
-![preview of the StaticConfig](doc/typedef-Type.gif)
+In addition, _JSDoc_ for any method that has an included type as one of its parameters will be updated to its expanded form so that a preview of options is available.
 
-And the `configure` function will be seen as:
+Therefore, a raw function _JSDoc_ of a function written as
+
+```js
+/**
+ * Configure the middleware.
+ * @param {StaticConfig} config Options to setup `koa-static`.
+ */
+function configure(config) {
+  const middleware = Static(config)
+  return middleware
+}
+```
+
+will be expanded to include the properties of the type:
+
+```js
+/**
+ * Configure the middleware.
+ * @param {StaticConfig} config Options to setup `koa-static`.
+ * @param {string} config.root Root directory string.
+ * @param {number} [config.maxage=0] Browser cache max-age in milliseconds. Default `0`.
+ * @param {boolean} [config.hidden=false] Allow transfer of hidden files. Default `false`.
+ * @param {string} [config.index="index.html"] Default file name. Default `index.html`.
+ * @param {SetHeaders} [config.setHeaders] Function to set custom headers on response.
+ */
+function configure(config) {
+  const middleware = Static(config)
+  return middleware
+}
+```
+
+This makes it possible to see the properties of the argument to the `configure` function fully:
 
 ![preview of the configure function](doc/typedef-config.gif)
 
-#### `README` placement
+And the description of each property will be available when passing an argument to the function:
+
+![preview of a property description](doc/desc.gif)
+
+Compare that to the preview without _JSDoc_ expansion:
+
+![preview of the configure function without expanded params](doc/no-expansion.gif)
+
+##### Spread `@param`
+
+Moreover, when the type of the type is just object, it also can be spread into a notation which contains its properties for even better visibility. To do that, the `spread` attribute must be added to the type definition in the `xml` file.
+
+Again, a raw function with JSDoc:
+
+```js
+/**
+ * Configure the middleware.
+ * @param {StaticConfig} config Options to setup `koa-static`.
+ */
+function configure(config) {
+  const middleware = Static(config)
+  return middleware
+}
+```
+
+Can be re-written as spread notation of a type.
+
+```js
+/**
+ * Configure the middleware.
+ * @param {{ root: string, maxage?: number, hidden?: boolean, index?: string, setHeaders?: SetHeaders }} config Options to setup `koa-static`.
+ * @param {string} config.root Root directory string.
+ * @param {number} [config.maxage=0] Browser cache max-age in milliseconds. Default `0`.
+ * @param {boolean} [config.hidden=false] Allow transfer of hidden files. Default `false`.
+ * @param {string} [config.index="index.html"] Default file name. Default `index.html`.
+ * @param {SetHeaders} [config.setHeaders] Function to set custom headers on response.
+ */
+function configure(config) {
+  const middleware = Static(config)
+  return middleware
+}
+```
+
+The properties will be visible in the preview:
+
+![preview of the configure function with stread params](doc/spread.gif)
+
+However, this method has one disadvantage as there will be no descriptions of the properties when trying to use them in a call to function:
+
+![spread will not have a description](doc/no-desc.gif)
+
+Therefore, it must be considered what is the best for developers -- to see descriptions of properties when passing a configuration object to a function, but not see all possible properties, or to see the full list of properties, but have no visibility of what they mean.
+
+#### README placement
 
 To place a type definition as a table into a `README` file, the `TYPEDEF` snippet can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed. Moreover, links to the type descriptions will be created in the table of contents using the [__TOC Titles__](#toc-titles), but to prevent this, the `noToc` attribute should be set for a type.
 
@@ -659,9 +750,9 @@ __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 | index | _string_ | Default file name. | `index.html` |
 | setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | - |
 
-#### `<i name="Type" from="package" />`
+#### Importing Types
 
-A special `i` (for `import`) element can be used to import a Type using Visual Code's TypeScript engine. An import looks like `/** @typedef {import('package').Type} Type */`, so that `name` attribute is the name of the type in the referenced package, and `from` attribute is the name of the module from which to import the type. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
+A special `import` element can be used to import a type using _VS Code_'s _TypeScript_ engine. An import is just a typedef which looks like `/** @typedef {import('package').Type} Type */`. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
 
 <table>
 <thead>
@@ -727,10 +818,76 @@ export default example
 </tbody>
 </table>
 
+#### XML Schema
 
-### `@typedef` Extraction
+The XML file should have the following nodes and attributes:
 
-A JavaScript file can be scanned for the presence of `@typedef` JSDoc comments, and then extracted to a `types.xml` file. This can be done with the <a name="doc-srcindexjs--e-typesindexxml">`doc src/index.js -e types/index.xml`</a> command. This is primarily a tool to migrate older software to using `types.xml` files which can be used both for [online documentation](#online-documentation) and [editor documentation](#editor-documentation).
+<table>
+<thead>
+ <tr>
+  <th>Node</th>
+  <th>Description</th>
+  <th>Attributes</th>
+ </tr>
+</thead>
+<tbody>
+ <tr>
+  <td>
+
+_types_</td>
+  <td>A single root element.</td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>
+
+_import_</td>
+  <td>An imported type definition.</th>
+  <td>
+
+- _name_: Name of the imported type.</li>
+- _from_: The module from which the type is imported.</li>
+  </td>
+ </tr>
+ <tr>
+  <td>
+
+_type_</td>
+  <td>
+
+A `@typedef` definition.</th>
+  <td>
+
+- _name_: A name of the type.</li>
+- _desc_: A Description of the type.</li>
+- _type_: A type of the type, if different from `Object`.</li>
+- _noToc_: Do not include link to the type in the table of contents.</li>
+- _spread_: Spread the type to the `{ prop: Type, prop2: Type2 }` notation when used as a `@param`.</li>
+  </td>
+ </tr>
+ <tr>
+  <td>
+
+_prop_</td>
+  <td>
+
+Property of a `@typedef` definition.</th>
+  <td>
+
+- _name_: Name of the property.</li>
+- _string_: Whether the property is string.</li>
+- _number_: Whether the property is number.</li>
+- _boolean_: Whether the property is boolean.</li>
+- _opt_: Whether the property is optional.</li>
+- _default_: Default value of the property. When given, the property becomes optional.</li>
+  </td>
+ </tr>
+</tbody>
+</table>
+
+#### Migration
+
+A JavaScript file can be scanned for the presence of `@typedef` JSDoc comments, which are then extracted to a `types.xml` file. This can be done with the [`doc src/index.js -e types/index.xml`](#extract-types) command. This is primarily a tool to migrate older software to using `types.xml` files which can be used both for [online documentation](#online-documentation) and [editor documentation](#editor-documentation).
 
 For example, types can be extracted from a JavaScript file which contains JSDoc in form of comments:
 
@@ -740,74 +897,47 @@ async function test() {
 }
 
 /**
- * @typedef {Object} Test This is test description.
- * @typedef {Object} SessionConfig Description of Session Config.
- * @prop {string} key cookie key.
- * @prop {number|'session'} [maxAge=86400000] maxAge in ms. Default is 1 day. `session` will result in a cookie that expires when session/browser is closed. Warning: If a session cookie is stolen, this cookie will never expire. Default `86400000`.
- * @prop {boolean} [overwrite] Can overwrite or not. Default `true`.
- * @prop {boolean} [httpOnly] httpOnly or not or not. Default `true`.
- * @prop {boolean} [signed=false] Signed or not. Default `false`.
- * @prop {boolean} [rolling] Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. Default `false`.
- * @prop {boolean} [renew] Renew session when session is nearly expired, so we can always keep user logged in. Default `false`.
+ * @typedef {import('http').IncomingMessage} IncomingMessage
  */
 
 /**
- * @typedef {Object} Limits
- * @prop {number} [fieldNameSize] Max field name size (Default: 100 bytes).
- * @prop {number} [fieldSize] Max field value size (Default: 1MB).
- * @prop {number} [fields] Max number of non- file fields (Default: Infinity).
- * @prop {number} [fileSize] For multipart forms, the max file size (in bytes)(Default: Infinity).
- * @prop {number} [files] For multipart forms, the max number of file fields (Default: Infinity).
- * @prop {number} [parts] For multipart forms, the max number of parts (fields + files)(Default: Infinity).
- * @prop {number} [headerPairs] For multipart forms, the max number of header key=> value pairs to parse Default: 2000 (same as node's http).
+ * @typedef {(m: IncomingMessage)} Test This is test function.
  *
- * @typedef {import('koa-multer').StorageEngine} StorageEngine
- * @typedef {import('http').IncomingMessage} IncomingMessage
- * @typedef {import('koa-multer').File} File
- * @typedef {Object} MulterConfig
- * @prop {string} [dest] Where to store the files.
- * @prop {StorageEngine} [storage] Where to store the files.
- * @prop {(req: IncomingMessage, file: File, callback: (error: Error | null, acceptFile: boolean)) => void} [fileFilter] Function to control which files are accepted.
- * @prop {Limits} [limits] Limits of the uploaded data.
- * @prop {boolean} [preservePath=false]  Keep the full path of files instead of just the base name.
+ * @typedef {Object} SessionConfig Description of Session Config.
+ * @prop {string} key cookie key.
+ * @prop {number|'session'} [maxAge=86400000] maxAge in ms. `session` will result in a cookie that expires when session/browser is closed.
+ * @prop {boolean} [overwrite] Can overwrite or not. Default `true`.
+ * @prop {boolean} [httpOnly] httpOnly or not or not. Default `true`.
+ * @prop {boolean} [renew] Renew session when session is nearly expired, so we can always keep user logged in. Default `false`.
  */
+
 
 export default test
 ```
 
-When a description ends with `Default \`true\``, type can also be parsed from there.
+When a description ends with <code>Default &#96;value&#96;</code>, the default value of a type can also be parsed from there.
 
 ```xml
 <types>
-  <t name="Test" desc="This is test description." />
-  <t name="SessionConfig" desc="Description of Session Config.">
-    <p string name="key">cookie key.</p>
-    <p opt type="number|'session'" name="maxAge" default="86400000">maxAge in ms. Default is 1 day. `session` will result in a cookie that expires when session/browser is closed. Warning: If a session cookie is stolen, this cookie will never expire.</p>
-    <p opt boolean name="overwrite" default="true">Can overwrite or not.</p>
-    <p opt boolean name="httpOnly" default="true">httpOnly or not or not.</p>
-    <p opt boolean name="signed" default="false">Signed or not.</p>
-    <p opt boolean name="rolling" default="false">Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown.</p>
-    <p opt boolean name="renew" default="false">Renew session when session is nearly expired, so we can always keep user logged in.</p>
-  </t>
-  <t name="Limits">
-    <p opt number name="fieldNameSize">Max field name size (Default: 100 bytes).</p>
-    <p opt number name="fieldSize">Max field value size (Default: 1MB).</p>
-    <p opt number name="fields">Max number of non- file fields (Default: Infinity).</p>
-    <p opt number name="fileSize">For multipart forms, the max file size (in bytes)(Default: Infinity).</p>
-    <p opt number name="files">For multipart forms, the max number of file fields (Default: Infinity).</p>
-    <p opt number name="parts">For multipart forms, the max number of parts (fields + files)(Default: Infinity).</p>
-    <p opt number name="headerPairs">For multipart forms, the max number of header key=> value pairs to parse Default: 2000 (same as node's http).</p>
-  </t>
-  <t name="StorageEngine" type="import('koa-multer').StorageEngine" />
-  <t name="IncomingMessage" type="import('http').IncomingMessage" />
-  <t name="File" type="import('koa-multer').File" />
-  <t name="MulterConfig">
-    <p opt string name="dest">Where to store the files.</p>
-    <p opt type="StorageEngine" name="storage">Where to store the files.</p>
-    <p opt type="(req: IncomingMessage, file: File, callback: (error: Error | null, acceptFile: boolean)) => void" name="fileFilter">Function to control which files are accepted.</p>
-    <p opt type="Limits" name="limits">Limits of the uploaded data.</p>
-    <p opt boolean name="preservePath" default="false"> Keep the full path of files instead of just the base name.</p>
-  </t>
+  <import name="IncomingMessage" from="http" />
+  <type name="Test" type="(m: IncomingMessage)" desc="This is test function." />
+  <type name="SessionConfig" desc="Description of Session Config.">
+    <prop string name="key">
+      cookie key.
+    </prop>
+    <prop type="number|'session'" name="maxAge" default="86400000">
+      maxAge in ms. `session` will result in a cookie that expires when session/browser is closed.
+    </prop>
+    <prop boolean name="overwrite" default="true">
+      Can overwrite or not.
+    </prop>
+    <prop boolean name="httpOnly" default="true">
+      httpOnly or not or not.
+    </prop>
+    <prop boolean name="renew" default="false">
+      Renew session when session is nearly expired, so we can always keep user logged in.
+    </prop>
+  </type>
 </types>
 ```
 ## CLI
@@ -815,18 +945,19 @@ When a description ends with `Default \`true\``, type can also be parsed from th
 The program is used from the CLI (or `package.json` script).
 
 ```sh
-doc README-source.md [-o README.md] [-twpT]
+doc README-source.md [-o README.md] [-tgewp]
 ```
 
 The arguments it accepts are:
 
 | Flag | Meaning | Description |
 | ---- | ------- | ----------- |
-| `-o` | <a name="output-location">Output Location</a> | Where to save the processed `README` file. If not specified, the output is written to the `stdout`. |
+| `-o path` | <a name="output-location">Output Location</a> | Where to save the processed `README` file. If not specified, the output is written to the `stdout`. |
 | `-t` | <a name="only-toc">Only TOC</a> | Only extract and print the table of contents. |
-| `-T` | <a name="insert-types">Insert Types</a> | Insert `@typedef` JSDoc into JavaScript files. |
+| `-g [path]` | <a name="generate-types">Generate Types</a> | Insert `@typedef` _JSDoc_ into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
+| `-e [path]` | <a name="extract-types">Extract Types</a> | Insert `@typedef` JSDoc into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
 | `-w` | <a name="watch-mode">Watch Mode</a> | Watch mode: re-run the program when changes to the source file are detected. |
-| `-p` | <a name="automatic-push">Automatic Push</a> | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit. |
+| `-p "commit message"` | <a name="automatic-push">Automatic Push</a> | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit. |
 
 When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print debug information, e.g.,
 
