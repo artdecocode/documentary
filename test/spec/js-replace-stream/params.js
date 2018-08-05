@@ -45,6 +45,29 @@ export default configure`
     const res = await catchment(stream)
     await test('js-replace-stream/jsdoc.js', res)
   },
+  async 'expands an optional type in function\'s JSDoc'(
+    { createReadable, catchment, typesLocation, SNAPSHOT_DIR }, { setDir, test }
+  ) {
+    setDir(SNAPSHOT_DIR)
+    const s = `import { resolve } from 'path'
+
+/**
+ * Configure the static middleware.
+ * @param {StaticConfig} [config]
+ */
+function configure(config) {
+  return resolve('test')
+}
+
+/* documentary ${typesLocation} */
+
+export default configure`
+    const rs = createReadable(s)
+    const stream = createJsReplaceStream()
+    rs.pipe(stream)
+    const res = await catchment(stream)
+    await test('js-replace-stream/jsdoc-optional.js', res)
+  },
   async 'expands an expanded type in function\'s JSDoc'(
     { createReadable, catchment, typesLocation, SNAPSHOT_DIR }, { setDir, test }
   ) {

@@ -7,16 +7,18 @@
   {
     "type": "OtherConfig",
     "name": "otherConfig",
-    "rest": "\n * @param {string} [otherConfig.hello] A hello-world example key.\n * @param {boolean} [otherConfig.world=false] A hello-world example value."
-  },
+    "rest": "\n * @param {string} [otherConfig.hello] A hello-world example key.\n * @param {boolean} [otherConfig.world=false] A hello-world example value.",
+    "opt": "["
+    },
   {
     "type": "FinalConfig",
     "name": "finalConfig"
   },
   {
     "type": "OptionalFinalConfig",
-    "name": "optionalFinalConfig"
-  },
+    "name": "optionalFinalConfig",
+    "opt": "["
+    },
   {
     "type": "Config2",
     "name": "config2",

@@ -21,7 +21,7 @@ function configure(config) {
   return resolve('test')
 }
 `
-    const { type, name } = getMatches(g, jsDocRe, ['type', 'name'])
+    const { type, name } = getMatches(g, jsDocRe, ['type', 'opt', 'name'])
     equal(type, t)
     equal(name, n)
   },
@@ -37,7 +37,7 @@ function configure(config) {
   return resolve('test')
 }
 `
-    const { type, name } = getMatches(g, jsDocRe, ['type', 'name'])
+    const { type, name } = getMatches(g, jsDocRe, ['type', 'opt', 'name'])
     equal(type, t)
     equal(name, n)
   },
@@ -70,7 +70,7 @@ function configureInverse(config) {
   return resolve('test')
 }
 `
-    const res = mismatch(jsDocRe, g, ['type', 'name', 'rest'])
+    const res = mismatch(jsDocRe, g, ['type', 'opt', 'name', 'rest'])
     await test('typedef/re-jsdoc.json', res)
   },
 }
