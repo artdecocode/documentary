@@ -16,10 +16,12 @@
       },
       "console": "integratedTerminal",
       "args": [
-        "test/spec/bin/generate.js",
+        // "test/spec/bin/generate.js",
         // "test/spec/replace-stream",
         // "test/spec/Toc.js",
         // "test/spec/replace-stream/typedef-md.js",
+        // "test/spec/js-replace-stream/params.js",
+        "test/spec/typedef/Property.js",
         // "test/spec/re/inner-code.js",
         // "test/spec/typedef/generate.js",
         "-b",

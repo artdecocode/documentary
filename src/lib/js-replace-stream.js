@@ -1,27 +1,12 @@
 import { Replaceable } from 'restream'
 import typedefJsRule from './rules/typedef-js'
-import { jsDocRe } from './typedef/jsdoc'
-import { debuglog } from 'util'
-
-const LOG = debuglog('doc')
+import JSDocRule from './typedef/jsdoc'
 
 class JSReplaceable extends Replaceable {
   constructor() {
     super([
       typedefJsRule,
-      {
-        re: jsDocRe,
-        replacement(match, typeName, paramName) {
-          if (!(typeName in this.types)) {
-            LOG('Type %s not found', typeName)
-            return match
-          }
-          /** @type {Type} */
-          const t = this.types[typeName]
-          const s = t.toParam(paramName)
-          return s
-        },
-      },
+      JSDocRule,
     ])
     this._types = {}
 
