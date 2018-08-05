@@ -1,5 +1,5 @@
 
-#### types Schema
+#### XML Schema
 
 The XML file should have the following nodes and attributes:
 

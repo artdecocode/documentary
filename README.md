@@ -33,13 +33,14 @@ yarn add -DE documentary
   * [`Type` Definition](#type-definition)
     * [Dedicated Example Row](#dedicated-example-row)
   * [`@typedef` Organisation](#typedef-organisation)
-    * [`README` placement](#readme-placement)
+    * [JS Placement](#js-placement)
+    * [import](#import)
+    * [README placement](#readme-placement)
       * [`SetHeaders`](#setheaders)
       * [`StaticConfig`](#staticconfig)
-    * [import](#import)
-    * [types Schema](#types-schema)
-  * [`@typedef` Extraction](#typedef-extraction)
-    * [`doc src/index.js -e types/index.xml`](#doc-srcindexjs--e-typesindexxml)
+    * [XML Schema](#xml-schema)
+    * [Migration](#migration)
+      * [`doc src/index.js -e types/index.xml`](#doc-srcindexjs--e-typesindexxml)
 - [CLI](#cli)
   * [Output Location](#output-location)
   * [Only TOC](#only-toc)
@@ -190,9 +191,10 @@ documentary
 │   ├── 8-gif.md
 │   ├── 9-type.md
 │   ├── 91-typedef
-│   │   ├── 1-readme.md
+│   │   ├── 1-js.md
 │   │   ├── 2-imports.md
-│   │   ├── 3-schema.md
+│   │   ├── 3-readme.md
+│   │   ├── 4-schema.md
 │   │   ├── 9-extraction.md
 │   │   └── index.md
 │   └── index.md
@@ -529,6 +531,9 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 
 For the purpose of easier maintenance of _JSDoc_ `@typedef` declarations, `documentary` allows to keep them in a separate XML file, and then place compiled versions into both source code as well as documentation. By doing this, more flexibility is achieved as types are kept in one place but can be reused for various purposes across multiple files. It is different from _TypeScript_ type declarations as `documentary` will generate _JSDoc_ comments rather than type definitions which means that a project does not have to be written in _TypeScript_.
 
+
+#### JS Placement
+
 Types are kept in an `xml` file, for example:
 
 ```xml
@@ -632,44 +637,6 @@ This is in contrast to the preview without _JSDoc_ expansion:
 
 ![preview of the configure function without expanded params](doc/no-expansion.gif)
 
-#### `README` placement
-
-To place a type definition as a table into a `README` file, the `TYPEDEF` snippet can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed. Moreover, links to the type descriptions will be created in the table of contents using the [__TOC Titles__](#toc-titles), but to prevent this, the `noToc` attribute should be set for a type.
-
-```
-%TYPEDEF path/definitions.xml TypeName%
-```
-
-For example, using previously defined `StaticConfig` type from `types/static.xml` file, `documentary` will process the following markers:
-
-```
-%TYPEDEF types/static.xml ServerResponse%
-%TYPEDEF types/static.xml SetHeaders%
-%TYPEDEF types/static.xml StaticConfig%
-```
-
-or a single marker to include all types in order in which they appear in the `xml` file (doing this also allows to reference other types from properties):
-
-```
-%TYPEDEF types/static.xml%
-```
-
-and embed resulting type definitions:
-
-`import('http').ServerResponse` __`ServerResponse`__
-
-`(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
-
-__<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
-
-| Name | Type | Description | Default |
-| ---- | ---- | ----------- | ------- |
-| __root*__ | _string_ | Root directory string. | - |
-| maxage | _number_ | Browser cache max-age in milliseconds. | `0` |
-| hidden | _boolean_ | Allow transfer of hidden files. | `false` |
-| index | _string_ | Default file name. | `index.html` |
-| setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | - |
-
 #### import
 
 A special `import` element can be used to import a type using _VS Code_'s _TypeScript_ engine. An import looks like `/** @typedef {import('package').Type} Type */`, so that the `name` attribute is the name of the type in the referenced package, and `from` attribute is the name of the module from which to import the type. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
@@ -738,7 +705,45 @@ export default example
 </tbody>
 </table>
 
-#### types Schema
+#### README placement
+
+To place a type definition as a table into a `README` file, the `TYPEDEF` snippet can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed. Moreover, links to the type descriptions will be created in the table of contents using the [__TOC Titles__](#toc-titles), but to prevent this, the `noToc` attribute should be set for a type.
+
+```
+%TYPEDEF path/definitions.xml TypeName%
+```
+
+For example, using previously defined `StaticConfig` type from `types/static.xml` file, `documentary` will process the following markers:
+
+```
+%TYPEDEF types/static.xml ServerResponse%
+%TYPEDEF types/static.xml SetHeaders%
+%TYPEDEF types/static.xml StaticConfig%
+```
+
+or a single marker to include all types in order in which they appear in the `xml` file (doing this also allows to reference other types from properties):
+
+```
+%TYPEDEF types/static.xml%
+```
+
+and embed resulting type definitions:
+
+`import('http').ServerResponse` __`ServerResponse`__
+
+`(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
+
+__<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
+
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| __root*__ | _string_ | Root directory string. | - |
+| maxage | _number_ | Browser cache max-age in milliseconds. | `0` |
+| hidden | _boolean_ | Allow transfer of hidden files. | `false` |
+| index | _string_ | Default file name. | `index.html` |
+| setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | - |
+
+#### XML Schema
 
 The XML file should have the following nodes and attributes:
 
@@ -804,7 +809,7 @@ Property of a `@typedef` definition.</th>
 </tbody>
 </table>
 
-### `@typedef` Extraction
+#### Migration
 
 A JavaScript file can be scanned for the presence of `@typedef` JSDoc comments, and then extracted to a `types.xml` file. This can be done with the <a name="doc-srcindexjs--e-typesindexxml">`doc src/index.js -e types/index.xml`</a> command. This is primarily a tool to migrate older software to using `types.xml` files which can be used both for [online documentation](#online-documentation) and [editor documentation](#editor-documentation).
 
