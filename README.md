@@ -529,17 +529,27 @@ Types are kept in an `xml` file, for example:
 
 ```xml
 <types>
-  <t name="ServerResponse" type="import('http').ServerResponse" noToc />
-  <t name="SetHeaders"
+  <import name="ServerResponse" from="http" />
+  <type name="SetHeaders"
     type="(res: ServerResponse) => any"
     desc="Function to set custom headers on response." />
-  <t name="StaticConfig" desc="Options to setup `koa-static`.">
-    <p string name="root">Root directory string.</p>
-    <p number name="maxage" default="0">Browser cache max-age in milliseconds.</p>
-    <p boolean name="hidden" default="false">Allow transfer of hidden files.</p>
-    <p string name="index" default="index.html">Default file name.</p>
-    <p opt type="SetHeaders" name="setHeaders">Function to set custom headers on response.</p>
-  </t>
+  <type name="StaticConfig" desc="Options to setup `koa-static`.">
+    <prop string name="root">
+      Root directory string.
+    </prop>
+    <prop number name="maxage" default="0">
+      Browser cache max-age in milliseconds.
+    </prop>
+    <prop boolean name="hidden" default="false">
+      Allow transfer of hidden files.
+    </prop>
+    <prop string name="index" default="index.html">
+      Default file name.
+    </prop>
+    <prop opt type="SetHeaders" name="setHeaders">
+      Function to set custom headers on response.
+    </prop>
+  </type>
 </types>
 ```
 
@@ -644,9 +654,9 @@ __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 | Name | Type | Description | Default |
 | ---- | ---- | ----------- | ------- |
 | __root*__ | _string_ | Root directory string. | - |
-| __maxage*__ | _number_ | Browser cache max-age in milliseconds. | `0` |
-| __hidden*__ | _boolean_ | Allow transfer of hidden files. | `false` |
-| __index*__ | _string_ | Default file name. | `index.html` |
+| maxage | _number_ | Browser cache max-age in milliseconds. | `0` |
+| hidden | _boolean_ | Allow transfer of hidden files. | `false` |
+| index | _string_ | Default file name. | `index.html` |
 | setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | - |
 
 #### `<i name="Type" from="package" />`
@@ -678,11 +688,11 @@ export default example
 
 ```xml
 <types>
-  <i name="IncomingMessage" from="http" />
-  <i name="ServerResponse" from="http" />
-  <i name="StorageEngine" from="koa-multer" />
-  <i name="File" from="koa-multer" />
-  <t type="(f: File) => void" name="Function"
+  <import name="IncomingMessage" from="http" />
+  <import name="ServerResponse" from="http" />
+  <import name="StorageEngine" from="koa-multer" />
+  <import name="File" from="koa-multer" />
+  <type type="(f: File) => void" name="Function"
     desc="A function to save a file." />
 </types>
 ```
@@ -706,6 +716,7 @@ async function example() {
  * @typedef {import('http').ServerResponse} ServerResponse
  * @typedef {import('koa-multer').StorageEngine} StorageEngine
  * @typedef {import('koa-multer').File} File
+ *
  * @typedef {(f: File) => void} Function A function to save a file.
  */
 
