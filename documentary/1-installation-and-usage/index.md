@@ -5,20 +5,17 @@ The `doc` client is available after installation. It can be used in a `doc` scri
 ```json
 {
   "scripts": {
-    "doc": "doc README-source.md -o README.md",
-    "dc": "git add README-source.md README.md && git commit -m ",
+    "doc": "doc documentary -o README.md"
   }
 }
 ```
 
-Therefore, to run produce an output README.md, the following command will be used:
+The first argument, `documentary` is a path to a directory containing source documentation files, or a path to a single file to be processed, e.g., `README-source.md`.
+
+Therefore, to produce an output `README.md`, the following command will be used:
 
 ```sh
 yarn doc
 ```
 
-The `dc` command is just a convenience script to commit both source and output files with a passed commit message, such as:
-
-```sh
-yarn dc 'add copyright'
-```
+When actively working on documentation, it is possible to use the `watch` mode with `-w` flag, or `-p` flag to also automatically push changes to a remote git repository, merging them into a single commit every time.

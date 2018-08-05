@@ -67,26 +67,23 @@ The `doc` client is available after installation. It can be used in a `doc` scri
 ```json
 {
   "scripts": {
-    "doc": "doc README-source.md -o README.md",
-    "dc": "git add README-source.md README.md && git commit -m ",
+    "doc": "doc documentary -o README.md"
   }
 }
 ```
 
-Therefore, to run produce an output README.md, the following command will be used:
+The first argument, `documentary` is a path to a directory containing source documentation files, or a path to a single file to be processed, e.g., `README-source.md`.
+
+Therefore, to produce an output `README.md`, the following command will be used:
 
 ```sh
 yarn doc
 ```
 
-The `dc` command is just a convenience script to commit both source and output files with a passed commit message, such as:
-
-```sh
-yarn dc 'add copyright'
-```
+When actively working on documentation, it is possible to use the `watch` mode with `-w` flag, or `-p` flag to also automatically push changes to a remote git repository, merging them into a single commit every time.
 ## Features
 
-The processed `README-source.md` file will have a generated table of contents, markdown tables and neat titles for API method descriptions.
+The processed `README.md` file will have a generated table of contents, markdown tables and neat titles for API method descriptions, as well as other possible features described in this section.
 ### TOC Generation
 
 Table of contents are useful for navigation the README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
@@ -955,12 +952,12 @@ The arguments it accepts are:
 
 | Flag | Meaning | Description |
 | ---- | ------- | ----------- |
-| `-o` | <a name="output-location">Output Location</a> | Where to save the processed `README` file. If not specified, the output is written to the `stdout`. |
+| `-o path` | <a name="output-location">Output Location</a> | Where to save the processed `README` file. If not specified, the output is written to the `stdout`. |
 | `-t` | <a name="only-toc">Only TOC</a> | Only extract and print the table of contents. |
 | `-g [path]` | <a name="generate-types">Generate Types</a> | Insert `@typedef` _JSDoc_ into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
 | `-e [path]` | <a name="extract-types">Extract Types</a> | Insert `@typedef` JSDoc into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
 | `-w` | <a name="watch-mode">Watch Mode</a> | Watch mode: re-run the program when changes to the source file are detected. |
-| `-p` | <a name="automatic-push">Automatic Push</a> | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit. |
+| `-p "commit message"` | <a name="automatic-push">Automatic Push</a> | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit. |
 
 When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print debug information, e.g.,
 
