@@ -148,10 +148,10 @@ const TypeToMarkdown = {
 }
 
 const T = {
-  // 'type from xml': TypeFromXml,
-  // 'type to typedef': TypeToTypedef,
+  'type from xml': TypeFromXml,
+  'type to typedef': TypeToTypedef,
   'type to param': TypeToParam,
-  // 'type to markdown': TypeToMarkdown,
+  'type to markdown': TypeToMarkdown,
 }
 
 export default T
