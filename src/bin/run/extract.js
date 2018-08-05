@@ -35,8 +35,9 @@ const makeP = (type, name, defaultValue, optional, description) => {
   const hasDefault = defaultValue !== undefined
   const def = hasDefault ? ` default="${defaultValue}"` : ''
   const o = (optional && !hasDefault) ? ' opt' : ''
-  const desc = description ? `>${description}</prop>` : '/>'
   const i = ' '.repeat(4)
+  const ii = ' '.repeat(6)
+  const desc = description ? `>\n${ii}${description}\n${i}</prop>` : '/>'
   const p = `${i}<prop${o}${t} name="${name}"${def}${desc}\n`
   return p
 }
