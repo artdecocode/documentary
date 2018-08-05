@@ -1,4 +1,7 @@
 <types>
+  <import name="StorageEngine" from="koa-multer" />
+  <import name="IncomingMessage" from="http" />
+  <import name="File" from="koa-multer" />
   <type name="Test" desc="This is test description." />
   <type name="SessionConfig" desc="Description of Session Config.">
     <prop string name="key">cookie key.</prop>
@@ -18,9 +21,6 @@
     <prop opt number name="parts">For multipart forms, the max number of parts (fields + files)(Default: Infinity).</prop>
     <prop opt number name="headerPairs">For multipart forms, the max number of header key=> value pairs to parse Default: 2000 (same as node's http).</prop>
   </type>
-  <type name="StorageEngine" type="import('koa-multer').StorageEngine" />
-  <type name="IncomingMessage" type="import('http').IncomingMessage" />
-  <type name="File" type="import('koa-multer').File" />
   <type name="MulterConfig">
     <prop opt string name="dest">Where to store the files.</prop>
     <prop opt type="StorageEngine" name="storage">Where to store the files.</prop>
