@@ -55,10 +55,11 @@ class Type {
     return st;
   }
 
-  toParam(paramName) {
+  toParam(paramName, optional) {
     const d = this.description ? ` ${this.description}` : '';
     const nn = this.spread ? getSpread(this.properties) : this.name;
-    const s = ` * @param {${nn}} ${paramName}${d}`;
+    const pn = optional ? `[${paramName}]` : paramName;
+    const s = ` * @param {${nn}} ${pn}${d}`;
     const p = this.properties ? this.properties.map(pr => {
       const sp = pr.toParam(paramName);
       return sp;
