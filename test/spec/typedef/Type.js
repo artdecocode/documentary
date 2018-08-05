@@ -112,6 +112,14 @@ const TypeToParam = {
  * @param {number} [${paramName}.maxage=0] Browser cache max-age in milliseconds. Default \`0\`.`
     equal(res, expected)
   },
+  'writes a spread param'({ t, name, desc, content, paramName }) {
+    t.fromXML(content, { name, desc, spread: true })
+    const res = t.toParam(paramName)
+    const expected = ` * @param {{ root: string, maxage?: number }} ${paramName} ${desc}
+ * @param {string} ${paramName}.root Root directory string.
+ * @param {number} [${paramName}.maxage=0] Browser cache max-age in milliseconds. Default \`0\`.`
+    equal(res, expected)
+  },
 }
 
 /** @type {Object.<string, (c: context)>} */
@@ -140,10 +148,10 @@ const TypeToMarkdown = {
 }
 
 const T = {
-  'type from xml': TypeFromXml,
-  'type to typedef': TypeToTypedef,
+  // 'type from xml': TypeFromXml,
+  // 'type to typedef': TypeToTypedef,
   'type to param': TypeToParam,
-  'type to markdown': TypeToMarkdown,
+  // 'type to markdown': TypeToMarkdown,
 }
 
 export default T

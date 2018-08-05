@@ -3,13 +3,14 @@ import Property from './Property'
 import { getLink } from '..'
 
 class Type {
-  fromXML(content, { name, type, desc, noToc }) {
+  fromXML(content, { name, type, desc, noToc, spread }) {
     if (!name) throw new Error('Type does not have a name.')
     this.name = name
 
     if (type) this.type = type
     if (desc) this.description = desc.trim()
     if (noToc) this.noToc = true
+    if (spread) this.spread = true
 
     if (content) {
       const ps = extractTags('prop', content)
@@ -35,7 +36,8 @@ class Type {
   }
   toParam(paramName) {
     const d = this.description ? ` ${this.description}` : ''
-    const s = ` * @param {${this.name}} ${paramName}${d}`
+    const nn = this.spread ? getSpread(this.properties) : this.name
+    const s = ` * @param {${nn}} ${paramName}${d}`
     const p = this.properties ? this.properties.map((pr) => {
       const sp = pr.toParam(paramName)
       return sp
@@ -53,6 +55,21 @@ class Type {
     const res = `${line}${table}`
     return res
   }
+}
+
+/**
+ * @param {Property[]} properties
+ */
+const getSpread = (properties = []) => {
+  const s = properties.map(p => {
+    const n = p.optional ? `${p.name}?` : p.name
+    const t = p.type
+    const st = `${n}: ${t}`
+    return st
+  })
+  const j = s.join(', ')
+  const st = `{ ${j} }`
+  return st
 }
 
 /**
