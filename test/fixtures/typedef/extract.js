@@ -32,7 +32,7 @@ async function test() {
  * @prop {StorageEngine} [storage] Where to store the files.
  * @prop {(req: IncomingMessage, file: File, callback: (error: Error | null, acceptFile: boolean)) => void} [fileFilter] Function to control which files are accepted.
  * @prop {Limits} [limits] Limits of the uploaded data.
- * @prop {boolean} [preservePath=false]  Keep the full path of files instead of just the base name.
+ * @prop {boolean} [preservePath=false] Keep the full path of files instead of just the base name.
  */
 
 export default test

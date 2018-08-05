@@ -26,7 +26,7 @@ const makeT = (type, name, description, properties) => {
   const tt = type && type != 'Object' ? ` type="${type}"` : ''
   const d = description ? ` desc="${description}"` : ''
   const i = ' '.repeat(2)
-  const t = `${i}<t name="${name}"${tt}${d}${hasProps ? '' : ' /'}>\n`
+  const t = `${i}<type name="${name}"${tt}${d}${hasProps ? '' : ' /'}>\n`
   return t
 }
 
@@ -34,9 +34,9 @@ const makeP = (type, name, defaultValue, optional, description) => {
   const t = ['string', 'number', 'boolean'].includes(type) ? ` ${type}` : ` type="${type}"`
   const def = defaultValue !== undefined ? ` default="${defaultValue}"` : ''
   const o = optional ? ' opt' : ''
-  const desc = description ? `>${description}</p>` : '/>'
+  const desc = description ? `>${description}</prop>` : '/>'
   const i = ' '.repeat(4)
-  const p = `${i}<p${o}${t} name="${name}"${def}${desc}\n`
+  const p = `${i}<prop${o}${t} name="${name}"${def}${desc}\n`
   return p
 }
 
@@ -66,7 +66,7 @@ class XML extends Transform {
       const p = makeP(pType, pName, d, optional, pDesc)
       this.push(p)
     })
-    if (properties.length) this.push('  </t>\n')
+    if (properties.length) this.push('  </type>\n')
     next()
   }
 }
