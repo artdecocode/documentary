@@ -3,7 +3,7 @@
 The program is used from the CLI (or `package.json` script).
 
 ```sh
-doc README-source.md [-o README.md] [-twpT]
+doc README-source.md [-o README.md] [-tgewp]
 ```
 
 The arguments it accepts are:
@@ -13,7 +13,8 @@ The arguments it accepts are:
   ["Flag", "Meaning", "Description"],
   ["`-o`", "[Output Location](t)", "Where to save the processed `README` file. If not specified, the output is written to the `stdout`."],
   ["`-t`", "[Only TOC](t)", "Only extract and print the table of contents."],
-  ["`-T`", "[Insert Types](t)", "Insert `@typedef` JSDoc into JavaScript files."],
+  ["`-g [path]`", "[Generate Types](t)", "Insert `@typedef` _JSDoc_ into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_."],
+  ["`-e [path]`", "[Extract Types](t)", "Insert `@typedef` JSDoc into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_."],
   ["`-w`", "[Watch Mode](t)", "Watch mode: re-run the program when changes to the source file are detected."],
   ["`-p`", "[Automatic Push](t)", "Watch + push: automatically push changes to a remote git branch by squashing them into a single commit."]
 ]

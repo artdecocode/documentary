@@ -45,7 +45,8 @@ yarn add -DE documentary
 - [CLI](#cli)
   * [Output Location](#output-location)
   * [Only TOC](#only-toc)
-  * [Insert Types](#insert-types)
+  * [Generate Types](#generate-types)
+  * [Extract Types](#extract-types)
   * [Watch Mode](#watch-mode)
   * [Automatic Push](#automatic-push)
   * [`NODE_DEBUG=doc`](#node_debugdoc)
@@ -591,7 +592,7 @@ export default configure
 
 > Please note that the types marker must be placed before `export default` is done (or just `export`) as there's currently a bug in VS Code.
 
-The file is then processed with [`doc src/config-static.js -g`](#insert-types) command and updated in place, unless `-` is given as an argument, which will print the output to _stdout_, or the path to the output file is specified. After the processing is done, the source code will be transformed to include all types specified in the XML file. This routine can be repeated whenever types are updated.
+The file is then processed with [`doc src/config-static.js -g`](#generate-types) command and updated in place, unless `-` is given as an argument, which will print the output to _stdout_, or the path to the output file is specified. After the processing is done, the source code will be transformed to include all types specified in the XML file. This routine can be repeated whenever types are updated.
 
 ```js
 /* src/config-static.js */
@@ -946,7 +947,7 @@ When a description ends with <code>Default &#96;value&#96;</code>, the default v
 The program is used from the CLI (or `package.json` script).
 
 ```sh
-doc README-source.md [-o README.md] [-twpT]
+doc README-source.md [-o README.md] [-tgewp]
 ```
 
 The arguments it accepts are:
@@ -955,7 +956,8 @@ The arguments it accepts are:
 | ---- | ------- | ----------- |
 | `-o` | <a name="output-location">Output Location</a> | Where to save the processed `README` file. If not specified, the output is written to the `stdout`. |
 | `-t` | <a name="only-toc">Only TOC</a> | Only extract and print the table of contents. |
-| `-T` | <a name="insert-types">Insert Types</a> | Insert `@typedef` JSDoc into JavaScript files. |
+| `-g [path]` | <a name="generate-types">Generate Types</a> | Insert `@typedef` _JSDoc_ into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
+| `-e [path]` | <a name="extract-types">Extract Types</a> | Insert `@typedef` JSDoc into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
 | `-w` | <a name="watch-mode">Watch Mode</a> | Watch mode: re-run the program when changes to the source file are detected. |
 | `-p` | <a name="automatic-push">Automatic Push</a> | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit. |
 
