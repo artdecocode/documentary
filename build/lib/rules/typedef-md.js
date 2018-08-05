@@ -11,7 +11,7 @@ var _rexml = _interopRequireDefault(require("rexml"));
 
 var _ = require("..");
 
-var _typedefJs = require("./typedef-js");
+var _typedef = require("../typedef");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40,7 +40,7 @@ const makeTable = (props, allTypes = []) => {
       ...propType
     }
   }) => {
-    const type = (0, _typedefJs.getPropType)(propType);
+    const type = (0, _typedef.getPropType)(propType);
     const link = getLinkToType(allTypes, type);
     const t = `_${type}_`;
     const tt = link ? `[${t}](#${link})` : t;

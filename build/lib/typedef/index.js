@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getNameWithDefault = void 0;
+exports.getPropType = exports.getNameWithDefault = void 0;
 
 /**
  * Return a name of a property with its default value, and surrounded by square brackets if default is given. If type is boolean or number, the default value is not surrounded by "".
@@ -14,16 +14,38 @@ exports.getNameWithDefault = void 0;
  *
  * requiredParam
  * [optionalDefaultParam=false]
- * [optionalDefaultParamString='test']
+ * [optionalDefaultParamString="test"]
  * [optionalParam]
+ *
+ * parentParam.requiredParam
+ * [parentParam.optionalDefaultParam=false]
+ * [parentParam.optionalDefaultParamString="test"]
+ * [parentParam.optionalParam]
  */
-const getNameWithDefault = (name, defaultValue, type) => {
+const getNameWithDefault = (name, defaultValue, type, parentParam) => {
+  const n = `${parentParam ? `${parentParam}.` : ''}${name}`;
   const hasDefault = defaultValue !== undefined;
-  if (!hasDefault) return name;
-  const d = ['number', 'boolean'].includes(type) ? defaultValue : `"${defaultValue}"`;
-  const n = `${name}=${d}`;
-  return n;
+  if (!hasDefault) return n;
+  const isPrimitive = Number.isInteger(defaultValue) || defaultValue === true || defaultValue === false || ['number', 'boolean'].includes(type);
+  const d = isPrimitive ? defaultValue : `"${defaultValue}"`;
+  const nn = `${n}=${d}`;
+  return nn;
 };
 
 exports.getNameWithDefault = getNameWithDefault;
+
+const getPropType = ({
+  number,
+  string,
+  boolean,
+  type
+}) => {
+  if (string) return 'string';
+  if (number) return 'number';
+  if (boolean) return 'boolean';
+  if (type) return type;
+  return '*';
+};
+
+exports.getPropType = getPropType;
 //# sourceMappingURL=index.js.map

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.getPropType = exports.typedefJsRe = void 0;
+exports.default = exports.typedefJsRe = void 0;
 
 var _util = require("util");
 
@@ -11,68 +11,22 @@ var _rexml = _interopRequireDefault(require("rexml"));
 
 var _ = require("..");
 
-var _typedef = require("../typedef");
+var _Type = _interopRequireDefault(require("../typedef/Type"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const LOG = (0, _util.debuglog)('doc');
-const typedefJsRe = /^\/\* documentary (.+?) \*\/\n(?:([^\n][\s\S]+?\n))?$/mg;
+const typedefJsRe = /^\/\* documentary (.+?) \*\/\n(?:([^\n][\s\S]+?\n))?$/mg; // const makePropsDesc = (props) => {
+//   return ''
+//   if (!props.length) return ''
+//   const l = props.map(({ props: { name, opt } }) => {
+//     const n = opt ? `[${name}]` : name
+//     return `\`${n}\``
+//   })
+//   return `Has properties: ${l.join(', ')}.`
+// }
+
 exports.typedefJsRe = typedefJsRe;
-
-const makeProp = (name, opt, type = '*', defaultValue, desc = '') => {
-  if (!name) throw new Error('Property does not have a value.');
-  const n = (0, _typedef.getNameWithDefault)(name, defaultValue, type);
-  const nn = opt ? `[${n}]` : n;
-  const d = defaultValue !== undefined ? ` Default \`${defaultValue}\`.` : '';
-  const p = ` * @prop {${type}} ${nn} ${desc}${d}`;
-  return p;
-};
-
-const getPropType = ({
-  number,
-  string,
-  boolean,
-  type
-}) => {
-  if (string) return 'string';
-  if (number) return 'number';
-  if (boolean) return 'boolean';
-  if (type) return type;
-  return 'any';
-};
-
-exports.getPropType = getPropType;
-
-const makePropsDesc = props => {
-  return ''; // if (!props.length) return ''
-  // const l = props.map(({ props: { name, opt } }) => {
-  //   const n = opt ? `[${name}]` : name
-  //   return `\`${n}\``
-  // })
-  // return `Has properties: ${l.join(', ')}.`
-};
-
-const makeType = (name, type = 'Object', desc, props) => {
-  if (!name) throw new Error('Type does not have a name.');
-  const pd = makePropsDesc(props);
-  const t = ` * @typedef {${type}} ${name}${desc ? ` ${desc}` : ''}${pd ? ` ${pd}` : ''}`;
-  const ps = props.map(({
-    content,
-    props: {
-      name: propName,
-      opt,
-      default: defaultVal,
-      ...propType
-    }
-  }) => {
-    const pt = getPropType(propType);
-    const p = makeProp(propName, opt, pt, defaultVal, content);
-    return p;
-  });
-  const res = [t, ...ps];
-  const s = res.join('\n');
-  return s;
-};
 
 const makeBlock = s => {
   return `/**
@@ -93,32 +47,32 @@ const typedefRule = {
     try {
       LOG('Detected type marker: %s', location);
       const xml = await (0, _.read)(location);
-      const types = (0, _rexml.default)('types', xml);
-      if (!types.length) throw new Error('XML file should contain root types element.');
+      const root = (0, _rexml.default)('types', xml);
+      if (!root.length) throw new Error('XML file should contain root types element.');
       const [{
-        content: Types
-      }] = types;
-      const ts = (0, _rexml.default)('t', Types);
-      const s = ts.map(({
+        content: Root
+      }] = root;
+      const ts = (0, _rexml.default)('t', Root);
+      const typedefs = ts.map(({
         content,
-        props: {
-          name,
-          type,
-          desc
-        }
+        props
       }) => {
-        const ps = (0, _rexml.default)('p', content);
-        return makeType(name, type, desc, ps);
-      });
-      const t = s.join('\n *\n');
-      const is = (0, _rexml.default)('i', Types).map(({
+        const tt = new _Type.default();
+        tt.fromXML(content, props);
+        return tt;
+      }); // remember types for js-replace-stream
+
+      this.emit('types', typedefs);
+      const t = typedefs.map(tt => tt.toTypedef()).join('\n *\n'); // imports
+
+      const is = (0, _rexml.default)('i', Root).map(({
         props: {
           name,
           from
         }
       }) => ` * @typedef {import('${from}').${name}} ${name}`);
       const iss = is.join('\n');
-      const b = makeBlock(`${is.length ? `${iss}` : ''}${t || ''}`);
+      const b = makeBlock(`${is.length ? `${iss}${t ? '\n' : ''}` : ''}${t || ''}`);
       const typedef = `/* documentary ${location} */\n${b}`;
       return typedef;
     } catch (e) {
