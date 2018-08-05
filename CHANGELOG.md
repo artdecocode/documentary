@@ -1,3 +1,10 @@
+## 5 August 2018
+
+### 1.11.0
+
+- [feature] `@typedef` organisation, required props in `type` to have `*`.
+- [fix] Non-greedy example regexp.
+
 ## 18 July 2018
 
 ### 1.10.0
