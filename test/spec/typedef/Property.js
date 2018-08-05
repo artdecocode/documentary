@@ -237,6 +237,14 @@ const PropertyToPropParam = {
       equal(param, ` * @param {*} [${parentParam}.${name}=true] ${desc} Default \`true\`.`)
     },
   },
+  'writes a prop without description'({ p, name, parentParam }) {
+    const props = { name }
+    p.fromXML('', props)
+    const prop = p.toProp()
+    equal(prop, ` * @prop {*} ${name}`)
+    const param = p.toParam(parentParam)
+    equal(param, ` * @param {*} ${parentParam}.${name}`)
+  },
 }
 
 const T = {

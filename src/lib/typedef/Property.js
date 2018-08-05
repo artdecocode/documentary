@@ -15,8 +15,9 @@ class Property {
   toJSDoc(parentParam) {
     const nameWithDefault = getNameWithDefault(this.name, this.default, this.type, parentParam)
     const name = this.optional ? `[${nameWithDefault}]` : nameWithDefault
+    const dd = this.description ? ` ${this.description}` : ''
     const d = this.hasDefault ? ` Default \`${this.default}\`.` : ''
-    const s = `{${this.type}} ${name} ${this.description}${d}`
+    const s = `{${this.type}} ${name}${dd}${d}`
     return s
   }
   toProp() {
