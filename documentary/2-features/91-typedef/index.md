@@ -1,5 +1,5 @@
 
-### `@typedef` Generation
+### `@typedef` Organisation
 
 For the purpose of easier maintenance of _JSDoc_ `@typedef` declarations, `documentary` allows to keep them in a separate XML file, and then place compiled versions into both source code as well as documentation. By doing this, more flexibility is achieved as types are kept in one place but can be reused for various purposes across multiple files. It is different from _TypeScript_ type declarations as `documentary` will generate _JSDoc_ comments rather than type definitions which means that a project does not have to be written in _TypeScript_.
 
@@ -11,86 +11,32 @@ Types are kept in an `xml` file, for example:
 
 Here, `import('http').ServerResponse` is a feature of _TypeScript_ that allows to reference an external type in VS Code. It does not require the project to be written in _TypeScript_, but will enable correct IntelliSense completions and hits (available since VS Code at least `1.25`). -->
 
-To place the compiled declaration into a source code, the following line should be placed in the `.js` file (where `types/static.xml` file existing in the project directory from which `doc` will be run):
+To include a compiled declaration into a source code, the following line should be placed in the `.js` file (where the `types/static.xml` file exists in the project directory from which the `doc` command will be run):
 
 ```js
 /* documentary types/static.xml */
 ```
 
+For example, an unprocessed _JavaScript_ file can look like this:
+
 %EXAMPLE: example/typedef-raw.js%
 
 > Please note that the types marker must be placed before `export default` is done (or just `export`) as there's currently a bug in VS Code.
 
-The JavaScript file is then processed with [`doc src/config-static.js -T`](t) command. After the processing is done, the `.js` file will be transformed to include all types specified in the XML file. On top of that, _JSDoc_ for any method that has an included type as one of its parameters will be updated to its expanded form so that a preview of options is available. This routine can be repeated whenever types are updated.
+The file is then processed with [`doc src/config-static.js -g`](#insert-types) command and updated in place, unless `-` is given as an argument, which will print the output to _stdout_.
 
-%EXAMPLE: example/typedef.js%
+After the processing is done, the source code will be transformed to include all types specified in the XML file. On top of that, _JSDoc_ for any method that has an included type as one of its parameters will be updated to its expanded form so that a preview of options is available. This routine can be repeated whenever types are updated.
 
-The `StaticConfig` type will be previewed as:
+%FORK-js src/bin/register example/typedef-raw.js -g -%
 
-![preview of the StaticConfig](doc/typedef-Type.gif)
+<!-- The `StaticConfig` type will be previewed as:
 
-And the `configure` function will be seen as:
+![preview of the StaticConfig](doc/typedef-Type.gif) -->
+
+Because the `@param` _JSDoc_ has been expanded, the properties of the argument to the `configure` function will be seen fully:
 
 ![preview of the configure function](doc/typedef-config.gif)
 
-#### `README` placement
+This is in contrast to the preview without _JSDoc_ expansion:
 
-To place a type definition as a table into a `README` file, the `TYPEDEF` snippet can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed. Moreover, links to the type descriptions will be created in the table of contents using the [__TOC Titles__](#toc-titles), but to prevent this, the `noToc` attribute should be set for a type.
-
-```
-%TYPEDEF path/definitions.xml TypeName%
-```
-
-For example, using previously defined `StaticConfig` type from `types/static.xml` file, `documentary` will process the following markers:
-
-```
-%TYPEDEF types/static.xml ServerResponse%
-%TYPEDEF types/static.xml SetHeaders%
-%TYPEDEF types/static.xml StaticConfig%
-```
-
-or a single marker to include all types in order in which they appear in the `xml` file (doing this also allows to reference other types from properties):
-
-```
-%TYPEDEF types/static.xml%
-```
-
-and embed resulting type definitions:
-
-%TYPEDEF types/static.xml%
-
-#### `<i name="Type" from="package" />`
-
-A special `i` (for `import`) element can be used to import a Type using Visual Code's TypeScript engine. An import looks like `/** @typedef {import('package').Type} Type */`, so that `name` attribute is the name of the type in the referenced package, and `from` attribute is the name of the module from which to import the type. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
-
-<table>
-<thead>
-<tr>
-<th>Original Source</th>
-<th>Types Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr/>
-<tr><td>
-
-%EXAMPLE: example/generate-imports.js, ../src => src, js%
-</td>
-<td>
-
-%EXAMPLE: types/import.xml%
-</td>
-</tr>
-<tr>
-<td colspan="2" align="center">
-<strong>Output</strong>
-</td></tr>
-<tr>
-<td colspan="2">
-
-%FORK-js src/bin/register example/generate-imports.js -g -%
-</td>
-</tr>
-</tbody>
-</table>
-
+![preview of the configure function without expanded params](doc/no-expansion.gif)

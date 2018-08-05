@@ -32,12 +32,12 @@ yarn add -DE documentary
     * [<code>yarn doc</code>](#yarn-doc)
   * [`Type` Definition](#type-definition)
     * [Dedicated Example Row](#dedicated-example-row)
-  * [`@typedef` Generation](#typedef-generation)
-    * [`doc src/config-static.js -T`](#doc-srcconfig-staticjs--t)
+  * [`@typedef` Organisation](#typedef-organisation)
     * [`README` placement](#readme-placement)
       * [`SetHeaders`](#setheaders)
       * [`StaticConfig`](#staticconfig)
-    * [`<i name="Type" from="package" />`](#i-nametype-frompackage-)
+    * [import](#import)
+    * [types Schema](#types-schema)
   * [`@typedef` Extraction](#typedef-extraction)
     * [`doc src/index.js -e types/index.xml`](#doc-srcindexjs--e-typesindexxml)
 - [CLI](#cli)
@@ -189,8 +189,12 @@ documentary
 │   ├── 7-examples.md
 │   ├── 8-gif.md
 │   ├── 9-type.md
-│   ├── 91-types-xml.md
-│   ├── 92-types-extraction.md
+│   ├── 91-typedef
+│   │   ├── 1-readme.md
+│   │   ├── 2-imports.md
+│   │   ├── 3-schema.md
+│   │   ├── 9-extraction.md
+│   │   └── index.md
 │   └── index.md
 ├── 3-cli.md
 ├── 4-api
@@ -521,7 +525,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 </table>
 
 
-### `@typedef` Generation
+### `@typedef` Organisation
 
 For the purpose of easier maintenance of _JSDoc_ `@typedef` declarations, `documentary` allows to keep them in a separate XML file, and then place compiled versions into both source code as well as documentation. By doing this, more flexibility is achieved as types are kept in one place but can be reused for various purposes across multiple files. It is different from _TypeScript_ type declarations as `documentary` will generate _JSDoc_ comments rather than type definitions which means that a project does not have to be written in _TypeScript_.
 
@@ -553,13 +557,13 @@ Types are kept in an `xml` file, for example:
 </types>
 ```
 
-Here, `import('http').ServerResponse` is a feature of _TypeScript_ that allows to reference an external type in VS Code. It does not require the project to be written in _TypeScript_, but will enable correct IntelliSense completions and hits (available since VS Code at least `1.25`).
-
-To place the compiled declaration into a source code, the following line should be placed in the `.js` file (where `types/static.xml` file existing in the project directory from which `doc` will be run):
+To include a compiled declaration into a source code, the following line should be placed in the `.js` file (where the `types/static.xml` file exists in the project directory from which the `doc` command will be run):
 
 ```js
 /* documentary types/static.xml */
 ```
+
+For example, an unprocessed _JavaScript_ file can look like this:
 
 ```js
 /* src/config-static.js */
@@ -581,15 +585,22 @@ export default configure
 
 > Please note that the types marker must be placed before `export default` is done (or just `export`) as there's currently a bug in VS Code.
 
-The JavaScript file is then processed with <a name="doc-srcconfig-staticjs--t">`doc src/config-static.js -T`</a> command. After the processing is done, the `.js` file will be transformed to include all types specified in the XML file. On top of that, _JSDoc_ for any method that has an included type as one of its parameters will be updated to its expanded form so that a preview of options is available. This routine can be repeated whenever types are updated.
+The file is then processed with [`doc src/config-static.js -g`](#insert-types) command and updated in place, unless `-` is given as an argument, which will print the output to _stdout_.
+
+After the processing is done, the source code will be transformed to include all types specified in the XML file. On top of that, _JSDoc_ for any method that has an included type as one of its parameters will be updated to its expanded form so that a preview of options is available. This routine can be repeated whenever types are updated.
 
 ```js
-/* yarn example/typedef.js */
+/* src/config-static.js */
 import Static from 'koa-static'
 
 /**
  * Configure the middleware.
- * @param {StaticConfig} config
+ * @param {StaticConfig} config Options to setup `koa-static`.
+ * @param {string} config.root Root directory string.
+ * @param {number} [config.maxage=0] Browser cache max-age in milliseconds. Default `0`.
+ * @param {boolean} [config.hidden=false] Allow transfer of hidden files. Default `false`.
+ * @param {string} [config.index="index.html"] Default file name. Default `index.html`.
+ * @param {SetHeaders} [config.setHeaders] Function to set custom headers on response.
  */
 function configure(config) {
   const middleware = Static(config)
@@ -613,13 +624,13 @@ function configure(config) {
 export default configure
 ```
 
-The `StaticConfig` type will be previewed as:
-
-![preview of the StaticConfig](doc/typedef-Type.gif)
-
-And the `configure` function will be seen as:
+Because the `@param` _JSDoc_ has been expanded, the properties of the argument to the `configure` function will be seen fully:
 
 ![preview of the configure function](doc/typedef-config.gif)
+
+This is in contrast to the preview without _JSDoc_ expansion:
+
+![preview of the configure function without expanded params](doc/no-expansion.gif)
 
 #### `README` placement
 
@@ -659,7 +670,7 @@ __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 | index | _string_ | Default file name. | `index.html` |
 | setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | - |
 
-#### `<i name="Type" from="package" />`
+#### import
 
 A special `i` (for `import`) element can be used to import a Type using Visual Code's TypeScript engine. An import looks like `/** @typedef {import('package').Type} Type */`, so that `name` attribute is the name of the type in the referenced package, and `from` attribute is the name of the module from which to import the type. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
 
@@ -727,6 +738,70 @@ export default example
 </tbody>
 </table>
 
+#### types Schema
+
+The XML file should have the following nodes and attributes:
+
+<table>
+<thead>
+ <tr>
+  <th>Node</th>
+  <th>Description</th>
+  <th>Attributes</th>
+ </tr>
+</thead>
+<tbody>
+ <tr>
+  <td>
+
+_types_</td>
+  <td>A single root element.</td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>
+
+_import_</td>
+  <td>An imported type definition.</th>
+  <td>
+
+- _name_: Name of the imported type.</li>
+- _from_: The module from which the type is imported.</li>
+  </td>
+ </tr>
+ <tr>
+  <td>
+
+_type_</td>
+  <td>
+
+A `@typedef` definition.</th>
+  <td>
+
+- _name_: A name of the type.</li>
+- _desc_: A Description of the type.</li>
+- _type_: A type of the type, if different from `Object`.</li>
+  </td>
+ </tr>
+ <tr>
+  <td>
+
+_prop_</td>
+  <td>
+
+Property of a `@typedef` definition.</th>
+  <td>
+
+- _name_: Name of the property.</li>
+- _string_: Whether the property is string.</li>
+- _number_: Whether the property is number.</li>
+- _boolean_: Whether the property is boolean.</li>
+- _opt_: Whether the property is optional.</li>
+- _default_: Default value of the property. When given, the property becomes optional.</li>
+  </td>
+ </tr>
+</tbody>
+</table>
 
 ### `@typedef` Extraction
 
