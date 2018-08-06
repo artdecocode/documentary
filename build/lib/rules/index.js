@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.linkTitleRe = exports.commentRule = exports.innerCodeRe = exports.codeRe = exports.commentRe = exports.createTocRule = void 0;
+exports.linkRe = exports.linkTitleRe = exports.commentRule = exports.innerCodeRe = exports.codeRe = exports.commentRe = exports.createTocRule = void 0;
 
 var _util = require("util");
 
@@ -35,4 +35,6 @@ const commentRule = {
 exports.commentRule = commentRule;
 const linkTitleRe = /\[([^[\n]+?)\]\((t|#+)\)/gm;
 exports.linkTitleRe = linkTitleRe;
+const linkRe = /\[(.+?)\]\(l\)/g;
+exports.linkRe = linkRe;
 //# sourceMappingURL=index.js.map

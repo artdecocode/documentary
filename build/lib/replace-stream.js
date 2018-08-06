@@ -64,6 +64,15 @@ function createReplaceStream(toc) {
   });
   const s = new _restream.Replaceable([cutInnerCode, cutTable, cutMethodTitle, cutCode, _rules.commentRule, _badge.default, _tree.default, _example.default, _fork.default, tocRule, _gif.default, _type.default, insertTable, _typedefMd.default, // places a table hence just before table
   _table.default, {
+    // a hackish way to update types property tables to include links to seen types.
+    re: /\| _(\w+)_ \|/g,
+
+    replacement(match, name) {
+      if (!(name in this.types)) return match;
+      return `| _[${name}](#${(0, _.getLink)(name)})_ |`;
+    }
+
+  }, {
     re: _rules.linkTitleRe,
 
     replacement(match, title) {
@@ -82,8 +91,24 @@ function createReplaceStream(toc) {
       return `<a name="${link}">${title}</a>`;
     }
 
+  }, {
+    re: _rules.linkRe,
+
+    // make links
+    replacement(match, title) {
+      // check why is needed to use innerCode re above
+      const link = (0, _.getLink)(title);
+      return `<a name="${link}">${title}</a>`;
+    }
+
   }, insertMethodTitle, _methodTitle.default, insertCode, insertInnerCode, // those found inside of code blocks
   insertTable, insertMethodTitle]);
+  s.types = {};
+  s.on('types', types => {
+    types.forEach(type => {
+      s.types[type] = true;
+    });
+  });
   return s;
 } // {
 //   re: /[\s\S]*/,

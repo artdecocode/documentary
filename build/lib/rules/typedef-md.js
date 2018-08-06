@@ -48,14 +48,17 @@ const typedefMdRule = {
       const imports = (0, _rexml.default)('import', Root).map(({
         props: {
           name,
-          from
+          from,
+          desc
         }
       }) => {
         const type = new _Type.default();
         type.fromXML('', {
           name,
           type: `import('${from}').${name}`,
-          noToc: true
+          noToc: true,
+          import: true,
+          desc
         });
         return type;
       });
@@ -65,6 +68,9 @@ const typedefMdRule = {
         if (typeName) return name == typeName;
         return true;
       });
+      this.emit('types', ft.map(({
+        name
+      }) => name));
       if (typeName && !ft.length) throw new Error(`Type ${typeName} not found.`);
       const mdt = ft.map((type, _, a) => {
         return type.toMarkdown(a);
