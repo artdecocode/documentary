@@ -1,4 +1,4 @@
-`import('http').ServerResponse` __`ServerResponse`__
+`import('http').ServerResponse` __<a name="serverresponse">`ServerResponse`</a>__
 
 `(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 
