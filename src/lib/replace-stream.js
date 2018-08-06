@@ -1,5 +1,5 @@
 import { Replaceable } from 'restream'
-import { createTocRule, commentRule as stripComments, codeRe, innerCodeRe, linkTitleRe } from './rules'
+import { createTocRule, commentRule as stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe } from './rules'
 import tableRule, { tableRe } from './rules/table'
 import methodTitleRule, { methodTitleRe } from './rules/method-title'
 import treeRule from './rules/tree'
@@ -57,6 +57,13 @@ export default function createReplaceStream(toc) {
     insertTable,
     typedefMdRule, // places a table hence just before table
     tableRule,
+    { // a hackish way to update types property tables to include links to seen types.
+      re: /\| _(\w+)_ \|/g,
+      replacement(match, name) {
+        if (!(name in this.types)) return match
+        return `| _[${name}](#${getLink(name)})_ |`
+      },
+    },
     {
       re: linkTitleRe,
       replacement(match, title) {
@@ -72,6 +79,14 @@ export default function createReplaceStream(toc) {
         return `<a name="${link}">${title}</a>`
       },
     },
+    {
+      re: linkRe, // make links
+      replacement(match, title) {
+        // check why is needed to use innerCode re above
+        const link = getLink(title)
+        return `<a name="${link}">${title}</a>`
+      },
+    },
     insertMethodTitle,
     methodTitleRule,
 
@@ -81,6 +96,13 @@ export default function createReplaceStream(toc) {
     insertTable,
     insertMethodTitle,
   ])
+
+  s.types = {}
+  s.on('types', (types) => {
+    types.forEach((type) => {
+      s.types[type] = true
+    })
+  })
 
   return s
 }

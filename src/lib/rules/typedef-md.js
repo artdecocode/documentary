@@ -31,9 +31,15 @@ const typedefMdRule = {
         })
 
       const imports = extractTags('import', Root)
-        .map(({ props: { name, from } }) => {
+        .map(({ props: { name, from, desc } }) => {
           const type = new Type()
-          type.fromXML('', { name, type: `import('${from}').${name}`, noToc: true } )
+          type.fromXML('', {
+            name,
+            type: `import('${from}').${name}`,
+            noToc: true,
+            import: true,
+            desc,
+          })
           return type
         })
 
@@ -42,6 +48,8 @@ const typedefMdRule = {
           if (typeName) return name == typeName
           return true
         })
+
+      this.emit('types', ft.map(({ name }) => name))
 
       if (typeName && !ft.length) throw new Error(`Type ${typeName} not found.`)
 

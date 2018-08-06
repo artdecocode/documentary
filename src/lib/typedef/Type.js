@@ -3,7 +3,7 @@ import Property from './Property'
 import { getLink } from '..'
 
 class Type {
-  fromXML(content, { name, type, desc, noToc, spread, noExpand }) {
+  fromXML(content, { name, type, desc, noToc, spread, noExpand, import: i }) {
     if (!name) throw new Error('Type does not have a name.')
     this.name = name
 
@@ -12,6 +12,7 @@ class Type {
     if (noToc) this.noToc = true
     if (spread) this.spread = true
     if (noExpand) this.noExpand = true
+    if (i) this.import = true
 
     if (content) {
       const ps = extractTags('prop', content)
@@ -50,7 +51,12 @@ class Type {
   toMarkdown(allTypes = []) {
     const t = this.type ? `\`${this.type}\` ` : ''
     const n = `\`${this.name}\``
-    const nn = this.noToc ? n : `[${n}](t)`
+    let nn
+    if (!this.import) {
+      nn = this.noToc ? n : `[${n}](t)`
+    } else {
+      nn = `[${n}](l)`
+    }
     const d = this.description ? `: ${this.description}` : ''
     const line = `${t}__${nn}__${d}`
     const table = makePropsTable(this.properties, allTypes)

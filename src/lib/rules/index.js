@@ -24,3 +24,4 @@ export const commentRule = {
 }
 
 export const linkTitleRe = /\[([^[\n]+?)\]\((t|#+)\)/gm
+export const linkRe = /\[(.+?)\]\(l\)/g
