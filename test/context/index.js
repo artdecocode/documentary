@@ -98,6 +98,22 @@ export default class Context {
   get FORK_PATH() {
     return resolve(__dirname, '../fixtures/fork.js')
   }
+  /**
+   * Path to the example file.
+   * @example
+import documentary from '../src'
+import Catchment from 'catchment'
+
+(async () => {
+  await documentary()
+})()
+   */
+  get EXAMPLE_PATH() {
+    return resolve(__dirname, '../fixtures/example.js')
+  }
+  get PARTIAL_EXAMPLE_PATH() {
+    return resolve(__dirname, '../fixtures/example-part.js')
+  }
   get mismatch() {
     return mismatch
   }
