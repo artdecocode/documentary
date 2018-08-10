@@ -62,7 +62,7 @@
     "catchment": "3.0.0",
     "mismatch": "1.0.1",
     "pedantry": "1.0.1",
-    "restream": "3.0.0",
+    "restream": "3.1.0",
     "rexml": "1.1.0",
     "spawncommand": "2.0.1"
   }

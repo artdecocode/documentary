@@ -167,9 +167,9 @@ restream@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/restream/-/restream-1.2.0.tgz#fd13b031a54e80cc65d1878c43149f1b3a40efbb"
 
-restream@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/restream/-/restream-3.0.0.tgz#39c07a3f4bc70979e5804135b0822001c9bb6322"
+restream@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/restream/-/restream-3.1.0.tgz#4245024bcb7cdcc0a63b1676ab1bbded24062a10"
 
 rexml@1.1.0:
   version "1.1.0"
