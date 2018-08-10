@@ -4,7 +4,7 @@ import { getLink } from '.'
 import { methodTitleRe, replaceTitle } from './rules/method-title'
 import { codeRe, commentRule as stripComments, innerCodeRe, linkTitleRe } from './rules'
 import { Replaceable } from 'restream'
-import { makeInitialRule, makeRule, makeMarkers } from './markers'
+import { makeCutRule, makePasteRule, makeMarkers } from 'restream'
 import { tableRe } from './rules/table'
 import typeRule from './rules/type'
 import typedefMdRule from './rules/typedef-md'
@@ -25,12 +25,12 @@ const getBuffer = async (buffer) => {
 
   const [cutTitle, cutLinkTitle, cutCode, cutMethodTitle, cutInnerCode, cutTable] =
     [title, linkTitle, code, methodTitle, innerCode, table].map((marker) => {
-      const rule = makeInitialRule(marker)
+      const rule = makeCutRule(marker)
       return rule
     })
   const [insertTitle, insertLinkTitle, insertMethodTitle, insertInnerCode, insertTable] =
     [title, linkTitle, methodTitle, innerCode, table].map((marker) => {
-      const rule = makeRule(marker)
+      const rule = makePasteRule(marker)
       return rule
     })
 
