@@ -3,6 +3,8 @@
 ### 1.11.0
 
 - [feature] `@typedef` organisation, required props in `type` to have `*`.
+- [feature] Partial example with `/* start/end example */`, always debuglog `example`.
+- [deps] Move markers to `restream`.
 - [fix] Non-greedy example regexp.
 
 ## 18 July 2018
