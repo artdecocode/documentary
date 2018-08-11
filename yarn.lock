@@ -197,6 +197,12 @@ spawncommand@2.0.1:
   dependencies:
     catchment "2.0.1"
 
+which-stream@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/which-stream/-/which-stream-1.0.0.tgz#1c28212ce6a1d590619ad8683bfc58c17bf63b3d"
+  dependencies:
+    catchment "3.0.0"
+
 wordwrap@>=0.0.2:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
