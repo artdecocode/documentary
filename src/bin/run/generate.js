@@ -1,8 +1,8 @@
 import { createReadStream } from 'fs'
 import { debuglog } from 'util'
+import whichStream from 'which-stream'
 import createJsReplaceStream from '../../lib/js-replace-stream'
 import catcher from '../catcher'
-import whichStream from './which-stream'
 
 const LOG = debuglog('doc')
 
@@ -11,16 +11,16 @@ const LOG = debuglog('doc')
  * @param {Config} config Configuration Object.
  * @param {string} config.source Path to the source JavaScript file.
  * @param {string} [config.destination] Path to the source JavaScript file. If not specified, source is assumed (overwriting the original file).
- * @param {string} [config.stream] An output stream to which to write instead of a location from `generateTo`.
+ * @param {import('stream').Writable} [config.writable] An output stream to which to write instead of a location from `generateTo`.
  */
 async function generateTypedef(config) {
   const {
     source,
     destination = source,
-    stream,
+    writable,
   } = config
   try {
-    if (!source && !stream) {
+    if (!source && !writable) {
       console.log('Please specify a JavaScript file or a pass a stream.')
       process.exit(1)
     }
@@ -31,9 +31,9 @@ async function generateTypedef(config) {
 
     const p = whichStream({
       source,
-      stream,
       readable,
-      destination,
+      destination: writable ? undefined : destination,
+      writable,
     })
 
     await new Promise((r, j) => {
@@ -44,7 +44,7 @@ async function generateTypedef(config) {
 
     await p
 
-    if (stream) {
+    if (writable) {
       LOG('%s written to stream', source)
     } else if (source == destination) {
       console.error('Updated %s to include types.', source)

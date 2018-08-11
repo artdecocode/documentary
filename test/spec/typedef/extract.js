@@ -1,7 +1,7 @@
 import SnapshotContext from 'snapshot-context'
+import Catchment from 'catchment'
 import Context from '../../context'
 import extractTypedef from '../../../src/bin/run/extract'
-import { PassThrough } from 'stream'
 
 /** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
 const T = {
@@ -9,27 +9,25 @@ const T = {
     Context,
     SnapshotContext,
   ],
-  async 'extracts types from a file'({ catchment, SNAPSHOT_DIR, typedefJsPath: source }, { setDir, test }) {
+  async 'extracts types from a file'({ SNAPSHOT_DIR, typedefJsPath: source }, { setDir, test }) {
     setDir(SNAPSHOT_DIR)
-    const stream = new PassThrough()
-    const p = catchment(stream)
+    const writable = new Catchment()
     await extractTypedef({
-      stream,
+      writable,
       source,
     })
-    const c = await p
-    await test('extract.xml', c)
+    const c = await writable.promise
+    await test('extract.xml', c.trim())
   },
-  async 'extracts properties without descriptions'({ SNAPSHOT_DIR, typedefJsPropPath: source, catchment }, { setDir, test }) {
+  async 'extracts properties without descriptions'({ SNAPSHOT_DIR, typedefJsPropPath: source }, { setDir, test }) {
     setDir(SNAPSHOT_DIR)
-    const stream = new PassThrough()
-    const p = catchment(stream)
+    const writable = new Catchment()
     await extractTypedef({
-      stream,
+      writable,
       source,
     })
-    const c = await p
-    await test('extract-props.xml', c)
+    const c = await writable.promise
+    await test('extract-props.xml', c.trim())
   },
 }
 

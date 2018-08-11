@@ -2,11 +2,11 @@ import { createReadStream } from 'fs'
 import createRegexTransformStream from 'restream'
 import { Transform, PassThrough } from 'stream'
 import mismatch from 'mismatch'
+import whichStream from 'which-stream'
 import catcher from '../catcher'
 import { debuglog } from 'util'
 import typedefRe from '../../lib/typedef/re'
 import { getNameWithDefault } from '../../lib/typedef'
-import whichStream from './which-stream'
 
 const LOG = debuglog('doc')
 
@@ -140,7 +140,7 @@ async function extractTypedef(config) {
   const {
     source,
     destination,
-    stream,
+    writable,
   } = config
   try {
     const s = createReadStream(source)
@@ -156,7 +156,7 @@ async function extractTypedef(config) {
     const p = whichStream({
       readable,
       source,
-      stream,
+      writable,
       destination,
     })
 

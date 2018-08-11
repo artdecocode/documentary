@@ -1,6 +1,6 @@
 import SnapshotContext from 'snapshot-context'
-import { PassThrough } from 'stream'
 import { ok } from 'zoroaster/assert'
+import Catchment from 'catchment'
 import Context from '../../context'
 import generateTypedef from '../../../src/bin/run/generate'
 
@@ -10,29 +10,27 @@ const T = {
     Context,
     SnapshotContext,
   ],
-  async 'generates @typedefs with imports'({ catchment, SNAPSHOT_DIR, generateImports: source }, { setDir, test }) {
+  async 'generates @typedefs with imports'({ SNAPSHOT_DIR, generateImports: source }, { setDir, test }) {
     setDir(SNAPSHOT_DIR)
-    const stream = new PassThrough()
-    const p = catchment(stream)
+    const writable = new Catchment()
     await generateTypedef({
-      stream,
+      writable,
       source,
     })
-    const c = await p
+    const c = await writable.promise
     ok(/@typedef/.test(c), 'Does not include a @typedef.')
-    await test('typedef/generate-imports.js', c)
+    await test('typedef/generate-imports.js', c.trim())
   },
-  async 'generates @typedefs with imports with existing'({ catchment, SNAPSHOT_DIR, generateImportsAfter: source }, { setDir, test }) {
+  async 'generates @typedefs with imports with existing'({ SNAPSHOT_DIR, generateImportsAfter: source }, { setDir, test }) {
     setDir(SNAPSHOT_DIR)
-    const stream = new PassThrough()
-    const p = catchment(stream)
+    const writable = new Catchment()
     await generateTypedef({
-      stream,
+      writable,
       source,
     })
-    const c = await p
+    const c = await writable.promise
     ok(/@typedef/.test(c), 'Does not include a @typedef.')
-    await test('typedef/generate-imports.js', c)
+    await test('typedef/generate-imports.js', c.trim())
   },
 }
 
