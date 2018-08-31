@@ -6,12 +6,12 @@
   "scripts": {
     "t": "NODE_DEBUG=doc zoroaster -b",
     "test": "zoroaster -b test/spec",
-    "test-build": "BABEL_ENV=test-build yarn test",
+    "test-build": "ALAMODE_ENV=test-build yarn test",
     "test-all": "yarn-s test test-build",
     "test-watch": "yarn test -w",
     "lint": "eslint .",
     "e": "node example",
-    "dev": "NODE_DEBUG=doc node src/bin/register",
+    "dev": "NODE_DEBUG=doc node src/bin/alamode",
     "d": "yarn-s doc_add doc_commit doc_push",
     "doc": "yarn dev documentary -o README.md",
     "start": "node build/bin",
@@ -19,7 +19,7 @@
     "example/toc.js": "NODE_DEBUG=doc yarn e example/toc.js",
     "example/toc2.js": "NODE_DEBUG=doc yarn e example/toc2.js",
     "example/typedef.js": "yarn dev example/typedef.js -T",
-    "b": "b --source-maps --ignore src/bin/register.js",
+    "b": "alamode src -o build -i bin/alamode.js",
     "build": "yarn-s b doc"
   },
   "bin": {
