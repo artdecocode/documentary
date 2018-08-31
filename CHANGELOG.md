@@ -1,10 +1,12 @@
-## 5 August 2018
+## 11 August 2018
 
 ### 1.11.0
 
 - [feature] `@typedef` organisation, required props in `type` to have `*`.
 - [feature] Partial example with `/* start/end example */`, always debuglog `example`.
 - [deps] Move markers to `restream`.
+- [deps] Create and use a separate `which-stream` package.
+- [build] Build w/ [`alamode`](https://alamode.cc)
 - [fix] Non-greedy example regexp.
 
 ## 18 July 2018
