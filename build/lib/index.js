@@ -1,102 +1,76 @@
-"use strict";
+const { createReadStream, lstatSync } = require('fs');
+let spawn = require('spawncommand'); if (spawn && spawn.__esModule) spawn = spawn.default;
+let Catchment = require('catchment'); if (Catchment && Catchment.__esModule) Catchment = Catchment.default;
+let Pedantry = require('pedantry'); if (Pedantry && Pedantry.__esModule) Pedantry = Pedantry.default;
+let tableRule = require('./rules/table'); if (tableRule && tableRule.__esModule) tableRule = tableRule.default;
+let titleRule = require('./rules/method-title'); if (titleRule && titleRule.__esModule) titleRule = titleRule.default;
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.git = exports.gitPush = exports.getStream = exports.read = exports.exactMethodTitle = exports.exactTable = exports.makeARegexFromRule = exports.getLink = void 0;
+       const getLink = (title) => {
+  const l = title
+    .replace(/<\/?code>/g, '')
+    .replace(/<\/?strong>/g, '')
+    .replace(/<br\/>/g, '')
+    .replace(/&nbsp;/g, '')
+    .replace(/[^\w-\d ]/g, '')
+    .toLowerCase()
+    .replace(/[, ]/g, '-')
+  return l
+}
 
-var _fs = require("fs");
+       const makeARegexFromRule = (rule) => {
+  const re = new RegExp(`^${rule.re.source}`)
+  return re
+}
 
-var _spawncommand = _interopRequireDefault(require("spawncommand"));
+       const exactTable = makeARegexFromRule(tableRule)
+       const exactMethodTitle = makeARegexFromRule(titleRule)
 
-var _catchment = _interopRequireDefault(require("catchment"));
-
-var _pedantry = _interopRequireDefault(require("pedantry"));
-
-var _table = _interopRequireDefault(require("./rules/table"));
-
-var _methodTitle = _interopRequireDefault(require("./rules/method-title"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const getLink = title => {
-  const l = title.replace(/<\/?code>/g, '').replace(/<\/?strong>/g, '').replace(/<br\/>/g, '').replace(/&nbsp;/g, '').replace(/[^\w-\d ]/g, '').toLowerCase().replace(/[, ]/g, '-');
-  return l;
-};
-
-exports.getLink = getLink;
-
-const makeARegexFromRule = rule => {
-  const re = new RegExp(`^${rule.re.source}`);
-  return re;
-};
-
-exports.makeARegexFromRule = makeARegexFromRule;
-const exactTable = makeARegexFromRule(_table.default);
-exports.exactTable = exactTable;
-const exactMethodTitle = makeARegexFromRule(_methodTitle.default);
-exports.exactMethodTitle = exactMethodTitle;
-
-const read = async source => {
-  const rs = (0, _fs.createReadStream)(source);
+       const read = async (source) => {
+  const rs = createReadStream(source)
   const data = await new Promise(async (r, j) => {
-    const {
-      promise
-    } = new _catchment.default({
-      rs
-    });
-    rs.on('error', j);
-    const res = await promise;
-    r(res);
-  });
-  return data;
-};
+    const { promise } = new Catchment({ rs })
+    rs.on('error', j)
+    const res = await promise
+    r(res)
+  })
+  return data
+}
 
-exports.read = read;
-
-const getStream = path => {
-  const ls = (0, _fs.lstatSync)(path);
-  let stream;
-
+       const getStream = (path) => {
+  const ls = lstatSync(path)
+  let stream
   if (ls.isDirectory()) {
-    stream = new _pedantry.default(path);
+    stream = new Pedantry(path)
   } else if (ls.isFile()) {
-    stream = (0, _fs.createReadStream)(path);
+    stream = createReadStream(path)
   }
+  return stream
+}
 
-  return stream;
-};
-
-exports.getStream = getStream;
-
-const gitPush = async (source, output, message) => {
-  const {
-    promise
-  } = (0, _spawncommand.default)('git', ['log', '--format=%B', '-n', '1']);
-  const {
-    stdout
-  } = await promise;
-  const s = stdout.trim();
-
+       const gitPush = async (source, output, message) => {
+  const { promise } = spawn('git', ['log', '--format=%B', '-n', '1'])
+  const { stdout } = await promise
+  const s = stdout.trim()
   if (s == message) {
-    await git('reset', 'HEAD~1');
+    await git('reset', 'HEAD~1')
   }
+  await git('add', source, output)
+  await git('commit', '-m', message)
+  await git('push', '-f')
+}
 
-  await git('add', source, output);
-  await git('commit', '-m', message);
-  await git('push', '-f');
-};
+       const git = async (...args) => {
+  const { promise } = spawn('git', args, { stdio: 'inherit' })
+  await promise
+}
 
-exports.gitPush = gitPush;
 
-const git = async (...args) => {
-  const {
-    promise
-  } = (0, _spawncommand.default)('git', args, {
-    stdio: 'inherit'
-  });
-  await promise;
-};
-
-exports.git = git;
+module.exports.getLink = getLink
+module.exports.makeARegexFromRule = makeARegexFromRule
+module.exports.exactTable = exactTable
+module.exports.exactMethodTitle = exactMethodTitle
+module.exports.read = read
+module.exports.getStream = getStream
+module.exports.gitPush = gitPush
+module.exports.git = git
 //# sourceMappingURL=index.js.map

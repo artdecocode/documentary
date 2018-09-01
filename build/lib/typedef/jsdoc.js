@@ -1,36 +1,29 @@
-"use strict";
+const { debuglog } = require('util');
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.jsDocRe = void 0;
+const jsDocRe = / \* @param {(.+?)} (\[)?([^\s\]]+)\]?(?: .+)?((?:\n \* @param {(?:.+?)} \[?\3\]?.*)*)/gm
 
-var _util = require("util");
+const LOG = debuglog('doc')
 
-const jsDocRe = / \* @param {(.+?)} (\[)?([^\s\]]+)\]?(?: .+)?((?:\n \* @param {(?:.+?)} \[?\3\]?.*)*)/gm;
-exports.jsDocRe = jsDocRe;
-const LOG = (0, _util.debuglog)('doc');
 const JSDocRule = {
   re: jsDocRe,
-
   replacement(match, typeName, optional, paramName) {
     if (!(typeName in this.types)) {
-      LOG('Type %s not found', typeName);
-      return match;
+      LOG('Type %s not found', typeName)
+      return match
     }
     /** @type {Type} */
+    const t = this.types[typeName]
+    const s = t.toParam(paramName, optional)
+    return s
+  },
+}
 
-
-    const t = this.types[typeName];
-    const s = t.toParam(paramName, optional);
-    return s;
-  }
-
-};
 /**
  * @typedef {import('./Type').default} Type
  */
 
-var _default = JSDocRule;
-exports.default = _default;
+
+module.exports=JSDocRule
+
+module.exports.jsDocRe = jsDocRe
 //# sourceMappingURL=jsdoc.js.map

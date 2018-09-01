@@ -1,120 +1,136 @@
-"use strict";
+const { Replaceable, makeMarkers, makeCutRule, makePasteRule } = require('restream');
+const {
+  createTocRule, commentRule: stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe,
+} = require('./rules');
+let tableRule = require('./rules/table'); if (tableRule && tableRule.__esModule) tableRule = tableRule.default; const { tableRe } = tableRule
+let methodTitleRule = require('./rules/method-title'); if (methodTitleRule && methodTitleRule.__esModule) methodTitleRule = methodTitleRule.default; const { methodTitleRe } = methodTitleRule
+let treeRule = require('./rules/tree'); if (treeRule && treeRule.__esModule) treeRule = treeRule.default;
+let exampleRule = require('./rules/example'); if (exampleRule && exampleRule.__esModule) exampleRule = exampleRule.default;
+let forkRule = require('./rules/fork'); if (forkRule && forkRule.__esModule) forkRule = forkRule.default;
+const { getLink } = require('.');
+let gifRule = require('./rules/gif'); if (gifRule && gifRule.__esModule) gifRule = gifRule.default;
+let typeRule = require('./rules/type'); if (typeRule && typeRule.__esModule) typeRule = typeRule.default;
+let badgeRule = require('./rules/badge'); if (badgeRule && badgeRule.__esModule) badgeRule = badgeRule.default;
+let typedefMdRule = require('./rules/typedef-md'); if (typedefMdRule && typedefMdRule.__esModule) typedefMdRule = typedefMdRule.default;
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = createReplaceStream;
+       class DocumentationStream extends Replaceable {
+  constructor({ toc }) {
+    const tocRule = createTocRule(toc)
 
-var _restream = require("restream");
+    const {
+      table, methodTitle, code, innerCode, linkTitle,
+    } = makeMarkers({
+      table: tableRe,
+      methodTitle: methodTitleRe,
+      code: codeRe,
+      innerCode: innerCodeRe,
+      linkTitle: linkTitleRe,
+    })
 
-var _rules = require("./rules");
+    /* below have ``` in them, therefore we want more control over handling them
+    * so that Replaceable does not confuse them with the code blocks.
+    */
+    const [cutCode, cutTable, cutMethodTitle, cutInnerCode] =
+      [code, table, methodTitle, innerCode, linkTitle].map((marker) => {
+        const rule = makeCutRule(marker)
+        return rule
+      })
+    const [insertCode, insertTable, insertMethodTitle, insertInnerCode] =
+      [code, table, methodTitle, innerCode, linkTitle].map((marker) => {
+        const rule = makePasteRule(marker)
+        return rule
+      })
 
-var _table = _interopRequireWildcard(require("./rules/table"));
+    super([
+      cutInnerCode,
+      cutTable,
+      cutMethodTitle,
+      cutCode,
+      stripComments,
 
-var _methodTitle = _interopRequireWildcard(require("./rules/method-title"));
+      badgeRule,
+      treeRule,
+      exampleRule,
+      forkRule,
+      tocRule,
+      gifRule,
+      typeRule,
 
-var _tree = _interopRequireDefault(require("./rules/tree"));
+      insertTable,
+      typedefMdRule, // places a table hence just before table
+      tableRule,
 
-var _example = _interopRequireDefault(require("./rules/example"));
+      { // a hackish way to update types property tables to include links to seen types.
+        re: /\| _(\w+)_ \|/g,
+        replacement(match, name) {
+          if (!(name in this.types)) return match
+          return `| _[${name}](#${getLink(name)})_ |`
+        },
+      },
+      {
+        re: linkTitleRe,
+        replacement(match, title) {
+          const ic = new RegExp(innerCode.regExp.source).exec(title) // test please
+          let link
+          if (!ic) {
+            link = getLink(title)
+          } else {
+            const [, i] = ic
+            const val = innerCode.map[i]
+            link = getLink(val)
+          }
+          return `<a name="${link}">${title}</a>`
+        },
+      },
+      {
+        re: linkRe, // make links
+        replacement(match, title) {
+          // check why is needed to use innerCode re above
+          const link = getLink(title)
+          return `<a name="${link}">${title}</a>`
+        },
+      },
+      insertMethodTitle,
+      methodTitleRule,
 
-var _markers = require("./markers");
+      insertCode,
+      insertInnerCode,
+      // those found inside of code blocks
+      insertTable,
+      insertMethodTitle,
+    ])
 
-var _fork = _interopRequireDefault(require("./rules/fork"));
+    this._types = {}
 
-var _ = require(".");
+    this.on('types', types => {
+      types.forEach(this.addType.bind(this))
+    })
+  }
+  addType(name) {
+    this.types[name] = true
+  }
+  get types() {
+    return this._types
+  }
+}
 
-var _gif = _interopRequireDefault(require("./rules/gif"));
+               function createReplaceStream(toc) {
+  const s = new DocumentationStream({
+    toc,
+  })
 
-var _type = _interopRequireDefault(require("./rules/type"));
+  return s
+}
 
-var _badge = _interopRequireDefault(require("./rules/badge"));
-
-var _typedefMd = _interopRequireDefault(require("./rules/typedef-md"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function createReplaceStream(toc) {
-  const tocRule = (0, _rules.createTocRule)(toc);
-  const {
-    table,
-    methodTitle,
-    code,
-    innerCode,
-    linkTitle
-  } = (0, _markers.makeMarkers)({
-    table: _table.tableRe,
-    methodTitle: _methodTitle.methodTitleRe,
-    code: _rules.codeRe,
-    innerCode: _rules.innerCodeRe,
-    linkTitle: _rules.linkTitleRe
-  });
-  /* below have ``` in them, therefore we want more control over handling them
-   * so that Replaceable does not confuse them with the code blocks.
-   */
-
-  const [cutCode, cutTable, cutMethodTitle, cutInnerCode] = [code, table, methodTitle, innerCode, linkTitle].map(marker => {
-    const rule = (0, _markers.makeInitialRule)(marker);
-    return rule;
-  });
-  const [insertCode, insertTable, insertMethodTitle, insertInnerCode] = [code, table, methodTitle, innerCode, linkTitle].map(marker => {
-    const rule = (0, _markers.makeRule)(marker);
-    return rule;
-  });
-  const s = new _restream.Replaceable([cutInnerCode, cutTable, cutMethodTitle, cutCode, _rules.commentRule, _badge.default, _tree.default, _example.default, _fork.default, tocRule, _gif.default, _type.default, insertTable, _typedefMd.default, // places a table hence just before table
-  _table.default, {
-    // a hackish way to update types property tables to include links to seen types.
-    re: /\| _(\w+)_ \|/g,
-
-    replacement(match, name) {
-      if (!(name in this.types)) return match;
-      return `| _[${name}](#${(0, _.getLink)(name)})_ |`;
-    }
-
-  }, {
-    re: _rules.linkTitleRe,
-
-    replacement(match, title) {
-      const ic = new RegExp(innerCode.regExp.source).exec(title); // test please
-
-      let link;
-
-      if (!ic) {
-        link = (0, _.getLink)(title);
-      } else {
-        const [, i] = ic;
-        const val = innerCode.map[i];
-        link = (0, _.getLink)(val);
-      }
-
-      return `<a name="${link}">${title}</a>`;
-    }
-
-  }, {
-    re: _rules.linkRe,
-
-    // make links
-    replacement(match, title) {
-      // check why is needed to use innerCode re above
-      const link = (0, _.getLink)(title);
-      return `<a name="${link}">${title}</a>`;
-    }
-
-  }, insertMethodTitle, _methodTitle.default, insertCode, insertInnerCode, // those found inside of code blocks
-  insertTable, insertMethodTitle]);
-  s.types = {};
-  s.on('types', types => {
-    types.forEach(type => {
-      s.types[type] = true;
-    });
-  });
-  return s;
-} // {
+// {
 //   re: /[\s\S]*/,
 //   replacement(match) {
 //     debugger
 //     return match
 //   },
 // },
+
+
+module.exports = createReplaceStream
+module.exports.DocumentationStream = DocumentationStream
 //# sourceMappingURL=replace-stream.js.map

@@ -1,40 +1,37 @@
-"use strict";
+const { debuglog } = require('util');
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.linkRe = exports.linkTitleRe = exports.commentRule = exports.innerCodeRe = exports.codeRe = exports.commentRe = exports.createTocRule = void 0;
+const LOG = debuglog('doc')
 
-var _util = require("util");
-
-const LOG = (0, _util.debuglog)('doc');
-
-const createTocRule = toc => {
+       const createTocRule = (toc) => {
   return {
     re: /^%TOC%$/gm,
-    replacement: toc
-  };
-};
-
-exports.createTocRule = createTocRule;
-const commentRe = /<!--[\s\S]*?-->\n*/g;
-exports.commentRe = commentRe;
-const codeRe = /^```(`)?(\w+)?\n[\s\S]*?\n```\1/gm;
-exports.codeRe = codeRe;
-const innerCodeRe = /`[^`\n]+?`/gm;
-exports.innerCodeRe = innerCodeRe;
-const commentRule = {
-  re: commentRe,
-
-  replacement() {
-    LOG('stripping comment');
-    return '';
+    replacement: toc,
   }
+}
 
-};
-exports.commentRule = commentRule;
-const linkTitleRe = /\[([^[\n]+?)\]\((t|#+)\)/gm;
-exports.linkTitleRe = linkTitleRe;
-const linkRe = /\[(.+?)\]\(l\)/g;
-exports.linkRe = linkRe;
+       const commentRe = /<!--[\s\S]*?-->\n*/g
+
+       const codeRe = /^```(`)?(\w+)?\n[\s\S]*?\n```\1/gm
+
+       const innerCodeRe = /`[^`\n]+?`/gm
+
+       const commentRule = {
+  re: commentRe,
+  replacement() {
+    LOG('stripping comment')
+    return ''
+  },
+}
+
+       const linkTitleRe = /\[([^[\n]+?)\]\((t|#+)\)/gm
+       const linkRe = /\[(.+?)\]\(l\)/g
+
+
+module.exports.createTocRule = createTocRule
+module.exports.commentRe = commentRe
+module.exports.codeRe = codeRe
+module.exports.innerCodeRe = innerCodeRe
+module.exports.commentRule = commentRule
+module.exports.linkTitleRe = linkTitleRe
+module.exports.linkRe = linkRe
 //# sourceMappingURL=index.js.map

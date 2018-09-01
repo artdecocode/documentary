@@ -1,35 +1,27 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _spawncommand = require("spawncommand");
-
+const { fork } = require('spawncommand');
 // import { debuglog } from 'util'
+
 // const LOG = debuglog('doc')
+
 const forkRule = {
   re: /%FORK(?:-(\w+))? (.+)%/mg,
-
   async replacement(match, lang, m) {
-    const [mod, ...args] = m.split(' ');
-    const {
-      promise
-    } = (0, _spawncommand.fork)(mod, args, {
+    const [mod, ...args] = m.split(' ')
+    const { promise } = fork(mod, args, {
       execArgv: [],
-      stdio: 'pipe'
-    });
-    const {
-      stdout
-    } = await promise;
-    return codeSurround(stdout, lang);
-  }
+      stdio: 'pipe',
+    })
+    const { stdout } = await promise
+    const hasBackticks = /```/.test(stdout)
+    return codeSurround(stdout, lang, hasBackticks)
+  },
+}
 
-};
+const codeSurround = (m, lang = '', hasBackticks = false) => {
+  const t = hasBackticks ? '````' : '```'
+  return `${t}${lang}\n${m.trim()}\n${t}`
+}
 
-const codeSurround = (m, lang = '') => `\`\`\`${lang}\n${m.trim()}\n\`\`\``;
+module.exports=forkRule
 
-var _default = forkRule;
-exports.default = _default;
 //# sourceMappingURL=fork.js.map

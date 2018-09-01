@@ -1,11 +1,7 @@
-"use strict";
+const propRe = / \* @prop(?:erty)? .+\n/
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-const propRe = / \* @prop(?:erty)? .+\n/;
-const typedefRe = new RegExp(`^ \\* @typedef {(.+?)} (.+?)(?: (.+))?\\n((?:${propRe.source})*)`, 'gm');
-var _default = typedefRe;
-exports.default = _default;
+const typedefRe = new RegExp(`^ \\* @typedef {(.+?)} (.+?)(?: (.+))?\\n((?:${propRe.source})*)`, 'gm')
+
+module.exports=typedefRe
+
 //# sourceMappingURL=re.js.map

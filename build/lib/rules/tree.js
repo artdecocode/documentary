@@ -1,50 +1,33 @@
-"use strict";
+let spawn = require('spawncommand'); if (spawn && spawn.__esModule) spawn = spawn.default;
+const { debuglog } = require('util');
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+const LOG = debuglog('doc')
 
-var _spawncommand = _interopRequireDefault(require("spawncommand"));
-
-var _util = require("util");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const LOG = (0, _util.debuglog)('doc');
 const treeRule = {
   re: /%TREE (.+)%/mg,
-
   async replacement(match, m) {
-    const args = m.split(' ');
-    const p = (0, _spawncommand.default)('tree', ['--noreport', ...args]);
-
+    const args = m.split(' ')
+    const p = spawn('tree', ['--noreport', ...args])
     try {
-      const {
-        stdout
-      } = await p.promise;
-
+      const { stdout } = await p.promise
       if (/\[error opening dir\]/.test(stdout)) {
-        LOG('Could not generate a tree for %s', args.join(' '));
-        return match;
+        LOG('Could not generate a tree for %s', args.join(' '))
+        return match
       }
-
-      return codeSurround(stdout);
+      return codeSurround(stdout)
     } catch (err) {
       if (err.code == 'ENOENT') {
-        console.warn('tree is not installed');
-        return match;
+        console.warn('tree is not installed')
+        return match
       }
-
-      LOG(err.message);
-      return match;
+      LOG(err.message)
+      return match
     }
-  }
+  },
+}
 
-};
+const codeSurround = (m, lang = 'm') => `\`\`\`${lang}\n${m.trim()}\n\`\`\``
 
-const codeSurround = (m, lang = 'm') => `\`\`\`${lang}\n${m.trim()}\n\`\`\``;
+module.exports=treeRule
 
-var _default = treeRule;
-exports.default = _default;
 //# sourceMappingURL=tree.js.map

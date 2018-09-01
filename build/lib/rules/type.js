@@ -1,66 +1,44 @@
-"use strict";
+const { debuglog } = require('util');
+let extractTags = require('rexml'); if (extractTags && extractTags.__esModule) extractTags = extractTags.default;
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.typeRe = void 0;
+const LOG = debuglog('doc')
 
-var _util = require("util");
+const typeRe = /^%TYPE( .+)?\n([\s\S]+?)\n%$/mg
 
-var _rexml = _interopRequireDefault(require("rexml"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const LOG = (0, _util.debuglog)('doc');
-const typeRe = /^%TYPE( .+)?\n([\s\S]+?)\n%$/mg;
-exports.typeRe = typeRe;
-
-const tag = (t, s) => `<${t}>${s}</${t}>`;
-
-const strong = s => tag('strong', s);
+const tag = (t, s) => `<${t}>${s}</${t}>`
+const strong = s => tag('strong', s)
 
 const getDescAndExample = (description, example, isExampleRow, hasExamples) => {
-  const span2 = hasExamples ? ' colspan="2"' : '';
-
+  const span2 = hasExamples ? ' colspan="2"' : ''
   if (!example) {
-    return `<td${span2}>${description}</td>`;
+    return `<td${span2}>${description}</td>`
   }
-
   if (isExampleRow) {
     return `<td${span2}>${description}</td>
   </tr>
   <tr></tr>
   <tr>
-   <td colspan="${hasExamples ? 4 : 3}">${example}</td>`;
+   <td colspan="${hasExamples ? 4 : 3}">${example}</td>`
   }
-
   return `<td>${description}</td>
-   <td>${example}</td>`;
-};
+   <td>${example}</td>`
+}
 
 const makeTable = (properties, tocTitles) => {
-  const hasExamples = properties.some(({
-    example,
-    isExampleRow
-  }) => example && !isExampleRow);
-  const rows = properties.map(({
-    name,
-    type,
-    required,
-    description = '',
-    example = '',
-    isExampleRow
-  }) => {
-    const t = `<code>${required ? `${name}*` : name}</code>`;
-    const n = required ? strong(t) : t;
-    const nn = tocTitles ? `[${n}](t)` : n;
-    const e = example.startsWith('```') ? `\n\n${example}` : example;
+  const hasExamples = properties.some(({ example, isExampleRow }) => example && !isExampleRow)
+  const rows = properties.map(({ name, type, required, description = '', example = '', isExampleRow }) => {
+    const t = `<code>${required ? `${name}*` : name}</code>`
+    const n = required ? strong(t) : t
+    const nn = tocTitles ? `[${n}](t)` : n
+    const e = example.startsWith('```') ? `\n\n${example}`: example
     return `  <tr>
    <td>${nn}</td>
    <td>${tag('em', type)}</td>
    ${getDescAndExample(description, e, isExampleRow, hasExamples)}
-  </tr>`;
-  });
+  </tr>`
+  })
   return `<table>
  <thead>
   <tr>
@@ -73,43 +51,34 @@ const makeTable = (properties, tocTitles) => {
 ${rows.join('\n')}
  </tbody>
 </table>
-`;
-};
+`
+}
 
 const typeRule = {
   re: typeRe,
-
   replacement(match, tocTitles, body) {
     try {
-      const tags = (0, _rexml.default)('p', body).map(({
-        content,
-        props
-      }) => {
-        const [{
-          content: description
-        } = {}] = (0, _rexml.default)('d', content);
-        const [{
-          content: example,
-          props: {
-            row: isExampleRow = false
-          } = {}
-        } = {}] = (0, _rexml.default)('e', content);
-        return {
-          description,
-          example,
-          isExampleRow,
-          ...props
-        };
-      });
-      const table = makeTable(tags, tocTitles);
-      return table;
+      const tags = extractTags('p', body)
+        .map(({ content, props }) => {
+          const [{ content: description } = {}] = extractTags('d', content)
+          const [{ content: example, props: { row: isExampleRow = false } = {} } = {}] = extractTags('e', content)
+          return {
+            description,
+            example,
+            isExampleRow,
+            ...props,
+          }
+        })
+      const table = makeTable(tags, tocTitles)
+      return table
     } catch (err) {
-      LOG('Could not parse type, %s', err.message);
-      return match;
+      LOG('Could not parse type, %s', err.message)
+      return match
     }
-  }
+  },
+}
 
-}; // const b = (summary, alt, gif) => {
+// const b = (summary, alt, gif) => {
 //   return `
 // <details>
 //   <summary>${summary}</summary>
@@ -122,6 +91,8 @@ const typeRule = {
 // `.trim()
 // }
 
-var _default = typeRule;
-exports.default = _default;
+module.exports=typeRule
+
+
+module.exports.typeRe = typeRe
 //# sourceMappingURL=type.js.map

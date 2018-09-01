@@ -1,28 +1,18 @@
 #!/usr/bin/env node
-"use strict";
+const { watch } = require('fs');
+const { debuglog } = require('util');
+const { lstatSync } = require('fs');
+let run = require('./run'); if (run && run.__esModule) run = run.default;
+let getArgs = require('./get-args'); if (getArgs && getArgs.__esModule) getArgs = getArgs.default;
+let generateTypedef = require('./run/generate'); if (generateTypedef && generateTypedef.__esModule) generateTypedef = generateTypedef.default;
+let extractTypedef = require('./run/extract'); if (extractTypedef && extractTypedef.__esModule) extractTypedef = extractTypedef.default;
+const { version } = require('../../package.json');
+let catcher = require('./catcher'); if (catcher && catcher.__esModule) catcher = catcher.default;
+const { getStream, gitPush } = require('../lib');
 
-var _fs = require("fs");
+const LOG = debuglog('doc')
+const DEBUG = /doc/.test(process.env.NODE_DEBUG)
 
-var _util = require("util");
-
-var _run = _interopRequireDefault(require("./run"));
-
-var _getArgs = _interopRequireDefault(require("./get-args"));
-
-var _generate2 = _interopRequireDefault(require("./run/generate"));
-
-var _extract2 = _interopRequireDefault(require("./run/extract"));
-
-var _package = require("../../package.json");
-
-var _catcher = _interopRequireDefault(require("./catcher"));
-
-var _lib = require("../lib");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const LOG = (0, _util.debuglog)('doc');
-const DEBUG = /doc/.test(process.env.NODE_DEBUG);
 const {
   source: _source,
   output: _output,
@@ -30,94 +20,83 @@ const {
   watch: _watch,
   push: _push,
   version: _version,
-  extract: _extract
-} = (0, _getArgs.default)();
+  extract: _extract,
+} = getArgs()
+
 let {
   generate: _generate,
-  _argv
-} = (0, _getArgs.default)();
+  _argv,
+} = getArgs()
 
 if (_version) {
-  console.log(_package.version);
-  process.exit(0);
+  console.log(version)
+  process.exit(0)
 }
 
 if (process.argv.find(a => a == '-p') && !_push) {
-  (0, _catcher.default)('Please specify a commit message.');
+  catcher('Please specify a commit message.')
 }
-
 if (process.argv.find(a => a == '-e') && !_extract) {
-  (0, _catcher.default)('Please specify where to extract typedefs (- for stdout).');
+  catcher('Please specify where to extract typedefs (- for stdout).')
 }
 
 if (_argv.find(g => g == '-g') && !_generate) {
-  _generate = _source;
+  _generate = _source
 }
 
 if (_source) {
   try {
-    (0, _fs.lstatSync)(_source);
+    lstatSync(_source)
   } catch (err) {
-    if (err.message) err.message = `Could not read input ${_source}: ${err.message}`;
-    (0, _catcher.default)(err);
+    if (err.message) err.message = `Could not read input ${_source}: ${err.message}`
+    catcher(err)
   }
 }
 
 const doc = async (source, output, justToc = false) => {
   if (!source) {
-    throw new Error('Please specify an input file.');
+    throw new Error('Please specify an input file.')
   }
-
-  const stream = (0, _lib.getStream)(source);
-  await (0, _run.default)(stream, output, justToc);
-};
+  const stream = getStream(source)
+  await run(stream, output, justToc)
+}
 
 (async () => {
   if (_extract) {
-    await (0, _extract2.default)({
+    await extractTypedef({
       source: _source,
-      destination: _extract
-    });
-    return;
+      destination: _extract,
+    })
+    return
   }
-
   if (_generate) {
-    await (0, _generate2.default)({
+    await generateTypedef({
       source: _source,
-      destination: _generate
-    });
-    return;
+      destination: _generate,
+    })
+    return
   }
-
   try {
-    await doc(_source, _output, _toc);
-  } catch ({
-    stack,
-    message,
-    code
-  }) {
-    DEBUG ? LOG(stack) : console.log(message);
+    await doc(_source, _output, _toc)
+  } catch ({ stack, message, code }) {
+    DEBUG ? LOG(stack) : console.log(message)
   }
 
-  let debounce = false;
-
+  let debounce = false
   if (_watch || _push) {
     // also watch referenced example files.
-    (0, _fs.watch)(_source, {
-      recursive: true
-    }, async () => {
+    watch(_source, { recursive: true }, async () => {
       if (!debounce) {
-        debounce = true;
-        await doc(_source, _output, _toc);
-
+        debounce = true
+        await doc(_source, _output, _toc)
         if (_push) {
-          console.log('Pushing documentation changes.');
-          await (0, _lib.gitPush)(_source, _output, _push);
+          console.log('Pushing documentation changes.')
+          await gitPush(_source, _output, _push)
         }
-
-        debounce = false;
+        debounce = false
       }
-    });
+    })
   }
-})();
+})()
+
 //# sourceMappingURL=index.js.map

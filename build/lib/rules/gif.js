@@ -1,26 +1,23 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.gifRe = void 0;
 // import { debuglog } from 'util'
+
 // const LOG = debuglog('doc')
+
 `%GIF path-to-file
 alt
 summary
-%`;
-const gifRe = /^%GIF (.+)\n(.+)\n(.+)\n%$/mg;
-exports.gifRe = gifRe;
+%`
+
+const gifRe = /^%GIF (.+)\n(.+)\n(.+)\n%$/mg
+
+
+
 const gifRule = {
   re: gifRe,
-
   replacement(match, path, alt, summary) {
-    const r = b(summary, alt, path);
-    return r;
-  }
-
-};
+    const r = b(summary, alt, path)
+    return r
+  },
+}
 
 const b = (summary, alt, gif) => {
   return `
@@ -32,9 +29,11 @@ const b = (summary, alt, gif) => {
   </td></tr>
   </table>
 </details>
-`.trim();
-};
+`.trim()
+}
 
-var _default = gifRule;
-exports.default = _default;
+module.exports=gifRule
+
+
+module.exports.gifRe = gifRe
 //# sourceMappingURL=gif.js.map
