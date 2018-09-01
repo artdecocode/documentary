@@ -4,6 +4,7 @@
 
 - [feature] `@typedef` organisation, required props in `type` to have `*`.
 - [feature] Partial example with `/* start/end example */`, always debuglog `example`.
+- [package] Add keywords.
 - [deps] Move markers to `restream`.
 - [deps] Create and use a separate `which-stream` package.
 - [deps] Update to `zoroaster@3`.
