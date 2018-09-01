@@ -35,7 +35,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch App",
-      "program": "${workspaceFolder}/src/bin/register.js",
+      "program": "${workspaceFolder}/src/bin/alamode.js",
       "env": {
         "BABEL_ENV": "debug",
         "NODE_DEBUG": "doc"
@@ -54,7 +54,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch App 2",
-      "program": "${workspaceFolder}/src/bin/register.js",
+      "program": "${workspaceFolder}/src/bin/alamode.js",
       "env": {
         "BABEL_ENV": "debug",
         "NODE_DEBUG": "doc"

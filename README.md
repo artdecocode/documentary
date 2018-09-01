@@ -28,6 +28,7 @@ yarn add -DE documentary
     * [`%TREE directory ...args%`](#tree-directory-args)
     * [`%FORK(-lang)? module ...args%`](#fork-lang-module-args)
   * [Examples Placement](#examples-placement)
+    * [Partial Examples](#partial-examples)
   * [Gif Detail](#gif-detail)
     * [<code>yarn doc</code>](#yarn-doc)
   * [`Type` Definition](#type-definition)
@@ -58,6 +59,7 @@ yarn add -DE documentary
 - [Glossary](#glossary)
   * [Online Documentation](#online-documentation)
   * [Editor Documentation](#editor-documentation)
+- [TODO](#todo)
 - [Copyright](#copyright)
 
 ## Installation & Usage
@@ -218,7 +220,7 @@ There are some built-in rules for replacements.
 `documentary` can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
 
 ```
-%EXAMPLE: examples/example.js, ../src => documentary%
+%EXAMPLE: example/example.js [, ../src => documentary] [, javascript]%
 ```
 
 The first argument is the path to the example relative to the working directory of where the command was executed (normally, the project folder). The second optional argument is the replacement for the `import` statements. The third optional argument is the markdown language to embed the example in and will be determined from the example extension if not specified.
@@ -230,7 +232,7 @@ Given the documentation section:
 
 This method allows to generate documentation.
 
-%EXAMPLE: examples/example.js, ../src => documentary, javascript%`
+%EXAMPLE: example/example.js, ../src => documentary, javascript%
 ```
 
 And the example file `examples/example.js`
@@ -246,7 +248,7 @@ import Catchment from 'catchment'
 
 The program will produce the following output:
 
-````
+````md
 ## API Method
 
 This method allows to generate documentation.
@@ -260,6 +262,25 @@ import Catchment from 'catchment'
 })()
 ```
 ````
+
+#### Partial Examples
+
+Whenever only a part of an example needs to be shown (but the full code is still needed to be able to run it), `documentary` allows to use `start` and `end` comments to specify which part to print to the documentation. It will also make sure to adjust the indentation appropriately.
+
+```js
+import documentary from '../src'
+import Catchment from 'catchment'
+
+(async () => {
+  /* start example */
+  await documentary()
+  /* end example */
+})()
+```
+
+```js
+await documentary()
+```
 ### Gif Detail
 
 The `GIF` rule will inserts a gif animation inside of a `<detail>` block. To highlight the summary with background color, `<code>` should be used instead of back-ticks. [TOC title link](##toc-titles) also work inside the summary.
@@ -738,7 +759,7 @@ or a single marker to include all types in order in which they appear in the `xm
 
 and embed resulting type definitions:
 
-`import('http').ServerResponse` __`ServerResponse`__
+`import('http').ServerResponse` __<a name="serverresponse">`ServerResponse`</a>__
 
 `(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 
@@ -1061,6 +1082,14 @@ import { createReadStream } from 'fs'
 
 - **<a name="online-documentation">Online Documentation</a>**: documentation which is accessible online, such as on a GitHub website, or a language reference, e.g., [Node.js Documentation](https://nodejs.org/api/stream.html).
 - **<a name="editor-documentation">Editor Documentation</a>**: hints available to the users of an IDE, or an editor, in form of suggestions and descriptive hints on hover over variables' names.
+
+## TODO
+
+- [ ] Test using `zoroaster`'s masks.
+- [ ] Gather all types across the whole documentation first to be able to independently link them even if they are in separate files.
+- [ ] Replace the source in example with a `require` call in addition to `import` statement.
+- [ ] Implement caching.
+- [ ] Trigger compilation whenever an embedded example changes.
 
 ## Copyright
 
