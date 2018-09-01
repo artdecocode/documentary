@@ -1,4 +1,4 @@
-require('@babel/register')
+require('alamode')()
 const { resolve } = require('path')
 
 const p = resolve(__dirname, '..', process.argv[2])

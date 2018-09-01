@@ -15,7 +15,7 @@ For example, an unprocessed _JavaScript_ file can look like this:
 
 The file is then processed with [`doc src/config-static.js -g`](#generate-types) command and updated in place, unless `-` is given as an argument, which will print the output to _stdout_, or the path to the output file is specified. After the processing is done, the source code will be transformed to include all types specified in the XML file. This routine can be repeated whenever types are updated (unless the [`spread`](#spread-param) attribute was set, when the generated _JSDoc_ of a function has to be removed by hand first).
 
-%FORK-js src/bin/register example/typedef-raw.js -g -%
+%FORK-js src/bin/alamode example/typedef-raw.js -g -%
 
 ##### Expanded `@param`
 

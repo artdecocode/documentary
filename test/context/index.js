@@ -123,8 +123,8 @@ import Catchment from 'catchment'
    */
   async doc(input, ...args) {
     const proc = fork(TEST_BUILD ?
-      resolve(__dirname, '../../build/bin/index.js') :
-      resolve(__dirname, '../../src/bin/register.js'),
+      resolve(__dirname, '../../build/bin') :
+      resolve(__dirname, '../../src/bin/alamode'),
       [input, ...args], {
         stdio: 'pipe',
         execArgv: [],

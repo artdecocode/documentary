@@ -28,7 +28,7 @@ A special `import` element can be used to import a type using _VS Code_'s _TypeS
 <tr>
 <td colspan="2">
 
-%FORK-js src/bin/register example/generate-imports.js -g -%
+%FORK-js src/bin/alamode example/generate-imports.js -g -%
 </td>
 </tr>
 </tbody>
