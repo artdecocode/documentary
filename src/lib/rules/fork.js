@@ -12,10 +12,14 @@ const forkRule = {
       stdio: 'pipe',
     })
     const { stdout } = await promise
-    return codeSurround(stdout, lang)
+    const hasBackticks = /```/.test(stdout)
+    return codeSurround(stdout, lang, hasBackticks)
   },
 }
 
-const codeSurround = (m, lang = '') => `\`\`\`${lang}\n${m.trim()}\n\`\`\``
+const codeSurround = (m, lang = '', hasBackticks = false) => {
+  const t = hasBackticks ? '````' : '```'
+  return `${t}${lang}\n${m.trim()}\n${t}`
+}
 
 export default forkRule
