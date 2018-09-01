@@ -6,8 +6,10 @@
 - [feature] Partial example with `/* start/end example */`, always debuglog `example`.
 - [deps] Move markers to `restream`.
 - [deps] Create and use a separate `which-stream` package.
-- [build] Build w/ [`alamode`](https://alamode.cc)
+- [deps] Update to `zoroaster@3`.
+- [build] Build w/ [`alamode`](https://alamode.cc).
 - [fix] Non-greedy example regexp.
+- [fix] Surround with ```` when forked output contains backticks.
 
 ## 18 July 2018
 
