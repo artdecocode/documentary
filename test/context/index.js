@@ -8,7 +8,7 @@ import mismatch from 'mismatch'
 import createReplaceStream from '../../src/lib/replace-stream'
 
 // const LOG = debuglog('doc')
-const TEST_BUILD = process.env.BABEL_ENV == 'test-build'
+const TEST_BUILD = process.env.ALAMODE_ENV == 'test-build'
 
 /**
  * A testing context for the package.
