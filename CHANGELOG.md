@@ -1,5 +1,12 @@
 ## 5 September 2018
 
+### 1.14.0
+
+- [feature] Pass `h1` to CLI to include top-level headings in the table of contents.
+- [feature] Parse underlined titles.
+- [refactor] Change `Toc` to not use super-regex, but remember positions and reorder before push.
+- [fix] Easier title regex, and only allow titles with a space between `#` and text.
+
 ### 1.13.0
 
 - [feature] Add `FORKERR` marker to print output of the `stderr` in fork.
