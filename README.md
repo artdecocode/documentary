@@ -58,6 +58,7 @@ yarn add -DE documentary
   * [`TocConfig` Type](#tocconfig-type)
     * [<code>skipLevelOne</code>](#skiplevelone)
   * [`constructor(config?: TocConfig): Toc`](#constructorconfig-skiplevelone-boolean--true-toc)
+- [#PRO<br/>Underlined<br/>`Titles`](#prounderlinedtitles)
 - [Glossary](#glossary)
   * [Online Documentation](#online-documentation)
   * [Editor Documentation](#editor-documentation)
@@ -1083,6 +1084,22 @@ import { createReadStream } from 'fs'
 - [API](#api)
 - [Copyright](#copyright)
 ```
+
+#PRO
+Underlined
+`Titles`
+---
+
+Titles written as blocks and underlined with any number of either `===` (for H1) and `---` (for H2), will be also displayed in the table of contents. However, the actual title will appear on a single line.
+
+```md
+#PRO
+Underlined
+`Titles`
+---
+```
+
+As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
 ## Glossary
 

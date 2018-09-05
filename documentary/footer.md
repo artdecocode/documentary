@@ -1,4 +1,20 @@
 
+#PRO
+Underlined
+`Titles`
+---
+
+Titles written as blocks and underlined with any number of either `===` (for H1) and `---` (for H2), will be also displayed in the table of contents. However, the actual title will appear on a single line.
+
+```md
+#PRO
+Underlined
+`Titles`
+---
+```
+
+As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
+
 ## Glossary
 
 - **[Online Documentation](t)**: documentation which is accessible online, such as on a GitHub website, or a language reference, e.g., [Node.js Documentation](https://nodejs.org/api/stream.html).
