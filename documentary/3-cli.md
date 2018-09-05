@@ -16,7 +16,8 @@ The arguments it accepts are:
   ["`-g [path]`", "[Generate Types](t)", "Insert `@typedef` _JSDoc_ into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_."],
   ["`-e [path]`", "[Extract Types](t)", "Insert `@typedef` JSDoc into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_."],
   ["`-w`", "[Watch Mode](t)", "Watch mode: re-run the program when changes to the source file are detected."],
-  ["`-p "commit message"`", "[Automatic Push](t)", "Watch + push: automatically push changes to a remote git branch by squashing them into a single commit."]
+  ["`-p "commit message"`", "[Automatic Push](t)", "Watch + push: automatically push changes to a remote git branch by squashing them into a single commit."],
+  ["`-h1`", "[h1 In Toc](t)", "Include `h1` headers in the table of contents."]
 ]
 ```
 

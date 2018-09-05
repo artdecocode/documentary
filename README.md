@@ -51,6 +51,7 @@ yarn add -DE documentary
   * [Extract Types](#extract-types)
   * [Watch Mode](#watch-mode)
   * [Automatic Push](#automatic-push)
+  * [h1 In Toc](#h1-in-toc)
   * [`NODE_DEBUG=doc`](#node_debugdoc)
 - [API](#api)
   * [`Toc` Stream](#toc-stream)
@@ -89,7 +90,9 @@ When actively working on documentation, it is possible to use the `watch` mode w
 The processed `README.md` file will have a generated table of contents, markdown tables and neat titles for API method descriptions, as well as other possible features described in this section.
 ### TOC Generation
 
-Table of contents are useful for navigation the README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
+Table of contents are useful for navigation in a README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
+
+By default, top level `h1` headers written with `#` are ignored, but they can be added by passing `-h1` [CLI argument](#h1-in-toc).
 
 ```md
 - [Table Of Contents](#table-of-contents)
@@ -984,6 +987,7 @@ The arguments it accepts are:
 | `-e [path]` | <a name="extract-types">Extract Types</a> | Insert `@typedef` JSDoc into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
 | `-w` | <a name="watch-mode">Watch Mode</a> | Watch mode: re-run the program when changes to the source file are detected. |
 | `-p "commit message"` | <a name="automatic-push">Automatic Push</a> | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit. |
+| `-h1` | <a name="h1-in-toc">h1 In Toc</a> | Include `h1` headers in the table of contents. |
 
 When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print debug information, e.g.,
 
