@@ -80,13 +80,20 @@ catchment@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/catchment/-/catchment-3.0.1.tgz#11dab5fea86d412343e797e052b21091b7e83a55"
 
+catchment@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/catchment/-/catchment-3.1.0.tgz#2bf76f8780bb3c009e8b2818427226d8d1f38828"
+  dependencies:
+    clean-stack artdecocode/clean-stack#82625bf
+    erotic "2.0.0"
+
 catchment@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/catchment/-/catchment-1.0.0.tgz#3061f71be0102710be84328d2f94363a165f8c4b"
 
-clean-stack@1.3.0:
+clean-stack@1.3.0, clean-stack@artdecocode/clean-stack#82625bf:
   version "1.3.0"
-  resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-1.3.0.tgz#9e821501ae979986c46b1d66d2d432db2fd4ae31"
+  resolved "https://codeload.github.com/artdecocode/clean-stack/tar.gz/82625bf33174099176f45c21c686dbc628da25f8"
 
 cli-color@~0.1.6:
   version "0.1.7"
@@ -133,6 +140,12 @@ erotic@1.2.1:
   resolved "https://registry.yarnpkg.com/erotic/-/erotic-1.2.1.tgz#f5265147573991578808de69af28316aa788f0ae"
   dependencies:
     clean-stack "1.3.0"
+
+erotic@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/erotic/-/erotic-2.0.0.tgz#1484efb37a465369cf0e57662d6fb271c3e850fd"
+  dependencies:
+    clean-stack artdecocode/clean-stack#82625bf
 
 erte@1.1.1:
   version "1.1.1"
@@ -221,6 +234,12 @@ restream@1.2.0:
 restream@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/restream/-/restream-3.1.1.tgz#36084997bd3e765c2da484700e16b850c2f9ffb4"
+
+restream@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/restream/-/restream-3.2.0.tgz#c54b3d27fb39ac71dc2220ebe44faffb5f4439a1"
+  dependencies:
+    clean-stack artdecocode/clean-stack#82625bf
 
 rexml@1.1.0:
   version "1.1.0"

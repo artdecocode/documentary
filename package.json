@@ -67,10 +67,10 @@
   },
   "dependencies": {
     "argufy": "1.2.1",
-    "catchment": "3.0.1",
+    "catchment": "3.1.0",
     "mismatch": "1.0.2",
     "pedantry": "1.0.1",
-    "restream": "3.1.1",
+    "restream": "3.2.0",
     "rexml": "1.1.0",
     "spawncommand": "2.0.1",
     "which-stream": "1.0.1"
