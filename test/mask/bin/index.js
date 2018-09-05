@@ -14,3 +14,21 @@ test/mask/bin/h1.md -h1
 
 /**/
 
+// underlined
+test/mask/bin/toc-underline.md
+
+/* expected */
+test
+====
+
+- [test](#test)
+  * [test2](#test2)
+  * [test3](#test3)
+
+test2
+-----
+
+test3
+-----
+/**/
+

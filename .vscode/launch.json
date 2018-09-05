@@ -10,13 +10,12 @@
       "name": "Launch Zoroaster",
       "program": "${workspaceFolder}/node_modules/.bin/zoroaster",
       "env": {
-        "ZOROASTER_TIMEOUT": "9999999",
         "NODE_DEBUG": "doc",
       },
       "console": "integratedTerminal",
       "args": [
         // "test/spec/bin/generate.js",
-        "test/spec/mask/example.js",
+        "test/spec/replace-stream/toc-titles.js",
         // "test/spec/Toc.js",
         // "test/spec/replace-stream/typedef-md.js",
         // "test/spec/js-replace-stream/params.js",
@@ -37,7 +36,6 @@
       "name": "Launch App",
       "program": "${workspaceFolder}/src/bin/alamode.js",
       "env": {
-        "BABEL_ENV": "debug",
         "NODE_DEBUG": "doc"
       },
       "args": [
@@ -53,17 +51,13 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch App 2",
+      "name": "Launch Toc",
       "program": "${workspaceFolder}/src/bin/alamode.js",
       "env": {
-        "BABEL_ENV": "debug",
         "NODE_DEBUG": "doc"
       },
       "args": [
-        // "documentation/2-features/6-rules.md",
-        "documentation/2-features/1-TOC-generation.md",
-        "-o",
-        "debug.md"
+        "documentary",
       ],
       "console": "integratedTerminal",
       "skipFiles": [

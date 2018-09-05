@@ -12,7 +12,9 @@ import { tableRe } from './rules/table'
 import typeRule from './rules/type'
 import typedefMdRule from './rules/typedef-md'
 
-const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/
+const re = /(?:^|\n) *(#+) *(.+)/g
+
+// const underlinedTitleRe = /\s*(?:[^#>-]|)/gm
 
 const getBuffer = async (buffer) => {
   const {
@@ -77,72 +79,131 @@ export default class Toc extends Transform {
     super()
     this.skipLevelOne = skipLevelOne
     this.level = 0
+    this.titles = []
   }
-  async _transform(buffer, enc, next) {
-    let res
 
-    const b = await getBuffer(buffer)
-    // create a single regex otherwise titles will always come before method titles
-    const superRe = new RegExp(`(?:${re.source})|(?:${methodTitleRe.source})|(?:${linkTitleRe.source})`, 'g')
-    while ((res = superRe.exec(b)) !== null) {
-      let t
-      let level
-      let link
-      if (res[8] && res[9]) {
-        t = res[8]
-        level = res[9] != 't' ? res[9].length : this.level + 1
-        link = getLink(t)
-      } else if (res[1]) { // normal title regex
-        const [, { length }, title] = res
-        this.level = length
-        if (this.skipLevelOne && this.level == 1) continue
-        t = title
-        link = getLink(title)
-      } else { // the method title regex
-        try {
-          const { length } = res[3]
-          this.level = length
-          if (this.skipLevelOne && this.level == 1) continue
-          const bb = res.slice(4, 6).filter(a => a).join(' ').trim()
-          const json = res[7] || '[]'
-          const args = JSON.parse(json)
-          const s = args.map(([name, type, shortType]) => {
-            let tt
-            if (shortType) tt = shortType
-            else if (typeof type == 'string') tt = type
-            else tt = 'object'
-            return `${name}: ${tt}`
-          })
-          const fullTitle = replaceTitle(...res.slice(3)).replace(/^#+ +/, '')
-          link = getLink(fullTitle)
-          t = `\`${bb}(${s.join(', ')})${res[6] ? `: ${res[6]}` : ''}\``
-        } catch (err) {
-          // ok
-          continue
-        }
-      }
-      const heading = `[${t}](#${link})`
-      let s
-      if (!level) level = this.level
-      level = this.skipLevelOne ? level - 1 : level
-      if (level == 1) {
-        s = `- ${heading}`
-      } else {
-        const p = '  '.repeat(Math.max(level - 1, 0))
-        s = `${p}* ${heading}`
-      }
-      this.push(s)
-      this.push('\n')
+  addTitle({ title, link, position, level, parentLevel }) {
+    this.titles.push({
+      title, link, position, level, parentLevel,
+    })
+  }
+
+  getTocLine({ title, link, level }) {
+    const heading = `[${title}](#${link})`
+    let s
+    const lvl = this.skipLevelOne ? level - 1 : level
+    if (lvl == 1) {
+      s = `- ${heading}`
+    } else {
+      const p = '  '.repeat(Math.max(lvl - 1, 0))
+      s = `${p}* ${heading}`
     }
+    return s
+  }
+
+  skipLine(level) {
+    return this.skipLevelOne && level == 1
+  }
+
+  async _transform(buffer, enc, next) {
+    const b = await getBuffer(buffer)
+
+    const replaceable = new Replaceable([
+      {
+        re,
+        replacement: (match, { length: level }, title, position) => {
+          if (this.skipLine(level)) return match
+
+          this.addTitle({
+            title,
+            link: getLink(title),
+            position,
+            level,
+          })
+          return match
+        },
+      },
+      {
+        re: methodTitleRe,
+        replacement: (match, hash, isAsync, name, returnType, jsonArgs = '[]', position) => {
+          try {
+            const { length: level } = hash
+
+            if (this.skipLine(level)) return match
+            const bb = [isAsync, name]
+              .filter(a => a)
+              .join(' ').trim()
+            const args = JSON.parse(jsonArgs)
+            const s = args.map(([argName, type, shortType]) => {
+              let tt
+              if (shortType) tt = shortType
+              else if (typeof type == 'string') tt = type
+              else tt = 'object'
+              return `${argName}: ${tt}`
+            })
+            const fullTitle = replaceTitle(hash, isAsync, name, returnType, jsonArgs)
+              .replace(/^#+ +/, '')
+            const link = getLink(fullTitle)
+
+            const rt = `${returnType ? `: ${returnType}` : ''}`
+            const title = `\`${bb}(${s.join(', ')})${rt}\``
+            this.addTitle({
+              title,
+              link,
+              position,
+              level,
+            })
+          } catch (err) {
+            // ok
+            return match
+          }
+        },
+      },
+      {
+        re: linkTitleRe,
+        replacement: (match, title, l, position) => {
+          const link = getLink(title)
+          this.addTitle({
+            title,
+            ...(l == 't' ? { parentLevel: true } : { level: l.length }),
+            link,
+            position,
+          })
+          return match
+        },
+      },
+    ])
+    replaceable.end(b)
+    await collect(replaceable)
+    const sorted = this.sortTitles()
+    sorted.forEach((title) => {
+      if (title.parentLevel) {
+        title.level = this.level + 1
+      } else {
+        this.level = title.level
+      }
+      const line = this.getTocLine(title)
+      this.push(line)
+      this.push('\n')
+    })
+    this.titles = []
     next()
+  }
+  sortTitles() {
+    const sorted = this.titles.sort(({ position: A }, { position: B }) => {
+      if (A > B) return 1
+      if (A < B) return -1
+      return 0
+    })
+    return sorted
   }
 }
 
 export const getToc = async (stream, h1) => {
-  const rs = new Toc({ skipLevelOne: !h1 })
-  stream.pipe(rs)
-  const t = await collect(rs)
-  return t.trim()
+  const toc = new Toc({ skipLevelOne: !h1 })
+  stream.pipe(toc)
+  const res = await collect(toc)
+  return res.trim()
 }
 
 /**
