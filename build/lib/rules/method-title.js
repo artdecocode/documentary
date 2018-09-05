@@ -41,12 +41,13 @@ const LOG = debuglog('doc')
 
 const re = /```(#+)( async)? (\w+)(?: => (.+)\n)?([\s\S]*?)```/g
 
-       const replacer = (match, level, isAsync, method, returnType, title) => {
+       const replacer = (match, level, isAsync, method, returnType, jsonArgs) => {
+  const args = jsonArgs ? jsonArgs : '[]'
   try {
-    const res = replaceTitle(level, isAsync, method, returnType, title)
+    const res = replaceTitle(level, isAsync, method, returnType, args)
     return res
   } catch (err) {
-    LOG('could not parse the method title')
+    LOG('Could not parse the method title')
     return match
   }
 }

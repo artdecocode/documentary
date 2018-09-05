@@ -9,6 +9,11 @@ const getArgs = () => {
       short: 't',
       boolean: true,
     },
+    h1: {
+      short: 'h1',
+      boolean: true,
+      description: 'Process h1 headings',
+    },
     watch: {
       short: 'w',
       boolean: true,

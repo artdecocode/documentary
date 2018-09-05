@@ -1,15 +1,20 @@
 const { Transform } = require('stream');
-let Catchment = require('catchment'); if (Catchment && Catchment.__esModule) Catchment = Catchment.default;
+const { collect } = require('catchment');
 const { getLink } = require('.');
 const { methodTitleRe, replaceTitle } = require('./rules/method-title');
-const { codeRe, commentRule: stripComments, innerCodeRe, linkTitleRe } = require('./rules');
-const { Replaceable } = require('restream');
-const { makeCutRule, makePasteRule, makeMarkers } = require('restream');
+const {
+  codeRe, commentRule: stripComments, innerCodeRe, linkTitleRe,
+} = require('./rules');
+const {
+  Replaceable, makeCutRule, makePasteRule, makeMarkers,
+} = require('restream');
 const { tableRe } = require('./rules/table');
 let typeRule = require('./rules/type'); if (typeRule && typeRule.__esModule) typeRule = typeRule.default;
 let typedefMdRule = require('./rules/typedef-md'); if (typedefMdRule && typedefMdRule.__esModule) typedefMdRule = typedefMdRule.default;
 
-const re = /(?:^|\n) *(#+) *((?:(?!\n)[\s\S])+)\n/
+const re = /(?:^|\n) *(#+) +(.+)/g
+
+const underline = /^ *([=-]+) *$/gm
 
 const getBuffer = async (buffer) => {
   const {
@@ -23,43 +28,57 @@ const getBuffer = async (buffer) => {
     linkTitle: linkTitleRe,
   })
 
-  const [cutTitle, cutLinkTitle, cutCode, cutMethodTitle, cutInnerCode, cutTable] =
+  const [
+    cutTitle, cutLinkTitle, cutCode, cutMethodTitle,
+    cutInnerCode, cutTable,
+  ] =
     [title, linkTitle, code, methodTitle, innerCode, table].map((marker) => {
       const rule = makeCutRule(marker)
       return rule
     })
-  const [insertTitle, insertLinkTitle, insertMethodTitle, insertInnerCode, insertTable] =
-    [title, linkTitle, methodTitle, innerCode, table].map((marker) => {
+  const [
+    insertTitle, insertLinkTitle, insertMethodTitle, insertTable,
+  ] =
+    [title, linkTitle, methodTitle, table].map((marker) => {
       const rule = makePasteRule(marker)
       return rule
     })
 
   const rs = new Replaceable([
-    cutTitle,
-    cutInnerCode,
-    cutLinkTitle,
-    {
-      re: innerCode.regExp,
-      replacement() {
-        return ''
-      },
-    },
+    cutInnerCode, // this ensures no link titles are detected inside of inner code
+    // cutTitle, // i don't know why we are doing this
+    // cutLinkTitle,
+
+    // make sure those are not cut with code
     cutTable,
     cutMethodTitle,
+
+    // never pasted back
     cutCode,
     stripComments,
+
+    // types will add link titles
     typedefMdRule,
     typeRule,
+
+    // paste those cut out earlier.
     insertMethodTitle,
     insertTable,
-    insertLinkTitle,
-    insertInnerCode,
-    insertTitle,
+
+    // insertLinkTitle,
+    // insertTitle,
+    // {
+    //   re: /[\s\S]*/,
+    //   replacement(match) {
+    //     debugger
+    //     return match
+    //   },
+    // },
   ])
-  const c = new Catchment({ rs })
   rs.end(buffer)
-  const b = await c.promise
-  return b
+  const b = await collect(rs)
+  // console.log(underlined.map)
+  return { b, innerCode }
 }
 
                class Toc extends Transform {
@@ -75,73 +94,178 @@ const getBuffer = async (buffer) => {
     super()
     this.skipLevelOne = skipLevelOne
     this.level = 0
+    this.titles = []
   }
-  async _transform(buffer, enc, next) {
-    let res
 
-    const b = await getBuffer(buffer)
-    // create a single regex otherwise titles will always come before method titles
-    const superRe = new RegExp(`(?:${re.source})|(?:${methodTitleRe.source})|(?:${linkTitleRe.source})`, 'g')
-    while ((res = superRe.exec(b)) !== null) {
-      let t
-      let level
-      let link
-      if (res[8] && res[9]) {
-        t = res[8]
-        level = res[9] != 't' ? res[9].length : this.level + 1
-        link = getLink(t)
-      } else if (res[1]) { // normal title regex
-        const [, { length }, title] = res
-        this.level = length
-        if (this.skipLevelOne && this.level == 1) continue
-        t = title
-        link = getLink(title)
-      } else { // the method title regex
-        try {
-          const { length } = res[3]
-          this.level = length
-          if (this.skipLevelOne && this.level == 1) continue
-          const bb = res.slice(4, 6).filter(a => a).join(' ').trim()
-          const json = res[7] || '[]'
-          const args = JSON.parse(json)
-          const s = args.map(([name, type, shortType]) => {
-            let tt
-            if (shortType) tt = shortType
-            else if (typeof type == 'string') tt = type
-            else tt = 'object'
-            return `${name}: ${tt}`
-          })
-          const fullTitle = replaceTitle(...res.slice(3)).replace(/^#+ +/, '')
-          link = getLink(fullTitle)
-          t = `\`${bb}(${s.join(', ')})${res[6] ? `: ${res[6]}` : ''}\``
-        } catch (err) {
-          // ok
-          continue
-        }
-      }
-      const heading = `[${t}](#${link})`
-      let s
-      if (!level) level = this.level
-      level = this.skipLevelOne ? level - 1 : level
-      if (level == 1) {
-        s = `- ${heading}`
-      } else {
-        const p = '  '.repeat(Math.max(level - 1, 0))
-        s = `${p}* ${heading}`
-      }
-      this.push(s)
-      this.push('\n')
+  addTitle({ title, link, position, level, parentLevel }) {
+    this.titles.push({
+      title, link, position, level, parentLevel,
+    })
+  }
+
+  getTocLine({ title, link, level }) {
+    const heading = `[${title}](#${link})`
+    let s
+    const lvl = this.skipLevelOne ? level - 1 : level
+    if (lvl == 1) {
+      s = `- ${heading}`
+    } else {
+      const p = '  '.repeat(Math.max(lvl - 1, 0))
+      s = `${p}* ${heading}`
     }
+    const ts = s.trimRight()
+    return ts
+  }
+
+  skipLine(level) {
+    return this.skipLevelOne && level == 1
+  }
+
+  async _transform(buffer, enc, next) {
+    const { b, innerCode } = await getBuffer(buffer)
+
+    const getTitle = (title) => {
+      const t = title.replace(innerCode.regExp, (m, i) => {
+        const val = innerCode.map[i]
+        return val
+      })
+      return t
+    }
+
+    const replaceable = new Replaceable([
+      {
+        re: underline,
+        replacement: (match, u, position, input) => {
+          const level = u.indexOf('-') + 2 // either 0 or -1
+          if (this.skipLine(level)) return match
+          const lines = []
+          let ok = true
+          let s = input.substr(0, position - 1)
+          while (ok) {
+            const li = s.lastIndexOf('\n')
+            const t = s.substr(li + 1)
+            const isLine = new RegExp(underline.source).test(t)
+            if (isLine) {
+              break
+            }
+            ok = /^ *(?!\s*(?:>|(?:[+*-] )|(?:\d+\.)|(?:# )|`{3,}))[^\s]+.*$/.test(t)
+            if (ok) {
+              lines.unshift(t)
+              s = s.substr(0, s.length - t.length - 1)
+            } else {
+              break
+            }
+          }
+          const title = `${lines.map(l => l.trim()).join('<br/>')}`
+          const t = getTitle(title)
+          const link = getLink(t)
+          this.addTitle({
+            title: t, link, level, position,
+          })
+          return match
+        },
+      },
+      {
+        re,
+        replacement: (match, { length: level }, title, position) => {
+          if (this.skipLine(level)) return match
+          const t = getTitle(title)
+
+          this.addTitle({
+            title: t,
+            link: getLink(t),
+            position,
+            level,
+          })
+          return match
+        },
+      },
+      {
+        re: methodTitleRe,
+        replacement: (match, hash, isAsync, name, returnType, jsonArgs, position) => {
+          try {
+            const { length: level } = hash
+
+            if (this.skipLine(level)) return match
+            const json = jsonArgs ? jsonArgs : '[]'
+            const bb = [isAsync, name]
+              .filter(a => a)
+              .join(' ').trim()
+            const args = JSON.parse(json)
+            const s = args.map(([argName, type, shortType]) => {
+              let tt
+              if (shortType) tt = shortType
+              else if (typeof type == 'string') tt = type
+              else tt = 'object'
+              return `${argName}: ${tt}`
+            })
+            const fullTitle = replaceTitle(hash, isAsync, name, returnType, jsonArgs)
+              .replace(/^#+ +/, '')
+            const link = getLink(fullTitle)
+
+            const rt = `${returnType ? `: ${returnType}` : ''}`
+            const title = `\`${bb}(${s.join(', ')})${rt}\``
+            this.addTitle({
+              title,
+              link,
+              position,
+              level,
+            })
+          } catch (err) {
+            // ok
+            return match
+          }
+        },
+      },
+      {
+        re: linkTitleRe,
+        replacement: (match, title, l, position) => {
+          const t = getTitle(title)
+          const link = getLink(t)
+          this.addTitle({
+            title: t,
+            ...(l == 't' ? { parentLevel: true } : { level: l.length }),
+            link,
+            position,
+          })
+          return match
+        },
+      },
+    ])
+    replaceable.end(b)
+    await collect(replaceable)
+    const sorted = this.sortTitles()
+    sorted.forEach((title) => {
+      if (title.parentLevel) {
+        title.level = this.level + 1
+      } else {
+        this.level = title.level
+      }
+      const line = this.getTocLine(title)
+      this.push(line)
+      this.push('\n')
+    })
+    this.clear()
     next()
+  }
+  clear() {
+    this.titles = []
+  }
+  sortTitles() {
+    const sorted = this.titles.sort(({ position: A }, { position: B }) => {
+      if (A > B) return 1
+      if (A < B) return -1
+      return 0
+    })
+    return sorted
   }
 }
 
-       const getToc = async (stream) => {
-  const rs = new Toc()
-  stream.pipe(rs)
-  const { promise } = new Catchment({ rs })
-  const t = await promise
-  return t.trim()
+       const getToc = async (stream, h1) => {
+  const toc = new Toc({ skipLevelOne: !h1 })
+  stream.pipe(toc)
+  const res = await collect(toc)
+  return res.trimRight()
 }
 
 /**

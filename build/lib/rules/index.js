@@ -23,6 +23,7 @@ const LOG = debuglog('doc')
   },
 }
 
+// ^[\n because can be part of a table row
        const linkTitleRe = /\[([^[\n]+?)\]\((t|#+)\)/gm
        const linkRe = /\[(.+?)\]\(l\)/g
 
