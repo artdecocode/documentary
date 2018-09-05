@@ -113,7 +113,8 @@ export default class Toc extends Transform {
       const p = '  '.repeat(Math.max(lvl - 1, 0))
       s = `${p}* ${heading}`
     }
-    return s
+    const ts = s.trimRight()
+    return ts
   }
 
   skipLine(level) {
@@ -263,7 +264,7 @@ export const getToc = async (stream, h1) => {
   const toc = new Toc({ skipLevelOne: !h1 })
   stream.pipe(toc)
   const res = await collect(toc)
-  return res.trim()
+  return res.trimRight()
 }
 
 /**

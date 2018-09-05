@@ -14,7 +14,7 @@ const ts = makeTestSuite(path, {
   async getResults(input, { catchment }) {
     const toc = new Toc()
     toc.end(input)
-    const res = await catchment(toc)
+    const res = await catchment(toc, true)
     return res
   },
   context: Context,
@@ -29,7 +29,7 @@ const h1 = makeTestSuite(path2, {
   async getResults(input, { catchment }) {
     const toc = new Toc({ skipLevelOne: false })
     toc.end(input)
-    const res = await catchment(toc)
+    const res = await catchment(toc, true)
     return res
   },
   context: Context,

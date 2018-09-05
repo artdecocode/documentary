@@ -39,7 +39,7 @@ export const replaceTitle = (level, isAsync, method, returnType, title) => {
   return res
 }
 
-const re = /```(#+)( async)? (\w+)(?: => (.+)\n)?([\s\S]*?)```/g
+const re = /```(#+)( async)? (\w+)(?: => (.+)\n)?([\s\S]+?)?```/g
 
 export const replacer = (match, level, isAsync, method, returnType, title) => {
   try {

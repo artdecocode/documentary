@@ -16,6 +16,7 @@
 
 /* expected */
 - [test](#test)
+
 /**/
 
 // does not generate titles for commented blocks
@@ -26,6 +27,7 @@
 
 /* expected */
 - [test](#test)
+
 /**/
 
 // supports titles
@@ -36,6 +38,7 @@
 /* expected */
 - [Title](#title)
   * [Toc Title](#toc-title)
+
 /**/
 
 // supports titles with explicit level
@@ -47,6 +50,7 @@
 /* expected */
 - [Title](#title)
 - [Toc Title](#toc-title)
+
 /**/
 
 // supports titles found in a table
@@ -67,6 +71,7 @@
 /* expected */
 - [`Hello World` Title](#hello-world-title)
   * [`Toc Title`](#toc-title)
+
 /**/
 
 // supports underlined titles
@@ -81,4 +86,26 @@ test2
 /* expected */
 - [`test`<br/>test2](#testtest2)
 - [#test3](#test3)
+
+/**/
+
+// method title with an argument
+```#### async runSoftware
+[
+  ["path", "string"]
+]
+```
+
+/* expected */
+    * [`async runSoftware(path: string)`](#async-runsoftwarepath-string-void)
+
+/**/
+
+// method title without arguments
+```#### runSoftware => string
+```
+
+/* expected */
+    * [`runSoftware(): string`](#runsoftware-string)
+
 /**/
