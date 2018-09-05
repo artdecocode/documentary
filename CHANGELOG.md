@@ -1,4 +1,10 @@
-## 11 August 2018
+## 5 September 2018
+
+### 1.12.0
+
+- [feature] Replace `require` source in examples.
+
+## 1 September 2018
 
 ### 1.11.0
 
