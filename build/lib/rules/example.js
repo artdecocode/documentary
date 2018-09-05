@@ -28,10 +28,18 @@ const getPartial = (boundExample) => {
     let f = await read(source)
     f = f.trim()
     if (from && to) {
-      f = f.replace(/^import .+? from ['"](.+)['"]$/mg, (m, fr) => {
-        if (fr == from) return m.replace(fr, to)
-        return m
-      })
+      f = f
+        .replace(/^(import .+? )(from (['"])(.+)\3)/gm, (m, i, fromSeg, q, fr) => {
+          if (fr == from) {
+            const r = fromSeg.replace(fr, to)
+            return `${i}${r}`
+          }
+          return m
+        })
+        .replace(/=\s+require\((['"'])(.+?)\1\)/gm, (m, q, fr) => {
+          if (fr == from) return m.replace(fr, to)
+          return m
+        })
     }
 
     let ff = f
