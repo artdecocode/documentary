@@ -27,6 +27,7 @@ yarn add -DE documentary
     * [`%NPM: package-name%`](#npm-package-name)
     * [`%TREE directory ...args%`](#tree-directory-args)
     * [`%FORK(-lang)? module ...args%`](#fork-lang-module-args)
+    * [`%FORKERR(-lang)? module ...args%`](#forkerr-lang-module-args)
   * [Examples Placement](#examples-placement)
     * [Partial Examples](#partial-examples)
   * [Gif Detail](#gif-detail)
@@ -215,6 +216,7 @@ There are some built-in rules for replacements.
 | <a name="npm-package-name">`%NPM: package-name%`</a> | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)` |
 | <a name="tree-directory-args">`%TREE directory ...args%`</a> | Executes the `tree` command with the given arguments. If `tree` is not installed, warns and does not replace the match. |
 | <a name="fork-lang-module-args">`%FORK(-lang)? module ...args%`</a> | Forks the Node.js process to execute the module using `child_process.fork`. The output is printed in the code block, with optionally given language. For example: `%FORK-json example.js -o%` |
+| <a name="forkerr-lang-module-args">`%FORKERR(-lang)? module ...args%`</a> | Same as `%FORK%` but will print the output of the `stderr`. |
 ### Examples Placement
 
 `documentary` can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
