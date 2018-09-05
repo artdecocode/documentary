@@ -52,13 +52,13 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Toc",
+      "name": "Launch Doc",
       "program": "${workspaceFolder}/src/bin/alamode.js",
       "env": {
         "NODE_DEBUG": "doc"
       },
       "args": [
-        "test/mask/bin/toc-underline.md",
+        "documentary",
       ],
       "console": "integratedTerminal",
       "skipFiles": [

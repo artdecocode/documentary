@@ -109,3 +109,14 @@ test2
     * [`runSoftware(): string`](#runsoftware-string)
 
 /**/
+
+// method title without arguments with a follow-up
+```#### runSoftware => string
+```
+Generated from
+```
+
+/* expected */
+    * [`runSoftware(): string`](#runsoftware-string)
+
+/**/

@@ -182,15 +182,16 @@ export default class Toc extends Transform {
       },
       {
         re: methodTitleRe,
-        replacement: (match, hash, isAsync, name, returnType, jsonArgs = '[]', position) => {
+        replacement: (match, hash, isAsync, name, returnType, jsonArgs, position) => {
           try {
             const { length: level } = hash
 
             if (this.skipLine(level)) return match
+            const json = jsonArgs ? jsonArgs : '[]'
             const bb = [isAsync, name]
               .filter(a => a)
               .join(' ').trim()
-            const args = JSON.parse(jsonArgs)
+            const args = JSON.parse(json)
             const s = args.map(([argName, type, shortType]) => {
               let tt
               if (shortType) tt = shortType
