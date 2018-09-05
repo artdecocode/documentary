@@ -1,5 +1,9 @@
 ## 5 September 2018
 
+### 1.13.0
+
+- [feature] Add `FORKERR` marker to print output of the `stderr` in fork.
+
 ### 1.12.0
 
 - [feature] Replace `require` source in examples.
