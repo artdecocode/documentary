@@ -4,16 +4,17 @@ import { fork } from 'spawncommand'
 // const LOG = debuglog('doc')
 
 const forkRule = {
-  re: /%FORK(?:-(\w+))? (.+)%/mg,
-  async replacement(match, lang, m) {
+  re: /%FORK(ERR)?(?:-(\w+))? (.+)%/mg,
+  async replacement(match, err, lang, m) {
     const [mod, ...args] = m.split(' ')
     const { promise } = fork(mod, args, {
       execArgv: [],
       stdio: 'pipe',
     })
-    const { stdout } = await promise
-    const hasBackticks = /```/.test(stdout)
-    return codeSurround(stdout, lang, hasBackticks)
+    const { stdout, stderr } = await promise
+    const res = err ? stderr : stdout
+    const hasBackticks = /```/.test(res)
+    return codeSurround(res, lang, hasBackticks)
   },
 }
 
