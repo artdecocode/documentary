@@ -21,6 +21,7 @@ const {
   push: _push,
   version: _version,
   extract: _extract,
+  h1: _h1,
 } = getArgs()
 
 let {
@@ -53,12 +54,12 @@ if (_source) {
   }
 }
 
-const doc = async (source, output, justToc = false) => {
+const doc = async ({ source, output, justToc = false, h1 }) => {
   if (!source) {
     throw new Error('Please specify an input file.')
   }
   const stream = getStream(source)
-  await run(stream, output, justToc)
+  await run(stream, output, justToc, h1)
 }
 
 (async () => {
@@ -77,18 +78,22 @@ const doc = async (source, output, justToc = false) => {
     return
   }
   try {
-    await doc(_source, _output, _toc)
+    await doc({
+      source: _source, output: _output, justToc: _toc, h1: _h1,
+    })
   } catch ({ stack, message, code }) {
     DEBUG ? LOG(stack) : console.log(message)
   }
 
   let debounce = false
   if (_watch || _push) {
-    // also watch referenced example files.
+    // todo: also watch referenced example files.
     watch(_source, { recursive: true }, async () => {
       if (!debounce) {
         debounce = true
-        await doc(_source, _output, _toc)
+        await doc({
+          source: _source, output: _output, justToc: _toc, h1: _h1,
+        })
         if (_push) {
           console.log('Pushing documentation changes.')
           await gitPush(_source, _output, _push)

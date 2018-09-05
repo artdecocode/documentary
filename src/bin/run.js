@@ -26,12 +26,13 @@ const replaceFile = async (stream, toc, out) => {
  * @param {Readable} stream A readable stream.
  * @param {string} [out] Path to the output file.
  * @param {boolean} [justToc] Just print the TOC.
+ * @param {boolean} [h1] Process top-level headers in the TOC.
  */
-export default async function run(stream, out, justToc) {
+export default async function run(stream, out, justToc, h1) {
   const pt = new PassThrough()
   pt.pause()
   stream.pipe(pt)
-  const t = await getToc(stream)
+  const t = await getToc(stream, h1)
   if (justToc) {
     console.log(t)
     process.exit()

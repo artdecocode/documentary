@@ -1,10 +1,13 @@
 import { Transform } from 'stream'
-import Catchment from 'catchment'
+import { collect } from 'catchment'
 import { getLink } from '.'
 import { methodTitleRe, replaceTitle } from './rules/method-title'
-import { codeRe, commentRule as stripComments, innerCodeRe, linkTitleRe } from './rules'
-import { Replaceable } from 'restream'
-import { makeCutRule, makePasteRule, makeMarkers } from 'restream'
+import {
+  codeRe, commentRule as stripComments, innerCodeRe, linkTitleRe,
+} from './rules'
+import {
+  Replaceable, makeCutRule, makePasteRule, makeMarkers,
+} from 'restream'
 import { tableRe } from './rules/table'
 import typeRule from './rules/type'
 import typedefMdRule from './rules/typedef-md'
@@ -56,9 +59,8 @@ const getBuffer = async (buffer) => {
     insertInnerCode,
     insertTitle,
   ])
-  const c = new Catchment({ rs })
   rs.end(buffer)
-  const b = await c.promise
+  const b = await collect(rs)
   return b
 }
 
@@ -136,11 +138,10 @@ export default class Toc extends Transform {
   }
 }
 
-export const getToc = async (stream) => {
-  const rs = new Toc()
+export const getToc = async (stream, h1) => {
+  const rs = new Toc({ skipLevelOne: !h1 })
   stream.pipe(rs)
-  const { promise } = new Catchment({ rs })
-  const t = await promise
+  const t = await collect(rs)
   return t.trim()
 }
 
