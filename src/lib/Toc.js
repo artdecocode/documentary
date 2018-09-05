@@ -12,9 +12,9 @@ import { tableRe } from './rules/table'
 import typeRule from './rules/type'
 import typedefMdRule from './rules/typedef-md'
 
-const re = /(?:^|\n) *(#+) *(.+)/g
+const re = /(?:^|\n) *(#+) +(.+)/g
 
-// const underlinedTitleRe = /\s*(?:[^#>-]|)/gm
+const underline = /^ *([=-]+) *$/gm
 
 const getBuffer = async (buffer) => {
   const {
@@ -28,42 +28,57 @@ const getBuffer = async (buffer) => {
     linkTitle: linkTitleRe,
   })
 
-  const [cutTitle, cutLinkTitle, cutCode, cutMethodTitle, cutInnerCode, cutTable] =
+  const [
+    cutTitle, cutLinkTitle, cutCode, cutMethodTitle,
+    cutInnerCode, cutTable,
+  ] =
     [title, linkTitle, code, methodTitle, innerCode, table].map((marker) => {
       const rule = makeCutRule(marker)
       return rule
     })
-  const [insertTitle, insertLinkTitle, insertMethodTitle, insertInnerCode, insertTable] =
-    [title, linkTitle, methodTitle, innerCode, table].map((marker) => {
+  const [
+    insertTitle, insertLinkTitle, insertMethodTitle, insertTable,
+  ] =
+    [title, linkTitle, methodTitle, table].map((marker) => {
       const rule = makePasteRule(marker)
       return rule
     })
 
   const rs = new Replaceable([
-    cutTitle,
-    cutInnerCode,
-    cutLinkTitle,
-    {
-      re: innerCode.regExp,
-      replacement() {
-        return ''
-      },
-    },
+    cutInnerCode, // this ensures no link titles are detected inside of inner code
+    // cutTitle, // i don't know why we are doing this
+    // cutLinkTitle,
+
+    // make sure those are not cut with code
     cutTable,
     cutMethodTitle,
+
+    // never pasted back
     cutCode,
     stripComments,
+
+    // types will add link titles
     typedefMdRule,
     typeRule,
+
+    // paste those cut out earlier.
     insertMethodTitle,
     insertTable,
-    insertLinkTitle,
-    insertInnerCode,
-    insertTitle,
+
+    // insertLinkTitle,
+    // insertTitle,
+    // {
+    //   re: /[\s\S]*/,
+    //   replacement(match) {
+    //     debugger
+    //     return match
+    //   },
+    // },
   ])
   rs.end(buffer)
   const b = await collect(rs)
-  return b
+  // console.log(underlined.map)
+  return { b, innerCode }
 }
 
 export default class Toc extends Transform {
@@ -106,17 +121,58 @@ export default class Toc extends Transform {
   }
 
   async _transform(buffer, enc, next) {
-    const b = await getBuffer(buffer)
+    const { b, innerCode } = await getBuffer(buffer)
+
+    const getTitle = (title) => {
+      const t = title.replace(innerCode.regExp, (m, i) => {
+        const val = innerCode.map[i]
+        return val
+      })
+      return t
+    }
 
     const replaceable = new Replaceable([
+      {
+        re: underline,
+        replacement: (match, u, position, input) => {
+          const level = u.indexOf('-') + 2 // either 0 or -1
+          if (this.skipLine(level)) return match
+          const lines = []
+          let ok = true
+          let s = input.substr(0, position - 1)
+          while (ok) {
+            const li = s.lastIndexOf('\n')
+            const t = s.substr(li + 1)
+            const isLine = new RegExp(underline.source).test(t)
+            if (isLine) {
+              break
+            }
+            ok = /^ *(?!\s*(?:>|(?:[+*-] )|(?:\d+\.)|(?:# )|`{3,}))[^\s]+.*$/.test(t)
+            if (ok) {
+              lines.unshift(t)
+              s = s.substr(0, s.length - t.length - 1)
+            } else {
+              break
+            }
+          }
+          const title = `${lines.map(l => l.trim()).join('<br/>')}`
+          const t = getTitle(title)
+          const link = getLink(t)
+          this.addTitle({
+            title: t, link, level, position,
+          })
+          return match
+        },
+      },
       {
         re,
         replacement: (match, { length: level }, title, position) => {
           if (this.skipLine(level)) return match
+          const t = getTitle(title)
 
           this.addTitle({
-            title,
-            link: getLink(title),
+            title: t,
+            link: getLink(t),
             position,
             level,
           })
@@ -162,9 +218,10 @@ export default class Toc extends Transform {
       {
         re: linkTitleRe,
         replacement: (match, title, l, position) => {
-          const link = getLink(title)
+          const t = getTitle(title)
+          const link = getLink(t)
           this.addTitle({
-            title,
+            title: t,
             ...(l == 't' ? { parentLevel: true } : { level: l.length }),
             link,
             position,
@@ -186,8 +243,11 @@ export default class Toc extends Transform {
       this.push(line)
       this.push('\n')
     })
-    this.titles = []
+    this.clear()
     next()
+  }
+  clear() {
+    this.titles = []
   }
   sortTitles() {
     const sorted = this.titles.sort(({ position: A }, { position: B }) => {

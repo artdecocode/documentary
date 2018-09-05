@@ -122,13 +122,10 @@ import Catchment from 'catchment'
    * @param {string} input Path to the source readme file
    */
   async doc(input, ...args) {
-    const proc = fork(TEST_BUILD ?
-      resolve(__dirname, '../../build/bin') :
-      resolve(__dirname, '../../src/bin/alamode'),
-      [input, ...args], {
-        stdio: 'pipe',
-        execArgv: [],
-      })
+    const proc = fork(DOC, [input, ...args], {
+      stdio: 'pipe',
+      execArgv: [],
+    })
     const { stdout, stderr } = await proc.promise
     return {
       stdout,
@@ -340,3 +337,6 @@ console.log('test')
     return resolve(__dirname, '../fixtures/typedef/generate-imports-after.js')
   }
 }
+
+const BIN = TEST_BUILD ? '../../build/bin' : '../../src/bin/alamode'
+const DOC = resolve(__dirname, BIN)

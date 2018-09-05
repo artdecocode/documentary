@@ -15,7 +15,7 @@
       "console": "integratedTerminal",
       "args": [
         // "test/spec/bin/generate.js",
-        "test/spec/replace-stream/toc-titles.js",
+        "test/spec/mask/toc.js",
         // "test/spec/Toc.js",
         // "test/spec/replace-stream/typedef-md.js",
         // "test/spec/js-replace-stream/params.js",
@@ -26,6 +26,7 @@
         "-w",
         "-t", "99999999"
       ],
+      "autoAttachChildProcesses": true,
       "skipFiles": [
         "<node_internals>/**/*.js"
       ]
@@ -57,7 +58,7 @@
         "NODE_DEBUG": "doc"
       },
       "args": [
-        "documentary",
+        "test/mask/bin/toc-underline.md",
       ],
       "console": "integratedTerminal",
       "skipFiles": [
