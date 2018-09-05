@@ -10,22 +10,22 @@
       "name": "Launch Zoroaster",
       "program": "${workspaceFolder}/node_modules/.bin/zoroaster",
       "env": {
-        "BABEL_ENV": "debug",
         "ZOROASTER_TIMEOUT": "9999999",
         "NODE_DEBUG": "doc",
       },
       "console": "integratedTerminal",
       "args": [
         // "test/spec/bin/generate.js",
-        "test/spec/replace-stream/typedef.js",
+        "test/spec/mask/example.js",
         // "test/spec/Toc.js",
         // "test/spec/replace-stream/typedef-md.js",
         // "test/spec/js-replace-stream/params.js",
         // "test/spec/typedef/Type.js",
         // "test/spec/re/inner-code.js",
         // "test/spec/typedef/generate.js",
-        "-b",
-        "-w"
+        "-a",
+        "-w",
+        "-t", "99999999"
       ],
       "skipFiles": [
         "<node_internals>/**/*.js"

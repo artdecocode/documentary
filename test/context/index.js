@@ -2,7 +2,7 @@
 import { fork } from 'spawncommand'
 import { resolve, relative } from 'path'
 import { unlink, createReadStream } from 'fs'
-import Catchment from 'catchment'
+import { collect } from 'catchment'
 import { Readable } from 'stream'
 import mismatch from 'mismatch'
 import createReplaceStream from '../../src/lib/replace-stream'
@@ -150,8 +150,7 @@ import Catchment from 'catchment'
    * @param {Readable} rs
    */
   async catchment(rs, noTrim) {
-    const { promise } = new Catchment({ rs })
-    const res = await promise
+    const res = await collect(rs)
     return noTrim ? res : res.trim()
   }
   get table() {
