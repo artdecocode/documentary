@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="252px" height="102px" viewBox="0, 0, 252, 102">
+  <style>
+    /* <![CDATA[ */
+    circle {
+      fill: orange;
+      stroke: black;
+      stroke-width: 10px; /* Note: The value of a pixel depends
+                             on the view box */
+    }
+    /* ]]> */
+  </style>
+  <defs>
+    <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="test">
+      <stop stop-color="#FFFFFF" offset="0%"/>
+      <stop stop-color="#D3D3D3" offset="100%"/>
+    </linearGradient>
+  </defs>
   <defs>
     <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="tb">
       <stop stop-color="#FFFFFF" offset="0%"/>
