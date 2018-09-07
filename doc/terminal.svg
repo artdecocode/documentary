@@ -3,12 +3,27 @@
   <style>
     /* <![CDATA[ */
     circle {
+      fill: green;
+    }
+    circle:hover {
       fill: orange;
       stroke: black;
       stroke-width: 10px; /* Note: The value of a pixel depends
                              on the view box */
     }
     /* ]]> */
+  </style>
+  <script><![CDATA[
+    console.log('a script will run')
+  ]]></script>
+  <style>
+    circle {
+      fill: green;
+    }
+    circle:hover {
+      fill: orange;
+      stroke: black;
+    }
   </style>
   <defs>
     <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="test">
