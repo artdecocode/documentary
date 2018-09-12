@@ -17,6 +17,7 @@ yarn add -DE documentary
     * [TOC Titles](#toc-titles)
       * [Specific Level](#specific-level)
   * [Tables Display](#tables-display)
+    * [Table Macro](#table-macro)
   * [Method Title](#method-title)
     * [`async runSoftware(path: string, config: Config): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
     * [`async runSoftware(path: string)`](#async-runsoftwarepath-string-void)
@@ -130,6 +131,38 @@ Result:
 | --- | ----------- |
 | -f | Display only free domains |
 | -z | A list of zones to check |
+
+#### Table Macro
+
+Whenever there's a pattern for presenting data in the table, so that the input fields can be mapped to output ones, a table macro can be defined. The example below defines a macro to print a row containing a link, logo and description of a company. It is then used in a table, where only the actual values are entered, relying `documentary` to place them in the template.
+
+````markdown
+%TABLE-MACRO Company
+  <a href="$2">![$1 Logo](images/logos/$3)</a>, $4, $5\, $6
+%
+
+```table Company
+[
+  ["Company", "Tag Line", "Evaluation & Exit"],
+  [
+    "VWO", "https://vwo.com", "vwo.png", "A/B Testing and Conversion Optimization Platform™", "$10m", "2018"
+  ]
+]
+```
+````
+
+```markdown
+| Company | Tag Line | Evaluation & Exit |
+| ------- | -------- | ----------------- |
+| <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018 |
+```
+
+The values in the macro need to be separated with `,` which allows to substitute them into the correct column of the table row. When a `,` needs to be used as part of the column in the macro, it can be escaped with `\` such as `\,` as shown in the last column of the example.
+
+| Company | Tag Line | Evaluation & Exit |
+| ------- | -------- | ----------------- |
+| <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018 |
+
 ### Method Title
 
 It is possible to generate neat titles useful for API documentation with `documentary`. The method signature should be specified as a `JSON` array, where every member is an argument specified as an array. The first item in the argument array is the argument name, and the second one is type. Type can be either a string, or an object. If it is an object, each value in the object will be an array and first contain the property type, secondly - the default value. To mark a property as optional, the `?` symbol can be used at the end. The third item is the short name for the table of contents (so that a complex object can be referenced to its type).

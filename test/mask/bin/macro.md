@@ -1,12 +1,12 @@
 %TABLE-MACRO Company
-<a href="$1">![$2 Logo](images/logos/$3)</a>, $4, $5
+  <a href="$2">![$1 Logo](images/logos/$3)</a>, $4, $5\, $6
 %
 
 ```table Company
 [
-  ["Company", "Tag Line", "Evaluation"],
+  ["Company", "Tag Line", "Evaluation & Exit"],
   [
-    "https://vwo.com", "VWO", "vwo.png", "A/B Testing and Conversion Optimization Platform™", "$10m"
+    "VWO", "https://vwo.com", "vwo.png", "A/B Testing and Conversion Optimization Platform™", "$10m", "2018"
   ]
 ]
 ```
