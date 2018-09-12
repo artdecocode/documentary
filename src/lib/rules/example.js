@@ -55,8 +55,9 @@ export const replacer = async (match, source, from, to, type) => {
     const lang = getExt(type, source)
     const res = codeSurround(ff.trim(), lang)
     return res
-  } catch (err) {
-    LOG(err)
+  } catch ({ stack }) {
+    LOG('Could not read an example from %s.', source)
+    LOG(stack)
     return match
   }
 }

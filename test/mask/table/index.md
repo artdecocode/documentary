@@ -8,10 +8,10 @@
 ```
 
 /* expected */
-| arg | description |
-| --- | ----------- |
-| -f | Display only free domains |
-| -z | A list of zones to check |
+| arg |        description        |
+| --- | ------------------------- |
+| -f  | Display only free domains |
+| -z  | A list of zones to check  |
 /**/
 
 // replaces the table with whitespace
@@ -26,10 +26,10 @@
 ```
 
 /* expected */
-| arg | description |
-| --- | ----------- |
-| -f | Display only free domains |
-| -z | A list of zones to check |
+| arg |        description        |
+| --- | ------------------------- |
+| -f  | Display only free domains |
+| -z  | A list of zones to check  |
 /**/
 
 // returns the match when cannot parse
@@ -56,8 +56,8 @@ test-$1, test-$2, test-$3\, test-$4
 ```
 
 /* expected */
-| A | B | C |
-| - | - | - |
-| test-one | test-two | test-three, test-four |
+|     A     |     B     |            C            |
+| --------- | --------- | ----------------------- |
+| test-one  | test-two  | test-three, test-four   |
 | test-2one | test-2two | test-2three, test-2four |
 /**/

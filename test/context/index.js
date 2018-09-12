@@ -5,7 +5,8 @@ import { unlink, createReadStream } from 'fs'
 import { collect } from 'catchment'
 import { Readable } from 'stream'
 import mismatch from 'mismatch'
-import createReplaceStream from '../../src/lib/replace-stream'
+import createReplaceStream  from '../../src/lib/replace-stream'
+import Documentary from '../../src/lib/Documentary'
 import { Replaceable } from 'restream'
 
 // const LOG = debuglog('doc')
@@ -335,6 +336,12 @@ console.log('test')
   get replaceStream() {
     const rs = createReplaceStream()
     return rs
+  }
+  /**
+   * Returns a reference to a documentary stream with the full set of rules.
+   */
+  get Documentary() {
+    return Documentary
   }
   /**
    * A JavaScript file which is suitable for generating typedefs, i.e., it has a /* documentary types.xml *\/ marker.

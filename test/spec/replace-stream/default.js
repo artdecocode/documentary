@@ -20,27 +20,6 @@ const T = {
     const res = await catchment(s)
     await test('replace-stream/fixture.md', res.trim())
   },
-  async 'keeps 4 back-ticks with a table code block'(
-    { createReadable, catchment, rawTable, escapeBackticks }
-  ) {
-    const s = escapeBackticks(rawTable)
-    const rs = createReadable(s)
-    const stream = createReplaceStream()
-    rs.pipe(stream)
-    const res = await catchment(stream)
-    equal(res, s)
-  },
-  async 'keeps 4 back-ticks with a method title'(
-    { createReadable, getRawMethodTitle, catchment, escapeBackticks }
-  ) {
-    const methodTitle = getRawMethodTitle()
-    const s = escapeBackticks(methodTitle)
-    const rs = createReadable(s)
-    const stream = createReplaceStream()
-    rs.pipe(stream)
-    const res = await catchment(stream)
-    equal(res, s)
-  },
 }
 
 export default T
