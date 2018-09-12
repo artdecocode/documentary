@@ -54,3 +54,12 @@ test2
 # test4
 /**/
 
+// macro
+test/mask/bin/macro.md
+
+/* expected */
+
+| Company | Tag Line | Evaluation |
+| ------- | -------- | ---------- |
+| <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m |
+/**/

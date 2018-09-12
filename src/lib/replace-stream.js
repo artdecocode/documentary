@@ -12,6 +12,7 @@ import gifRule from './rules/gif'
 import typeRule from './rules/type'
 import badgeRule from './rules/badge'
 import typedefMdRule from './rules/typedef-md'
+import macroRule from './rules/macro'
 
 export class DocumentationStream extends Replaceable {
   constructor({ toc }) {
@@ -58,6 +59,7 @@ export class DocumentationStream extends Replaceable {
 
       insertTable,
       typedefMdRule, // places a table hence just before table
+      macroRule, // macro is for the table
       tableRule,
 
       { // a hackish way to update types property tables to include links to seen types.
