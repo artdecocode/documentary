@@ -27,6 +27,7 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 - [ ] Replace the source in example with a `require` call in addition to `import` statement.
 - [ ] Implement caching.
 - [ ] Trigger compilation whenever an embedded example changes.
+- [ ] Purge image cache from CLI (e.g., `curl -X https://github.com/artdecocode/documentary/raw/${BRANCH}${PATH}`)
 
 ## Copyright
 
