@@ -1,6 +1,6 @@
 import { createReadStream, lstatSync } from 'fs'
 import spawn from 'spawncommand'
-import Catchment from 'catchment'
+import { collect } from 'catchment'
 import Pedantry from 'pedantry'
 import tableRule from './rules/table'
 import titleRule from './rules/method-title'
@@ -27,12 +27,7 @@ export const exactMethodTitle = makeARegexFromRule(titleRule)
 
 export const read = async (source) => {
   const rs = createReadStream(source)
-  const data = await new Promise(async (r, j) => {
-    const { promise } = new Catchment({ rs })
-    rs.on('error', j)
-    const res = await promise
-    r(res)
-  })
+  const data = await collect(rs)
   return data
 }
 
@@ -62,4 +57,10 @@ export const gitPush = async (source, output, message) => {
 export const git = async (...args) => {
   const { promise } = spawn('git', args, { stdio: 'inherit' })
   await promise
+}
+
+export const codeSurround = (content, lang = '') => {
+  const hasBackticks = /```/.test(content)
+  const t = hasBackticks ? '````' : '```'
+  return `${t}${lang}\n${content}\n${t}`
 }

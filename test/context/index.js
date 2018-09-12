@@ -5,7 +5,9 @@ import { unlink, createReadStream } from 'fs'
 import { collect } from 'catchment'
 import { Readable } from 'stream'
 import mismatch from 'mismatch'
-import createReplaceStream from '../../src/lib/replace-stream'
+import createReplaceStream  from '../../src/lib/replace-stream'
+import Documentary from '../../src/lib/Documentary'
+import { Replaceable } from 'restream'
 
 // const LOG = debuglog('doc')
 const TEST_BUILD = process.env.ALAMODE_ENV == 'test-build'
@@ -318,11 +320,28 @@ console.log('test')
     return relative('', r)
   }
   /**
+   * Replace a string using a Replaceable stream.
+   * @param {Rule|Rule[]} rule The rule or rules to use.
+   * @param {string} s The string to replace.
+   */
+  async replace(rule, s) {
+    const replaceable = new Replaceable(rule)
+    replaceable.end(s)
+    const res = await this.catchment(replaceable, true)
+    return { res, replaceable }
+  }
+  /**
    * Returns a reference to a new replace stream.
    */
   get replaceStream() {
     const rs = createReplaceStream()
     return rs
+  }
+  /**
+   * Returns a reference to a documentary stream with the full set of rules.
+   */
+  get Documentary() {
+    return Documentary
   }
   /**
    * A JavaScript file which is suitable for generating typedefs, i.e., it has a /* documentary types.xml *\/ marker.
@@ -337,6 +356,8 @@ console.log('test')
     return resolve(__dirname, '../fixtures/typedef/generate-imports-after.js')
   }
 }
+
+/** @typedef {import('restream').Rule} Rule */
 
 const BIN = TEST_BUILD ? '../../build/bin' : '../../src/bin/alamode'
 const DOC = resolve(__dirname, BIN)

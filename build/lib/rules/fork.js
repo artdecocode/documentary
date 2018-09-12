@@ -1,4 +1,5 @@
 const { fork } = require('spawncommand');
+const { codeSurround } = require('..');;
 // import { debuglog } from 'util'
 
 // const LOG = debuglog('doc')
@@ -13,15 +14,10 @@ const forkRule = {
     })
     const { stdout, stderr } = await promise
     const res = err ? stderr : stdout
-    const hasBackticks = /```/.test(res)
-    return codeSurround(res, lang, hasBackticks)
+    return codeSurround(res.trim(), lang)
   },
 }
 
-const codeSurround = (m, lang = '', hasBackticks = false) => {
-  const t = hasBackticks ? '````' : '```'
-  return `${t}${lang}\n${m.trim()}\n${t}`
-}
 
 module.exports=forkRule
 

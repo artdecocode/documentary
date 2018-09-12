@@ -1,6 +1,6 @@
 const { createReadStream, lstatSync } = require('fs');
 let spawn = require('spawncommand'); if (spawn && spawn.__esModule) spawn = spawn.default;
-let Catchment = require('catchment'); if (Catchment && Catchment.__esModule) Catchment = Catchment.default;
+const { collect } = require('catchment');
 let Pedantry = require('pedantry'); if (Pedantry && Pedantry.__esModule) Pedantry = Pedantry.default;
 let tableRule = require('./rules/table'); if (tableRule && tableRule.__esModule) tableRule = tableRule.default;
 let titleRule = require('./rules/method-title'); if (titleRule && titleRule.__esModule) titleRule = titleRule.default;
@@ -27,12 +27,7 @@ let titleRule = require('./rules/method-title'); if (titleRule && titleRule.__es
 
        const read = async (source) => {
   const rs = createReadStream(source)
-  const data = await new Promise(async (r, j) => {
-    const { promise } = new Catchment({ rs })
-    rs.on('error', j)
-    const res = await promise
-    r(res)
-  })
+  const data = await collect(rs)
   return data
 }
 
@@ -64,6 +59,12 @@ let titleRule = require('./rules/method-title'); if (titleRule && titleRule.__es
   await promise
 }
 
+       const codeSurround = (content, lang = '') => {
+  const hasBackticks = /```/.test(content)
+  const t = hasBackticks ? '````' : '```'
+  return `${t}${lang}\n${content}\n${t}`
+}
+
 
 module.exports.getLink = getLink
 module.exports.makeARegexFromRule = makeARegexFromRule
@@ -73,4 +74,5 @@ module.exports.read = read
 module.exports.getStream = getStream
 module.exports.gitPush = gitPush
 module.exports.git = git
+module.exports.codeSurround = codeSurround
 //# sourceMappingURL=index.js.map

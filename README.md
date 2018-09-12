@@ -17,6 +17,7 @@ yarn add -DE documentary
     * [TOC Titles](#toc-titles)
       * [Specific Level](#specific-level)
   * [Tables Display](#tables-display)
+    * [Table Macro](#table-macro)
   * [Method Title](#method-title)
     * [`async runSoftware(path: string, config: Config): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
     * [`async runSoftware(path: string)`](#async-runsoftwarepath-string-void)
@@ -130,6 +131,38 @@ Result:
 | --- | ----------- |
 | -f | Display only free domains |
 | -z | A list of zones to check |
+
+#### Table Macro
+
+Whenever there's a pattern for presenting data in the table, so that the input fields can be mapped to output ones, a table macro can be defined. The example below defines a macro to print a row containing a link, logo and description of a company. It is then used in a table, where only the actual values are entered, relying `documentary` to place them in the template.
+
+````markdown
+%TABLE-MACRO Company
+  <a href="$2">![$1 Logo](images/logos/$3)</a>, $4, $5\, $6
+%
+
+```table Company
+[
+  ["Company", "Tag Line", "Evaluation & Exit"],
+  [
+    "VWO", "https://vwo.com", "vwo.png", "A/B Testing and Conversion Optimization Platform™", "$10m", "2018"
+  ]
+]
+```
+````
+
+```markdown
+|                             Company                             |                     Tag Line                      | Evaluation & Exit |
+| --------------------------------------------------------------- | ------------------------------------------------- | ----------------- |
+| <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018        |
+```
+
+The values in the macro need to be separated with `,` which allows to substitute them into the correct column of the table row. When a `,` needs to be used as part of the column in the macro, it can be escaped with `\` such as `\,` as shown in the last column of the example.
+
+| Company | Tag Line | Evaluation & Exit |
+| ------- | -------- | ----------------- |
+| <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018 |
+
 ### Method Title
 
 It is possible to generate neat titles useful for API documentation with `documentary`. The method signature should be specified as a `JSON` array, where every member is an argument specified as an array. The first item in the argument array is the argument name, and the second one is type. Type can be either a string, or an object. If it is an object, each value in the object will be an array and first contain the property type, secondly - the default value. To mark a property as optional, the `?` symbol can be used at the end. The third item is the short name for the table of contents (so that a complex object can be referenced to its type).
@@ -215,12 +248,12 @@ documentary
 
 There are some built-in rules for replacements.
 
-| Rule | Description |
-| ---- | ----------- |
-| <a name="npm-package-name">`%NPM: package-name%`</a> | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)` |
-| <a name="tree-directory-args">`%TREE directory ...args%`</a> | Executes the `tree` command with the given arguments. If `tree` is not installed, warns and does not replace the match. |
+|                  Rule                   |                                                                                          Description                                                                                          |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a name="npm-package-name">`%NPM: package-name%`</a> | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                                                                                              |
+| <a name="tree-directory-args">`%TREE directory ...args%`</a> | Executes the `tree` command with the given arguments. If `tree` is not installed, warns and does not replace the match.     |
 | <a name="fork-lang-module-args">`%FORK(-lang)? module ...args%`</a> | Forks the Node.js process to execute the module using `child_process.fork`. The output is printed in the code block, with optionally given language. For example: `%FORK-json example.js -o%` |
-| <a name="forkerr-lang-module-args">`%FORKERR(-lang)? module ...args%`</a> | Same as `%FORK%` but will print the output of the `stderr`. |
+| <a name="forkerr-lang-module-args">`%FORKERR(-lang)? module ...args%`</a> | Same as `%FORK%` but will print the output of the `stderr`.                                                                     |
 ### Examples Placement
 
 `documentary` can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
@@ -771,13 +804,13 @@ and embed resulting type definitions:
 
 __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
-| Name | Type | Description | Default |
-| ---- | ---- | ----------- | ------- |
-| __root*__ | _string_ | Root directory string. | - |
-| maxage | _number_ | Browser cache max-age in milliseconds. | `0` |
-| hidden | _boolean_ | Allow transfer of hidden files. | `false` |
-| index | _string_ | Default file name. | `index.html` |
-| setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | - |
+|    Name    |            Type             |                 Description                 |   Default    |
+| ---------- | --------------------------- | ------------------------------------------- | ------------ |
+| __root*__  | _string_                    | Root directory string.                      | -            |
+| maxage     | _number_                    | Browser cache max-age in milliseconds.      | `0`          |
+| hidden     | _boolean_                   | Allow transfer of hidden files.             | `false`      |
+| index      | _string_                    | Default file name.                          | `index.html` |
+| setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | -            |
 
 #### Importing Types
 
@@ -980,15 +1013,15 @@ doc README-source.md [-o README.md] [-tgewp]
 
 The arguments it accepts are:
 
-| Flag | Meaning | Description |
-| ---- | ------- | ----------- |
+|         Flag          |       Meaning        |                                                                            Description                                                                             |
+| --------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `-o path` | <a name="output-location">Output Location</a> | Where to save the processed `README` file. If not specified, the output is written to the `stdout`. |
-| `-t` | <a name="only-toc">Only TOC</a> | Only extract and print the table of contents. |
-| `-g [path]` | <a name="generate-types">Generate Types</a> | Insert `@typedef` _JSDoc_ into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
-| `-e [path]` | <a name="extract-types">Extract Types</a> | Insert `@typedef` JSDoc into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
-| `-w` | <a name="watch-mode">Watch Mode</a> | Watch mode: re-run the program when changes to the source file are detected. |
-| `-p "commit message"` | <a name="automatic-push">Automatic Push</a> | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit. |
-| `-h1` | <a name="h1-in-toc">h1 In Toc</a> | Include `h1` headers in the table of contents. |
+| `-t` | <a name="only-toc">Only TOC</a>        | Only extract and print the table of contents.                                                                                                                      |
+| `-g [path]` | <a name="generate-types">Generate Types</a>  | Insert `@typedef` _JSDoc_ into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
+| `-e [path]` | <a name="extract-types">Extract Types</a>   | Insert `@typedef` JSDoc into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
+| `-w` | <a name="watch-mode">Watch Mode</a>      | Watch mode: re-run the program when changes to the source file are detected.                                                                                       |
+| `-p "commit message"` | <a name="automatic-push">Automatic Push</a>  | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit.                                                            |
+| `-h1` | <a name="h1-in-toc">h1 In Toc</a>       | Include `h1` headers in the table of contents.                                                                                 |
 
 When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print debug information, e.g.,
 
@@ -1113,6 +1146,7 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 - [ ] Replace the source in example with a `require` call in addition to `import` statement.
 - [ ] Implement caching.
 - [ ] Trigger compilation whenever an embedded example changes.
+- [ ] Purge image cache from CLI (e.g., `curl -X https://github.com/artdecocode/documentary/raw/${BRANCH}${PATH}`)
 
 ## Copyright
 

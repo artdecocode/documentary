@@ -28,11 +28,11 @@ import documentary from 'documentary'
 
 `documentary` has the following features:
 
-| feature | description |
-| ------- | ----------- |
-| toc | Generates a table of contents |
-| tables | Display markdown tables |
-| comments | Removes comments |
+| feature  |          description          |
+| -------- | ----------------------------- |
+| toc      | Generates a table of contents |
+| tables   | Display markdown tables       |
+| comments | Removes comments              |
 
 #### `async runSoftware(`<br/>&nbsp;&nbsp;`string: path,`<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`render?: function,`<br/>&nbsp;&nbsp;`},`<br/>`): string`
 

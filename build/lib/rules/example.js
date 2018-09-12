@@ -1,6 +1,6 @@
 const { debuglog } = require('util');
 const { parse } = require('path');
-const { read } = require('..');
+const { read, codeSurround } = require('..');
 
 const LOG = debuglog('doc')
 
@@ -52,11 +52,12 @@ const getPartial = (boundExample) => {
       LOG('Example: %s', source)
     }
 
-    return `\`\`\`${getExt(type, source)}
-${ff.trim()}
-\`\`\``
-  } catch (err) {
-    LOG(err)
+    const lang = getExt(type, source)
+    const res = codeSurround(ff.trim(), lang)
+    return res
+  } catch ({ stack }) {
+    LOG('Could not read an example from %s.', source)
+    LOG(stack)
     return match
   }
 }

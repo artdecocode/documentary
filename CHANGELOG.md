@@ -1,3 +1,19 @@
+## 13 September 2018
+
+### 1.15.0
+
+- [feature] Implement table macros for templating in tables.
+- [fix] Make sure toc-titles work with partial inner code in them, e.g.,
+    ```
+    [hello `world`](t)
+    ```
+- [feature] Make example escape content with 4 backticks, and make sure code from the example does not get replaced further down (e.g., if example inserts a table).
+- [feature] Align content inside tables (does not work properly with a toc title.)
+- [deps] Update `zoroaster@3.0.4`.
+- [refactor] Create separate `Documentary` file to eventually only use it as a stream instead of `createReplaceStream`.
+- [tests] Rewrite some tests as masks; remove unhandled rejection.
+
+
 ## 5 September 2018
 
 ### 1.14.0

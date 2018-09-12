@@ -1,7 +1,6 @@
 import { ok, equal } from 'assert'
 import { deepEqual } from 'zoroaster/assert'
 import SnapshotContext from 'snapshot-context'
-import { Replaceable } from 'restream'
 import Context from '../../context'
 import exampleRule, { re } from '../../../src/lib/rules/example'
 
@@ -50,63 +49,44 @@ const T = {
     deepEqual(a, [examplePath, from, to, type])
   },
   async 'replaces an example without replacement'(
-    { createReadable, catchment, SNAPSHOT_DIR, examplePath }, { setDir, test },
+    { replace, SNAPSHOT_DIR, examplePath }, { setDir, test },
   ) {
     setDir(SNAPSHOT_DIR)
-    const r = createReadable(`
-%EXAMPLE: ${examplePath}%
-`)
-    const rs = new Replaceable(exampleRule)
-    r.pipe(rs)
-    const res = await catchment(rs)
+    const s = `%EXAMPLE: ${examplePath}%`
+    const { res } = await replace(exampleRule, s)
     await test('rules/example/simple.md', res)
   },
   async 'replaces an example with type'(
-    { createReadable, catchment, SNAPSHOT_DIR, examplePath }, { setDir, test },
+    { replace, SNAPSHOT_DIR, examplePath }, { setDir, test },
   ) {
     setDir(SNAPSHOT_DIR)
-    const r = createReadable(`
-%EXAMPLE: ${examplePath}, javascript%
-`)
-    const rs = new Replaceable(exampleRule)
-    r.pipe(rs)
-    const res = await catchment(rs)
+    const s = `%EXAMPLE: ${examplePath}, javascript%`
+    const { res } = await replace(exampleRule, s)
     await test('rules/example/type.md', res)
   },
   async 'replaces an example with replacement'(
-    { createReadable, catchment, SNAPSHOT_DIR, examplePath }, { setDir, test },
+    { replace, SNAPSHOT_DIR, examplePath }, { setDir, test },
   ) {
     setDir(SNAPSHOT_DIR)
-    const r = createReadable(`
-%EXAMPLE: ${examplePath}, ../src => documentary%
-`)
-    const rs = new Replaceable(exampleRule)
-    r.pipe(rs)
-    const res = await catchment(rs)
+    const s = `%EXAMPLE: ${examplePath}, ../src => documentary%`
+    const { res } = await replace(exampleRule, s)
     await test('rules/example/replacement.md', res)
   },
   async 'replaces an example with replacement and type'(
-    { createReadable, catchment, SNAPSHOT_DIR, examplePath }, { setDir, test },
+    { replace, SNAPSHOT_DIR, examplePath }, { setDir, test },
   ) {
     setDir(SNAPSHOT_DIR)
-    const r = createReadable(`
-%EXAMPLE: ${examplePath}, ../src => documentary, javascript%
-`)
-    const rs = new Replaceable(exampleRule)
-    r.pipe(rs)
-    const res = await catchment(rs)
+    const s = `%EXAMPLE: ${examplePath}, ../src => documentary, javascript%`
+    const { res } = await replace(exampleRule, s)
     await test('rules/example/replacement-type.md', res)
   },
-  async 'does nothing when file cannot be read'({ createReadable, catchment }) {
+  async 'does nothing when file cannot be read'({ replace }) {
     const s = `## API Method
 
 This method allows to trim strings.
 
-%EXAMPLE: /usr/bin, ../src => documentary, javascript%`
-    const r = createReadable(s)
-    const rs = new Replaceable(exampleRule)
-    r.pipe(rs)
-    const res = await catchment(rs)
+%EXAMPLE: not-an-example, ../src => documentary, javascript%`
+    const { res } = await replace(exampleRule, s)
     equal(res, s)
   },
 }
