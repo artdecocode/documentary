@@ -14,14 +14,7 @@
       },
       "console": "integratedTerminal",
       "args": [
-        // "test/spec/bin/generate.js",
-        "test/spec/mask/toc.js",
-        // "test/spec/Toc.js",
-        // "test/spec/replace-stream/typedef-md.js",
-        // "test/spec/js-replace-stream/params.js",
-        // "test/spec/typedef/Type.js",
-        // "test/spec/re/inner-code.js",
-        // "test/spec/typedef/generate.js",
+        "test/spec",
         "-a",
         "-w",
         "-t", "99999999"
