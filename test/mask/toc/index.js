@@ -1,3 +1,22 @@
+// gets titles from a table with a macro
+## test
+
+%TABLE-MACRO macro
+[$1](t)
+%
+```table macro
+[
+  ["A"],
+  ["test2"]
+]
+```
+
+/* expected */
+- [test](#test)
+  * [test2](#test2)
+
+/**/
+
 // does not generate titles for titles in comments
 ````
 ```### async runSoftware => string

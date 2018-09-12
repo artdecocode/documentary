@@ -3,7 +3,7 @@ import { resolve } from 'path'
 import Context from '../../context'
 
 const getPath = (mask) => {
-  return resolve(__dirname, '../../mask/documentary', `${mask}.md`)
+  return resolve(__dirname, '../../mask/Documentary', `${mask}.md`)
 }
 
 const make = (name) => {

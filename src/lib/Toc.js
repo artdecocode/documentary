@@ -5,6 +5,8 @@ import { methodTitleRe, replaceTitle } from './rules/method-title'
 import {
   codeRe, commentRule as stripComments, innerCodeRe, linkTitleRe,
 } from './rules'
+import tableRule from './rules/table'
+import macroRule from './rules/macro'
 import {
   Replaceable, makeCutRule, makePasteRule, makeMarkers,
 } from 'restream'
@@ -65,6 +67,8 @@ const getBuffer = async (buffer) => {
     insertMethodTitle,
     insertTable,
 
+    macroRule,
+    tableRule,
     // insertLinkTitle,
     // insertTitle,
     // {
