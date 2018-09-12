@@ -58,3 +58,9 @@ export const git = async (...args) => {
   const { promise } = spawn('git', args, { stdio: 'inherit' })
   await promise
 }
+
+export const codeSurround = (content, lang = '') => {
+  const hasBackticks = /```/.test(content)
+  const t = hasBackticks ? '````' : '```'
+  return `${t}${lang}\n${content}\n${t}`
+}

@@ -51,7 +51,10 @@ export class DocumentationStream extends Replaceable {
 
       badgeRule,
       treeRule,
-      exampleRule,
+      ...[
+        exampleRule,
+        cutCode, // cut code again after inserting example
+      ],
       forkRule,
       tocRule,
       gifRule,

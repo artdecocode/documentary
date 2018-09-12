@@ -1,6 +1,6 @@
 import { debuglog } from 'util'
 import { parse } from 'path'
-import { read } from '..'
+import { read, codeSurround } from '..'
 
 const LOG = debuglog('doc')
 
@@ -52,9 +52,9 @@ export const replacer = async (match, source, from, to, type) => {
       LOG('Example: %s', source)
     }
 
-    return `\`\`\`${getExt(type, source)}
-${ff.trim()}
-\`\`\``
+    const lang = getExt(type, source)
+    const res = codeSurround(ff.trim(), lang)
+    return res
   } catch (err) {
     LOG(err)
     return match
