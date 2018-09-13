@@ -191,9 +191,9 @@ node-modules-regexp@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/node-modules-regexp/-/node-modules-regexp-1.0.0.tgz#8d9dbe28964a4ac5712e9131642107c71e90ec40"
 
-pedantry@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/pedantry/-/pedantry-2.0.0.tgz#8f34c4ab240c8f80f4ba038ffe46b045edbf36ca"
+pedantry@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/pedantry/-/pedantry-2.1.0.tgz#63d767760d8bb13c0f4dd573c273976fe962a70c"
   dependencies:
     "@wrote/read-dir-structure" "1.0.1"
 
