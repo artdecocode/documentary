@@ -161,6 +161,7 @@ export default class Toc extends Transform {
             }
           }
           const title = `${lines.map(l => l.trim()).join('<br/>')}`
+          if (!title) return match
           const t = getTitle(title)
           const link = getLink(t)
           this.addTitle({
