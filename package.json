@@ -67,14 +67,14 @@
     "eslint-config-artdeco": "1.0.1",
     "snapshot-context": "2.0.4",
     "yarn-s": "1.1.0",
-    "zoroaster": "3.0.4"
+    "zoroaster": "3.1.2"
   },
   "dependencies": {
     "argufy": "1.2.1",
-    "catchment": "3.1.0",
+    "catchment": "3.1.1",
     "mismatch": "1.0.2",
     "pedantry": "1.0.1",
-    "restream": "3.2.0",
+    "restream": "3.2.1",
     "rexml": "1.1.0",
     "spawncommand": "2.0.1",
     "which-stream": "1.0.1"

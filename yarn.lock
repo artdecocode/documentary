@@ -16,6 +16,10 @@
   dependencies:
     restream "3.1.1"
 
+"@artdeco/clean-stack@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@artdeco/clean-stack/-/clean-stack-1.0.0.tgz#36ff9c9f66e6cb1eb0bfa90341be21cba70c7ea6"
+
 "@wrote/ensure-path@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@wrote/ensure-path/-/ensure-path-1.0.2.tgz#a98809dab5f957333183b2549e93725176b5202d"
@@ -65,11 +69,11 @@ assert-plus@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/assert-plus/-/assert-plus-1.0.0.tgz#f12e0f3c5d77b0b1cdd9146942e4e96c1e4dd525"
 
-assert-throws@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/assert-throws/-/assert-throws-3.1.0.tgz#eab72d819ff2c614f8e7ec4c616ba2b7aea98465"
+assert-throws@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/assert-throws/-/assert-throws-3.1.1.tgz#a6f385317a330b16d7bd871a00ef8ec07cc12934"
   dependencies:
-    erotic "2.0.0"
+    erotic "2.0.1"
     erte "1.1.4"
 
 catchment@2.0.1:
@@ -80,20 +84,20 @@ catchment@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/catchment/-/catchment-3.0.1.tgz#11dab5fea86d412343e797e052b21091b7e83a55"
 
-catchment@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/catchment/-/catchment-3.1.0.tgz#2bf76f8780bb3c009e8b2818427226d8d1f38828"
+catchment@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/catchment/-/catchment-3.1.1.tgz#dad005e4383cb56f0108d8ea1f877608df22be59"
   dependencies:
-    clean-stack artdecocode/clean-stack#82625bf
-    erotic "2.0.0"
+    "@artdeco/clean-stack" "1.0.0"
+    erotic "2.0.1"
 
 catchment@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/catchment/-/catchment-1.0.0.tgz#3061f71be0102710be84328d2f94363a165f8c4b"
 
-clean-stack@1.3.0, clean-stack@artdecocode/clean-stack#82625bf:
+clean-stack@1.3.0:
   version "1.3.0"
-  resolved "https://codeload.github.com/artdecocode/clean-stack/tar.gz/82625bf33174099176f45c21c686dbc628da25f8"
+  resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-1.3.0.tgz#9e821501ae979986c46b1d66d2d432db2fd4ae31"
 
 cli-color@~0.1.6:
   version "0.1.7"
@@ -135,11 +139,11 @@ erotic@1.2.1:
   dependencies:
     clean-stack "1.3.0"
 
-erotic@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/erotic/-/erotic-2.0.0.tgz#1484efb37a465369cf0e57662d6fb271c3e850fd"
+erotic@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/erotic/-/erotic-2.0.1.tgz#bcb45bf61e5a3a9006bbee2cf998515a56f3961b"
   dependencies:
-    clean-stack artdecocode/clean-stack#82625bf
+    "@artdeco/clean-stack" "1.0.0"
 
 erte@1.1.4:
   version "1.1.4"
@@ -223,11 +227,11 @@ restream@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/restream/-/restream-3.1.1.tgz#36084997bd3e765c2da484700e16b850c2f9ffb4"
 
-restream@3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/restream/-/restream-3.2.0.tgz#c54b3d27fb39ac71dc2220ebe44faffb5f4439a1"
+restream@3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/restream/-/restream-3.2.1.tgz#0dc7354eb364b5045a2ab0a9c70f1f2c384c489a"
   dependencies:
-    clean-stack artdecocode/clean-stack#82625bf
+    "@artdeco/clean-stack" "1.0.0"
 
 rexml@1.1.0:
   version "1.1.0"
@@ -287,16 +291,16 @@ yarn-s@1.1.0:
   dependencies:
     spawncommand "1.1.0"
 
-zoroaster@3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/zoroaster/-/zoroaster-3.0.4.tgz#42ba6e974f56a3290e60dafd8b60ceba4e4a8087"
+zoroaster@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/zoroaster/-/zoroaster-3.1.2.tgz#b5e81212782b3f83924f1ea465c064427d3b4e86"
   dependencies:
+    "@artdeco/clean-stack" "1.0.0"
     alamode "1.4.0"
     argufy "1.2.1"
     assert-diff "2.0.3"
-    assert-throws "3.1.0"
-    catchment "3.0.1"
-    clean-stack artdecocode/clean-stack#82625bf
+    assert-throws "3.1.1"
+    catchment "3.1.1"
     erte "1.1.4"
     makepromise "3.0.1"
     mismatch "1.0.2"
