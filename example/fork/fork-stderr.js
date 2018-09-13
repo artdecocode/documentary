@@ -1,1 +1,2 @@
-console.error('WORLD hello')
+// Notify of an error.
+console.error('An error has occurred.')

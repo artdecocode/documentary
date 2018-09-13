@@ -1,2 +1,2 @@
-// print a welcome message
+// Display a welcome message.
 console.log('HELLO world')

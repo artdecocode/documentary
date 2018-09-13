@@ -28,7 +28,7 @@ It will make _Documentary_ fork a Node.js module using the `child_process.fork` 
   </td>
  </tr>
  <tr>
- <td colspan="2"><strong>Output<strong></td>
+ <td colspan="2" align="center"><strong>Output<strong></td>
  </tr>
  <tr>
  <td colspan="2">
@@ -50,6 +50,33 @@ By default, the `FORK` marker will print the `stdout` output. To print the `stde
 
 It works exactly the same as `%FORK%` but will print the output of the process's `stderr` stream.
 
-%EXAMPLE: example/fork-stderr.js%
 
-%FORK example example/fork-stderr%
+<table>
+<thead>
+ <tr>
+  <th>Markdown</th><th>JavaScript</th>
+ </tr>
+</thead>
+<tbody>
+ <tr/>
+ <tr>
+  <td>
+
+%EXAMPLE: example/fork/fork-stderr.md, markdown%
+  </td>
+
+  <td>
+
+%EXAMPLE: example/fork/fork-stderr.js%
+  </td>
+ </tr>
+ <tr>
+ <td colspan="2" align="center"><strong>Output<strong></td>
+ </tr>
+ <tr>
+ <td colspan="2">
+
+%FORK src/bin/alamode example/fork/fork-stderr.md%
+ </td>
+ </tr>
+</table>

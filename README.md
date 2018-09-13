@@ -264,13 +264,13 @@ The program will output:
   <td>
 
 ```js
-// print a welcome message
+// Display a welcome message.
 console.log('HELLO world')
 ```
   </td>
  </tr>
  <tr>
- <td colspan="2"><strong>Output<strong></td>
+ <td colspan="2" align="center"><strong>Output<strong></td>
  </tr>
  <tr>
  <td colspan="2">
@@ -296,12 +296,47 @@ By default, the `FORK` marker will print the `stdout` output. To print the `stde
 
 It works exactly the same as `%FORK%` but will print the output of the process's `stderr` stream.
 
-%EXAMPLE: example/fork-stderr.js%
+
+<table>
+<thead>
+ <tr>
+  <th>Markdown</th><th>JavaScript</th>
+ </tr>
+</thead>
+<tbody>
+ <tr/>
+ <tr>
+  <td>
+
+```markdown
+In case of an error, the program will print:
+
+%FORKSTD-fs example/fork/fork-stderr%
+```
+  </td>
+
+  <td>
+
+```js
+// Notify of an error.
+console.error('An error has occurred.')
+```
+  </td>
+ </tr>
+ <tr>
+ <td colspan="2" align="center"><strong>Output<strong></td>
+ </tr>
+ <tr>
+ <td colspan="2">
 
 ```
+In case of an error, the program will print:
 
+%FORKSTD-fs example/fork/fork-stderr%
 ```
-
+ </td>
+ </tr>
+</table>
 ## **Method Titles**
 
 _Documentary_ can generate neat titles useful for API documentation. The method signature should be specified in a `JSON` array, where every member is an argument written as an array containing its name and type. The type can be either a string, or an object.
