@@ -311,7 +311,7 @@ It works exactly the same as `%FORK%` but will print the output of the process's
 ```markdown
 In case of an error, the program will print:
 
-%FORKSTD-fs example/fork/fork-stderr%
+%FORKERR-fs example/fork/fork-stderr%
 ```
   </td>
 
@@ -329,11 +329,13 @@ console.error('An error has occurred.')
  <tr>
  <td colspan="2">
 
-```
+````
 In case of an error, the program will print:
 
-%FORKSTD-fs example/fork/fork-stderr%
+```fs
+An error has occurred.
 ```
+````
  </td>
  </tr>
 </table>
