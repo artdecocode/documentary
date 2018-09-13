@@ -1,5 +1,14 @@
 ## 13 September 2018
 
+### 1.15.2
+
+- [fix] Add a toc line for a method title without args or return, e.g.,
+    ````
+    ```### destroy
+    ```
+    ````
+- [deps] Update dependencies to not have `clean-stack` installed from GitHub commit.
+
 ### 1.15.1
 
 - [fix] Allow to use toc-titles in the macros.
