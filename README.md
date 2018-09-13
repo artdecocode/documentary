@@ -12,29 +12,29 @@ yarn add -DE documentary
 
 - [Table Of Contents](#table-of-contents)
 - [Installation & Usage](#installation--usage)
-- [Features](#features)
-- [TOC Generation](#toc-generation)
+- [Quick Features](#quick-features)
+- [**TOC Generation**](#toc-generation)
   * [TOC Titles](#toc-titles)
     * [Specific Level](#specific-level)
-- [Simple Tables](#simple-tables)
+- [**Simple Tables**](#simple-tables)
   * [Template Macros](#template-macros)
-- [Examples Placement](#examples-placement)
+- [**Examples Placement**](#examples-placement)
   * [Partial Examples](#partial-examples)
-- [Embedding Output](#embedding-output)
+- [**Embedding Output**](#embedding-output)
   * [Stderr](#stderr)
-- [Method Titles](#method-titles)
+- [**Method Titles**](#method-titles)
   * [`async runSoftware(path: string, config: Config): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
   * [`async runSoftware(path: string)`](#async-runsoftwarepath-string-void)
   * [`runSoftware(): string`](#runsoftware-string)
   * [`runSoftware()`](#runsoftware-void)
-- [Comments Stripping](#comments-stripping)
-- [File Splitting](#file-splitting)
-- [Replacement Rules](#replacement-rules)
-- [Gif Detail](#gif-detail)
+- [**Comments Stripping**](#comments-stripping)
+- [**File Splitting**](#file-splitting)
+- [**Replacement Rules**](#replacement-rules)
+- [**Gif Detail**](#gif-detail)
   * [<code>yarn doc</code>](#yarn-doc)
-- [`Type` Definition](#type-definition)
+- [**`Type` Definition**](#type-definition)
   * [Dedicated Example Row](#dedicated-example-row)
-- [`@typedef` Organisation](#typedef-organisation)
+- [**`@typedef` Organisation**](#typedef-organisation)
   * [JS Placement](#js-placement)
     * [Expanded `@param`](#expanded-param)
     * [Spread `@param`](#spread-param)
@@ -87,13 +87,13 @@ yarn doc
 ```
 
 When actively working on documentation, it is possible to use the `watch` mode with `-w` flag, or `-p` flag to also automatically push changes to a remote git repository, merging them into a single commit every time.
-## Features
+## Quick Features
 
-The processed `README.md` file will have a generated table of contents, markdown tables and neat titles for API method descriptions, as well as other possible features described in this section.
+This section has a quick look at all features in _Documentary_.
 
-```table
-
-```## TOC Generation
+| Feature | Description |
+| ------- | ----------- |
+## **TOC Generation**
 
 Table of contents are useful for navigation in a README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
 
@@ -114,7 +114,7 @@ To be able to include a link to a specific position in the text (i.e., create an
 This feature can be useful when presenting some data in a table in a section, but wanting to include a link to each row in the table of contents so that the structure is immediately visible.
 
 **<a name="specific-level">Specific Level</a>**: if required, the level can be specified with a number of `#` symbols, such as `[Specific Level](######)`.
-## Simple Tables
+## **Simple Tables**
 
 One of the most common problem with markdown is that it is hard to write tables. They must be written either as html, or as markdown, which is troublesome and requires effort. Although there are online tools to build markdown tables, with _Documentary_ the process is even simpler: the data just needs to be put into a JSON array.
 
@@ -167,7 +167,7 @@ The values in the macro need to be separated with `,` which allows to substitute
 | Company | Tag Line | Evaluation & Exit |
 | ------- | -------- | ----------------- |
 | <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018 |
-## Examples Placement
+## **Examples Placement**
 
 _Documentary_ can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
 
@@ -233,7 +233,7 @@ import Catchment from 'catchment'
 ```js
 await documentary()
 ```
-## Embedding Output
+## **Embedding Output**
 
 When placing examples, it is important to show the output that they produce. This can be achieved using the `FORK` marker.
 
@@ -250,6 +250,7 @@ It will make _Documentary_ fork a Node.js module using the `child_process.fork` 
  </tr>
 </thead>
 <tbody>
+ <tr/>
  <tr>
   <td>
 
@@ -270,6 +271,8 @@ console.log('HELLO world')
  </tr>
  <tr>
  <td colspan="2"><strong>Output<strong></td>
+ </tr>
+ <tr>
  <td colspan="2">
 
 ````
@@ -299,7 +302,7 @@ It works exactly the same as `%FORK%` but will print the output of the process's
 
 ```
 
-## Method Titles
+## **Method Titles**
 
 _Documentary_ can generate neat titles useful for API documentation. The method signature should be specified in a `JSON` array, where every member is an argument written as an array containing its name and type. The type can be either a string, or an object.
 
@@ -355,10 +358,10 @@ Generated from
 ```### runSoftware
 ```
 ````
-## Comments Stripping
+## **Comments Stripping**
 
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
-## File Splitting
+## **File Splitting**
 
 _Documentary_ can read a directory and put files together into a single `README` file. The files will be sorted in alphabetical order, and their content merged into a single stream. The `index.md` and `footer.md` are special in this respect, such that the `index.md` of a directory will always go first, and the `footer.md` will go last. To print in reverse order, for example when writing a blog and name files by their dates, the [`--reverse` flag](#reverse-order) can be passed to the CLI.
 
@@ -395,7 +398,7 @@ documentary
 ├── footer.md
 └── index.md
 ```
-## Replacement Rules
+## **Replacement Rules**
 
 There are some other built-in rules for replacements which are listed in this table.
 
@@ -404,7 +407,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
 | %NPM: package-name%      | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                               |
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
-## Gif Detail
+## **Gif Detail**
 
 The `GIF` rule will inserts a gif animation inside of a `<detail>` block. To highlight the summary with background color, `<code>` should be used instead of back-ticks. [TOC title link](##toc-titles) also work inside the summary.
 
@@ -438,7 +441,7 @@ The actual html placed in the `README` looks like the one below:
 </details>
 ```
 
-## `Type` Definition
+## **`Type` Definition**
 
 Often, it is required to document a type of an object, which methods can use. To display the information about type's properties in a table, the `TYPE` macro can be used. It allows to show all possible properties that an object can contain, show which ones are required, give examples and link them in the table of contents (disabled by default).
 
@@ -670,7 +673,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 </table>
 
 
-## `@typedef` Organisation
+## **`@typedef` Organisation**
 
 For the purpose of easier maintenance of _JSDoc_ `@typedef` declarations, `documentary` allows to keep them in a separate XML file, and then place compiled versions into both source code as well as documentation. By doing this, more flexibility is achieved as types are kept in one place but can be reused for various purposes across multiple files. It is different from _TypeScript_ type declarations as `documentary` will generate _JSDoc_ comments rather than type definitions which means that a project does not have to be written in _TypeScript_.
 

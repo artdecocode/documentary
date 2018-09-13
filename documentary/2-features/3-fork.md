@@ -1,4 +1,4 @@
-## Embedding Output
+## **Embedding Output**
 
 When placing examples, it is important to show the output that they produce. This can be achieved using the `FORK` marker.
 
@@ -15,6 +15,7 @@ It will make _Documentary_ fork a Node.js module using the `child_process.fork` 
  </tr>
 </thead>
 <tbody>
+ <tr/>
  <tr>
   <td>
 
@@ -28,6 +29,8 @@ It will make _Documentary_ fork a Node.js module using the `child_process.fork` 
  </tr>
  <tr>
  <td colspan="2"><strong>Output<strong></td>
+ </tr>
+ <tr>
  <td colspan="2">
 
 %FORK src/bin/alamode example/fork/fork.md%

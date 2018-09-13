@@ -1,4 +1,4 @@
-## Gif Detail
+## **Gif Detail**
 
 The `GIF` rule will inserts a gif animation inside of a `<detail>` block. To highlight the summary with background color, `<code>` should be used instead of back-ticks. [TOC title link](##toc-titles) also work inside the summary.
 

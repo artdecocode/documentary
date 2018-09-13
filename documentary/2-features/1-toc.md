@@ -1,4 +1,4 @@
-## TOC Generation
+## **TOC Generation**
 
 Table of contents are useful for navigation in a README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
 

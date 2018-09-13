@@ -1,4 +1,4 @@
-## Examples Placement
+## **Examples Placement**
 
 _Documentary_ can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
 

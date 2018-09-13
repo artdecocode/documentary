@@ -1,4 +1,4 @@
-## Simple Tables
+## **Simple Tables**
 
 One of the most common problem with markdown is that it is hard to write tables. They must be written either as html, or as markdown, which is troublesome and requires effort. Although there are online tools to build markdown tables, with _Documentary_ the process is even simpler: the data just needs to be put into a JSON array.
 
