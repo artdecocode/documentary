@@ -5,6 +5,8 @@ const { methodTitleRe, replaceTitle } = require('./rules/method-title');
 const {
   codeRe, commentRule: stripComments, innerCodeRe, linkTitleRe,
 } = require('./rules');
+let tableRule = require('./rules/table'); if (tableRule && tableRule.__esModule) tableRule = tableRule.default;
+let macroRule = require('./rules/macro'); if (macroRule && macroRule.__esModule) macroRule = macroRule.default;
 const {
   Replaceable, makeCutRule, makePasteRule, makeMarkers,
 } = require('restream');
@@ -65,6 +67,8 @@ const getBuffer = async (buffer) => {
     insertMethodTitle,
     insertTable,
 
+    macroRule,
+    tableRule,
     // insertLinkTitle,
     // insertTitle,
     // {
@@ -157,6 +161,7 @@ const getBuffer = async (buffer) => {
             }
           }
           const title = `${lines.map(l => l.trim()).join('<br/>')}`
+          if (!title) return match
           const t = getTitle(title)
           const link = getLink(t)
           this.addTitle({
