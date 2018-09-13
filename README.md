@@ -221,6 +221,13 @@ documentary
 │   └── index.md
 ├── 2-features
 │   ├── 1-TOC-generation.md
+│   ├── 10-typedef
+│   │   ├── 1-js.md
+│   │   ├── 2-readme.md
+│   │   ├── 3-imports.md
+│   │   ├── 4-schema.md
+│   │   ├── 9-migration.md
+│   │   └── index.md
 │   ├── 2-table-display.md
 │   ├── 3-method-title.md
 │   ├── 4-comment-stripping.md
@@ -229,13 +236,6 @@ documentary
 │   ├── 7-examples.md
 │   ├── 8-gif.md
 │   ├── 9-type.md
-│   ├── 91-typedef
-│   │   ├── 1-js.md
-│   │   ├── 2-readme.md
-│   │   ├── 3-imports.md
-│   │   ├── 4-schema.md
-│   │   ├── 9-migration.md
-│   │   └── index.md
 │   └── index.md
 ├── 3-cli.md
 ├── 4-api
