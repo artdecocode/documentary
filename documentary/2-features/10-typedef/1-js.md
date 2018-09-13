@@ -1,5 +1,5 @@
 
-#### JS Placement
+### JS Placement
 
 To include a compiled declaration into a source code, the following line should be placed in the `.js` file (where the `types/static.xml` file exists in the project directory from which the `doc` command will be run):
 
@@ -17,7 +17,7 @@ The file is then processed with [`doc src/config-static.js -g`](#generate-types)
 
 %FORK-js src/bin/alamode example/typedef-raw.js -g -%
 
-##### Expanded `@param`
+#### Expanded `@param`
 
 In addition, _JSDoc_ for any method that has an included type as one of its parameters will be updated to its expanded form so that a preview of options is available.
 
@@ -66,7 +66,7 @@ Compare that to the preview without _JSDoc_ expansion:
 
 To prevent the expansion, the `noExpand` attribute should be added to the type.
 
-##### Spread `@param`
+#### Spread `@param`
 
 Moreover, when the type of the type is just object, it also can be spread into a notation which contains its properties for even better visibility. To do that, the `spread` attribute must be added to the type definition in the `xml` file.
 

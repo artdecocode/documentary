@@ -1,6 +1,6 @@
-### Examples Placement
+## Examples Placement
 
-`documentary` can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
+_Documentary_ can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
 
 ```
 %EXAMPLE: example/example.js [, ../src => documentary] [, javascript]%
@@ -20,7 +20,7 @@ The program will produce the following output:
 
 %FORK-md src/bin/alamode example/examples.md%
 
-#### Partial Examples
+### Partial Examples
 
 Whenever only a part of an example needs to be shown (but the full code is still needed to be able to run it), `documentary` allows to use `start` and `end` comments to specify which part to print to the documentation. It will also make sure to adjust the indentation appropriately.
 

@@ -28,6 +28,7 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 - [ ] Implement caching.
 - [ ] Trigger compilation whenever an embedded example changes.
 - [ ] Purge image cache from CLI (e.g., `curl -X https://github.com/artdecocode/documentary/raw/${BRANCH}${PATH}`)
+- [ ] Implement JS-based `tree`.
 
 ## Copyright
 

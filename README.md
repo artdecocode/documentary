@@ -16,35 +16,32 @@ yarn add -DE documentary
   * [TOC Generation](#toc-generation)
     * [TOC Titles](#toc-titles)
       * [Specific Level](#specific-level)
-  * [Tables Display](#tables-display)
-    * [Table Macro](#table-macro)
-  * [Method Title](#method-title)
-    * [`async runSoftware(path: string, config: Config): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
-    * [`async runSoftware(path: string)`](#async-runsoftwarepath-string-void)
-    * [`runSoftware(): string`](#runsoftware-string)
-  * [Comments Stripping](#comments-stripping)
-  * [File Splitting](#file-splitting)
-  * [Replacement Rules](#replacement-rules)
-    * [`%NPM: package-name%`](#npm-package-name)
-    * [`%TREE directory ...args%`](#tree-directory-args)
-    * [`%FORK(-lang)? module ...args%`](#fork-lang-module-args)
-    * [`%FORKERR(-lang)? module ...args%`](#forkerr-lang-module-args)
-  * [Examples Placement](#examples-placement)
-    * [Partial Examples](#partial-examples)
-  * [Gif Detail](#gif-detail)
-    * [<code>yarn doc</code>](#yarn-doc)
-  * [`Type` Definition](#type-definition)
-    * [Dedicated Example Row](#dedicated-example-row)
-  * [`@typedef` Organisation](#typedef-organisation)
-    * [JS Placement](#js-placement)
-      * [Expanded `@param`](#expanded-param)
-      * [Spread `@param`](#spread-param)
-    * [README placement](#readme-placement)
-      * [`SetHeaders`](#setheaders)
-      * [`StaticConfig`](#staticconfig)
-    * [Importing Types](#importing-types)
-    * [XML Schema](#xml-schema)
-    * [Migration](#migration)
+- [Simple Tables](#simple-tables)
+  * [Template Macros](#template-macros)
+- [Method Titles](#method-titles)
+  * [`async runSoftware(path: string, config: Config): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
+  * [`async runSoftware(path: string)`](#async-runsoftwarepath-string-void)
+  * [`runSoftware(): string`](#runsoftware-string)
+  * [`runSoftware()`](#runsoftware-void)
+- [Comments Stripping](#comments-stripping)
+- [File Splitting](#file-splitting)
+- [Replacement Rules](#replacement-rules)
+- [Examples Placement](#examples-placement)
+  * [Partial Examples](#partial-examples)
+- [Gif Detail](#gif-detail)
+  * [<code>yarn doc</code>](#yarn-doc)
+- [`Type` Definition](#type-definition)
+  * [Dedicated Example Row](#dedicated-example-row)
+- [`@typedef` Organisation](#typedef-organisation)
+  * [JS Placement](#js-placement)
+    * [Expanded `@param`](#expanded-param)
+    * [Spread `@param`](#spread-param)
+  * [README placement](#readme-placement)
+    * [`SetHeaders`](#setheaders)
+    * [`StaticConfig`](#staticconfig)
+  * [Importing Types](#importing-types)
+  * [XML Schema](#xml-schema)
+  * [Migration](#migration)
 - [CLI](#cli)
   * [Output Location](#output-location)
   * [Only TOC](#only-toc)
@@ -91,7 +88,10 @@ When actively working on documentation, it is possible to use the `watch` mode w
 ## Features
 
 The processed `README.md` file will have a generated table of contents, markdown tables and neat titles for API method descriptions, as well as other possible features described in this section.
-### TOC Generation
+
+```table
+
+```### TOC Generation
 
 Table of contents are useful for navigation in a README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
 
@@ -112,9 +112,11 @@ To be able to include a link to a specific position in the text (i.e., create an
 This feature can be useful when presenting some data in a table in a section, but wanting to include a link to each row in the table of contents so that the structure is immediately visible.
 
 **<a name="specific-level">Specific Level</a>**: if required, the level can be specified with a number of `#` symbols, such as `[Specific Level](######)`.
-### Tables Display
+## Simple Tables
 
-To describe method arguments in a table, but prepare them in a more readable format, `documentary` will parse the code blocks with `table` language as a table. The blocks must be in `JSON` format and contain a single array of arrays which represent rows.
+One of the most common problem with markdown is that it is hard to write tables. They must be written either as html, or as markdown, which is troublesome and requires effort. Although there are online tools to build markdown tables, with _Documentary_ the process is even simpler: the data just needs to be put into a JSON array.
+
+To describe tabular data (for example, a CLI tool arguments) in a table, but prepare them in a more readable format, _Documentary_ allows to write code blocks with the `table` language to be converted into a markdown table. The content of the blocks must be in `JSON` format and contain a single array of arrays which represent rows.
 
 ````m
 ```table
@@ -133,9 +135,9 @@ Result:
 | -f | Display only free domains |
 | -z | A list of zones to check |
 
-#### Table Macro
+### Template Macros
 
-Whenever there's a pattern for presenting data in the table, so that the input fields can be mapped to output ones, a table macro can be defined. The example below defines a macro to print a row containing a link, logo and description of a company. It is then used in a table, where only the actual values are entered, relying `documentary` to place them in the template.
+Whenever there's a pattern for presenting data in a table, such as that input fields can be mapped to output columns, a table macro can be defined. The example below defines a macro to print a row containing a link, logo and description of a company. It is then used in a table, where only the actual values are entered, relying on _Documentary_ to substitute them in the template.
 
 ````markdown
 %TABLE-MACRO Company
@@ -164,16 +166,20 @@ The values in the macro need to be separated with `,` which allows to substitute
 | ------- | -------- | ----------------- |
 | <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018 |
 
-### Method Title
+## Method Titles
 
-It is possible to generate neat titles useful for API documentation with `documentary`. The method signature should be specified as a `JSON` array, where every member is an argument specified as an array. The first item in the argument array is the argument name, and the second one is type. Type can be either a string, or an object. If it is an object, each value in the object will be an array and first contain the property type, secondly - the default value. To mark a property as optional, the `?` symbol can be used at the end. The third item is the short name for the table of contents (so that a complex object can be referenced to its type).
+_Documentary_ can generate neat titles useful for API documentation. The method signature should be specified in a `JSON` array, where every member is an argument written as an array containing its name and type. The type can be either a string, or an object.
 
-#### `async runSoftware(`<br/>&nbsp;&nbsp;`path: string,`<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`render?: function,`<br/>&nbsp;&nbsp;`},`<br/>`): string`
+For object types, each value is an array which contains the property type and its default value. To mark a property as optional, the `?` symbol can be used at the end of the key.
+
+The last item in the argument array is used when the argument is an object and is a short name to be place in the table of contents (so that a complex object can be referenced to its type).
+
+### `async runSoftware(`<br/>&nbsp;&nbsp;`path: string,`<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`render?: function,`<br/>&nbsp;&nbsp;`},`<br/>`): string`
 
 Generated from
 
 ````m
-```#### async runSoftware => string
+```### async runSoftware => string
 [
   ["path", "string"],
   ["config", {
@@ -186,34 +192,44 @@ Generated from
 ```
 ````
 
-#### `async runSoftware(`<br/>&nbsp;&nbsp;`path: string,`<br/>`): void`
+### `async runSoftware(`<br/>&nbsp;&nbsp;`path: string,`<br/>`): void`
 
 Generated from
 
 ````m
-```#### async runSoftware
+```### async runSoftware
 [
   ["path", "string"]
 ]
 ```
 ````
 
-#### `runSoftware(): string`
+### `runSoftware(): string`
 
 Generated from
 
 ````m
-```#### runSoftware => string
+```### runSoftware => string
 ```
 ````
-### Comments Stripping
 
-Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the output document.
-### File Splitting
 
-`documentary` can read a directory and put files together into a single `README` file. The files will be sorted in alphabetical order, and their content merged into a single stream. The `index.md` and `footer.md` are special in this respect, so that the `index.md` of a directory will always go first, and the `footer.md` will go last.
+### `runSoftware(): void`
 
-Example structure used in this project:
+Generated from
+
+````m
+```### runSoftware
+```
+````
+## Comments Stripping
+
+Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
+## File Splitting
+
+_Documentary_ can read a directory and put files together into a single `README` file. The files will be sorted in alphabetical order, and their content merged into a single stream. The `index.md` and `footer.md` are special in this respect, such that the `index.md` of a directory will always go first, and the `footer.md` will go last. To print in reverse order, for example when writing a blog and name files by their dates, the [`--reverse` flag](#reverse-order) can be passed to the CLI.
+
+Example structure used in this documentation:
 
 ```m
 documentary
@@ -221,7 +237,7 @@ documentary
 │   ├── 1-vs-code.md
 │   └── index.md
 ├── 2-features
-│   ├── 1-TOC-generation.md
+│   ├── 1-toc.md
 │   ├── 10-typedef
 │   │   ├── 1-js.md
 │   │   ├── 2-readme.md
@@ -229,7 +245,7 @@ documentary
 │   │   ├── 4-schema.md
 │   │   ├── 9-migration.md
 │   │   └── index.md
-│   ├── 2-table-display.md
+│   ├── 2-tables.md
 │   ├── 3-method-title.md
 │   ├── 4-comment-stripping.md
 │   ├── 5-file-splitting.md
@@ -245,19 +261,20 @@ documentary
 ├── footer.md
 └── index.md
 ```
-### Replacement Rules
+## Replacement Rules
 
-There are some built-in rules for replacements.
+There are some other built-in rules for replacements which are listed in this table.
 
-|                  Rule                   |                                                                                          Description                                                                                          |
-| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <a name="npm-package-name">`%NPM: package-name%`</a> | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                                                                                              |
-| <a name="tree-directory-args">`%TREE directory ...args%`</a> | Executes the `tree` command with the given arguments. If `tree` is not installed, warns and does not replace the match.     |
-| <a name="fork-lang-module-args">`%FORK(-lang)? module ...args%`</a> | Forks the Node.js process to execute the module using `child_process.fork`. The output is printed in the code block, with optionally given language. For example: `%FORK-json example.js -o%` |
-| <a name="forkerr-lang-module-args">`%FORKERR(-lang)? module ...args%`</a> | Same as `%FORK%` but will print the output of the `stderr`.                                                                     |
-### Examples Placement
 
-`documentary` can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
+|               Rule               |                                                                                          Description                                                                                          |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| %NPM: package-name%              | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                                                                                              |
+| %TREE directory ...args%         | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match.         |
+| %FORK(-lang)? module ...args%    | Forks the Node.js process to execute the module using `child_process.fork`. The output is printed in the code block, with optionally given language. For example: `%FORK-json example.js -o%` |
+| %FORKERR(-lang)? module ...args% | Same as `%FORK%` but will print the output of the `stderr`.                                                                     |
+## Examples Placement
+
+_Documentary_ can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
 
 ```
 %EXAMPLE: example/example.js [, ../src => documentary] [, javascript]%
@@ -303,7 +320,7 @@ import Catchment from 'catchment'
 ```
 ````
 
-#### Partial Examples
+### Partial Examples
 
 Whenever only a part of an example needs to be shown (but the full code is still needed to be able to run it), `documentary` allows to use `start` and `end` comments to specify which part to print to the documentation. It will also make sure to adjust the indentation appropriately.
 
@@ -321,7 +338,7 @@ import Catchment from 'catchment'
 ```js
 await documentary()
 ```
-### Gif Detail
+## Gif Detail
 
 The `GIF` rule will inserts a gif animation inside of a `<detail>` block. To highlight the summary with background color, `<code>` should be used instead of back-ticks. [TOC title link](##toc-titles) also work inside the summary.
 
@@ -355,7 +372,7 @@ The actual html placed in the `README` looks like the one below:
 </details>
 ```
 
-### `Type` Definition
+## `Type` Definition
 
 Often, it is required to document a type of an object, which methods can use. To display the information about type's properties in a table, the `TYPE` macro can be used. It allows to show all possible properties that an object can contain, show which ones are required, give examples and link them in the table of contents (disabled by default).
 
@@ -461,7 +478,7 @@ Start the table of contents from level 2, i.e., excluding the `#` title.</d>
 
 Otherwise, the content will not be processed by `GitHub`. However, it will add an extra margin to the content of the cell as it will be transformed into a paragraph.
 
-#### Dedicated Example Row
+### Dedicated Example Row
 
 Because examples occupy a lot of space which causes table squeezing on GitHub and scrolling on NPM, `documentary` allows to dedicate a special row to an example. It can be achieved by adding a `row` attribute to the `e` element, like so:
 
@@ -587,7 +604,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 </table>
 
 
-### `@typedef` Organisation
+## `@typedef` Organisation
 
 For the purpose of easier maintenance of _JSDoc_ `@typedef` declarations, `documentary` allows to keep them in a separate XML file, and then place compiled versions into both source code as well as documentation. By doing this, more flexibility is achieved as types are kept in one place but can be reused for various purposes across multiple files. It is different from _TypeScript_ type declarations as `documentary` will generate _JSDoc_ comments rather than type definitions which means that a project does not have to be written in _TypeScript_.
 
@@ -621,7 +638,7 @@ Types are kept in a separate `xml` file, for example:
 
 They are then included in both JavaScript source code and markdown documentation.
 
-#### JS Placement
+### JS Placement
 
 To include a compiled declaration into a source code, the following line should be placed in the `.js` file (where the `types/static.xml` file exists in the project directory from which the `doc` command will be run):
 
@@ -681,7 +698,7 @@ function configure(config) {
 export default configure
 ```
 
-##### Expanded `@param`
+#### Expanded `@param`
 
 In addition, _JSDoc_ for any method that has an included type as one of its parameters will be updated to its expanded form so that a preview of options is available.
 
@@ -730,7 +747,7 @@ Compare that to the preview without _JSDoc_ expansion:
 
 To prevent the expansion, the `noExpand` attribute should be added to the type.
 
-##### Spread `@param`
+#### Spread `@param`
 
 Moreover, when the type of the type is just object, it also can be spread into a notation which contains its properties for even better visibility. To do that, the `spread` attribute must be added to the type definition in the `xml` file.
 
@@ -775,7 +792,7 @@ However, this method has one disadvantage as there will be no descriptions of th
 
 Therefore, it must be considered what is the best for developers -- to see descriptions of properties when passing a configuration object to a function, but not see all possible properties, or to see the full list of properties, but have no visibility of what they mean.
 
-#### README placement
+### README placement
 
 To place a type definition as a table into a `README` file, the `TYPEDEF` snippet can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed. Moreover, links to the type descriptions will be created in the table of contents using the [__TOC Titles__](#toc-titles), but to prevent this, the `noToc` attribute should be set for a type.
 
@@ -813,7 +830,7 @@ __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 | index      | _string_                    | Default file name.                          | `index.html` |
 | setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | -            |
 
-#### Importing Types
+### Importing Types
 
 A special `import` element can be used to import a type using _VS Code_'s _TypeScript_ engine. An import is just a typedef which looks like `/** @typedef {import('package').Type} Type */`. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
 
@@ -881,7 +898,7 @@ export default example
 </tbody>
 </table>
 
-#### XML Schema
+### XML Schema
 
 The XML file should have the following nodes and attributes:
 
@@ -949,7 +966,7 @@ Property of a `@typedef` definition.</th>
 </tbody>
 </table>
 
-#### Migration
+### Migration
 
 A JavaScript file can be scanned for the presence of `@typedef` JSDoc comments, which are then extracted to a `types.xml` file. This can be done with the [`doc src/index.js -e types/index.xml`](#extract-types) command. This is primarily a tool to migrate older software to using `types.xml` files which can be used both for [online documentation](#online-documentation) and [editor documentation](#editor-documentation).
 
@@ -1034,7 +1051,7 @@ DOC 80734: could not parse the table
 ```
 ## API
 
-The programmatic use of the `documentary` is intended for developers who want to use this software in their projects.
+The programmatic use of _Documentary_ is intended for developers who want to use this software in their projects.
 ### `Toc` Stream
 
 `Toc` is a transform stream which can generate a table of contents for incoming markdown data. For every title that the transform sees, it will push the appropriate level of the table of contents.
@@ -1150,6 +1167,7 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 - [ ] Implement caching.
 - [ ] Trigger compilation whenever an embedded example changes.
 - [ ] Purge image cache from CLI (e.g., `curl -X https://github.com/artdecocode/documentary/raw/${BRANCH}${PATH}`)
+- [ ] Implement JS-based `tree`.
 
 ## Copyright
 
