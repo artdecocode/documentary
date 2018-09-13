@@ -31,11 +31,13 @@ export const read = async (source) => {
   return data
 }
 
-export const getStream = (path) => {
+export const getStream = (path, reverse) => {
   const ls = lstatSync(path)
   let stream
   if (ls.isDirectory()) {
-    stream = new Pedantry(path)
+    stream = new Pedantry(path, {
+      reverse,
+    })
   } else if (ls.isFile()) {
     stream = createReadStream(path)
   }

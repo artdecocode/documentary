@@ -63,3 +63,18 @@ test/mask/bin/macro.md
 | --------------------------------------------------------------- | ------------------------------------------------- | ----------------- |
 | <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018        |
 /**/
+
+// prints in reverse order
+test/fixtures/order -r
+
+/* expected */
+## index
+
+- [index](#index)
+- [30-file](#30-file)
+- [25-file](#25-file)
+- [footer](#footer)
+## 30-file
+## 25-file
+## footer
+/**/
