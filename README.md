@@ -53,6 +53,7 @@ yarn add -DE documentary
   * [Watch Mode](#watch-mode)
   * [Automatic Push](#automatic-push)
   * [h1 In Toc](#h1-in-toc)
+  * [Reverse Order](#reverse-order)
   * [`NODE_DEBUG=doc`](#node_debugdoc)
 - [API](#api)
   * [`Toc` Stream](#toc-stream)
@@ -1013,15 +1014,17 @@ doc README-source.md [-o README.md] [-tgewp]
 
 The arguments it accepts are:
 
-|         Flag          |       Meaning        |                                                                            Description                                                                             |
-| --------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `-o path` | <a name="output-location">Output Location</a> | Where to save the processed `README` file. If not specified, the output is written to the `stdout`. |
-| `-t` | <a name="only-toc">Only TOC</a>        | Only extract and print the table of contents.                                                                                                                      |
-| `-g [path]` | <a name="generate-types">Generate Types</a>  | Insert `@typedef` _JSDoc_ into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
-| `-e [path]` | <a name="extract-types">Extract Types</a>   | Insert `@typedef` JSDoc into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
-| `-w` | <a name="watch-mode">Watch Mode</a>      | Watch mode: re-run the program when changes to the source file are detected.                                                                                       |
-| `-p "commit message"` | <a name="automatic-push">Automatic Push</a>  | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit.                                                            |
-| `-h1` | <a name="h1-in-toc">h1 In Toc</a>       | Include `h1` headers in the table of contents.                                                                                 |
+
+|         Flag          |       Meaning        |                                                                                                Description                                                                                                 |
+| --------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-o path`             | <a name="output-location">Output Location</a> | Where to save the processed `README` file. If not specified, the output is written to the `stdout`.                                        |
+| `-t`                  | <a name="only-toc">Only TOC</a>        | Only extract and print the table of contents.                                                                                                                                                              |
+| `-g [path]`           | <a name="generate-types">Generate Types</a>  | Insert `@typedef` _JSDoc_ into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
+| `-e [path]`           | <a name="extract-types">Extract Types</a>   | Insert `@typedef` JSDoc into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
+| `-w`                  | <a name="watch-mode">Watch Mode</a>      | Watch mode: re-run the program when changes to the source file are detected.                                                                                                                               |
+| `-p 'commit message'` | <a name="automatic-push">Automatic Push</a>  | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit.                                                                                                    |
+| `-h1`                 | <a name="h1-in-toc">h1 In Toc</a>       | Include `h1` headers in the table of contents.                                                                                                                         |
+| `-r`                  | <a name="reverse-order">Reverse Order</a>   | Reverse the output order of files, such as that `2.md` will come before `1.md`. This could be useful when writing blogs. The `index.md` and `footer.md` files will still come first and last respectively. |
 
 When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print debug information, e.g.,
 
