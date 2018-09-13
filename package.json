@@ -41,6 +41,7 @@
     "fork",
     "example",
     "examples",
+    "output",
     "github",
     "doc",
     "docs",
@@ -50,7 +51,10 @@
     "jsdoc",
     "typedef",
     "types",
-    "methods"
+    "methods",
+    "api",
+    "table of contents",
+    "toc"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
