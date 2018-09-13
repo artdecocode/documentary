@@ -13,11 +13,15 @@ yarn add -DE documentary
 - [Table Of Contents](#table-of-contents)
 - [Installation & Usage](#installation--usage)
 - [Features](#features)
-  * [TOC Generation](#toc-generation)
-    * [TOC Titles](#toc-titles)
-      * [Specific Level](#specific-level)
+- [TOC Generation](#toc-generation)
+  * [TOC Titles](#toc-titles)
+    * [Specific Level](#specific-level)
 - [Simple Tables](#simple-tables)
   * [Template Macros](#template-macros)
+- [Examples Placement](#examples-placement)
+  * [Partial Examples](#partial-examples)
+- [Embedding Output](#embedding-output)
+  * [Stderr](#stderr)
 - [Method Titles](#method-titles)
   * [`async runSoftware(path: string, config: Config): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
   * [`async runSoftware(path: string)`](#async-runsoftwarepath-string-void)
@@ -26,8 +30,6 @@ yarn add -DE documentary
 - [Comments Stripping](#comments-stripping)
 - [File Splitting](#file-splitting)
 - [Replacement Rules](#replacement-rules)
-- [Examples Placement](#examples-placement)
-  * [Partial Examples](#partial-examples)
 - [Gif Detail](#gif-detail)
   * [<code>yarn doc</code>](#yarn-doc)
 - [`Type` Definition](#type-definition)
@@ -91,7 +93,7 @@ The processed `README.md` file will have a generated table of contents, markdown
 
 ```table
 
-```### TOC Generation
+```## TOC Generation
 
 Table of contents are useful for navigation in a README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
 
@@ -105,7 +107,7 @@ By default, top level `h1` headers written with `#` are ignored, but they can be
 - [Copyright](#copyright)
 ```
 
-#### TOC Titles
+### TOC Titles
 
 To be able to include a link to a specific position in the text (i.e., create an "anchor"), `documentary` supports a `TOC Titles` feature. Any text written as `[Toc Title](t)` will generate a relevant position in the table of contents. It will automatically detect the appropriate level and be contained inside the current section.
 
@@ -165,6 +167,137 @@ The values in the macro need to be separated with `,` which allows to substitute
 | Company | Tag Line | Evaluation & Exit |
 | ------- | -------- | ----------------- |
 | <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018 |
+## Examples Placement
+
+_Documentary_ can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
+
+```
+%EXAMPLE: example/example.js [, ../src => documentary] [, javascript]%
+```
+
+The first argument is the path to the example relative to the working directory of where the command was executed (normally, the project folder). The second optional argument is the replacement for the `import` statements (or `require` calls). The third optional argument is the markdown language to embed the example in and will be determined from the example extension if not specified.
+
+Given the documentation section:
+
+```md
+## API Method
+
+This method allows to generate documentation.
+
+%EXAMPLE: example/example.js, ../src => documentary, javascript%
+```
+
+And the example file `examples/example.js`
+
+```js
+import documentary from '../src'
+import Catchment from 'catchment'
+
+(async () => {
+  await documentary()
+})()
+```
+
+The program will produce the following output:
+
+````md
+## API Method
+
+This method allows to generate documentation.
+
+```javascript
+import documentary from 'documentary'
+import Catchment from 'catchment'
+
+(async () => {
+  await documentary()
+})()
+```
+````
+
+### Partial Examples
+
+Whenever only a part of an example needs to be shown (but the full code is still needed to be able to run it), `documentary` allows to use `start` and `end` comments to specify which part to print to the documentation. It will also make sure to adjust the indentation appropriately.
+
+```js
+import documentary from '../src'
+import Catchment from 'catchment'
+
+(async () => {
+  /* start example */
+  await documentary()
+  /* end example */
+})()
+```
+
+```js
+await documentary()
+```
+## Embedding Output
+
+When placing examples, it is important to show the output that they produce. This can be achieved using the `FORK` marker.
+
+```md
+%FORK(-lang)? module ...args%
+```
+
+It will make _Documentary_ fork a Node.js module using the `child_process.fork` function. The output is printed in a code block, with optionally given language.
+
+<table>
+<thead>
+ <tr>
+  <th>Markdown</th><th>JavaScript</th>
+ </tr>
+</thead>
+<tbody>
+ <tr>
+  <td>
+
+```markdown
+The program will output:
+
+%FORK-fs example/fork/fork%
+```
+  </td>
+
+  <td>
+
+```js
+// print a welcome message
+console.log('HELLO world')
+```
+  </td>
+ </tr>
+ <tr>
+ <td colspan="2"><strong>Output<strong></td>
+ <td colspan="2">
+
+````
+The program will output:
+
+```fs
+HELLO world
+```
+````
+ </td>
+ </tr>
+</table>
+
+### Stderr
+
+By default, the `FORK` marker will print the `stdout` output. To print the `stderr` output, there is the `FORKERR` marker.
+
+```md
+%FORKERR(-lang)? module ...args%
+```
+
+It works exactly the same as `%FORK%` but will print the output of the process's `stderr` stream.
+
+%EXAMPLE: example/fork-stderr.js%
+
+```
+
+```
 
 ## Method Titles
 
@@ -246,11 +379,12 @@ documentary
 │   │   ├── 9-migration.md
 │   │   └── index.md
 │   ├── 2-tables.md
+│   ├── 3-examples.md
+│   ├── 3-fork.md
 │   ├── 3-method-title.md
 │   ├── 4-comment-stripping.md
 │   ├── 5-file-splitting.md
 │   ├── 6-rules.md
-│   ├── 7-examples.md
 │   ├── 8-gif.md
 │   ├── 9-type.md
 │   └── index.md
@@ -266,78 +400,10 @@ documentary
 There are some other built-in rules for replacements which are listed in this table.
 
 
-|               Rule               |                                                                                          Description                                                                                          |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| %NPM: package-name%              | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                                                                                              |
-| %TREE directory ...args%         | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match.         |
-| %FORK(-lang)? module ...args%    | Forks the Node.js process to execute the module using `child_process.fork`. The output is printed in the code block, with optionally given language. For example: `%FORK-json example.js -o%` |
-| %FORKERR(-lang)? module ...args% | Same as `%FORK%` but will print the output of the `stderr`.                                                                     |
-## Examples Placement
-
-_Documentary_ can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
-
-```
-%EXAMPLE: example/example.js [, ../src => documentary] [, javascript]%
-```
-
-The first argument is the path to the example relative to the working directory of where the command was executed (normally, the project folder). The second optional argument is the replacement for the `import` statements (or `require` calls). The third optional argument is the markdown language to embed the example in and will be determined from the example extension if not specified.
-
-Given the documentation section:
-
-```md
-## API Method
-
-This method allows to generate documentation.
-
-%EXAMPLE: example/example.js, ../src => documentary, javascript%
-```
-
-And the example file `examples/example.js`
-
-```js
-import documentary from '../src'
-import Catchment from 'catchment'
-
-(async () => {
-  await documentary()
-})()
-```
-
-The program will produce the following output:
-
-````md
-## API Method
-
-This method allows to generate documentation.
-
-```javascript
-import documentary from 'documentary'
-import Catchment from 'catchment'
-
-(async () => {
-  await documentary()
-})()
-```
-````
-
-### Partial Examples
-
-Whenever only a part of an example needs to be shown (but the full code is still needed to be able to run it), `documentary` allows to use `start` and `end` comments to specify which part to print to the documentation. It will also make sure to adjust the indentation appropriately.
-
-```js
-import documentary from '../src'
-import Catchment from 'catchment'
-
-(async () => {
-  /* start example */
-  await documentary()
-  /* end example */
-})()
-```
-
-```js
-await documentary()
-```
+|           Rule           |                                                          Description                                                           |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| %NPM: package-name%      | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                               |
+| %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 ## Gif Detail
 
 The `GIF` rule will inserts a gif animation inside of a `<detail>` block. To highlight the summary with background color, `<code>` should be used instead of back-ticks. [TOC title link](##toc-titles) also work inside the summary.

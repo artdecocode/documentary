@@ -16,14 +16,6 @@ There are some other built-in rules for replacements which are listed in this ta
   [
     "%TREE directory ...args%",
     "Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match."
-  ],
-  [
-    "%FORK(-lang)? module ...args%",
-    "Forks the Node.js process to execute the module using `child_process.fork`. The output is printed in the code block, with optionally given language. For example: `%FORK-json example.js -o%`"
-  ],
-  [
-    "%FORKERR(-lang)? module ...args%",
-    "Same as `%FORK%` but will print the output of the `stderr`."
   ]
 ]
 ```
