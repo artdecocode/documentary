@@ -192,7 +192,7 @@ const getBuffer = async (buffer) => {
             const { length: level } = hash
 
             if (this.skipLine(level)) return match
-            const json = jsonArgs ? jsonArgs : '[]'
+            const json = jsonArgs.trim() ? jsonArgs : '[]'
             const bb = [isAsync, name]
               .filter(a => a)
               .join(' ').trim()
