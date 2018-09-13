@@ -1,5 +1,10 @@
 ## 13 September 2018
 
+### 1.15.1
+
+- [fix] Allow to use toc-titles in the macros.
+- [fix] Fix putting `---` with empty line above in the table of contents.
+
 ### 1.15.0
 
 - [feature] Implement table macros for templating in tables.
