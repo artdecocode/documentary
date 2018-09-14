@@ -13,11 +13,11 @@ const T = {
     const { stdout } = await doc(README_PATH)
     await test('bin/markdown.md', stdout.trim())
   },
-  async 'generates correct markdown from a directory'({ SNAPSHOT_DIR, doc, README_DIR_PATH }, { setDir, test }) {
-    setDir(SNAPSHOT_DIR)
-    const { stdout } = await doc(README_DIR_PATH)
-    await test('bin/dir-markdown.md', stdout.trim())
-  },
+  // async '!generates correct markdown from a directory'({ SNAPSHOT_DIR, doc, README_DIR_PATH }, { setDir, test }) {
+  //   setDir(SNAPSHOT_DIR)
+  //   const { stdout } = await doc(README_DIR_PATH)
+  //   await test('bin/dir-markdown.md', stdout.trim())
+  // },
   async 'generates correct markdown and saves it to a file'(
     { SNAPSHOT_DIR, doc, README_PATH, OUTPUT, readOutput }, { setDir, test }
   ) {
