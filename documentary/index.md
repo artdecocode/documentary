@@ -5,7 +5,7 @@ Documentary
 
 <a href="https://github.com/artdecocode/documentary"><img src="images/LOGO.svg" width="150" align="left"></a>
 
-_Documentary_ is a command-line tool and a library to manage documentation of Node.js packages. Due to the fact that complex `README` files are harder to maintain, _Documentary_ serves as a pre-processor of documentation. It enhances every area of the task of making available quality docs of Node.js (and possibly other languages) packages for fellow developers.
+_Documentary_ is a command-line tool and a library to manage documentation of Node.js packages. Due to the fact that there is usually a lot of manual labour involved in creating and keeping up-to-date a README document, such as copying examples and the output they produce, there is a need for software which can help automate the task and focus on what is really important. _Documentary_ serves as a pre-processor of documentation and enhances every area of the task of making available quality docs for Node.js (and other languages) packages for fellow developers.
 
 ```sh
 yarn add -DE documentary
