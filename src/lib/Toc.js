@@ -263,6 +263,10 @@ export default class Toc extends Transform {
   }
 }
 
+/**
+ * Gather all titles from the stream and return the table of contents as a string.
+ * @returns {string} The table of contents.
+ */
 export const getToc = async (stream, h1) => {
   const toc = new Toc({ skipLevelOne: !h1 })
   stream.pipe(toc)

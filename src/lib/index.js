@@ -31,6 +31,11 @@ export const read = async (source) => {
   return data
 }
 
+/**
+ * Create an input stream for all data.
+ * @param {string} path Path to the directory or file.
+ * @param {boolean} [reverse=false] If directory, read in reverse order.
+ */
 export const getStream = (path, reverse) => {
   const ls = lstatSync(path)
   let stream
