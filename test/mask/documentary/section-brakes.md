@@ -2,5 +2,5 @@
 %~%
 
 /* expected */
-<p align="center"><a href="#table-of-contents"><img src=".documentary/0.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg"></a></p>
 /**/

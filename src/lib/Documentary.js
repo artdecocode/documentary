@@ -13,7 +13,7 @@ import typeRule from './rules/type'
 import badgeRule from './rules/badge'
 import typedefMdRule from './rules/typedef-md'
 import macroRule from './rules/macro'
-import sectionBrakeRule from './rules/section-brake'
+import sectionBrakeRule from './rules/section-break'
 
 export default class Documentary extends Replaceable {
   constructor({ toc } = {}) {

@@ -16,7 +16,7 @@ const rule = {
     const isEnd = n >= 0
     if (isEnd) this.sectionBrakeNumber = n
     const name = `${n}.svg`
-    const imgPath = join(__dirname, '../../breaks', name)
+    const imgPath = join(__dirname, '../../section-breaks', name)
     const newPath = getNewPath(name)
     await copy(imgPath, newPath)
     const a = mismatch(/(.+)="(.+)"/gm, attrs, ['key', 'val'])
@@ -36,7 +36,7 @@ const getTags = ({
 }
 
 const getNewPath = (name) => {
-  const j = join('.documentary', name)
+  const j = join('.documentary/section-breaks', name)
   return j
 }
 

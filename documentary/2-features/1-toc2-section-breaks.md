@@ -52,17 +52,17 @@ There are 23 available section breaks which will be inserted in incremental orde
    <td><img src="src/breaks/11.svg"></td>
   </tr>
   <tr>
-   <td>12</td>
-   <td>13</td>
-   <td>14</td>
-   <td>15</td>
-   <td>16</td>
-   <td>17</td>
-   <td>18</td>
-   <td>19</td>
-   <td>20</td>
-   <td>21</td>
-   <td>22</td>
+   <td align="center"><strong>12</strong></td>
+   <td align="center"><strong>13</strong></td>
+   <td align="center"><strong>14</strong></td>
+   <td align="center"><strong>15</strong></td>
+   <td align="center"><strong>16</strong></td>
+   <td align="center"><strong>17</strong></td>
+   <td align="center"><strong>18</strong></td>
+   <td align="center"><strong>19</strong></td>
+   <td align="center"><strong>20</strong></td>
+   <td align="center"><strong>21</strong></td>
+   <td align="center"><strong>22</strong></td>
   </tr>
   <tr>
    <td><img src="src/breaks/12.svg"></td>
@@ -87,5 +87,7 @@ There are 23 available section breaks which will be inserted in incremental orde
   ["<img src='src/breaks/-1.svg'>", "<img src='src/breaks/-2.svg'>", "<img src='src/breaks/-3.svg'>"]
 ]
 ```
+
+By default, the section brake will link to the table of contents, however this can be changed by setting the `href` attribute. The images are also SVGs therefore it is possible to give them any width via the `width` attribute and they will stretch without any loss of quality. _Documentary_ will copy images from its source code to the `.documentary` directory in the repository.
 
 %~%

@@ -11,7 +11,7 @@ _Documentary_ is a command-line tool and a library to manage documentation of No
 yarn add -DE documentary
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/0.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg"></a></p>
 
 ## Key Features
 
@@ -27,17 +27,17 @@ This section has a quick look at the best features available in _Documentary_ an
 | *[Typedefs](#typedef-organisation)*     | Maintains a types.xml file to place types definition in it, available both for source code and documentation.            | 1. Keeps the types declarations in one place, allowing to quickly update it both in JavaScript JSDoc, and in markdown README.<br/>2. Automatically constructs type tables for documentation.<br/>3. Expands the JSDoc config (options) argument for other developers to have a quick glance at possible options.                      |
 | *[API Methods](#method-titles)*         | Creates good-looking headers for methods.                                                                                | 1. By writing each argument on new line, makes it easier to understand the signature of a function.<br/>2. Can maintain a separate title for table of contents to keep things simple there.                                                                                                                                           |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/1.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg"></a></p>
 
 ## Table Of Contents
 
 - [Key Features](#key-features)
 - [Table Of Contents](#table-of-contents)
 - [Installation & Usage](#installation--usage)
-  * [Section Breaks](#section-breaks)
 - [**TOC Generation**](#toc-generation)
   * [TOC Titles](#toc-titles)
   * [Level TOC Titles](#level-toc-titles)
+  * [Section Breaks](#section-breaks)
 - [**Simple Tables**](#simple-tables)
   * [Template Macros](#template-macros)
 - [**Examples Placement**](#examples-placement)
@@ -88,7 +88,7 @@ This section has a quick look at the best features available in _Documentary_ an
 - [TODO](#todo)
 - [Copyright](#copyright)
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/2.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg"></a></p>
 
 ## Installation & Usage
 
@@ -112,7 +112,29 @@ yarn doc
 
 When actively working on documentation, it is possible to use the `watch` mode with `-w` flag, or `-p` flag to also automatically push changes to a remote git repository, merging them into a single commit every time.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/3.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg"></a></p>
+
+## **TOC Generation**
+
+Table of contents are useful for navigation in a README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
+
+By default, top level `h1` headers written with `#` are ignored, but they can be added by passing `-h1` [CLI argument](#h1-in-toc).
+
+```md
+- [Table Of Contents](#table-of-contents)
+- [CLI](#cli)
+  * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
+- [API](#api)
+- [Copyright](#copyright)
+```
+
+### TOC Titles
+
+To be able to include a link to a specific position in the text (i.e., create an "anchor"), _Documentary_ has a `TOC Titles` feature. Any text written as `[Toc Title](t)` will generate a relevant position in the table of contents. It will automatically detect the appropriate level and be contained inside the current section.
+
+This feature can be useful when presenting some data in a table in a section, but wanting to include a link to each row in the table of contents so that the structure is immediately visible.
+
+**<a name="level-toc-titles">Level TOC Titles</a>**: if required, the level can be specified with a number of `#` symbols, such as `[Specific Level](###)`.
 
 ### Section Breaks
 
@@ -136,10 +158,10 @@ For example:
 ```
 
 ```
-<p align="center"><a href="#table-of-contents"><img src=".documentary/0.svg"></a></p>
-<p align="center"><a href="#table-of-contents"><img src=".documentary/15.svg"></a></p>
-<p align="center"><a href="#table-of-contents"><img src=".documentary/-1.svg"></a></p>
-<p align="center"><a href="#table-of-contents"><img src=".documentary/16.svg" href="https://hello.world" width="200"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg" href="https://hello.world" width="200"></a></p>
 ```
 
 There are 23 available section breaks which will be inserted in incremental order in the document. When the end of the list is reached, the count restarts. There are also 3 ending breaks which can be inserted at the end and do not participate in the rotation, so that they must be inserted manually. To select a specific image, its number can be given.
@@ -178,17 +200,17 @@ There are 23 available section breaks which will be inserted in incremental orde
    <td><img src="src/breaks/11.svg"></td>
   </tr>
   <tr>
-   <td>12</td>
-   <td>13</td>
-   <td>14</td>
-   <td>15</td>
-   <td>16</td>
-   <td>17</td>
-   <td>18</td>
-   <td>19</td>
-   <td>20</td>
-   <td>21</td>
-   <td>22</td>
+   <td align="center"><strong>12</strong></td>
+   <td align="center"><strong>13</strong></td>
+   <td align="center"><strong>14</strong></td>
+   <td align="center"><strong>15</strong></td>
+   <td align="center"><strong>16</strong></td>
+   <td align="center"><strong>17</strong></td>
+   <td align="center"><strong>18</strong></td>
+   <td align="center"><strong>19</strong></td>
+   <td align="center"><strong>20</strong></td>
+   <td align="center"><strong>21</strong></td>
+   <td align="center"><strong>22</strong></td>
   </tr>
   <tr>
    <td><img src="src/breaks/12.svg"></td>
@@ -211,29 +233,9 @@ There are 23 available section breaks which will be inserted in incremental orde
 | ----------------------------- | ----------------------------- | ----------------------------- |
 | <img src='src/breaks/-1.svg'> | <img src='src/breaks/-2.svg'> | <img src='src/breaks/-3.svg'> |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/4.svg"></a></p>
+By default, the section brake will link to the table of contents, however this can be changed by setting the `href` attribute. The images are also SVGs therefore it is possible to give them any width via the `width` attribute and they will stretch without any loss of quality. _Documentary_ will copy images from its source code to the `.documentary` directory in the repository.
 
-## **TOC Generation**
-
-Table of contents are useful for navigation in a README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
-
-By default, top level `h1` headers written with `#` are ignored, but they can be added by passing `-h1` [CLI argument](#h1-in-toc).
-
-```md
-- [Table Of Contents](#table-of-contents)
-- [CLI](#cli)
-  * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
-- [API](#api)
-- [Copyright](#copyright)
-```
-
-### TOC Titles
-
-To be able to include a link to a specific position in the text (i.e., create an "anchor"), _Documentary_ has a `TOC Titles` feature. Any text written as `[Toc Title](t)` will generate a relevant position in the table of contents. It will automatically detect the appropriate level and be contained inside the current section.
-
-This feature can be useful when presenting some data in a table in a section, but wanting to include a link to each row in the table of contents so that the structure is immediately visible.
-
-**<a name="level-toc-titles">Level TOC Titles</a>**: if required, the level can be specified with a number of `#` symbols, such as `[Specific Level](###)`.
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/4.svg"></a></p>
 
 ## **Simple Tables**
 
@@ -289,7 +291,7 @@ The values in the macro need to be separated with `,` which allows to substitute
 | ------- | -------- | ----------------- |
 | <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018 |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/5.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/5.svg"></a></p>
 
 ## **Examples Placement**
 
@@ -358,7 +360,7 @@ import Catchment from 'catchment'
 await documentary()
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/6.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/6.svg"></a></p>
 
 ## **Embedding Output**
 
@@ -467,7 +469,7 @@ An error has occurred.
  </tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/7.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/7.svg"></a></p>
 
 ## **Method Titles**
 
@@ -526,13 +528,13 @@ Generated from
 ```
 ````
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/8.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/8.svg"></a></p>
 
 ## **Comments Stripping**
 
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/9.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/9.svg"></a></p>
 
 ## **File Splitting**
 
@@ -545,8 +547,8 @@ documentary
 ├── 1-installation-and-usage
 │   └── index.md
 ├── 2-features
-│   ├── 1-section-breaks.md
 │   ├── 1-toc.md
+│   ├── 1-toc2-section-breaks.md
 │   ├── 10-typedef
 │   │   ├── 1-js.md
 │   │   ├── 2-readme.md
@@ -573,7 +575,7 @@ documentary
 └── index.md
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/10.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg"></a></p>
 
 ## **Replacement Rules**
 
@@ -585,7 +587,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | %NPM: package-name%      | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                               |
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/11.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg"></a></p>
 
 ## **Gif Detail**
 
@@ -621,7 +623,7 @@ The actual html placed in the `README` looks like the one below:
 </details>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/12.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg"></a></p>
 
 ## **`Type` Definition**
 
@@ -855,7 +857,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 </table>
 
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/13.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg"></a></p>
 
 ## **`@typedef` Organisation**
 
@@ -1275,7 +1277,7 @@ When a description ends with <code>Default &#96;value&#96;</code>, the default v
 </types>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/14.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg"></a></p>
 
 ## CLI
 
@@ -1306,7 +1308,7 @@ DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/15.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg"></a></p>
 
 ## API
 
@@ -1398,7 +1400,7 @@ import { createReadStream } from 'fs'
 - [Copyright](#copyright)
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/16.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg"></a></p>
 
 #PRO
 Underlined
@@ -1416,14 +1418,14 @@ Underlined
 
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/17.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg"></a></p>
 
 ## Glossary
 
 - **<a name="online-documentation">Online Documentation</a>**: documentation which is accessible online, such as on a GitHub website, or a language reference, e.g., [Node.js Documentation](https://nodejs.org/api/stream.html).
 - **<a name="editor-documentation">Editor Documentation</a>**: hints available to the users of an IDE, or an editor, in form of suggestions and descriptive hints on hover over variables' names.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/-3.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-3.svg"></a></p>
 
 ## TODO
 
@@ -1436,7 +1438,7 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 - [ ] Implement JS-based `tree`.
 - [ ] Implement a proper logging system without `NODE_DEBUG`.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/-2.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-2.svg"></a></p>
 
 ## Copyright
 
@@ -1444,4 +1446,4 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 
 [1]: https://artdeco.bz
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/-1.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg"></a></p>

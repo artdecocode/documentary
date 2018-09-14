@@ -34,6 +34,9 @@ export default async function run(options) {
     readable: doc,
     destination: output,
   })
+  if (output != '-') {
+    console.log('Saved documentation to %s', output)
+  }
 }
 
 /* documentary types/run.xml */
