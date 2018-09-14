@@ -53,9 +53,7 @@
         "NODE_DEBUG": "doc"
       },
       "args": [
-        "example/typedef-raw.js",
-        "-g",
-        "example/typedef.js"
+        "documentary",
       ],
       "console": "integratedTerminal",
       "skipFiles": [
