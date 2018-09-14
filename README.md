@@ -2,17 +2,30 @@
 
 [![npm version](https://badge.fury.io/js/documentary.svg)](https://npmjs.org/package/documentary)
 
-_Documentary_ is a command-line tool and a library to manage documentation of Node.js packages. Due to the fact that complex `README` files are harder to maintain, _Documentary_ serves as a pre-processor of documentation.
+_Documentary_ is a command-line tool and a library to manage documentation of Node.js packages. Due to the fact that complex `README` files are harder to maintain, _Documentary_ serves as a pre-processor of documentation. It enhances every area of the task of making available quality docs of Node.js (and possibly other languages) packages for fellow developers.
 
 ```sh
 yarn add -DE documentary
 ```
 
+## Key Features
+
+This section has a quick look at the best features available in _Documentary_ and how they help the documentation process.
+
+|                 Feature                 |                                                  Description                                                  |                                                                                                                                                              Advantages                                                                                                                                                               |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| *[Tables Of Contents](#toc-generation)* | Compiles an accurate table of contents for the content.                                                       | 1. Makes the structure of the document at hand.<br/>2. Allows to navigate across the page easily.<br/>3. Shows problems with incorrect levels structure which otherwise might not be visible.<br/>4. Allows to place anchor links with available from the TOC at any level in any place of the README.                                |
+| *[Examples](#examples-placement)*       | Allows to embed the source code into documentation.                                                           | 1. Increases productivity by eliminating the need to copy and paste the source code.<br/>2. Can run examples as Node.js scripts and check that they are working correctly (see forks below).                                                                                                                                          |
+| *[Forks](#embedding-output)*            | Makes it possible to run an example and embed its output directly into documentation.                         | 1. Enhances productivity by eliminating the need to copy and paste the output.<br/>2. Makes sure the output is always up-to-date with documented one.<br/>3. Will make it visible if a change to the code base lead to a different output (implicit part of regression testing).<br/>4. Ensures that the example is actually working. |
+| *[Tables](#simple-tables)*              | Compiles tables from arrays without having to write html or markdown.                                         | 1. Removes the need to manually build tables either by hand, online or using other tools.<br/>2. Provides table macros to reduce repetitive information and substitute only the core data into templates.                                                                                                                             |
+| *[Typedefs](#typedef-organisation)*     | Maintains a types.xml file to place types definition in it, available both for source code and documentation. | 1. Keeps the types declarations in one place, allowing to quickly update it both in JavaScript JSDoc, and in markdown README.<br/>2. Automatically constructs type tables for documentation.<br/>3. Expands the JSDoc config (options) argument for other developers to have a quick glance at possible options.                      |
+| *[API Methods](#method-titles)*         | Creates good-looking headers for methods.                                                                     | 1. By writing each argument on new line, makes it easier to understand the signature of a function.<br/>2. Can maintain a separate title for table of contents to keep things simple there.                                                                                                                                           |
+
 ## Table Of Contents
 
+- [Key Features](#key-features)
 - [Table Of Contents](#table-of-contents)
 - [Installation & Usage](#installation--usage)
-- [Key Features](#key-features)
 - [**TOC Generation**](#toc-generation)
   * [TOC Titles](#toc-titles)
   * [Level TOC Titles](#level-toc-titles)
@@ -88,16 +101,7 @@ yarn doc
 
 When actively working on documentation, it is possible to use the `watch` mode with `-w` flag, or `-p` flag to also automatically push changes to a remote git repository, merging them into a single commit every time.
 
-## Key Features
 
-This section has a quick look at the best features available in _Documentary_ and how they help the documentation process.
-
-|  Feature   |                                                  Description                                                  |                                                                                                                                                              Advantages                                                                                                                                                               |
-| ---------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| *Examples* | Allows to embed the source code into documentation.                                                           | 1. Increases productivity by eliminating the need to copy and paste the source code.<br/>2. Can run examples as Node.js scripts and check that they are working correctly (see forks below).                                                                                                                                          |
-| *Forks*    | Makes it possible to run an example and embed its output directly into documentation.                         | 1. Enhances productivity by eliminating the need to copy and paste the output.<br/>2. Makes sure the output is always up-to-date with documented one.<br/>3. Will make it visible if a change to the code base lead to a different output (implicit part of regression testing).<br/>4. Ensures that the example is actually working. |
-| *Tables*   | Compiles tables from arrays without having to write html or markdown.                                         | 1. Removes the need to manually build tables either by hand, online or using other tools.<br/>2. Provides table macros to reduce repetitive information and substitute only the core data into templates.                                                                                                                             |
-| *Typedefs* | Maintains a types.xml file to place types definition in it, available both for source code and documentation. | 1. Keeps the types declarations in one place, allowing to quickly update it both in JavaScript JSDoc, and in markdown README.<br/>2. Automatically constructs type tables for documentation.<br/>3. Expands the JSDoc config (options) argument for other developers to have a quick glance at possible options.                      |
 
 ## **TOC Generation**
 
@@ -1285,11 +1289,12 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 
 - [ ] Test using `zoroaster`'s masks.
 - [ ] Gather all types across the whole documentation first to be able to independently link them even if they are in separate files.
-- [ ] Replace the source in example with a `require` call in addition to `import` statement.
+- [x] Replace the source in example with a `require` call in addition to `import` statement.
 - [ ] Implement caching.
 - [ ] Trigger compilation whenever an embedded example changes.
 - [ ] Purge image cache from CLI (e.g., `curl -X https://github.com/artdecocode/documentary/raw/${BRANCH}${PATH}`)
 - [ ] Implement JS-based `tree`.
+- [ ] Implement a proper logging system without `NODE_DEBUG`.
 
 ## Copyright
 

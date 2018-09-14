@@ -1,7 +1,14 @@
 import { debuglog } from 'util'
+import { c as color } from 'erte'
 
 const LOG = debuglog('doc')
 
+/**
+ *
+ * @param {*} match
+ * @param {*} macro
+ * @param {string} table
+ */
 export function replacer(match, macro, table) {
   const { tableMacros = {} } = this
   const macroFn = tableMacros[macro]
@@ -21,6 +28,17 @@ export function replacer(match, macro, table) {
     ].map(r => getRow(r, lengths))
     return [h, ...a].join('\n')
   } catch (err) {
+    const token = /Unexpected token (.) in JSON at position (\d+)/.exec(err.message)
+    if (token) {
+      const [, t, pos] = token
+      const p = parseInt(pos)
+      const before = Math.max(p - 100, 0)
+      const s = table.substring(before, p)
+      const s2 = table.substring(p + 1, p + 100)
+      const r = color(t, 'red')
+      const tt = `${s}${r}${s2}`
+      LOG(tt)
+    }
     LOG('Could not parse the table.')
     return match
   }

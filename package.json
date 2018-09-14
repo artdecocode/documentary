@@ -75,6 +75,7 @@
   "dependencies": {
     "argufy": "1.2.1",
     "catchment": "3.1.1",
+    "erte": "1.1.4",
     "mismatch": "1.0.2",
     "pedantry": "2.2.0",
     "restream": "3.2.1",
