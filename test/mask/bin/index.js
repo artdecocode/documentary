@@ -111,3 +111,17 @@ Debugging with VS Code is made possible with `launch.json` configuration file.
 
 (c) Art Deco Code 2018
 /**/
+
+// prints the TOC with -t flag
+test/fixtures/README-source.md -t
+
+/* expected */
+- [Table Of Contents](#table-of-contents)
+- [CLI](#cli)
+  * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
+- [API](#api)
+    * [`async runSoftware(string: path, config: Config): string`](#async-runsoftwarestring-pathconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
+- [Example](#example)
+- [Copyright](#copyright)
+
+/**/
