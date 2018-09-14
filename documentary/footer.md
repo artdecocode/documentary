@@ -33,10 +33,13 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 - [ ] Purge image cache from CLI (e.g., `curl -X https://github.com/artdecocode/documentary/raw/${BRANCH}${PATH}`)
 - [ ] Implement JS-based `tree`.
 - [ ] Implement a proper logging system without `NODE_DEBUG`.
+- [ ] Add more section breaks.
 
 %~ -2%
 
 ## Copyright
+
+Section breaks from [FoglihtenDeH0](https://www.1001fonts.com/foglihtendeh0-font.html) font.
 
 (c) [Art Deco][1] 2018
 
