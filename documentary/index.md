@@ -41,6 +41,11 @@ This section has a quick look at the best features available in _Documentary_ an
     "1. Removes the need to manually build tables either by hand, online or using other tools.<br/>2. Provides table macros to reduce repetitive information and substitute only the core data into templates."
   ],
   [
+    "*[Live Push](#automatic-push)*",
+    "Detects changes to the source documentation files, re-compiles the output README.md and pushes to the remote repository.",
+    "1. The preview is available on-line almost immediately after a change is made. <br/>2. Allows to skip writing a commit message and the push command every time a change is made."
+  ],
+  [
     "*[Typedefs](#typedef-organisation)*",
     "Maintains a types.xml file to place types definition in it, available both for source code and documentation.",
     "1. Keeps the types declarations in one place, allowing to quickly update it both in JavaScript JSDoc, and in markdown README.<br/>2. Automatically constructs type tables for documentation.<br/>3. Expands the JSDoc config (options) argument for other developers to have a quick glance at possible options."
