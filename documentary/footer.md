@@ -1,4 +1,3 @@
-
 #PRO
 Underlined
 `Titles`
@@ -15,23 +14,35 @@ Underlined
 
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
+%~%
+
 ## Glossary
 
 - **[Online Documentation](t)**: documentation which is accessible online, such as on a GitHub website, or a language reference, e.g., [Node.js Documentation](https://nodejs.org/api/stream.html).
 - **[Editor Documentation](t)**: hints available to the users of an IDE, or an editor, in form of suggestions and descriptive hints on hover over variables' names.
 
+%~ -3%
+
 ## TODO
 
 - [ ] Test using `zoroaster`'s masks.
 - [ ] Gather all types across the whole documentation first to be able to independently link them even if they are in separate files.
-- [ ] Replace the source in example with a `require` call in addition to `import` statement.
+- [x] Replace the source in example with a `require` call in addition to `import` statement.
 - [ ] Implement caching.
 - [ ] Trigger compilation whenever an embedded example changes.
 - [ ] Purge image cache from CLI (e.g., `curl -X https://github.com/artdecocode/documentary/raw/${BRANCH}${PATH}`)
+- [ ] Implement JS-based `tree`.
+- [ ] Implement a proper logging system without `NODE_DEBUG`.
+- [ ] Add more section breaks.
+
+%~ -2%
 
 ## Copyright
+
+Section breaks from [FoglihtenDeH0](https://www.1001fonts.com/foglihtendeh0-font.html) font.
 
 (c) [Art Deco][1] 2018
 
 [1]: https://artdeco.bz
 
+%~ -1%

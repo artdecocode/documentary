@@ -1,9 +1,12 @@
+## **Method Titles**
 
-### Method Title
+_Documentary_ can generate neat titles useful for API documentation. The method signature should be specified in a `JSON` array, where every member is an argument written as an array containing its name and type. The type can be either a string, or an object.
 
-It is possible to generate neat titles useful for API documentation with `documentary`. The method signature should be specified as a `JSON` array, where every member is an argument specified as an array. The first item in the argument array is the argument name, and the second one is type. Type can be either a string, or an object. If it is an object, each value in the object will be an array and first contain the property type, secondly - the default value. To mark a property as optional, the `?` symbol can be used at the end. The third item is the short name for the table of contents (so that a complex object can be referenced to its type).
+For object types, each value is an array which contains the property type and its default value. To mark a property as optional, the `?` symbol can be used at the end of the key.
 
-```#### async runSoftware => string
+The last item in the argument array is used when the argument is an object and is a short name to be place in the table of contents (so that a complex object can be referenced to its type).
+
+```### async runSoftware => string
 [
   ["path", "string"],
   ["config", {
@@ -18,7 +21,7 @@ It is possible to generate neat titles useful for API documentation with `docume
 Generated from
 
 ````m
-```#### async runSoftware => string
+```### async runSoftware => string
 [
   ["path", "string"],
   ["config", {
@@ -31,7 +34,7 @@ Generated from
 ```
 ````
 
-```#### async runSoftware
+```### async runSoftware
 [
   ["path", "string"]
 ]
@@ -40,19 +43,32 @@ Generated from
 Generated from
 
 ````m
-```#### async runSoftware
+```### async runSoftware
 [
   ["path", "string"]
 ]
 ```
 ````
 
-```#### runSoftware => string
+```### runSoftware => string
 ```
 
 Generated from
 
 ````m
-```#### runSoftware => string
+```### runSoftware => string
 ```
 ````
+
+
+```### runSoftware
+```
+
+Generated from
+
+````m
+```### runSoftware
+```
+````
+
+%~%

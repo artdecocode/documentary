@@ -22,7 +22,8 @@ function replacement(match, name, body) {
       : body.split(',')
     const mappedParts = parts.map(p => {
       const t = hasEscapedComma ? p.replace(/\\,/g, ',') : p
-      const r = t
+      const tt = this.replaceInnerCode ? this.replaceInnerCode(t) : t
+      const r = tt
         .replace(/\$(\d+)/g, (_, s) => {
           const i = parseInt(s)
           const val = row[i - 1]

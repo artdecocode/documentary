@@ -12,9 +12,9 @@ const ts = makeTestSuite(path, {
   async getResults(input, { doc }) {
     const [source, ...args] = input.split(' ')
     const { stdout, stderr } = await doc(source, ...args)
-    if (stderr) {
-      throw new Error(stderr)
-    }
+    // if (stderr) {
+    //   throw new Error(stderr)
+    // }
     return stdout
   },
   context: Context,

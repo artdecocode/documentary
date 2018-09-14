@@ -1,5 +1,4 @@
-
-### `Type` Definition
+## **`Type` Definition**
 
 Often, it is required to document a type of an object, which methods can use. To display the information about type's properties in a table, the `TYPE` macro can be used. It allows to show all possible properties that an object can contain, show which ones are required, give examples and link them in the table of contents (disabled by default).
 
@@ -90,9 +89,9 @@ Start the table of contents from level 2, i.e., excluding the `#` title.</d>
 
 Otherwise, the content will not be processed by `GitHub`. However, it will add an extra margin to the content of the cell as it will be transformed into a paragraph.
 
-#### Dedicated Example Row
+### Dedicated Example Row
 
-Because examples occupy a lot of space which causes table squeezing on GitHub and scrolling on NPM, `documentary` allows to dedicate a special row to an example. It can be achieved by adding a `row` attribute to the `e` element, like so:
+Because examples occupy a lot of space which causes table squeezing on GitHub and scrolling on NPM, _Documentary_ allows to dedicate a special row to an example. It can be achieved by adding a `row` attribute to the `e` element, like so:
 
 ````xml
 %TYPE
@@ -178,3 +177,5 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
   <d>What HTTP method to use to send data (only works when <code>data</code> is set).</d>
 </p>
 %
+
+%~%

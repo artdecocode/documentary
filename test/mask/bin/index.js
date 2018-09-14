@@ -63,3 +63,65 @@ test/mask/bin/macro.md
 | --------------------------------------------------------------- | ------------------------------------------------- | ----------------- |
 | <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018        |
 /**/
+
+// prints in reverse order
+test/fixtures/order -r
+
+/* expected */
+## index
+
+- [index](#index)
+- [30-file](#30-file)
+- [25-file](#25-file)
+- [footer](#footer)
+
+## 30-file
+
+## 25-file
+
+## footer
+/**/
+
+// generates correct markdown from a directory
+test/fixtures/README
+
+/* expected */
+# readme
+
+This is a composite documentation split into multiple files.
+
+## a hidden file
+
+is a real treasure
+
+## Introduction
+
+Before software can be reusable it first has to be usable. (Ralph Johnson)
+
+## Debugging
+
+Debugging is an essential part of development process.
+
+### VS Code
+
+Debugging with VS Code is made possible with `launch.json` configuration file.
+
+
+---
+
+(c) Art Deco Code 2018
+/**/
+
+// prints the TOC with -t flag
+test/fixtures/README-source.md -t
+
+/* expected */
+- [Table Of Contents](#table-of-contents)
+- [CLI](#cli)
+  * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
+- [API](#api)
+    * [`async runSoftware(string: path, config: Config): string`](#async-runsoftwarestring-pathconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
+- [Example](#example)
+- [Copyright](#copyright)
+
+/**/

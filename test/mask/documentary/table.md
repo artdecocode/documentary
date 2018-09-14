@@ -35,7 +35,7 @@ The program accepts the following arguments:
 | test |
 /**/
 
-// replaces a table with a macro and inner code
+// replaces a table with inner code in data
 %TABLE-MACRO Company
   $1
 %
@@ -46,10 +46,21 @@ The program accepts the following arguments:
 ]
 ```
 
+// replaces a table with inner code in macro
+%TABLE-MACRO Company
+  `$1`
+%
+```table Company
+[
+  ["Test"],
+  ["hello world"]
+]
+```
+
 /* expected */
 |     Test      |
 | ------------- |
-| hello `world` |
+| `hello world` |
 /**/
 
 // replaces followed by a code block

@@ -31,11 +31,19 @@ export const read = async (source) => {
   return data
 }
 
-export const getStream = (path) => {
+/**
+ * Create an input stream for all data.
+ * @param {string} path Path to the directory or file.
+ * @param {boolean} [reverse=false] If directory, read in reverse order.
+ */
+export const getStream = (path, reverse) => {
   const ls = lstatSync(path)
   let stream
   if (ls.isDirectory()) {
-    stream = new Pedantry(path)
+    stream = new Pedantry(path, {
+      reverse,
+      addBlankLine: true,
+    })
   } else if (ls.isFile()) {
     stream = createReadStream(path)
   }

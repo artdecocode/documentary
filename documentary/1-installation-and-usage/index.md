@@ -19,3 +19,5 @@ yarn doc
 ```
 
 When actively working on documentation, it is possible to use the `watch` mode with `-w` flag, or `-p` flag to also automatically push changes to a remote git repository, merging them into a single commit every time.
+
+%~%

@@ -26,12 +26,6 @@
   dependencies:
     makepromise "2.0.0"
 
-"@wrote/read-dir-structure@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@wrote/read-dir-structure/-/read-dir-structure-1.0.0.tgz#11b827934b493b2f730a32a91551eadacd41b936"
-  dependencies:
-    makepromise "2.0.0"
-
 "@wrote/read-dir-structure@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@wrote/read-dir-structure/-/read-dir-structure-1.0.1.tgz#fe1bf41715a0dbf7c2fb65a7d7b4fefab127eb24"
@@ -197,11 +191,11 @@ node-modules-regexp@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/node-modules-regexp/-/node-modules-regexp-1.0.0.tgz#8d9dbe28964a4ac5712e9131642107c71e90ec40"
 
-pedantry@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/pedantry/-/pedantry-1.0.1.tgz#d32d78a3dfcf130c402fa65dce819c199c29ddbe"
+pedantry@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/pedantry/-/pedantry-2.2.0.tgz#bba0dd81b77e08fcc153fc9e53dc60671686a304"
   dependencies:
-    "@wrote/read-dir-structure" "1.0.0"
+    "@wrote/read-dir-structure" "1.0.1"
 
 pirates@4.0.0:
   version "4.0.0"

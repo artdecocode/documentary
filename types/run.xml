@@ -1,0 +1,19 @@
+<types>
+  <type name="RunOptions" desc="Options for the run command.">
+    <prop string name="source">
+      The path to the source directory or file.
+    </prop>
+    <prop string name="output" default="-">
+      The path where to save the output. When `-` is passed, prints to `stdout`.
+    </prop>
+    <prop boolean name="reverse" default="false">
+      Read files in directories in reverse order, such that `30.md` comes before `1.md`. Useful for blogs.
+    </prop>
+    <prop boolean name="justToc" default="false">
+      Only print the table of contents and exit.
+    </prop>
+    <prop boolean name="h1" default="false">
+      Include `H1` headers in the table of contents.
+    </prop>
+  </type>
+</types>
