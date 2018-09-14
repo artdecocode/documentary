@@ -91,7 +91,7 @@ Otherwise, the content will not be processed by `GitHub`. However, it will add a
 
 ### Dedicated Example Row
 
-Because examples occupy a lot of space which causes table squeezing on GitHub and scrolling on NPM, `documentary` allows to dedicate a special row to an example. It can be achieved by adding a `row` attribute to the `e` element, like so:
+Because examples occupy a lot of space which causes table squeezing on GitHub and scrolling on NPM, _Documentary_ allows to dedicate a special row to an example. It can be achieved by adding a `row` attribute to the `e` element, like so:
 
 ````xml
 %TYPE
