@@ -1,3 +1,16 @@
+## 14 September 2018
+
+### 1.16.0
+
+- [feature] Section breaks to visually split content and jump back to the top.
+- [feature] Compile read files in reverse order (e.g., for blogs).
+- [feature] Display the position of error when trying to parse a table.
+- [fix] Make sure pointers such as `$1` in inner code in table macros also participate in replacements there.
+- [test] Add a separate folder for masts.
+- [docs] Move features 1 level up, separate sections for fork and examples, add key features summary at the top; add section breaks; insert logo.
+- [deps] Update _Pedantry_ to automatically insert blank lines between files.
+- [refactor] Create `ChunkReplaceable` in the _Toc_ stream for easier processing of incoming files; change `run` method to not buffer the input stream which Toc is generated, but read files again.
+
 ## 13 September 2018
 
 ### 1.15.2
