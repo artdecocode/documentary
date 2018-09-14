@@ -1,4 +1,3 @@
-
 ### Importing Types
 
 A special `import` element can be used to import a type using _VS Code_'s _TypeScript_ engine. An import is just a typedef which looks like `/** @typedef {import('package').Type} Type */`. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.

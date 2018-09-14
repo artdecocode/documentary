@@ -37,6 +37,7 @@ export const getStream = (path, reverse) => {
   if (ls.isDirectory()) {
     stream = new Pedantry(path, {
       reverse,
+      addBlankLine: true,
     })
   } else if (ls.isFile()) {
     stream = createReadStream(path)

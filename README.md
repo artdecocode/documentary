@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/documentary.svg)](https://npmjs.org/package/documentary)
 
-`documentary` is a command-line tool and a library to manage documentation of Node.js packages. Due to the fact that complex `README` files are harder to maintain, `documentary` serves as a pre-processor of documentation.
+_Documentary_ is a command-line tool and a library to manage documentation of Node.js packages. Due to the fact that complex `README` files are harder to maintain, _Documentary_ serves as a pre-processor of documentation.
 
 ```sh
 yarn add -DE documentary
@@ -15,7 +15,7 @@ yarn add -DE documentary
 - [Quick Features](#quick-features)
 - [**TOC Generation**](#toc-generation)
   * [TOC Titles](#toc-titles)
-    * [Specific Level](#specific-level)
+  * [Level TOC Titles](#level-toc-titles)
 - [**Simple Tables**](#simple-tables)
   * [Template Macros](#template-macros)
 - [**Examples Placement**](#examples-placement)
@@ -87,12 +87,14 @@ yarn doc
 ```
 
 When actively working on documentation, it is possible to use the `watch` mode with `-w` flag, or `-p` flag to also automatically push changes to a remote git repository, merging them into a single commit every time.
+
 ## Quick Features
 
 This section has a quick look at all features in _Documentary_.
 
 | Feature | Description |
 | ------- | ----------- |
+
 ## **TOC Generation**
 
 Table of contents are useful for navigation in a README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
@@ -113,7 +115,8 @@ To be able to include a link to a specific position in the text (i.e., create an
 
 This feature can be useful when presenting some data in a table in a section, but wanting to include a link to each row in the table of contents so that the structure is immediately visible.
 
-**<a name="specific-level">Specific Level</a>**: if required, the level can be specified with a number of `#` symbols, such as `[Specific Level](######)`.
+**<a name="level-toc-titles">Level TOC Titles</a>**: if required, the level can be specified with a number of `#` symbols, such as `[Specific Level](###)`.
+
 ## **Simple Tables**
 
 One of the most common problem with markdown is that it is hard to write tables. They must be written either as html, or as markdown, which is troublesome and requires effort. Although there are online tools to build markdown tables, with _Documentary_ the process is even simpler: the data just needs to be put into a JSON array.
@@ -167,6 +170,7 @@ The values in the macro need to be separated with `,` which allows to substitute
 | Company | Tag Line | Evaluation & Exit |
 | ------- | -------- | ----------------- |
 | <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018 |
+
 ## **Examples Placement**
 
 _Documentary_ can be used to embed examples into the documentation. The example file needs to be specified with the following marker:
@@ -233,6 +237,7 @@ import Catchment from 'catchment'
 ```js
 await documentary()
 ```
+
 ## **Embedding Output**
 
 When placing examples, it is important to show the output that they produce. This can be achieved using the `FORK` marker.
@@ -396,9 +401,11 @@ Generated from
 ```### runSoftware
 ```
 ````
+
 ## **Comments Stripping**
 
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
+
 ## **File Splitting**
 
 _Documentary_ can read a directory and put files together into a single `README` file. The files will be sorted in alphabetical order, and their content merged into a single stream. The `index.md` and `footer.md` are special in this respect, such that the `index.md` of a directory will always go first, and the `footer.md` will go last. To print in reverse order, for example when writing a blog and name files by their dates, the [`--reverse` flag](#reverse-order) can be passed to the CLI.
@@ -408,7 +415,6 @@ Example structure used in this documentation:
 ```m
 documentary
 ├── 1-installation-and-usage
-│   ├── 1-vs-code.md
 │   └── index.md
 ├── 2-features
 │   ├── 1-toc.md
@@ -436,6 +442,7 @@ documentary
 ├── footer.md
 └── index.md
 ```
+
 ## **Replacement Rules**
 
 There are some other built-in rules for replacements which are listed in this table.
@@ -445,6 +452,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
 | %NPM: package-name%      | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                               |
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
+
 ## **Gif Detail**
 
 The `GIF` rule will inserts a gif animation inside of a `<detail>` block. To highlight the summary with background color, `<code>` should be used instead of back-ticks. [TOC title link](##toc-titles) also work inside the summary.
@@ -1128,6 +1136,7 @@ When a description ends with <code>Default &#96;value&#96;</code>, the default v
   </type>
 </types>
 ```
+
 ## CLI
 
 The program is used from the CLI (or `package.json` script).
@@ -1156,9 +1165,11 @@ When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print
 DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
+
 ## API
 
 The programmatic use of _Documentary_ is intended for developers who want to use this software in their projects.
+
 ### `Toc` Stream
 
 `Toc` is a transform stream which can generate a table of contents for incoming markdown data. For every title that the transform sees, it will push the appropriate level of the table of contents.
@@ -1281,4 +1292,3 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 (c) [Art Deco][1] 2018
 
 [1]: https://artdeco.bz
-

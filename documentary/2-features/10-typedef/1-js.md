@@ -1,4 +1,3 @@
-
 ### JS Placement
 
 To include a compiled declaration into a source code, the following line should be placed in the `.js` file (where the `types/static.xml` file exists in the project directory from which the `doc` command will be run):

@@ -1,4 +1,3 @@
-
 #PRO
 Underlined
 `Titles`
@@ -35,4 +34,3 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 (c) [Art Deco][1] 2018
 
 [1]: https://artdeco.bz
-

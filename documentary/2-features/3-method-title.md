@@ -1,4 +1,3 @@
-
 ## **Method Titles**
 
 _Documentary_ can generate neat titles useful for API documentation. The method signature should be specified in a `JSON` array, where every member is an argument written as an array containing its name and type. The type can be either a string, or an object.
