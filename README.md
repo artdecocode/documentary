@@ -34,10 +34,10 @@ This section has a quick look at the best features available in _Documentary_ an
 - [Key Features](#key-features)
 - [Table Of Contents](#table-of-contents)
 - [Installation & Usage](#installation--usage)
+  * [Section Breaks](#section-breaks)
 - [**TOC Generation**](#toc-generation)
   * [TOC Titles](#toc-titles)
   * [Level TOC Titles](#level-toc-titles)
-  * [Section Breaks](#section-breaks)
 - [**Simple Tables**](#simple-tables)
   * [Template Macros](#template-macros)
 - [**Examples Placement**](#examples-placement)
@@ -114,28 +114,6 @@ When actively working on documentation, it is possible to use the `watch` mode w
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/3.svg"></a></p>
 
-## **TOC Generation**
-
-Table of contents are useful for navigation in a README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
-
-By default, top level `h1` headers written with `#` are ignored, but they can be added by passing `-h1` [CLI argument](#h1-in-toc).
-
-```md
-- [Table Of Contents](#table-of-contents)
-- [CLI](#cli)
-  * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
-- [API](#api)
-- [Copyright](#copyright)
-```
-
-### TOC Titles
-
-To be able to include a link to a specific position in the text (i.e., create an "anchor"), _Documentary_ has a `TOC Titles` feature. Any text written as `[Toc Title](t)` will generate a relevant position in the table of contents. It will automatically detect the appropriate level and be contained inside the current section.
-
-This feature can be useful when presenting some data in a table in a section, but wanting to include a link to each row in the table of contents so that the structure is immediately visible.
-
-**<a name="level-toc-titles">Level TOC Titles</a>**: if required, the level can be specified with a number of `#` symbols, such as `[Specific Level](###)`.
-
 ### Section Breaks
 
 A section break is a small image in the center of the page which indicates the end of a section. With larger sections which also include sub-sections, this feature can help to differentiate when the topic finishes and another one starts. They can also be used to navigate back to the table of contents, or a specified location.
@@ -180,9 +158,11 @@ There are 23 available section breaks which will be inserted in incremental orde
    <th>8</th>
    <th>9</th>
    <th>10</th>
+   <th>11</th>
   </tr>
  </thead>
  <tbody>
+  <tr/>
   <tr>
    <td><img src="src/breaks/0.svg"></td>
    <td><img src="src/breaks/1.svg"></td>
@@ -195,6 +175,33 @@ There are 23 available section breaks which will be inserted in incremental orde
    <td><img src="src/breaks/8.svg"></td>
    <td><img src="src/breaks/9.svg"></td>
    <td><img src="src/breaks/10.svg"></td>
+   <td><img src="src/breaks/11.svg"></td>
+  </tr>
+  <tr>
+   <td>12</td>
+   <td>13</td>
+   <td>14</td>
+   <td>15</td>
+   <td>16</td>
+   <td>17</td>
+   <td>18</td>
+   <td>19</td>
+   <td>20</td>
+   <td>21</td>
+   <td>22</td>
+  </tr>
+  <tr>
+   <td><img src="src/breaks/12.svg"></td>
+   <td><img src="src/breaks/13.svg"></td>
+   <td><img src="src/breaks/14.svg"></td>
+   <td><img src="src/breaks/15.svg"></td>
+   <td><img src="src/breaks/16.svg"></td>
+   <td><img src="src/breaks/17.svg"></td>
+   <td><img src="src/breaks/18.svg"></td>
+   <td><img src="src/breaks/19.svg"></td>
+   <td><img src="src/breaks/20.svg"></td>
+   <td><img src="src/breaks/21.svg"></td>
+   <td><img src="src/breaks/22.svg"></td>
   </tr>
  </tbody>
 </table>
@@ -202,9 +209,31 @@ There are 23 available section breaks which will be inserted in incremental orde
 
 |              -1               |              -2               |              -3               |
 | ----------------------------- | ----------------------------- | ----------------------------- |
-| <img scr='src/breaks/-1.svg'> | <img scr='src/breaks/-2.svg'> | <img scr='src/breaks/-3.svg'> |
+| <img src='src/breaks/-1.svg'> | <img src='src/breaks/-2.svg'> | <img src='src/breaks/-3.svg'> |
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/4.svg"></a></p>
+
+## **TOC Generation**
+
+Table of contents are useful for navigation in a README document. When a `%TOC%` placeholder is found in the file, it will be replaced with an extracted structure. Titles appearing in comments and code blocks will be skipped.
+
+By default, top level `h1` headers written with `#` are ignored, but they can be added by passing `-h1` [CLI argument](#h1-in-toc).
+
+```md
+- [Table Of Contents](#table-of-contents)
+- [CLI](#cli)
+  * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
+- [API](#api)
+- [Copyright](#copyright)
+```
+
+### TOC Titles
+
+To be able to include a link to a specific position in the text (i.e., create an "anchor"), _Documentary_ has a `TOC Titles` feature. Any text written as `[Toc Title](t)` will generate a relevant position in the table of contents. It will automatically detect the appropriate level and be contained inside the current section.
+
+This feature can be useful when presenting some data in a table in a section, but wanting to include a link to each row in the table of contents so that the structure is immediately visible.
+
+**<a name="level-toc-titles">Level TOC Titles</a>**: if required, the level can be specified with a number of `#` symbols, such as `[Specific Level](###)`.
 
 ## **Simple Tables**
 
@@ -516,6 +545,7 @@ documentary
 ├── 1-installation-and-usage
 │   └── index.md
 ├── 2-features
+│   ├── 1-section-breaks.md
 │   ├── 1-toc.md
 │   ├── 10-typedef
 │   │   ├── 1-js.md
