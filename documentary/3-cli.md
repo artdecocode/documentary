@@ -64,3 +64,5 @@ When [`NODE_DEBUG=doc`](t) is set, the program will print debug information, e.g
 DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
+
+%~%

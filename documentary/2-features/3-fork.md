@@ -80,3 +80,5 @@ It works exactly the same as `%FORK%` but will print the output of the process's
  </td>
  </tr>
 </table>
+
+%~%

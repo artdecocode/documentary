@@ -1,12 +1,17 @@
-# documentary
+Documentary
+===
 
 %NPM: documentary%
+
+<a href="https://github.com/artdecocode/documentary"><img src="images/LOGO.svg" width="150" align="left"></a>
 
 _Documentary_ is a command-line tool and a library to manage documentation of Node.js packages. Due to the fact that complex `README` files are harder to maintain, _Documentary_ serves as a pre-processor of documentation. It enhances every area of the task of making available quality docs of Node.js (and possibly other languages) packages for fellow developers.
 
 ```sh
 yarn add -DE documentary
 ```
+
+%~%
 
 ## Key Features
 
@@ -18,7 +23,7 @@ This section has a quick look at the best features available in _Documentary_ an
   [
     "*[Tables Of Contents](#toc-generation)*",
     "Compiles an accurate table of contents for the content.",
-    "1. Makes the structure of the document at hand.<br/>2. Allows to navigate across the page easily.<br/>3. Shows problems with incorrect levels structure which otherwise might not be visible.<br/>4. Allows to place anchor links with available from the TOC at any level in any place of the README."
+    "1. Makes the structure of the document immediately visible to the reader.<br/>2. Allows to navigate across the page easily.<br/>3. Shows problems with incorrect levels structure which otherwise might not be visible.<br/>4. Allows to place anchor links with available from the TOC at any level in any place of the README."
   ],
   [
     "*[Examples](#examples-placement)*",
@@ -48,6 +53,10 @@ This section has a quick look at the best features available in _Documentary_ an
 ]
 ```
 
+%~%
+
 ## Table Of Contents
 
 %TOC%
+
+%~%

@@ -14,10 +14,14 @@ Underlined
 
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
+%~%
+
 ## Glossary
 
 - **[Online Documentation](t)**: documentation which is accessible online, such as on a GitHub website, or a language reference, e.g., [Node.js Documentation](https://nodejs.org/api/stream.html).
 - **[Editor Documentation](t)**: hints available to the users of an IDE, or an editor, in form of suggestions and descriptive hints on hover over variables' names.
+
+%~ -3%
 
 ## TODO
 
@@ -30,8 +34,12 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 - [ ] Implement JS-based `tree`.
 - [ ] Implement a proper logging system without `NODE_DEBUG`.
 
+%~ -2%
+
 ## Copyright
 
 (c) [Art Deco][1] 2018
 
 [1]: https://artdeco.bz
+
+%~ -1%

@@ -27,6 +27,26 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch Zoroaster Mask",
+      "program": "${workspaceFolder}/node_modules/.bin/zoroaster",
+      "env": {
+        "NODE_DEBUG": "doc",
+      },
+      "console": "integratedTerminal",
+      "args": [
+        "test/masked",
+        "-a",
+        "-w",
+        "-t", "99999999"
+      ],
+      "autoAttachChildProcesses": true,
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch App",
       "program": "${workspaceFolder}/src/bin/alamode.js",
       "env": {

@@ -27,3 +27,5 @@ The actual html placed in the `README` looks like the one below:
   </table>
 </details>
 ```
+
+%~%

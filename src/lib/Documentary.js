@@ -13,6 +13,7 @@ import typeRule from './rules/type'
 import badgeRule from './rules/badge'
 import typedefMdRule from './rules/typedef-md'
 import macroRule from './rules/macro'
+import sectionBrakeRule from './rules/section-brake'
 
 export default class Documentary extends Replaceable {
   constructor({ toc } = {}) {
@@ -59,6 +60,7 @@ export default class Documentary extends Replaceable {
       tocRule,
       gifRule,
       typeRule,
+      sectionBrakeRule,
 
       insertTable,
       typedefMdRule, // places a table hence just before table

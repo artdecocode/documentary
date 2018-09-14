@@ -36,3 +36,5 @@ import Catchment from 'catchment'
 ```
 
 %EXAMPLE: example/example-partial.js%
+
+%~%

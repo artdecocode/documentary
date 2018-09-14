@@ -34,3 +34,5 @@ The values in the macro need to be separated with `,` which allows to substitute
 | Company | Tag Line | Evaluation & Exit |
 | ------- | -------- | ----------------- |
 | <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018 |
+
+%~%

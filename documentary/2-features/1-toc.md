@@ -23,3 +23,5 @@ To be able to include a link to a specific position in the text (i.e., create an
 This feature can be useful when presenting some data in a table in a section, but wanting to include a link to each row in the table of contents so that the structure is immediately visible.
 
 **[Level TOC Titles](###)**: if required, the level can be specified with a number of `#` symbols, such as `[Specific Level](###)`.
+
+%~%

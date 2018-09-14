@@ -1,8 +1,8 @@
 import { makeTestSuite } from 'zoroaster'
 import { resolve } from 'path'
-import Context from '../../context'
+import Context from '../context'
 
-const ts = makeTestSuite(resolve(__dirname, '../../mask/Documentary'), {
+const ts = makeTestSuite(resolve(__dirname, '../mask/Documentary'), {
   /**
      * @param {string} input
      * @param {Context} context

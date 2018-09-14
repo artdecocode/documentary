@@ -177,3 +177,5 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
   <d>What HTTP method to use to send data (only works when <code>data</code> is set).</d>
 </p>
 %
+
+%~%

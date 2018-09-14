@@ -5,3 +5,5 @@ _Documentary_ can read a directory and put files together into a single `README`
 Example structure used in this documentation:
 
 %TREE documentary%
+
+%~%

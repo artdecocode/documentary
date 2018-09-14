@@ -15,7 +15,6 @@ const makeRuleTestSuite = (path, rule) => {
      */
     async getResults(input, { replace }) {
       const { res } = await replace(rule, input)
-      // console.log(res)
       return res
     },
     context: Context,

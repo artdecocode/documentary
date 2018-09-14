@@ -1,6 +1,9 @@
-# documentary
+Documentary
+===
 
 [![npm version](https://badge.fury.io/js/documentary.svg)](https://npmjs.org/package/documentary)
+
+<a href="https://github.com/artdecocode/documentary"><img src="images/LOGO.svg" width="150" align="left"></a>
 
 _Documentary_ is a command-line tool and a library to manage documentation of Node.js packages. Due to the fact that complex `README` files are harder to maintain, _Documentary_ serves as a pre-processor of documentation. It enhances every area of the task of making available quality docs of Node.js (and possibly other languages) packages for fellow developers.
 
@@ -8,18 +11,22 @@ _Documentary_ is a command-line tool and a library to manage documentation of No
 yarn add -DE documentary
 ```
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/0.svg"></a></p>
+
 ## Key Features
 
 This section has a quick look at the best features available in _Documentary_ and how they help the documentation process.
 
 |                 Feature                 |                                                  Description                                                  |                                                                                                                                                              Advantages                                                                                                                                                               |
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| *[Tables Of Contents](#toc-generation)* | Compiles an accurate table of contents for the content.                                                       | 1. Makes the structure of the document at hand.<br/>2. Allows to navigate across the page easily.<br/>3. Shows problems with incorrect levels structure which otherwise might not be visible.<br/>4. Allows to place anchor links with available from the TOC at any level in any place of the README.                                |
+| *[Tables Of Contents](#toc-generation)* | Compiles an accurate table of contents for the content.                                                       | 1. Makes the structure of the document immediately visible to the reader.<br/>2. Allows to navigate across the page easily.<br/>3. Shows problems with incorrect levels structure which otherwise might not be visible.<br/>4. Allows to place anchor links with available from the TOC at any level in any place of the README.      |
 | *[Examples](#examples-placement)*       | Allows to embed the source code into documentation.                                                           | 1. Increases productivity by eliminating the need to copy and paste the source code.<br/>2. Can run examples as Node.js scripts and check that they are working correctly (see forks below).                                                                                                                                          |
 | *[Forks](#embedding-output)*            | Makes it possible to run an example and embed its output directly into documentation.                         | 1. Enhances productivity by eliminating the need to copy and paste the output.<br/>2. Makes sure the output is always up-to-date with documented one.<br/>3. Will make it visible if a change to the code base lead to a different output (implicit part of regression testing).<br/>4. Ensures that the example is actually working. |
 | *[Tables](#simple-tables)*              | Compiles tables from arrays without having to write html or markdown.                                         | 1. Removes the need to manually build tables either by hand, online or using other tools.<br/>2. Provides table macros to reduce repetitive information and substitute only the core data into templates.                                                                                                                             |
 | *[Typedefs](#typedef-organisation)*     | Maintains a types.xml file to place types definition in it, available both for source code and documentation. | 1. Keeps the types declarations in one place, allowing to quickly update it both in JavaScript JSDoc, and in markdown README.<br/>2. Automatically constructs type tables for documentation.<br/>3. Expands the JSDoc config (options) argument for other developers to have a quick glance at possible options.                      |
 | *[API Methods](#method-titles)*         | Creates good-looking headers for methods.                                                                     | 1. By writing each argument on new line, makes it easier to understand the signature of a function.<br/>2. Can maintain a separate title for table of contents to keep things simple there.                                                                                                                                           |
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/1.svg"></a></p>
 
 ## Table Of Contents
 
@@ -79,6 +86,8 @@ This section has a quick look at the best features available in _Documentary_ an
 - [TODO](#todo)
 - [Copyright](#copyright)
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/2.svg"></a></p>
+
 ## Installation & Usage
 
 The `doc` client is available after installation. It can be used in a `doc` script of `package.json`, as follows:
@@ -101,7 +110,7 @@ yarn doc
 
 When actively working on documentation, it is possible to use the `watch` mode with `-w` flag, or `-p` flag to also automatically push changes to a remote git repository, merging them into a single commit every time.
 
-
+<p align="center"><a href="#table-of-contents"><img src=".documentary/3.svg"></a></p>
 
 ## **TOC Generation**
 
@@ -124,6 +133,8 @@ To be able to include a link to a specific position in the text (i.e., create an
 This feature can be useful when presenting some data in a table in a section, but wanting to include a link to each row in the table of contents so that the structure is immediately visible.
 
 **<a name="level-toc-titles">Level TOC Titles</a>**: if required, the level can be specified with a number of `#` symbols, such as `[Specific Level](###)`.
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/4.svg"></a></p>
 
 ## **Simple Tables**
 
@@ -178,6 +189,8 @@ The values in the macro need to be separated with `,` which allows to substitute
 | Company | Tag Line | Evaluation & Exit |
 | ------- | -------- | ----------------- |
 | <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018 |
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/5.svg"></a></p>
 
 ## **Examples Placement**
 
@@ -245,6 +258,8 @@ import Catchment from 'catchment'
 ```js
 await documentary()
 ```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/6.svg"></a></p>
 
 ## **Embedding Output**
 
@@ -353,6 +368,8 @@ An error has occurred.
  </tr>
 </table>
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/7.svg"></a></p>
+
 ## **Method Titles**
 
 _Documentary_ can generate neat titles useful for API documentation. The method signature should be specified in a `JSON` array, where every member is an argument written as an array containing its name and type. The type can be either a string, or an object.
@@ -410,9 +427,13 @@ Generated from
 ```
 ````
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/8.svg"></a></p>
+
 ## **Comments Stripping**
 
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/9.svg"></a></p>
 
 ## **File Splitting**
 
@@ -442,14 +463,17 @@ documentary
 │   ├── 6-rules.md
 │   ├── 8-gif.md
 │   ├── 9-type.md
-│   └── index.md
+│   └── footer.md
 ├── 3-cli.md
 ├── 4-api
 │   ├── 1-toc.md
+│   ├── footer.md
 │   └── index.md
 ├── footer.md
 └── index.md
 ```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/10.svg"></a></p>
 
 ## **Replacement Rules**
 
@@ -460,6 +484,8 @@ There are some other built-in rules for replacements which are listed in this ta
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
 | %NPM: package-name%      | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                               |
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/11.svg"></a></p>
 
 ## **Gif Detail**
 
@@ -494,6 +520,8 @@ The actual html placed in the `README` looks like the one below:
   </table>
 </details>
 ```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/12.svg"></a></p>
 
 ## **`Type` Definition**
 
@@ -726,6 +754,8 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
  </tbody>
 </table>
 
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/13.svg"></a></p>
 
 ## **`@typedef` Organisation**
 
@@ -1145,6 +1175,8 @@ When a description ends with <code>Default &#96;value&#96;</code>, the default v
 </types>
 ```
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/14.svg"></a></p>
+
 ## CLI
 
 The program is used from the CLI (or `package.json` script).
@@ -1173,6 +1205,8 @@ When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print
 DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/15.svg"></a></p>
 
 ## API
 
@@ -1264,6 +1298,8 @@ import { createReadStream } from 'fs'
 - [Copyright](#copyright)
 ```
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/16.svg"></a></p>
+
 #PRO
 Underlined
 `Titles`
@@ -1280,10 +1316,14 @@ Underlined
 
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/17.svg"></a></p>
+
 ## Glossary
 
 - **<a name="online-documentation">Online Documentation</a>**: documentation which is accessible online, such as on a GitHub website, or a language reference, e.g., [Node.js Documentation](https://nodejs.org/api/stream.html).
 - **<a name="editor-documentation">Editor Documentation</a>**: hints available to the users of an IDE, or an editor, in form of suggestions and descriptive hints on hover over variables' names.
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/-3.svg"></a></p>
 
 ## TODO
 
@@ -1296,8 +1336,12 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 - [ ] Implement JS-based `tree`.
 - [ ] Implement a proper logging system without `NODE_DEBUG`.
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/-2.svg"></a></p>
+
 ## Copyright
 
 (c) [Art Deco][1] 2018
 
 [1]: https://artdeco.bz
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/-1.svg"></a></p>
