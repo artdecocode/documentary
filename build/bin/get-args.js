@@ -9,6 +9,11 @@ const getArgs = () => {
       short: 't',
       boolean: true,
     },
+    reverse: {
+      short: 'r',
+      boolean: true,
+      description: 'Print files in reverse order. Useful for blogs.',
+    },
     h1: {
       short: 'h1',
       boolean: true,

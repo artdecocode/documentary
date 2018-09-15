@@ -1,0 +1,57 @@
+const { join } = require('path');
+let mismatch = require('mismatch'); if (mismatch && mismatch.__esModule) mismatch = mismatch.default;
+let clone = require('@wrote/clone'); if (clone && clone.__esModule) clone = clone.default;
+const { debuglog } = require('util');
+const { c, b } = require('erte');
+
+const LOG = debuglog('doc')
+
+const sectionBrakeRe = /^%~(?: +(-?\d+))?(?: +(.+))?%$/gm
+
+const rule = {
+  re: sectionBrakeRe,
+  async replacement(match, number, attrs = '') {
+    let n = 0
+    try {
+      if (number) n = parseInt(number)
+      else if (this.sectionBrakeNumber !== undefined) n = this.sectionBrakeNumber == 22
+        ? 0                           // reset
+        : this.sectionBrakeNumber + 1 // increase from the prev one
+      const isEnd = n >= 0
+      if (isEnd) this.sectionBrakeNumber = n
+      const name = `${n}.svg`
+      const imgPath = join(__dirname, '../../section-breaks', name)
+      const { to, ...a } = mismatch(/(.+)="(.+)"/gm, attrs, ['key', 'val'])
+        .reduce((acc, { key, val }) => ({ ...acc, [key]: val }), {
+          to: '.documentary/section-breaks',
+        })
+
+      await clone(imgPath, to)
+
+      const tags = getTags({ src: join(to, name), ...a })
+      return tags
+    } catch (err) {
+      const h = c(err.message, 'red')
+      const [, ...s] = err.stack.split('\n')
+      const st = b(s.join('\n'), 'red')
+      const l = `Section break ${n}: ${h}\n${st}`
+      LOG(l)
+      return match
+    }
+  },
+}
+
+const getTags = ({
+  href = '#table-of-contents',
+  ...attrs
+}) => {
+  const a = Object.keys(attrs).map(k => `${k}="${attrs[k]}"`).join(' ')
+  const s = `<p align="center"><a href="${href}"><img ${a}></a></p>`
+  return s
+}
+
+
+module.exports=rule
+
+module.exports.sectionBrakeRe = sectionBrakeRe
+//# sourceMappingURL=section-break.js.map

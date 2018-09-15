@@ -13,6 +13,7 @@ let typeRule = require('./rules/type'); if (typeRule && typeRule.__esModule) typ
 let badgeRule = require('./rules/badge'); if (badgeRule && badgeRule.__esModule) badgeRule = badgeRule.default;
 let typedefMdRule = require('./rules/typedef-md'); if (typedefMdRule && typedefMdRule.__esModule) typedefMdRule = typedefMdRule.default;
 let macroRule = require('./rules/macro'); if (macroRule && macroRule.__esModule) macroRule = macroRule.default;
+let sectionBrakeRule = require('./rules/section-break'); if (sectionBrakeRule && sectionBrakeRule.__esModule) sectionBrakeRule = sectionBrakeRule.default;
 
                class Documentary extends Replaceable {
   constructor({ toc } = {}) {
@@ -59,6 +60,7 @@ let macroRule = require('./rules/macro'); if (macroRule && macroRule.__esModule)
       tocRule,
       gifRule,
       typeRule,
+      sectionBrakeRule,
 
       insertTable,
       typedefMdRule, // places a table hence just before table

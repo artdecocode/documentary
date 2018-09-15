@@ -8,7 +8,7 @@ let generateTypedef = require('./run/generate'); if (generateTypedef && generate
 let extractTypedef = require('./run/extract'); if (extractTypedef && extractTypedef.__esModule) extractTypedef = extractTypedef.default;
 const { version } = require('../../package.json');
 let catcher = require('./catcher'); if (catcher && catcher.__esModule) catcher = catcher.default;
-const { getStream, gitPush } = require('../lib');
+const { gitPush } = require('../lib');
 
 const LOG = debuglog('doc')
 const DEBUG = /doc/.test(process.env.NODE_DEBUG)
@@ -22,6 +22,7 @@ const {
   version: _version,
   extract: _extract,
   h1: _h1,
+  reverse: _reverse,
 } = getArgs()
 
 let {
@@ -54,12 +55,13 @@ if (_source) {
   }
 }
 
-const doc = async ({ source, output, justToc = false, h1 }) => {
+const doc = async ({ source, output, justToc = false, h1, reverse }) => {
   if (!source) {
     throw new Error('Please specify an input file.')
   }
-  const stream = getStream(source)
-  await run(stream, output, justToc, h1)
+  await run({
+    source, reverse, output, justToc, h1,
+  })
 }
 
 (async () => {
@@ -80,6 +82,7 @@ const doc = async ({ source, output, justToc = false, h1 }) => {
   try {
     await doc({
       source: _source, output: _output, justToc: _toc, h1: _h1,
+      reverse: _reverse,
     })
   } catch ({ stack, message, code }) {
     DEBUG ? LOG(stack) : console.log(message)
@@ -93,6 +96,7 @@ const doc = async ({ source, output, justToc = false, h1 }) => {
         debounce = true
         await doc({
           source: _source, output: _output, justToc: _toc, h1: _h1,
+          reverse: _reverse,
         })
         if (_push) {
           console.log('Pushing documentation changes.')
