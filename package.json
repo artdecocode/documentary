@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "e": "node example",
     "dev": "NODE_DEBUG=doc node src/bin/alamode",
-    "d": "yarn-s doc_add doc_commit doc_push",
+    "d": "yarn dev src/bin/run.js -g",
     "doc": "yarn dev documentary -o README.md",
     "start": "node build/bin",
     "example/": "yarn e example/example.js",
@@ -70,10 +70,11 @@
     "eslint-config-artdeco": "1.0.1",
     "snapshot-context": "2.0.4",
     "yarn-s": "1.1.0",
-    "zoroaster": "3.1.2"
+    "zoroaster": "3.2.0"
   },
   "dependencies": {
-    "@wrote/ensure-path": "1.0.2",
+    "@wrote/clone": "1.0.1",
+    "@wrote/ensure-path": "1.0.3",
     "argufy": "1.2.1",
     "catchment": "3.1.1",
     "erte": "1.1.4",
