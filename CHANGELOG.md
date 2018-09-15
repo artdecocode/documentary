@@ -1,4 +1,8 @@
-## 14 September 2018
+## 15 September 2018
+
+### 1.16.1
+
+- [fix] Append `?sanitize=true` to be able to load SVGs from GitHub on NPM.
 
 ### 1.16.0
 
