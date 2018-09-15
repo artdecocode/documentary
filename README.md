@@ -3,7 +3,7 @@ Documentary
 
 [![npm version](https://badge.fury.io/js/documentary.svg)](https://npmjs.org/package/documentary)
 
-<a href="https://github.com/artdecocode/documentary"><img src="images/LOGO.svg" width="150" align="left"></a>
+<a href="https://github.com/artdecocode/documentary"><img src="images/LOGO.svg?sanitize=true" width="150" align="left"></a>
 
 _Documentary_ is a command-line tool and a library to manage documentation of Node.js packages. Due to the fact that there is usually a lot of manual labour involved in creating and keeping up-to-date a README document, such as copying examples and the output they produce, there is a need for software that can help automate the process and focus on what is really important. _Documentary_ serves as a pre-processor of documentation and enhances every area of the task of making available quality docs for Node.js (and other languages) packages for fellow developers.
 
@@ -11,7 +11,7 @@ _Documentary_ is a command-line tool and a library to manage documentation of No
 yarn add -DE documentary
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
 
 ## Key Features
 
@@ -27,7 +27,7 @@ This section has a quick look at the best features available in _Documentary_ an
 | *[Typedefs](#typedef-organisation)*     | Maintains a types.xml file to place types definition in it, available both for source code and documentation.            | 1. Keeps the types declarations in one place, allowing to quickly update it both in JavaScript JSDoc, and in markdown README.<br/>2. Automatically constructs type tables for documentation.<br/>3. Expands the JSDoc config (options) argument for other developers to have a quick glance at possible options when calling a function.<br/>4. If the `types.xml` file or directory is published, other packages can embed it into documentation also, by using _Documentary_. |
 | *[API Method Titles](#method-titles)*   | Creates good-looking headers for methods.                                                                                | 1. By writing each argument on new line, makes it easier to understand the signature of a function.<br/>2. Can maintain a separate title for the table of contents to keep things simple there.                                                                                                                                                                                                                                                                                 |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
 
 ## Table Of Contents
 
@@ -88,7 +88,7 @@ This section has a quick look at the best features available in _Documentary_ an
 - [TODO](#todo)
 - [Copyright](#copyright)
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
 
 ## Installation & Usage
 
@@ -112,7 +112,7 @@ yarn doc
 
 When actively working on documentation, it is possible to use the `watch` mode with `-w` flag, or `-p` flag to also automatically push changes to a remote git repository, merging them into a single commit every time.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>
 
 ## **TOC Generation**
 
@@ -158,10 +158,10 @@ For example:
 ```
 
 ```
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg"></a></p>
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg"></a></p>
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg"></a></p>
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg" href="https://hello.world" width="200"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true" href="https://hello.world" width="200"></a></p>
 ```
 
 There are 23 available section breaks which will be inserted in incremental order in the document. When the end of the list is reached, the count restarts. There are also 3 ending breaks which can be inserted at the end and do not participate in the rotation, so that they must be inserted manually. To select a specific image, its number can be given.
@@ -186,18 +186,18 @@ There are 23 available section breaks which will be inserted in incremental orde
  <tbody>
   <tr/>
   <tr>
-   <td><img src="src/section-breaks/0.svg"></td>
-   <td><img src="src/section-breaks/1.svg"></td>
-   <td><img src="src/section-breaks/2.svg"></td>
-   <td><img src="src/section-breaks/3.svg"></td>
-   <td><img src="src/section-breaks/4.svg"></td>
-   <td><img src="src/section-breaks/5.svg"></td>
-   <td><img src="src/section-breaks/6.svg"></td>
-   <td><img src="src/section-breaks/7.svg"></td>
-   <td><img src="src/section-breaks/8.svg"></td>
-   <td><img src="src/section-breaks/9.svg"></td>
-   <td><img src="src/section-breaks/10.svg"></td>
-   <td><img src="src/section-breaks/11.svg"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/0.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/1.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/2.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/3.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/4.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/5.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/6.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/7.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/8.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/9.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/10.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/11.svg?sanitize=true"></td>
   </tr>
   <tr>
    <td align="center"><strong>12</strong></td>
@@ -213,29 +213,42 @@ There are 23 available section breaks which will be inserted in incremental orde
    <td align="center"><strong>22</strong></td>
   </tr>
   <tr>
-   <td><img src="src/section-breaks/12.svg"></td>
-   <td><img src="src/section-breaks/13.svg"></td>
-   <td><img src="src/section-breaks/14.svg"></td>
-   <td><img src="src/section-breaks/15.svg"></td>
-   <td><img src="src/section-breaks/16.svg"></td>
-   <td><img src="src/section-breaks/17.svg"></td>
-   <td><img src="src/section-breaks/18.svg"></td>
-   <td><img src="src/section-breaks/19.svg"></td>
-   <td><img src="src/section-breaks/20.svg"></td>
-   <td><img src="src/section-breaks/21.svg"></td>
-   <td><img src="src/section-breaks/22.svg"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/12.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/13.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/14.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/15.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/16.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/17.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/18.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/19.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/20.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/21.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/22.svg?sanitize=true"></td>
   </tr>
  </tbody>
 </table>
 
+<table>
+ <thead>
+  <tr>
+   <th>-1</th>
+   <th>-2</th>
+   <th>-3</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr/>
+  <tr>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/-1.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/-2.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/-3.svg?sanitize=true"></td>
+  </tr>
+ </tbody>
+</table>
 
-|                  -1                   |                  -2                   |                  -3                   |
-| ------------------------------------- | ------------------------------------- | ------------------------------------- |
-| <img src='src/section-breaks/-1.svg'> | <img src='src/section-breaks/-2.svg'> | <img src='src/section-breaks/-3.svg'> |
+By default, the section brake will link to the table of contents, however this can be changed by setting the `href` attribute. The images are also SVGs therefore it is possible to give them any width via the `width` attribute and they will stretch without any loss of quality. _Documentary_ will copy images from its source code to the `.documentary/section-breaks` directory in the repository. To control the destination, set the `to` attribute on section breaks.
 
-By default, the section brake will link to the table of contents, however this can be changed by setting the `href` attribute. The images are also SVGs therefore it is possible to give them any width via the `width` attribute and they will stretch without any loss of quality. _Documentary_ will copy images from its source code to the `.documentary` directory in the repository.
-
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/4.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/4.svg?sanitize=true"></a></p>
 
 ## **Simple Tables**
 
@@ -291,7 +304,7 @@ The values in the macro need to be separated with `,` which allows to substitute
 | ------- | -------- | ----------------- |
 | <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018 |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/5.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/5.svg?sanitize=true"></a></p>
 
 ## **Examples Placement**
 
@@ -360,7 +373,7 @@ import Catchment from 'catchment'
 await documentary()
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/6.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/6.svg?sanitize=true"></a></p>
 
 ## **Embedding Output**
 
@@ -469,7 +482,7 @@ An error has occurred.
  </tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/7.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/7.svg?sanitize=true"></a></p>
 
 ## **Method Titles**
 
@@ -528,13 +541,13 @@ Generated from
 ```
 ````
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/8.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/8.svg?sanitize=true"></a></p>
 
 ## **Comments Stripping**
 
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/9.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/9.svg?sanitize=true"></a></p>
 
 ## **File Splitting**
 
@@ -575,7 +588,7 @@ documentary
 └── index.md
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg?sanitize=true"></a></p>
 
 ## **Replacement Rules**
 
@@ -587,7 +600,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | %NPM: package-name%      | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                               |
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true"></a></p>
 
 ## **Gif Detail**
 
@@ -623,7 +636,7 @@ The actual html placed in the `README` looks like the one below:
 </details>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>
 
 ## **`Type` Definition**
 
@@ -857,7 +870,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 </table>
 
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg?sanitize=true"></a></p>
 
 ## **`@typedef` Organisation**
 
@@ -1277,7 +1290,7 @@ When a description ends with <code>Default &#96;value&#96;</code>, the default v
 </types>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg?sanitize=true"></a></p>
 
 ## CLI
 
@@ -1308,7 +1321,7 @@ DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true"></a></p>
 
 ## API
 
@@ -1400,7 +1413,7 @@ import { createReadStream } from 'fs'
 - [Copyright](#copyright)
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true"></a></p>
 
 #PRO
 Underlined
@@ -1418,14 +1431,14 @@ Underlined
 
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg?sanitize=true"></a></p>
 
 ## Glossary
 
 - **<a name="online-documentation">Online Documentation</a>**: documentation which is accessible online, such as on a GitHub website, or a language reference, e.g., [Node.js Documentation](https://nodejs.org/api/stream.html).
 - **<a name="editor-documentation">Editor Documentation</a>**: hints available to the users of an IDE, or an editor, in form of suggestions and descriptive hints on hover over variables' names.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-3.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-3.svg?sanitize=true"></a></p>
 
 ## TODO
 
@@ -1439,7 +1452,7 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 - [ ] Implement a proper logging system without `NODE_DEBUG`.
 - [ ] Add more section breaks.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-2.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-2.svg?sanitize=true"></a></p>
 
 ## Copyright
 
@@ -1449,4 +1462,4 @@ Section breaks from [FoglihtenDeH0](https://www.1001fonts.com/foglihtendeh0-font
 
 [1]: https://artdeco.bz
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg?sanitize=true"></a></p>

@@ -38,18 +38,18 @@ There are 23 available section breaks which will be inserted in incremental orde
  <tbody>
   <tr/>
   <tr>
-   <td><img src="src/section-breaks/0.svg"></td>
-   <td><img src="src/section-breaks/1.svg"></td>
-   <td><img src="src/section-breaks/2.svg"></td>
-   <td><img src="src/section-breaks/3.svg"></td>
-   <td><img src="src/section-breaks/4.svg"></td>
-   <td><img src="src/section-breaks/5.svg"></td>
-   <td><img src="src/section-breaks/6.svg"></td>
-   <td><img src="src/section-breaks/7.svg"></td>
-   <td><img src="src/section-breaks/8.svg"></td>
-   <td><img src="src/section-breaks/9.svg"></td>
-   <td><img src="src/section-breaks/10.svg"></td>
-   <td><img src="src/section-breaks/11.svg"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/0.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/1.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/2.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/3.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/4.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/5.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/6.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/7.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/8.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/9.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/10.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/11.svg?sanitize=true"></td>
   </tr>
   <tr>
    <td align="center"><strong>12</strong></td>
@@ -65,29 +65,39 @@ There are 23 available section breaks which will be inserted in incremental orde
    <td align="center"><strong>22</strong></td>
   </tr>
   <tr>
-   <td><img src="src/section-breaks/12.svg"></td>
-   <td><img src="src/section-breaks/13.svg"></td>
-   <td><img src="src/section-breaks/14.svg"></td>
-   <td><img src="src/section-breaks/15.svg"></td>
-   <td><img src="src/section-breaks/16.svg"></td>
-   <td><img src="src/section-breaks/17.svg"></td>
-   <td><img src="src/section-breaks/18.svg"></td>
-   <td><img src="src/section-breaks/19.svg"></td>
-   <td><img src="src/section-breaks/20.svg"></td>
-   <td><img src="src/section-breaks/21.svg"></td>
-   <td><img src="src/section-breaks/22.svg"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/12.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/13.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/14.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/15.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/16.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/17.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/18.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/19.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/20.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/21.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/22.svg?sanitize=true"></td>
   </tr>
  </tbody>
 </table>
 
+<table>
+ <thead>
+  <tr>
+   <th>-1</th>
+   <th>-2</th>
+   <th>-3</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr/>
+  <tr>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/-1.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/-2.svg?sanitize=true"></td>
+   <td><img src="https://raw.githubusercontent.com/artdecocode/documentary/HEAD/src/section-breaks/-3.svg?sanitize=true"></td>
+  </tr>
+ </tbody>
+</table>
 
-```table
-[
-  ["-1", "-2", "-3"],
-  ["<img src='src/section-breaks/-1.svg'>", "<img src='src/section-breaks/-2.svg'>", "<img src='src/section-breaks/-3.svg'>"]
-]
-```
-
-By default, the section brake will link to the table of contents, however this can be changed by setting the `href` attribute. The images are also SVGs therefore it is possible to give them any width via the `width` attribute and they will stretch without any loss of quality. _Documentary_ will copy images from its source code to the `.documentary` directory in the repository.
+By default, the section brake will link to the table of contents, however this can be changed by setting the `href` attribute. The images are also SVGs therefore it is possible to give them any width via the `width` attribute and they will stretch without any loss of quality. _Documentary_ will copy images from its source code to the `.documentary/section-breaks` directory in the repository. To control the destination, set the `to` attribute on section breaks.
 
 %~%
