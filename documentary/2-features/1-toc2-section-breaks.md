@@ -38,18 +38,18 @@ There are 23 available section breaks which will be inserted in incremental orde
  <tbody>
   <tr/>
   <tr>
-   <td><img src="src/breaks/0.svg"></td>
-   <td><img src="src/breaks/1.svg"></td>
-   <td><img src="src/breaks/2.svg"></td>
-   <td><img src="src/breaks/3.svg"></td>
-   <td><img src="src/breaks/4.svg"></td>
-   <td><img src="src/breaks/5.svg"></td>
-   <td><img src="src/breaks/6.svg"></td>
-   <td><img src="src/breaks/7.svg"></td>
-   <td><img src="src/breaks/8.svg"></td>
-   <td><img src="src/breaks/9.svg"></td>
-   <td><img src="src/breaks/10.svg"></td>
-   <td><img src="src/breaks/11.svg"></td>
+   <td><img src="src/section-breaks/0.svg"></td>
+   <td><img src="src/section-breaks/1.svg"></td>
+   <td><img src="src/section-breaks/2.svg"></td>
+   <td><img src="src/section-breaks/3.svg"></td>
+   <td><img src="src/section-breaks/4.svg"></td>
+   <td><img src="src/section-breaks/5.svg"></td>
+   <td><img src="src/section-breaks/6.svg"></td>
+   <td><img src="src/section-breaks/7.svg"></td>
+   <td><img src="src/section-breaks/8.svg"></td>
+   <td><img src="src/section-breaks/9.svg"></td>
+   <td><img src="src/section-breaks/10.svg"></td>
+   <td><img src="src/section-breaks/11.svg"></td>
   </tr>
   <tr>
    <td align="center"><strong>12</strong></td>
@@ -65,17 +65,17 @@ There are 23 available section breaks which will be inserted in incremental orde
    <td align="center"><strong>22</strong></td>
   </tr>
   <tr>
-   <td><img src="src/breaks/12.svg"></td>
-   <td><img src="src/breaks/13.svg"></td>
-   <td><img src="src/breaks/14.svg"></td>
-   <td><img src="src/breaks/15.svg"></td>
-   <td><img src="src/breaks/16.svg"></td>
-   <td><img src="src/breaks/17.svg"></td>
-   <td><img src="src/breaks/18.svg"></td>
-   <td><img src="src/breaks/19.svg"></td>
-   <td><img src="src/breaks/20.svg"></td>
-   <td><img src="src/breaks/21.svg"></td>
-   <td><img src="src/breaks/22.svg"></td>
+   <td><img src="src/section-breaks/12.svg"></td>
+   <td><img src="src/section-breaks/13.svg"></td>
+   <td><img src="src/section-breaks/14.svg"></td>
+   <td><img src="src/section-breaks/15.svg"></td>
+   <td><img src="src/section-breaks/16.svg"></td>
+   <td><img src="src/section-breaks/17.svg"></td>
+   <td><img src="src/section-breaks/18.svg"></td>
+   <td><img src="src/section-breaks/19.svg"></td>
+   <td><img src="src/section-breaks/20.svg"></td>
+   <td><img src="src/section-breaks/21.svg"></td>
+   <td><img src="src/section-breaks/22.svg"></td>
   </tr>
  </tbody>
 </table>
@@ -84,7 +84,7 @@ There are 23 available section breaks which will be inserted in incremental orde
 ```table
 [
   ["-1", "-2", "-3"],
-  ["<img src='src/breaks/-1.svg'>", "<img src='src/breaks/-2.svg'>", "<img src='src/breaks/-3.svg'>"]
+  ["<img src='src/section-breaks/-1.svg'>", "<img src='src/section-breaks/-2.svg'>", "<img src='src/section-breaks/-3.svg'>"]
 ]
 ```
 
