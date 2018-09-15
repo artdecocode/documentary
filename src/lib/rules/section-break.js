@@ -26,9 +26,10 @@ const rule = {
           to: '.documentary/section-breaks',
         })
 
+      const nn = `${name}?sanitize=true`
       await clone(imgPath, to)
 
-      const tags = getTags({ src: join(to, name), ...a })
+      const tags = getTags({ src: join(to, nn), ...a })
       return tags
     } catch (err) {
       const h = c(err.message, 'red')
