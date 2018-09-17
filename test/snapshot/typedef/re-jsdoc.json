@@ -12,12 +12,14 @@
     },
   {
     "type": "FinalConfig",
-    "name": "finalConfig"
+    "name": "finalConfig",
+    "rest": ""
   },
   {
     "type": "OptionalFinalConfig",
+    "opt": "[",
     "name": "optionalFinalConfig",
-    "opt": "["
+    "rest": ""
     },
   {
     "type": "Config2",

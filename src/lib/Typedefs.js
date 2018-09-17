@@ -15,7 +15,7 @@ export default class Typedefs extends Replaceable {
   constructor() {
     super({
       re: typedefMdRe,
-      async replacement(match, location) {
+      async replacement(match, location, typeName) {
         if (location in this.locations) return
         try {
           const xml = await read(location)
@@ -43,7 +43,11 @@ export default class Typedefs extends Replaceable {
               })
               return type
             })
-          this.emit('types', { location, types: [...typedefs, ...imports] })
+          this.emit('types', {
+            location,
+            types: [...imports, ...typedefs],
+            typeName,
+          })
         } catch (e) {
           LOG('(%s) Could not process typedef-md: %s', location, e.message)
         }
@@ -51,11 +55,13 @@ export default class Typedefs extends Replaceable {
     })
     this.types = []
     this.locations = {}
-    this.on('types', ({ location, types }) => {
-      this.types.push(...types)
+    this.on('types', ({ location, types, typeName }) => {
+      const t = typeName ? types.filter(tt => tt.name == typeName) : types
+      this.types.push(...t)
+      const oldLocationTypes = this.locations[location] || []
       this.locations = {
         ...this.locations,
-        [location]: types,
+        [location]: [...oldLocationTypes, ...t],
       }
     })
   }
