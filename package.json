@@ -6,8 +6,8 @@
   "scripts": {
     "t": "NODE_DEBUG=doc zoroaster -a",
     "spec": "yarn t test/spec",
-    "mask": "yarn t test/masked",
-    "test": "yarn t test/spec test/masked",
+    "mask": "yarn t test/mask",
+    "test": "yarn t test/spec test/mask",
     "test-build": "ALAMODE_ENV=test-build yarn test",
     "lint": "eslint .",
     "e": "node example",

@@ -15,6 +15,9 @@ import typedefMdRule from './rules/typedef-md'
 import macroRule from './rules/macro'
 import sectionBrakeRule from './rules/section-break'
 
+/**
+ * Documentary is a _Replaceable_ stream with transform rules for documentation.
+ */
 export default class Documentary extends Replaceable {
   constructor({ toc } = {}) {
     const tocRule = createTocRule(toc)

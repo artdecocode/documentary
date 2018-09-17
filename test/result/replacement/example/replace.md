@@ -1,5 +1,5 @@
 // replaces local
-%EXAMPLE: test/mask/example/replace-local.js, ../src => pass%
+%EXAMPLE: test/result/replacement/example/replace-local.js, ../src => pass%
 
 /* expected */
 ```js
@@ -9,7 +9,7 @@ const test = require('pass')
 /**/
 
 // replaces global
-%EXAMPLE: test/mask/example/replace-global.js, test => pass%
+%EXAMPLE: test/result/replacement/example/replace-global.js, test => pass%
 
 /* expected */
 ```js

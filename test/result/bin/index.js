@@ -1,5 +1,5 @@
 // h1
-test/mask/bin/h1.md -h1
+test/result/bin/h1.md -h1
 
 /* expected */
 # test
@@ -15,7 +15,7 @@ test/mask/bin/h1.md -h1
 /**/
 
 // underlined -h1
-test/mask/bin/toc-underline.md -h1
+test/result/bin/toc-underline.md -h1
 
 /* expected */
 Test
@@ -36,7 +36,7 @@ test2
 /**/
 
 // underlined
-test/mask/bin/toc-underline.md
+test/result/bin/toc-underline.md
 
 /* expected */
 Test
@@ -55,7 +55,7 @@ test2
 /**/
 
 // macro
-test/mask/bin/macro.md
+test/result/bin/macro.md
 
 /* expected */
 
