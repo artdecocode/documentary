@@ -1,6 +1,7 @@
 import { debuglog } from 'util'
 import { Replaceable } from 'restream'
 import extractTags from 'rexml'
+import { collect } from 'catchment'
 import { typedefMdRe } from './rules/typedef-md'
 import { read } from '.'
 import Type from './typedef/Type'
@@ -58,4 +59,12 @@ export default class Typedefs extends Replaceable {
       }
     })
   }
+}
+
+export const getTypedefs = async (stream) => {
+  const typedefs = new Typedefs()
+  stream.pipe(typedefs)
+  await collect(typedefs)
+  const { types, locations } = typedefs
+  return { types, locations }
 }

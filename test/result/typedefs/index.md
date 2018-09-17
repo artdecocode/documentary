@@ -1,4 +1,4 @@
-// !links types across files
+// links types across files
 test/fixture/typedef/documentary
 
 /* expected */
@@ -14,9 +14,12 @@ __[`StaticConfig`](t)__: Options to setup `koa-static`.
 [["Name","Type","Description","Default"],["setHeaders","[_SetHeaders_](#setheaders)","Function to set custom headers on response.","-"]]
 ```
 `import('http').ServerResponse` __[`ServerResponse`](l)__
+__[`Type1`](t)__
+__[`Type2`](t)__
 /**/
 
 /* locations */
 ["test/fixture/typedef/types/1.xml",
- "test/fixture/typedef/types/2.xml"]
+ "test/fixture/typedef/types/2.xml",
+ "test/fixture/typedef/types/3.xml"]
 /**/

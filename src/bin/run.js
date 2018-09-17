@@ -2,6 +2,7 @@ import whichStream from 'which-stream'
 import { getToc } from '../lib/Toc'
 import Documentary from '../lib/Documentary'
 import { getStream } from '../lib'
+import { getTypedefs } from '../lib/Typedefs'
 
 /**
  * Run the documentary and save the results.
@@ -21,7 +22,10 @@ export default async function run(options) {
   const stream = getStream(source, reverse)
   // we used to create a pass through, pause and pipe stream in it,
   // but there were problems.
-  const toc = await getToc(stream, h1)
+
+  const { types, locations } = await getTypedefs(stream)
+
+  const toc = await getToc(stream, h1, locations)
   if (justToc) {
     console.log(toc)
     process.exit()
