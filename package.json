@@ -59,7 +59,16 @@
     "api",
     "table of contents",
     "table",
-    "toc"
+    "toc",
+    "heading",
+    "vuepress",
+    "d3",
+    "docusaurus",
+    "redoc",
+    "docsify",
+    "esdoc",
+    "docco",
+    "documentation.js"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
