@@ -1,0 +1,11 @@
+<types>
+  <import name="ServerResponse" from="http" />
+  <type name="SetHeaders"
+    type="(res: ServerResponse) => any"
+    desc="Function to set custom headers on response." />
+  <type name="StaticConfig" desc="Options to setup `koa-static`.">
+    <prop opt type="SetHeaders" name="setHeaders">
+      Function to set custom headers on response.
+    </prop>
+  </type>
+</types>
