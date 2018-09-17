@@ -1,7 +1,7 @@
 {
   "name": "documentary",
   "version": "1.16.1",
-  "description": "A library to manage documentation, such as README, usage, man pages and changelog.",
+  "description": "A Documentation Pre-processor To Generate A Table Of Contents, Automatically Embed Examples And Their Output, Easily Make Markdown Tables, Maintain Helpful Typedefs For JavaScript And README, Watch Changes To Push To GitHub And Create Pretty Titles For API Methods.",
   "main": "build",
   "scripts": {
     "t": "NODE_DEBUG=doc zoroaster -a",
