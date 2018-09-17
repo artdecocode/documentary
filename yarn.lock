@@ -191,10 +191,6 @@ makepromise@3.0.1:
   dependencies:
     erotic "1.2.1"
 
-mismatch@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/mismatch/-/mismatch-1.0.2.tgz#80262a922a420b7ace005195ee14508787d9072f"
-
 mismatch@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/mismatch/-/mismatch-1.0.3.tgz#416cbe164971a8eafc6f3a68c7c63a77bdf06bfb"
@@ -297,9 +293,9 @@ yarn-s@1.1.0:
   dependencies:
     spawncommand "1.1.0"
 
-zoroaster@3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/zoroaster/-/zoroaster-3.4.0.tgz#878ede6b5af71e5611ebf28677b60f85f61fd0d9"
+zoroaster@3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/zoroaster/-/zoroaster-3.4.1.tgz#16fe5cf4c30f1993f6daf07aff2fdc8548c03c7e"
   dependencies:
     "@artdeco/clean-stack" "1.0.0"
     alamode "1.5.0"
