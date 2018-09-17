@@ -12,7 +12,9 @@
     "lint": "eslint .",
     "e": "node example",
     "dev": "NODE_DEBUG=doc node src/bin/alamode",
-    "d": "yarn dev src/bin/run.js -g",
+    "d1": "yarn dev src/bin/run.js -g",
+    "d2": "yarn dev src/lib/Documentary.js -g",
+    "d": "yarn-s d1 d2",
     "doc": "yarn dev documentary -o README.md",
     "start": "node build/bin",
     "example/": "yarn e example/example.js",
@@ -70,7 +72,7 @@
     "eslint-config-artdeco": "1.0.1",
     "snapshot-context": "2.0.4",
     "yarn-s": "1.1.0",
-    "zoroaster": "3.3.0"
+    "zoroaster": "3.4.0"
   },
   "dependencies": {
     "@wrote/clone": "1.0.1",
