@@ -46,6 +46,12 @@ The program accepts the following arguments:
 ]
 ```
 
+/* expected */
+|     Test      |
+| ------------- |
+| hello `world` |
+/**/
+
 // replaces a table with inner code in macro
 %TABLE-MACRO Company
   `$1`

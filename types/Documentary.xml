@@ -1,0 +1,7 @@
+<types>
+  <type name="DocumentaryOptions" desc="Options for the Documentary constructor.">
+    <prop opt string name="toc">
+      The table of contents to replace the `%TOC%` marker with.
+    </prop>
+  </type>
+</types>

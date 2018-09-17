@@ -19,7 +19,12 @@ import sectionBrakeRule from './rules/section-break'
  * Documentary is a _Replaceable_ stream with transform rules for documentation.
  */
 export default class Documentary extends Replaceable {
-  constructor({ toc } = {}) {
+  /**
+   * @param {DocumentaryOptions} options Options for the Documentary constructor.
+ * @param {string} [options.toc] The table of contents to replace the `%TOC%` marker with.
+   */
+  constructor(options = {}) {
+    const { toc } = options
     const tocRule = createTocRule(toc)
 
     const {
@@ -132,3 +137,9 @@ export default class Documentary extends Replaceable {
     return this._types
   }
 }
+
+/* documentary types/Documentary.xml */
+/**
+ * @typedef {Object} DocumentaryOptions Options for the Documentary constructor.
+ * @prop {string} [toc] The table of contents to replace the `%TOC%` marker with.
+ */

@@ -356,9 +356,9 @@ console.log('test')
     return resolve(__dirname, '../fixtures/typedef/generate-imports-after.js')
   }
   /**
-   * Path to the executable. When testing with `ALAMODE_ENV` set to `test-build`, this will point to `build/bin`, and when testing source code, this will point to `src/bin/a;alamode`.
+   * Path to the executable. When testing with `ALAMODE_ENV` set to `test-build`, this will point to `build/bin`, and when testing source code, this will point to `src/bin/alamode`.
    */
-  get DOC() {
+  static get DOC() {
     return DOC
   }
 }

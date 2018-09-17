@@ -1,7 +1,7 @@
 // h1
 test/result/bin/h1.md -h1
 
-/* expected */
+/* stdout */
 # test
 
 - [test](#test)
@@ -17,7 +17,7 @@ test/result/bin/h1.md -h1
 // underlined -h1
 test/result/bin/toc-underline.md -h1
 
-/* expected */
+/* stdout */
 Test
 ====
 
@@ -38,7 +38,7 @@ test2
 // underlined
 test/result/bin/toc-underline.md
 
-/* expected */
+/* stdout */
 Test
 ====
 
@@ -57,7 +57,7 @@ test2
 // macro
 test/result/bin/macro.md
 
-/* expected */
+/* stdout */
 
 |                             Company                             |                     Tag Line                      | Evaluation & Exit |
 | --------------------------------------------------------------- | ------------------------------------------------- | ----------------- |
@@ -67,7 +67,7 @@ test/result/bin/macro.md
 // prints in reverse order
 test/fixtures/order -r
 
-/* expected */
+/* stdout */
 ## index
 
 - [index](#index)
@@ -85,7 +85,7 @@ test/fixtures/order -r
 // generates correct markdown from a directory
 test/fixtures/README
 
-/* expected */
+/* stdout */
 # readme
 
 This is a composite documentation split into multiple files.
@@ -115,7 +115,7 @@ Debugging with VS Code is made possible with `launch.json` configuration file.
 // prints the TOC with -t flag
 test/fixtures/README-source.md -t
 
-/* expected */
+/* stdout */
 - [Table Of Contents](#table-of-contents)
 - [CLI](#cli)
   * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
