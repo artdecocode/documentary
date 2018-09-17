@@ -25,9 +25,9 @@ Result:
 
 Whenever there's a pattern for presenting data in a table, such as that input fields can be mapped to output columns, a table macro can be defined. The example below defines a macro to print a row containing a link, logo and description of a company. It is then used in a table, where only the actual values are entered, relying on _Documentary_ to substitute them in the template.
 
-%EXAMPLE: test/mask/bin/macro.md, markdown%
+%EXAMPLE: test/result/bin/macro.md, markdown%
 
-%FORK-markdown src/bin/alamode test/mask/bin/macro.md%
+%FORK-markdown src/bin/alamode test/result/bin/macro.md%
 
 The values in the macro need to be separated with `,` which allows to substitute them into the correct column of the table row. When a `,` needs to be used as part of the column in the macro, it can be escaped with `\` such as `\,` as shown in the last column of the example.
 
