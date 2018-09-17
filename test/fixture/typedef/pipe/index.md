@@ -1,0 +1,1 @@
+%TYPEDEF test/fixture/typedef/pipe/types.xml%

@@ -355,6 +355,12 @@ console.log('test')
   get generateImportsAfter() {
     return resolve(__dirname, '../fixtures/typedef/generate-imports-after.js')
   }
+  /**
+   * Path to the executable. When testing with `ALAMODE_ENV` set to `test-build`, this will point to `build/bin`, and when testing source code, this will point to `src/bin/alamode`.
+   */
+  static get DOC() {
+    return DOC
+  }
 }
 
 /** @typedef {import('restream').Rule} Rule */

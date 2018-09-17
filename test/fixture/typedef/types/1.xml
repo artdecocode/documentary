@@ -1,0 +1,10 @@
+<types>
+  <type name="ServerConfig" desc="Options to setup the server.">
+    <prop number name="port" default="8888">
+      The port on which to run the server.
+    </prop>
+    <prop name="staticConfig" type="StaticConfig">
+      The configuration for the static server.
+    </prop>
+  </type>
+</types>

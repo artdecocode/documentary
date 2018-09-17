@@ -17,15 +17,15 @@ yarn add -DE documentary
 
 This section has a quick look at the best features available in _Documentary_ and how they help the documentation process.
 
-|                 Feature                 |                                                       Description                                                        |                                                                                                                                                                                                                                   Advantages                                                                                                                                                                                                                                    |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| *[Tables Of Contents](#toc-generation)* | Compiles an accurate table of contents for the content.                                                                  | 1. Makes the structure of the document immediately visible to the reader.<br/>2. Allows to navigate across the page easily.<br/>3. Shows problems with incorrect levels structure which otherwise might not be visible.<br/>4. Allows to place anchor links available from the TOC at any level in any place of the README.<br/>5. Can insert section breaks which visually divide the content and allow to navigate back to the top.                                           |
-| *[Examples](#examples-placement)*       | Allows to embed the source code into documentation.                                                                      | 1. Increases productivity by eliminating the need to copy and paste the source code manually.<br/>2. Developers can run examples as Node.js scripts to check that they are working correctly and debug them.<br/>3. Examples can also be forked (see below).<br/> 4. It is possible to imports and requires such as `../src` to be displayed as the name of the package.                                                                          |
-| *[Forks](#embedding-output)*            | Makes it possible to run an example and embed its `stdout` and `stderr` output directly into documentation. | 1. Enhances productivity by eliminating the need to copy and paste the output by hand.<br/>2. Makes sure the output is always up-to-date with the documented one.<br/>3. Will make it visible if a change to the code base lead to a different output (implicit regression testing).<br/>4. Ensures that examples are actually working.<br/>5. Can print usage of CLI tools by forking them with `-h` command.                                |
-| *[Tables](#simple-tables)*              | Compiles tables from arrays without having to write html or markdown.                                                    | 1. Removes the need to manually build tables either by hand, online or using other tools.<br/>2. Provides table macros to reduce repetitive information and substitute only the core data into templates.                                                                                                                                                                                                                                                                       |
-| *[Live Push](#automatic-push)*          | Detects changes to the source documentation files, re-compiles the output README.md and pushes to the remote repository. | 1. The preview is available on-line almost immediately after a change is made. <br/>2. Allows to skip writing a commit message and the push command every time a change is made.                                                                                                                                                                                                                                                                                                |
-| *[Typedefs](#typedef-organisation)*     | Maintains a types.xml file to place types definition in it, available both for source code and documentation.            | 1. Keeps the types declarations in one place, allowing to quickly update it both in JavaScript JSDoc, and in markdown README.<br/>2. Automatically constructs type tables for documentation.<br/>3. Expands the JSDoc config (options) argument for other developers to have a quick glance at possible options when calling a function.<br/>4. If the `types.xml` file or directory is published, other packages can embed it into documentation also, by using _Documentary_. |
-| *[API Method Titles](#method-titles)*   | Creates good-looking headers for methods.                                                                                | 1. By writing each argument on new line, makes it easier to understand the signature of a function.<br/>2. Can maintain a separate title for the table of contents to keep things simple there.                                                                                                                                                                                                                                                                                 |
+|                 Feature                 |                                                       Description                                                        |                                                                                                                                                                                                                                                                         Advantages                                                                                                                                                                                                                                                                          |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| *[Tables Of Contents](#toc-generation)* | Compiles an accurate table of contents for the content.                                                                  | 1. Makes the structure of the document immediately visible to the reader.<br/>2. Allows to navigate across the page easily.<br/>3. Shows problems with incorrect levels structure which otherwise might not be visible.<br/>4. Allows to place anchor links available from the TOC at any level in any place of the README.<br/>5. Can insert section breaks which visually divide the content and allow to navigate back to the top.                                                                                                                       |
+| *[Examples](#examples-placement)*       | Allows to embed the source code into documentation.                                                                      | 1. Increases productivity by eliminating the need to copy and paste the source code manually.<br/>2. Developers can run examples as Node.js scripts to check that they are working correctly and debug them.<br/>3. Examples can also be forked (see below).<br/> 4. It is possible to imports and requires such as `../src` to be displayed as the name of the package.                                                                                                                                                      |
+| *[Forks](#embedding-output)*            | Makes it possible to run an example and embed its `stdout` and `stderr` output directly into documentation. | 1. Enhances productivity by eliminating the need to copy and paste the output by hand.<br/>2. Makes sure the output is always up-to-date with the documented one.<br/>3. Will make it visible if a change to the code base lead to a different output (implicit regression testing).<br/>4. Ensures that examples are actually working.<br/>5. Can print usage of CLI tools by forking them with `-h` command.                                                                                                            |
+| *[Tables](#simple-tables)*              | Compiles tables from arrays without having to write html or markdown.                                                    | 1. Removes the need to manually build tables either by hand, online or using other tools.<br/>2. Provides table macros to reduce repetitive information and substitute only the core data into templates.                                                                                                                                                                                                                                                                                                                                                   |
+| *[Live Push](#automatic-push)*          | Detects changes to the source documentation files, re-compiles the output README.md and pushes to the remote repository. | 1. The preview is available on-line almost immediately after a change is made. <br/>2. Allows to skip writing a commit message and the push command every time a change is made.                                                                                                                                                                                                                                                                                                                                                                            |
+| *[Typedefs](#typedef-organisation)*     | Maintains a types.xml file to place types definition in it, available both for source code and documentation.            | 1. Keeps the types declarations in one place, allowing to quickly update it both in JavaScript JSDoc, and in markdown README.<br/>2. Automatically constructs type tables for documentation.<br/>3. Expands the JSDoc config (options) argument for other developers to have a quick glance at possible options when calling a function.<br/>4. Links all types across the whole documentation for quick navigation.<br/>5. If the `types.xml` file or directory is published, other packages can embed it into documentation also, by using _Documentary_. |
+| *[API Method Titles](#method-titles)*   | Creates good-looking headers for methods.                                                                                | 1. By writing each argument on new line, makes it easier to understand the signature of a function.<br/>2. Can maintain a separate title for the table of contents to keep things simple there.                                                                                                                                                                                                                                                                                                                                                             |
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
 
@@ -59,10 +59,11 @@ This section has a quick look at the best features available in _Documentary_ an
 - [**`@typedef` Organisation**](#typedef-organisation)
   * [JS Placement](#js-placement)
     * [Expanded `@param`](#expanded-param)
-    * [Spread `@param`](#spread-param)
   * [README placement](#readme-placement)
     * [`SetHeaders`](#setheaders)
     * [`StaticConfig`](#staticconfig)
+  * [Advanced Usage](#advanced-usage)
+    * [Spread `@param`](#spread-param)
   * [Importing Types](#importing-types)
   * [XML Schema](#xml-schema)
   * [Migration](#migration)
@@ -565,6 +566,7 @@ documentary
 │   ├── 10-typedef
 │   │   ├── 1-js.md
 │   │   ├── 2-readme.md
+│   │   ├── 3-advanced.md
 │   │   ├── 3-imports.md
 │   │   ├── 4-schema.md
 │   │   ├── 9-migration.md
@@ -908,7 +910,7 @@ They are then included in both JavaScript source code and markdown documentation
 
 ### JS Placement
 
-To include a compiled declaration into a source code, the following line should be placed in the `.js` file (where the `types/static.xml` file exists in the project directory from which the `doc` command will be run):
+To include a compiled declaration into the source code, the following line should be placed in the `.js` file (where the `types/static.xml` file exists in the project directory from which the `doc` command will be run):
 
 ```js
 /* documentary types/static.xml */
@@ -935,7 +937,7 @@ export default configure
 
 > Please note that the types marker must be placed before `export default` is done (or just `export`) as there's currently a bug in VS Code.
 
-The file is then processed with [`doc src/config-static.js -g`](#generate-types) command and updated in place, unless `-` is given as an argument, which will print the output to _stdout_, or the path to the output file is specified. After the processing is done, the source code will be transformed to include all types specified in the XML file. This routine can be repeated whenever types are updated (unless the [`spread`](#spread-param) attribute was set, when the generated _JSDoc_ of a function has to be removed by hand first).
+The file is then processed with [`doc src/config-static.js -g`](#generate-types) command and updated in place, unless `-` is given as an argument, which will print the output to _stdout_, or the path to the output file is specified. After the processing is done, the source code will be transformed to include all types specified in the XML file. This routine can be repeated whenever types are updated.
 
 ```js
 /* src/config-static.js */
@@ -968,7 +970,7 @@ export default configure
 
 #### Expanded `@param`
 
-In addition, _JSDoc_ for any method that has an included type as one of its parameters will be updated to its expanded form so that a preview of options is available.
+In addition, _JSDoc_ for any method that has got an included type as one of its parameters will be updated to its expanded form so that a preview of options is available.
 
 Therefore, a raw function _JSDoc_ of a function written as
 
@@ -1015,9 +1017,53 @@ Compare that to the preview without _JSDoc_ expansion:
 
 To prevent the expansion, the `noExpand` attribute should be added to the type.
 
+### README placement
+
+To place a type definition as a table into a `README` file, the `TYPEDEF` marker can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed. Moreover, links to the type descriptions will be created in the table of contents using the [__TOC Titles__](#toc-titles), but to prevent this, the `noToc` attribute should be set for a type.
+
+```
+%TYPEDEF path/definitions.xml [TypeName]%
+```
+
+For example, using the previously defined `StaticConfig` type from `types/static.xml` file, _Documentary_ will process the following markers:
+
+```
+%TYPEDEF types/static.xml ServerResponse%
+%TYPEDEF types/static.xml SetHeaders%
+%TYPEDEF types/static.xml StaticConfig%
+```
+
+or a single marker to include all types in order in which they appear in the `xml` file:
+
+```
+%TYPEDEF types/static.xml%
+```
+
+and embed resulting type definitions:
+
+`import('http').ServerResponse` __<a name="serverresponse">`ServerResponse`</a>__
+
+`(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
+
+__<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
+
+|    Name    |            Type             |                 Description                 |   Default    |
+| ---------- | --------------------------- | ------------------------------------------- | ------------ |
+| __root*__  | _string_                    | Root directory string.                      | -            |
+| maxage     | _number_                    | Browser cache max-age in milliseconds.      | `0`          |
+| hidden     | _boolean_                   | Allow transfer of hidden files.             | `false`      |
+| index      | _string_                    | Default file name.                          | `index.html` |
+| setHeaders | _[SetHeaders](#setheaders)_ | Function to set custom headers on response. | -            |
+
+_Documentary_ wil scan each source file of the documentation first to build a map of all types. Whenever a property appears to be of a known type, it will be automatically linked to the location where it was defined. This makes it possible to define all types in one place, and then reference them in the API documentation.
+
+### Advanced Usage
+
+The basic functionality of maintaining types in the source `JavaScript` and `MarkDown` files is mostly enough. In addition, there are some advanced patterns which can be used in JavaScript.
+
 #### Spread `@param`
 
-Moreover, when the type of the type is just object, it also can be spread into a notation which contains its properties for even better visibility. To do that, the `spread` attribute must be added to the type definition in the `xml` file.
+When a type is just an object, it can be spread into a notation which contains its properties for even better visibility. To do that, the `spread` attribute must be added to the type definition in the `xml` file.
 
 Again, a raw function with JSDoc:
 
@@ -1060,47 +1106,13 @@ However, this method has one disadvantage as there will be no descriptions of th
 
 Therefore, it must be considered what is the best for developers -- to see descriptions of properties when passing a configuration object to a function, but not see all possible properties, or to see the full list of properties, but have no visibility of what they mean.
 
-### README placement
+It is also not possible to automatically update the spread type in place, because the information about the original type is lost after its converted into the object notation.
 
-To place a type definition as a table into a `README` file, the `TYPEDEF` snippet can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed. Moreover, links to the type descriptions will be created in the table of contents using the [__TOC Titles__](#toc-titles), but to prevent this, the `noToc` attribute should be set for a type.
-
-```
-%TYPEDEF path/definitions.xml TypeName%
-```
-
-For example, using previously defined `StaticConfig` type from `types/static.xml` file, _Documentary_ will process the following markers:
-
-```
-%TYPEDEF types/static.xml ServerResponse%
-%TYPEDEF types/static.xml SetHeaders%
-%TYPEDEF types/static.xml StaticConfig%
-```
-
-or a single marker to include all types in order in which they appear in the `xml` file (doing this also allows to reference other types from properties):
-
-```
-%TYPEDEF types/static.xml%
-```
-
-and embed resulting type definitions:
-
-`import('http').ServerResponse` __<a name="serverresponse">`ServerResponse`</a>__
-
-`(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
-
-__<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
-
-|    Name    |            Type             |                 Description                 |   Default    |
-| ---------- | --------------------------- | ------------------------------------------- | ------------ |
-| __root*__  | _string_                    | Root directory string.                      | -            |
-| maxage     | _number_                    | Browser cache max-age in milliseconds.      | `0`          |
-| hidden     | _boolean_                   | Allow transfer of hidden files.             | `false`      |
-| index      | _string_                    | Default file name.                          | `index.html` |
-| setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | -            |
+Generally, this feature should not be used, because the autocompletion list can be summoned by hitting <kbd>ctrl</kbd><kbd>     </kbd>.
 
 ### Importing Types
 
-A special `import` element can be used to import a type using _VS Code_'s _TypeScript_ engine. An import is just a typedef which looks like `/** @typedef {import('package').Type} Type */`. This makes it easier to reference the external type later in the file. However, it is not supported in older versions of _VS Code_.
+A special `import` element can be used to import a type using _VS Code_'s _TypeScript_ engine. An import is just a typedef which looks like `/** @typedef {import('package').Type} Type */`. This makes it easier to reference an external type later in the file. However, it is not supported in older versions of _VS Code_.
 
 <table>
 <thead>

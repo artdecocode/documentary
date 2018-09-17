@@ -48,7 +48,7 @@ This section has a quick look at the best features available in _Documentary_ an
   [
     "*[Typedefs](#typedef-organisation)*",
     "Maintains a types.xml file to place types definition in it, available both for source code and documentation.",
-    "1. Keeps the types declarations in one place, allowing to quickly update it both in JavaScript JSDoc, and in markdown README.<br/>2. Automatically constructs type tables for documentation.<br/>3. Expands the JSDoc config (options) argument for other developers to have a quick glance at possible options when calling a function.<br/>4. If the `types.xml` file or directory is published, other packages can embed it into documentation also, by using _Documentary_."
+    "1. Keeps the types declarations in one place, allowing to quickly update it both in JavaScript JSDoc, and in markdown README.<br/>2. Automatically constructs type tables for documentation.<br/>3. Expands the JSDoc config (options) argument for other developers to have a quick glance at possible options when calling a function.<br/>4. Links all types across the whole documentation for quick navigation.<br/>5. If the `types.xml` file or directory is published, other packages can embed it into documentation also, by using _Documentary_."
   ],
   [
     "*[API Method Titles](#method-titles)*",

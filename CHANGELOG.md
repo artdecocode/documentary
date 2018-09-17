@@ -1,3 +1,11 @@
+## 17 September 2018
+
+### 1.17.0
+
+- [feature] Link `typedef` definitions across the whole README document by scanning the whole of the source documentation first; links for piped types.
+- [test] Organise mask tests by `mask` and `result`, use `zoroaster@3.4` to pass `getTransform`, `getReadable` and `fork` properties to the mask factory; fix some erronous tests (no `expected` for one table, reading .js supporting files for .md masks).
+- [doc] Place `@typedefs > README` above advanced spread, improve English.
+
 ## 15 September 2018
 
 ### 1.16.1

@@ -11,12 +11,23 @@ import { getLink } from '.'
 import gifRule from './rules/gif'
 import typeRule from './rules/type'
 import badgeRule from './rules/badge'
-import typedefMdRule from './rules/typedef-md'
+import { typedefMdRe } from './rules/typedef-md'
 import macroRule from './rules/macro'
 import sectionBrakeRule from './rules/section-break'
+import { debuglog } from 'util'
 
+const LOG = debuglog('doc')
+
+/**
+ * Documentary is a _Replaceable_ stream with transform rules for documentation.
+ */
 export default class Documentary extends Replaceable {
-  constructor({ toc } = {}) {
+  /**
+   * @param {DocumentaryOptions} options Options for the Documentary constructor.
+ * @param {string} [options.toc] The table of contents to replace the `%TOC%` marker with.
+   */
+  constructor(options = {}) {
+    const { toc, locations = {}, types: allTypes = [] } = options
     const tocRule = createTocRule(toc)
 
     const {
@@ -63,17 +74,27 @@ export default class Documentary extends Replaceable {
       sectionBrakeRule,
 
       insertTable,
-      typedefMdRule, // places a table hence just before table
+      // typedefMdRule, // places a table hence just before table
+
+      {
+        re: typedefMdRe,
+        replacement(match, location, typeName) {
+          const types = locations[location]
+          if (!types) {
+            LOG('No types for location %s.', location)
+            return match
+          }
+          const t = typeName ? types.filter(a => a.name == typeName) : types
+          const res = t.map((type) => {
+            return type.toMarkdown(allTypes)
+          }).join('\n\n')
+          return res
+        },
+      },
+
       macroRule, // macro is for the table
       tableRule,
 
-      { // a hackish way to update types property tables to include links to seen types.
-        re: /\| _(\w+)_ \|/g,
-        replacement(match, name) {
-          if (!(name in this.types)) return match
-          return `| _[${name}](#${getLink(name)})_ |`
-        },
-      },
       {
         re: linkTitleRe,
         replacement(match, title) {
@@ -129,3 +150,9 @@ export default class Documentary extends Replaceable {
     return this._types
   }
 }
+
+/* documentary types/Documentary.xml */
+/**
+ * @typedef {Object} DocumentaryOptions Options for the Documentary constructor.
+ * @prop {string} [toc] The table of contents to replace the `%TOC%` marker with.
+ */

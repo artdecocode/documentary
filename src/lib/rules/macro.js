@@ -38,9 +38,9 @@ function replacement(match, name, body) {
   return ''
 }
 
-const rule = {
+const tableMacroRule = {
   re,
   replacement,
 }
 
-export default rule
+export default tableMacroRule
