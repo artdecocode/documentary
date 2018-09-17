@@ -35,6 +35,7 @@
       "console": "integratedTerminal",
       "args": [
         "test/mask",
+        "test/spec",
         "-a",
         "-w",
         "-t", "99999999"

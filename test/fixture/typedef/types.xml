@@ -1,0 +1,23 @@
+<types>
+  <import name="ServerResponse" from="http" />
+  <type name="SetHeaders"
+    type="(res: ServerResponse) => any"
+    desc="Function to set custom headers on response." />
+  <type name="StaticConfig" desc="Options to setup `koa-static`.">
+    <prop string name="root">
+      Root directory string.
+    </prop>
+    <prop number name="maxage" default="0">
+      Browser cache max-age in milliseconds.
+    </prop>
+    <prop boolean name="hidden" default="false">
+      Allow transfer of hidden files.
+    </prop>
+    <prop string name="index" default="index.html">
+      Default file name.
+    </prop>
+    <prop opt type="SetHeaders" name="setHeaders">
+      Function to set custom headers on response.
+    </prop>
+  </type>
+</types>
