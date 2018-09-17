@@ -47,5 +47,5 @@ __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 | maxage     | _number_                    | Browser cache max-age in milliseconds.      | `0`          |
 | hidden     | _boolean_                   | Allow transfer of hidden files.             | `false`      |
 | index      | _string_                    | Default file name.                          | `index.html` |
-| setHeaders | [_SetHeaders_](#setheaders) | Function to set custom headers on response. | -            |
+| setHeaders | _[SetHeaders](#setheaders)_ | Function to set custom headers on response. | -            |
 /**/

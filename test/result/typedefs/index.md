@@ -5,14 +5,14 @@ test/fixture/typedef/documentary
 __[`ServerConfig`](t)__: Options to setup the server.
 
 ```table
-[["Name","Type","Description","Default"],["port","_number_","The port on which to run the server.","`8888`"],["__staticConfig*__","[_StaticConfig_](#staticconfig)","The configuration for the static server.","-"]]
+[["Name","Type","Description","Default"],["port","_number_","The port on which to run the server.","`8888`"],["__staticConfig*__","_[StaticConfig](#staticconfig)_","The configuration for the static server.","-"]]
 ```
 `import('http').ServerResponse` __[`ServerResponse`](l)__
 `(res: ServerResponse) => any` __[`SetHeaders`](t)__: Function to set custom headers on response.
 __[`StaticConfig`](t)__: Options to setup `koa-static`.
 
 ```table
-[["Name","Type","Description","Default"],["setHeaders","[_SetHeaders_](#setheaders)","Function to set custom headers on response.","-"]]
+[["Name","Type","Description","Default"],["setHeaders","_[SetHeaders](#setheaders)_","Function to set custom headers on response.","-"]]
 ```
 __[`Type2`](t)__
 /**/

@@ -1,0 +1,8 @@
+<types>
+  <type name="Type" />
+  <type name="Type2">
+    <prop name="prop" type="string|Type">
+      A property.
+    </prop>
+  </type>
+</types>

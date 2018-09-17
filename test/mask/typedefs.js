@@ -23,7 +23,7 @@ const ts = makeTestSuite('test/result/typedefs', {
     return res
   },
   assertResults({ locations: actual }, { locations }) {
-    deepEqual(actual, locations)
+    if(locations) deepEqual(actual, locations)
   },
   jsonProps: ['locations'],
 })

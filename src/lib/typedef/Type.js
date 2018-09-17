@@ -80,6 +80,17 @@ const getSpread = (properties = []) => {
   return st
 }
 
+const getLinks = (allTypes, type) => {
+  const types = type.split('|').map(t => {
+    const link = getLinkToType(allTypes, t)
+    if (!link) return t
+    const typeWithLink = `[${t}](#${link})`
+    return typeWithLink
+  }).join(escapePipe('|'))
+  const res = `_${types}_`
+  return res
+}
+
 /**
  * @param {Property[]} props
  * @param {*} allTypes
@@ -89,12 +100,10 @@ const makePropsTable = (props = [], allTypes = []) => {
 
   const h = ['Name', 'Type', 'Description', 'Default']
   const ps = props.map((prop) => {
-    const link = getLinkToType(allTypes, prop.type)
-    const t = `_${escapePipe(prop.type)}_`
-    const typeWithLink = link ? `[${t}](#${link})` : t
+    const linkedType = getLinks(allTypes, prop.type)
     const name = prop.optional ? prop.name : `__${prop.name}*__`
     const d = !prop.hasDefault ? '-' : `\`${prop.default}\``
-    return [name, typeWithLink, prop.description, d]
+    return [name, linkedType, prop.description, d]
   })
   const res = [h, ...ps]
   const j = JSON.stringify(res)
