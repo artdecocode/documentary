@@ -38,12 +38,12 @@ function replacement(match, name, body) {
   return ''
 }
 
-const rule = {
+const tableMacroRule = {
   re,
   replacement,
 }
 
-module.exports=rule
+module.exports=tableMacroRule
 
 module.exports.re = re
 //# sourceMappingURL=macro.js.map

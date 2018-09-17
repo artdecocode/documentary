@@ -11,12 +11,23 @@ const { getLink } = require('.');
 let gifRule = require('./rules/gif'); if (gifRule && gifRule.__esModule) gifRule = gifRule.default;
 let typeRule = require('./rules/type'); if (typeRule && typeRule.__esModule) typeRule = typeRule.default;
 let badgeRule = require('./rules/badge'); if (badgeRule && badgeRule.__esModule) badgeRule = badgeRule.default;
-let typedefMdRule = require('./rules/typedef-md'); if (typedefMdRule && typedefMdRule.__esModule) typedefMdRule = typedefMdRule.default;
+const { typedefMdRe } = require('./rules/typedef-md');
 let macroRule = require('./rules/macro'); if (macroRule && macroRule.__esModule) macroRule = macroRule.default;
 let sectionBrakeRule = require('./rules/section-break'); if (sectionBrakeRule && sectionBrakeRule.__esModule) sectionBrakeRule = sectionBrakeRule.default;
+const { debuglog } = require('util');
 
+const LOG = debuglog('doc')
+
+/**
+ * Documentary is a _Replaceable_ stream with transform rules for documentation.
+ */
                class Documentary extends Replaceable {
-  constructor({ toc } = {}) {
+  /**
+   * @param {DocumentaryOptions} options Options for the Documentary constructor.
+ * @param {string} [options.toc] The table of contents to replace the `%TOC%` marker with.
+   */
+  constructor(options = {}) {
+    const { toc, locations = {}, types: allTypes = [] } = options
     const tocRule = createTocRule(toc)
 
     const {
@@ -63,17 +74,27 @@ let sectionBrakeRule = require('./rules/section-break'); if (sectionBrakeRule &&
       sectionBrakeRule,
 
       insertTable,
-      typedefMdRule, // places a table hence just before table
+      // typedefMdRule, // places a table hence just before table
+
+      {
+        re: typedefMdRe,
+        replacement(match, location, typeName) {
+          const types = locations[location]
+          if (!types) {
+            LOG('No types for location %s.', location)
+            return match
+          }
+          const t = typeName ? types.filter(a => a.name == typeName) : types
+          const res = t.map((type) => {
+            return type.toMarkdown(allTypes)
+          }).join('\n\n')
+          return res
+        },
+      },
+
       macroRule, // macro is for the table
       tableRule,
 
-      { // a hackish way to update types property tables to include links to seen types.
-        re: /\| _(\w+)_ \|/g,
-        replacement(match, name) {
-          if (!(name in this.types)) return match
-          return `| _[${name}](#${getLink(name)})_ |`
-        },
-      },
       {
         re: linkTitleRe,
         replacement(match, title) {
@@ -129,6 +150,12 @@ let sectionBrakeRule = require('./rules/section-break'); if (sectionBrakeRule &&
     return this._types
   }
 }
+
+/* documentary types/Documentary.xml */
+/**
+ * @typedef {Object} DocumentaryOptions Options for the Documentary constructor.
+ * @prop {string} [toc] The table of contents to replace the `%TOC%` marker with.
+ */
 
 
 module.exports = Documentary

@@ -12,7 +12,7 @@ const {
 } = require('restream');
 const { tableRe } = require('./rules/table');
 let typeRule = require('./rules/type'); if (typeRule && typeRule.__esModule) typeRule = typeRule.default;
-let typedefMdRule = require('./rules/typedef-md'); if (typedefMdRule && typedefMdRule.__esModule) typedefMdRule = typedefMdRule.default;
+const { typedefMdRe } = require('./rules/typedef-md');
 
 const re = /(?:^|\n) *(#+) +(.+)/g
 
@@ -22,8 +22,10 @@ class ChunkReplaceable extends Replaceable {
   /**
    * A chunk replaceable needs to be used because we want to process the whole chunk from pedantry first because we will need to sort titles as titles are detected rule-by-rule and not in the natural order.
    * @constructor
+   * @param {boolean} skipLevelOne
+   * @param {Object.<string,Type[]>} locations
    */
-  constructor(skipLevelOne) {
+  constructor(skipLevelOne, locations) {
     const {
       methodTitle, code, innerCode, table,
     } = makeMarkers({
@@ -70,7 +72,18 @@ class ChunkReplaceable extends Replaceable {
       stripComments,
 
       // types will add link titles
-      typedefMdRule,
+      {
+        re: typedefMdRe,
+        replacement(match, location, typeName) {
+          const types = locations[location]
+          const t = typeName ? types.filter(a => a.name == typeName) : types
+          const tt = t.filter(type => !type.noToc)
+          const res = tt.map((type) => {
+            return `[\`${type.name}\`](t)` // let toc-titles replacement do the job later
+          }).join('\n')
+          return res
+        },
+      },
       typeRule,
 
       // paste those cut out earlier.
@@ -193,14 +206,17 @@ class ChunkReplaceable extends Replaceable {
    * A transform stream which will extract the titles in the markdown document and transform them into a markdown nested list with links.
    * @param {Config} [config] Configuration object.
    * @param {boolean} [config.skipLevelOne=true] Don't use the first title in the TOC (default `true`).
+   * @param {Object.<string,Type[]>} locations
    */
   constructor(config = {}) {
     const {
       skipLevelOne = true,
+      locations = {},
     } = config
 
     super()
     this.skipLevelOne = skipLevelOne
+    this.locations = locations
     this.level = 0
     this.titles = []
   }
@@ -226,7 +242,7 @@ class ChunkReplaceable extends Replaceable {
   }
 
   async _transform(buffer, enc, next) {
-    const cr = new ChunkReplaceable(this.skipLevelOne)
+    const cr = new ChunkReplaceable(this.skipLevelOne, this.locations)
     cr
       .on('title', t => this.addTitle(t))
       .end(buffer)
@@ -267,14 +283,15 @@ class ChunkReplaceable extends Replaceable {
  * Gather all titles from the stream and return the table of contents as a string.
  * @returns {string} The table of contents.
  */
-       const getToc = async (stream, h1) => {
-  const toc = new Toc({ skipLevelOne: !h1 })
+       const getToc = async (stream, h1, locations) => {
+  const toc = new Toc({ skipLevelOne: !h1, locations })
   stream.pipe(toc)
   const res = await collect(toc)
   return res.trimRight()
 }
 
 /**
+ * @typedef {import('./typedef/Type').default} Type
  * @typedef {Object} Config
  * @property {boolean} [skipLevelOne=true] Don't use the first title in the TOC (default `true`).
  */

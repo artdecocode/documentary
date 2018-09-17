@@ -2,6 +2,7 @@ let whichStream = require('which-stream'); if (whichStream && whichStream.__esMo
 const { getToc } = require('../lib/Toc');
 let Documentary = require('../lib/Documentary'); if (Documentary && Documentary.__esModule) Documentary = Documentary.default;
 const { getStream } = require('../lib');
+const { getTypedefs } = require('../lib/Typedefs');
 
 /**
  * Run the documentary and save the results.
@@ -16,20 +17,21 @@ const { getStream } = require('../lib');
   const {
     source, output = '-', reverse, justToc, h1,
   } = options
-  // run the whole stream once to get the toc first
-  // TODO: get all methods here as well
   const stream = getStream(source, reverse)
-  // we used to create a pass through, pause and pipe stream in it,
-  // but there were problems.
-  const toc = await getToc(stream, h1)
+  // todo: figure out why can't create a pass-through, pipe into it and pause it
+
+  const { types, locations } = await getTypedefs(stream)
+
+  const stream2 = getStream(source, reverse)
+  const toc = await getToc(stream2, h1, locations)
   if (justToc) {
     console.log(toc)
     process.exit()
   }
 
-  const stream2 = getStream(source, reverse)
-  const doc = new Documentary({ toc })
-  stream2.pipe(doc)
+  const stream3 = getStream(source, reverse)
+  const doc = new Documentary({ toc, locations, types })
+  stream3.pipe(doc)
   await whichStream({
     readable: doc,
     destination: output,
