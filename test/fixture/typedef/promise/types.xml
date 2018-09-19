@@ -1,0 +1,11 @@
+<types>
+  <type name="Type" />
+  <type name="Type2" />
+  <type name="Type3" />
+  <type name="Type4" />
+  <type name="Type5">
+    <prop name="prop" type="Promise.<Type|Type2>|Type3|Type4">
+      A property.
+    </prop>
+  </type>
+</types>

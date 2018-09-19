@@ -1,4 +1,5 @@
 import extractTags from 'rexml'
+import mismatch from 'mismatch'
 import Property from './Property'
 import { getLink } from '..'
 
@@ -81,14 +82,22 @@ const getSpread = (properties = []) => {
 }
 
 const getLinks = (allTypes, type) => {
-  const types = type.split('|').map(t => {
+  const m = mismatch(
+    /(?:(.+)\.<(.+?)>)|([^|]+)/g,
+    type,
+    ['gen', 'generic', 't'],
+  )
+  const types = m.map(({ gen, generic, t }) => {
+    if (gen) {
+      const pp = getLinks(allTypes, generic)
+      return `${gen}.<${pp}>`
+    }
     const link = getLinkToType(allTypes, t)
     if (!link) return t
     const typeWithLink = `[${t}](#${link})`
     return typeWithLink
-  }).join(escapePipe('|'))
-  const res = `_${types}_`
-  return res
+  }).join('|')
+  return types
 }
 
 /**
@@ -103,7 +112,7 @@ const makePropsTable = (props = [], allTypes = []) => {
     const linkedType = getLinks(allTypes, prop.type)
     const name = prop.optional ? prop.name : `__${prop.name}*__`
     const d = !prop.hasDefault ? '-' : `\`${prop.default}\``
-    return [name, linkedType, prop.description, d]
+    return [name, `_${esc(linkedType)}_`, prop.description, d]
   })
   const res = [h, ...ps]
   const j = JSON.stringify(res)
@@ -114,8 +123,11 @@ ${j}
 \`\`\``
 }
 
-const escapePipe = (s) => {
-  return s.replace(/\|/g, '\\|')
+const esc = (s) => {
+  return s
+    .replace(/\|/g, '\\|')
+    .replace(/</g, '&lt;')
+    .replace(/>/, '&gt;')
 }
 
 const getLinkToType = (allTypes, type) => {
