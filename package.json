@@ -77,11 +77,11 @@
   },
   "homepage": "https://github.com/artdecocode/documentary#readme",
   "devDependencies": {
-    "alamode": "1.5.0",
+    "alamode": "1.5.1",
     "eslint-config-artdeco": "1.0.1",
     "snapshot-context": "2.0.4",
     "yarn-s": "1.1.0",
-    "zoroaster": "3.4.1"
+    "zoroaster": "3.5.1"
   },
   "dependencies": {
     "@wrote/clone": "1.0.1",
@@ -93,7 +93,7 @@
     "pedantry": "2.2.0",
     "restream": "3.2.1",
     "rexml": "1.1.0",
-    "spawncommand": "2.0.1",
+    "spawncommand": "2.1.0",
     "which-stream": "1.0.1"
   }
 }
