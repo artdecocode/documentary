@@ -1,8 +1,13 @@
 <types>
-  <import name="ServerResponse" from="http" />
+  <import name="ServerResponse" from="http"
+    link="https://nodejs.org/api/http.html#http_class_http_serverresponse"
+  />
   <type name="SetHeaders"
     type="(res: ServerResponse) => any"
     desc="Function to set custom headers on response." />
+  <type name="RightsConfig"
+    type="{ location: string, rights: number }[]"
+    desc="Configuration of read and write access rights." />
   <type name="StaticConfig" desc="Options to setup `koa-static`.">
     <prop string name="root">
       Root directory string.
@@ -18,6 +23,9 @@
     </prop>
     <prop opt type="SetHeaders" name="setHeaders">
       Function to set custom headers on response.
+    </prop>
+    <prop opt type="Promise.<RightsConfig>" name="rightsPromise">
+      The promise which will be resolved with access rights to files.
     </prop>
   </type>
 </types>

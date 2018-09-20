@@ -61,6 +61,7 @@ This section has a quick look at the best features available in _Documentary_ an
     * [Expanded `@param`](#expanded-param)
   * [README placement](#readme-placement)
     * [`SetHeaders`](#setheaders)
+    * [`RightsConfig`](#rightsconfig)
     * [`StaticConfig`](#staticconfig)
   * [Advanced Usage](#advanced-usage)
     * [Spread `@param`](#spread-param)
@@ -882,10 +883,15 @@ Types are kept in a separate `xml` file, for example:
 
 ```xml
 <types>
-  <import name="ServerResponse" from="http" />
+  <import name="ServerResponse" from="http"
+    link="https://nodejs.org/api/http.html#http_class_http_serverresponse"
+  />
   <type name="SetHeaders"
     type="(res: ServerResponse) => any"
     desc="Function to set custom headers on response." />
+  <type name="RightsConfig"
+    type="{ location: string, rights: number }[]"
+    desc="Configuration of read and write access rights." />
   <type name="StaticConfig" desc="Options to setup `koa-static`.">
     <prop string name="root">
       Root directory string.
@@ -901,6 +907,9 @@ Types are kept in a separate `xml` file, for example:
     </prop>
     <prop opt type="SetHeaders" name="setHeaders">
       Function to set custom headers on response.
+    </prop>
+    <prop opt type="Promise.<RightsConfig>" name="rightsPromise">
+      The promise which will be resolved with access rights to files.
     </prop>
   </type>
 </types>
@@ -957,12 +966,15 @@ function configure(config) {
  *
  * @typedef {(res: ServerResponse) => any} SetHeaders Function to set custom headers on response.
  *
+ * @typedef {{ location: string, rights: number }[]} RightsConfig Configuration of read and write access rights.
+ *
  * @typedef {Object} StaticConfig Options to setup `koa-static`.
  * @prop {string} root Root directory string.
  * @prop {number} [maxage=0] Browser cache max-age in milliseconds. Default `0`.
  * @prop {boolean} [hidden=false] Allow transfer of hidden files. Default `false`.
  * @prop {string} [index="index.html"] Default file name. Default `index.html`.
  * @prop {SetHeaders} [setHeaders] Function to set custom headers on response.
+ * @prop {Promise.<RightsConfig>} [rightsPromise] The promise which will be resolved with access rights to files.
  */
 
 export default configure
@@ -1039,23 +1051,26 @@ or a single marker to include all types in order in which they appear in the `xm
 %TYPEDEF types/static.xml%
 ```
 
-and embed resulting type definitions:
+and embed resulting type definitions (with the imported type linked to the Node.js documentation due to its `link` attribute):
 
-`import('http').ServerResponse` __<a name="serverresponse">`ServerResponse`</a>__
+[`import('http').ServerResponse`](https://nodejs.org/api/http.html#http_class_http_serverresponse) __<a name="serverresponse">`ServerResponse`</a>__
 
 `(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 
+`{ location: string, rights: number }[]` __<a name="rightsconfig">`RightsConfig`</a>__: Configuration of read and write access rights.
+
 __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
-|    Name    |            Type             |                 Description                 |   Default    |
-| ---------- | --------------------------- | ------------------------------------------- | ------------ |
-| __root*__  | _string_                    | Root directory string.                      | -            |
-| maxage     | _number_                    | Browser cache max-age in milliseconds.      | `0`          |
-| hidden     | _boolean_                   | Allow transfer of hidden files.             | `false`      |
-| index      | _string_                    | Default file name.                          | `index.html` |
-| setHeaders | _[SetHeaders](#setheaders)_ | Function to set custom headers on response. | -            |
+|     Name      |                      Type                       |                           Description                           |   Default    |
+| ------------- | ----------------------------------------------- | --------------------------------------------------------------- | ------------ |
+| __root*__     | _string_                                        | Root directory string.                                          | -            |
+| maxage        | _number_                                        | Browser cache max-age in milliseconds.                          | `0`          |
+| hidden        | _boolean_                                       | Allow transfer of hidden files.                                 | `false`      |
+| index         | _string_                                        | Default file name.                                              | `index.html` |
+| setHeaders    | _[SetHeaders](#setheaders)_                     | Function to set custom headers on response.                     | -            |
+| rightsPromise | _Promise.&lt;[RightsConfig](#rightsconfig)&gt;_ | The promise which will be resolved with access rights to files. | -            |
 
-_Documentary_ wil scan each source file of the documentation first to build a map of all types. Whenever a property appears to be of a known type, it will be automatically linked to the location where it was defined. This makes it possible to define all types in one place, and then reference them in the API documentation.
+_Documentary_ wil scan each source file of the documentation first to build a map of all types. Whenever a property appears to be of a known type, it will be automatically linked to the location where it was defined. It is also true for properties described as generic types, such as `Promise.<Type>`. This makes it possible to define all types in one place, and then reference them in the API documentation.
 
 ### Advanced Usage
 
@@ -1113,6 +1128,14 @@ Generally, this feature should not be used, because the autocompletion list can 
 ### Importing Types
 
 A special `import` element can be used to import a type using _VS Code_'s _TypeScript_ engine. An import is just a typedef which looks like `/** @typedef {import('package').Type} Type */`. This makes it easier to reference an external type later in the file. However, it is not supported in older versions of _VS Code_.
+
+The import will never display in the Table of Contents as its an external type and should be used to document internal API. There are three attributes supported by the `import` element:
+
+| Attribute |                  Meaning                   |
+| --------- | ------------------------------------------ |
+| from      | The package from which to import the type. |
+| name      | The name of the type.                      |
+| link      | The link to display in the documentation.  |
 
 <table>
 <thead>
@@ -1207,6 +1230,7 @@ _import_</td>
 
 - _name_: Name of the imported type.</li>
 - _from_: The module from which the type is imported.</li>
+- _link_: The link to a web page displayed in the documentation.</li>
   </td>
  </tr>
  <tr>

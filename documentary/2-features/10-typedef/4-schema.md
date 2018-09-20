@@ -27,6 +27,7 @@ _import_</td>
 
 - _name_: Name of the imported type.</li>
 - _from_: The module from which the type is imported.</li>
+- _link_: The link to a web page displayed in the documentation.</li>
   </td>
  </tr>
  <tr>
