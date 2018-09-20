@@ -2,8 +2,8 @@ const { Replaceable, makeMarkers, makeCutRule, makePasteRule } = require('restre
 const {
   createTocRule, commentRule: stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe,
 } = require('./rules');
-let tableRule = require('./rules/table'); if (tableRule && tableRule.__esModule) tableRule = tableRule.default; const { tableRe } = tableRule
-let methodTitleRule = require('./rules/method-title'); if (methodTitleRule && methodTitleRule.__esModule) methodTitleRule = methodTitleRule.default; const { methodTitleRe } = methodTitleRule
+let tableRule = require('./rules/table'); const { tableRe } = tableRule; if (tableRule && tableRule.__esModule) tableRule = tableRule.default;
+let methodTitleRule = require('./rules/method-title'); const { methodTitleRe } = methodTitleRule; if (methodTitleRule && methodTitleRule.__esModule) methodTitleRule = methodTitleRule.default;
 let treeRule = require('./rules/tree'); if (treeRule && treeRule.__esModule) treeRule = treeRule.default;
 let exampleRule = require('./rules/example'); if (exampleRule && exampleRule.__esModule) exampleRule = exampleRule.default;
 let forkRule = require('./rules/fork'); if (forkRule && forkRule.__esModule) forkRule = forkRule.default;

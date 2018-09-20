@@ -6,6 +6,7 @@ const { typedefMdRe } = require('./rules/typedef-md');
 const { read } = require('.');
 let Type = require('./typedef/Type'); if (Type && Type.__esModule) Type = Type.default;
 const { codeRe, commentRule } = require('./rules');
+const { methodTitleRe } = require('./rules/method-title');
 
 const LOG = debuglog('doc')
 
@@ -15,6 +16,12 @@ const LOG = debuglog('doc')
                class Typedefs extends Replaceable {
   constructor() {
     super([
+      {
+        re: methodTitleRe,
+        replacement() {
+          return ''
+        },
+      },
       {
         re: codeRe,
         replacement() {
@@ -77,6 +84,14 @@ const LOG = debuglog('doc')
     })
   }
 }
+
+// {
+//   re: /[\s\S]+/g,
+//   replacement(match) {
+//     debugger
+//     return match
+//   },
+// },
 
        const getTypedefs = async (stream) => {
   const typedefs = new Typedefs()
