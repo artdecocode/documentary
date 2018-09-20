@@ -1,1 +1,0 @@
-%TYPEDEF test/fixture/typedef/promise/types.xml%

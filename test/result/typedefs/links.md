@@ -1,5 +1,5 @@
 // can link piped types
-test/fixture/typedef/pipe/index.md
+%TYPEDEF test/fixture/typedef/pipe.xml%
 
 /* expected */
 __[`Type`](t)__
@@ -11,7 +11,7 @@ __[`Type2`](t)__
 /**/
 
 // can link promised types
-test/fixture/typedef/promise/index.md
+%TYPEDEF test/fixture/typedef/promise.xml%
 
 /* expected */
 __[`Type`](t)__
