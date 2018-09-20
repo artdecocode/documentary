@@ -64,7 +64,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Package",
+      "name": "Launch For Package",
       "program": "${workspaceFolder}/src/bin/alamode.js",
       "env": {
         "NODE_DEBUG": "doc"
@@ -72,7 +72,7 @@
       "args": [
         "documentary",
       ],
-      "cwd": "${workspaceFolder}/../spawncommand",
+      "cwd": "${workspaceFolder}/../../idiojs/core",
       "console": "integratedTerminal",
       "skipFiles": [
         "<node_internals>/**/*.js"

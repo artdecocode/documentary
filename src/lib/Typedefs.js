@@ -6,6 +6,7 @@ import { typedefMdRe } from './rules/typedef-md'
 import { read } from '.'
 import Type from './typedef/Type'
 import { codeRe, commentRule } from './rules'
+import { methodTitleRe } from './rules/method-title'
 
 const LOG = debuglog('doc')
 
@@ -15,6 +16,12 @@ const LOG = debuglog('doc')
 export default class Typedefs extends Replaceable {
   constructor() {
     super([
+      {
+        re: methodTitleRe,
+        replacement() {
+          return ''
+        },
+      },
       {
         re: codeRe,
         replacement() {
@@ -77,6 +84,14 @@ export default class Typedefs extends Replaceable {
     })
   }
 }
+
+// {
+//   re: /[\s\S]+/g,
+//   replacement(match) {
+//     debugger
+//     return match
+//   },
+// },
 
 export const getTypedefs = async (stream) => {
   const typedefs = new Typedefs()

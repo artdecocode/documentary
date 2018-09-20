@@ -29,7 +29,7 @@ const ts = makeTestSuite('test/result/Typedefs-dir.md', {
   jsonProps: ['locations'],
 })
 
-const links = makeTestSuite('test/result/Typedefs', {
+const rest = makeTestSuite('test/result/Typedefs', {
   /**
    * @param {string} input
    * @param {TempContext} t
@@ -59,5 +59,7 @@ const links = makeTestSuite('test/result/Typedefs', {
   context: TempContext,
 })
 
-export default ts
-export { links }
+export default {
+  ...ts,
+  ...rest,
+}
