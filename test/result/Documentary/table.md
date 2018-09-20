@@ -18,6 +18,27 @@ The program accepts the following arguments:
 | -z  | A list of zones to check  |
 /**/
 
+
+// replaces a table with null data
+The program accepts the following arguments:
+
+```table
+[
+  ["arg", "description"],
+  ["-f", null],
+  ["-z", null]
+]
+```
+
+/* expected */
+The program accepts the following arguments:
+
+| arg | description |
+| --- | ----------- |
+| -f  |             |
+| -z  |             |
+/**/
+
 // replaces a table with a macro
 %TABLE-MACRO Company
   $1
