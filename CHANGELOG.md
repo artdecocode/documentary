@@ -1,5 +1,9 @@
 ## 20 September 2018
 
+### 1.18.1
+
+- [fix] Cut method titles in _Typedefs_ stream to prevents errors when a method title is followed by a code block.
+
 ### 1.18.0
 
 - [feature] Link to generic types, such as `Promise.<Type>`.
