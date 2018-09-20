@@ -1,3 +1,10 @@
+## 20 September 2018
+
+### 1.18.0
+
+- [feature] Link to generic types, such as `Promise.<Type>`.
+- [feature] Add external linking of `import` types.
+
 ## 17 September 2018
 
 ### 1.17.0
