@@ -1,5 +1,9 @@
 ## 20 September 2018
 
+### 1.18.2
+
+- [fix] Fix a bug when a table in comments were not being cut out properly; fix parsing table with `null` values.
+
 ### 1.18.1
 
 - [fix] Cut method titles in _Typedefs_ stream to prevents errors when a method title is followed by a code block.
