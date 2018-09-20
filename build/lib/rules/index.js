@@ -25,8 +25,7 @@ const LOG = debuglog('doc')
 
 // ^[\n because can be part of a table row
        const linkTitleRe = /\[([^[\n]+?)\]\((t|#+)\)/gm
-       const linkRe = /\[(.+?)\]\(l\)/g
-
+       const linkRe = /\[([^\n\]]+?)\]\(l\)/gm
 
 module.exports.createTocRule = createTocRule
 module.exports.commentRe = commentRe

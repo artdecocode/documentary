@@ -1,9 +1,12 @@
 let extractTags = require('rexml'); if (extractTags && extractTags.__esModule) extractTags = extractTags.default;
+let mismatch = require('mismatch'); if (mismatch && mismatch.__esModule) mismatch = mismatch.default;
 let Property = require('./Property'); if (Property && Property.__esModule) Property = Property.default;
 const { getLink } = require('..');
 
 class Type {
-  fromXML(content, { name, type, desc, noToc, spread, noExpand, import: i }) {
+  fromXML(content, {
+    name, type, desc, noToc, spread, noExpand, import: i, link,
+  }) {
     if (!name) throw new Error('Type does not have a name.')
     this.name = name
 
@@ -13,6 +16,7 @@ class Type {
     if (spread) this.spread = true
     if (noExpand) this.noExpand = true
     if (i) this.import = true
+    if (link) this.link = link
 
     if (content) {
       const ps = extractTags('prop', content)
@@ -49,19 +53,21 @@ class Type {
     return st
   }
   toMarkdown(allTypes = []) {
-    const t = this.type ? `\`${this.type}\` ` : ''
-    const n = `\`${this.name}\``
+    const t = this.type ? `\`${this.type}\`` : ''
+    const typeWithLink = this.link ? `[${t}](${this.link})` : t
+    const codedName = `\`${this.name}\``
     let nn
     if (!this.import) {
-      nn = this.noToc ? n : `[${n}](t)`
+      nn = this.noToc ? codedName : `[${codedName}](t)`
     } else {
-      nn = `[${n}](l)`
+      nn = `[${codedName}](l)`
     }
     const d = this.description ? `: ${this.description}` : ''
-    const line = `${t}__${nn}__${d}`
+    const twl = typeWithLink ? `${typeWithLink} ` : ''
+    const line = `${twl}__${nn}__${d}`
     const table = makePropsTable(this.properties, allTypes)
-    const res = `${line}${table}`
-    return res
+    const r = `${line}${table}`
+    return r
   }
 }
 
@@ -81,14 +87,22 @@ const getSpread = (properties = []) => {
 }
 
 const getLinks = (allTypes, type) => {
-  const types = type.split('|').map(t => {
+  const m = mismatch(
+    /(?:(.+)\.<(.+?)>)|([^|]+)/g,
+    type,
+    ['gen', 'generic', 't'],
+  )
+  const types = m.map(({ gen, generic, t }) => {
+    if (gen) {
+      const pp = getLinks(allTypes, generic)
+      return `${gen}.<${pp}>`
+    }
     const link = getLinkToType(allTypes, t)
     if (!link) return t
     const typeWithLink = `[${t}](#${link})`
     return typeWithLink
-  }).join(escapePipe('|'))
-  const res = `_${types}_`
-  return res
+  }).join('|')
+  return types
 }
 
 /**
@@ -103,7 +117,7 @@ const makePropsTable = (props = [], allTypes = []) => {
     const linkedType = getLinks(allTypes, prop.type)
     const name = prop.optional ? prop.name : `__${prop.name}*__`
     const d = !prop.hasDefault ? '-' : `\`${prop.default}\``
-    return [name, linkedType, prop.description, d]
+    return [name, `_${esc(linkedType)}_`, prop.description, d]
   })
   const res = [h, ...ps]
   const j = JSON.stringify(res)
@@ -114,8 +128,11 @@ ${j}
 \`\`\``
 }
 
-const escapePipe = (s) => {
-  return s.replace(/\|/g, '\\|')
+const esc = (s) => {
+  return s
+    .replace(/\|/g, '\\|')
+    .replace(/</g, '&lt;')
+    .replace(/>/, '&gt;')
 }
 
 const getLinkToType = (allTypes, type) => {
