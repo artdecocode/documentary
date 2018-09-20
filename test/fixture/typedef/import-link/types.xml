@@ -1,0 +1,7 @@
+<types>
+  <import
+    name="Test"
+    from="vm"
+    link="https://nodejs.org/api/vm.html#Test"
+  />
+</types>

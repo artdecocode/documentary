@@ -41,7 +41,7 @@ export default class Typedefs extends Replaceable {
               })
 
             const imports = extractTags('import', Root)
-              .map(({ props: { name, from, desc } }) => {
+              .map(({ props: { name, from, desc, link } }) => {
                 const type = new Type()
                 type.fromXML('', {
                   name,
@@ -49,6 +49,7 @@ export default class Typedefs extends Replaceable {
                   noToc: true,
                   import: true,
                   desc,
+                  link,
                 })
                 return type
               })

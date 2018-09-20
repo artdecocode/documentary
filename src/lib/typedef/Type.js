@@ -4,7 +4,9 @@ import Property from './Property'
 import { getLink } from '..'
 
 class Type {
-  fromXML(content, { name, type, desc, noToc, spread, noExpand, import: i }) {
+  fromXML(content, {
+    name, type, desc, noToc, spread, noExpand, import: i, link,
+  }) {
     if (!name) throw new Error('Type does not have a name.')
     this.name = name
 
@@ -14,6 +16,7 @@ class Type {
     if (spread) this.spread = true
     if (noExpand) this.noExpand = true
     if (i) this.import = true
+    if (link) this.link = link
 
     if (content) {
       const ps = extractTags('prop', content)
@@ -50,19 +53,21 @@ class Type {
     return st
   }
   toMarkdown(allTypes = []) {
-    const t = this.type ? `\`${this.type}\` ` : ''
-    const n = `\`${this.name}\``
+    const t = this.type ? `\`${this.type}\`` : ''
+    const typeWithLink = this.link ? `[${t}](${this.link})` : t
+    const codedName = `\`${this.name}\``
     let nn
     if (!this.import) {
-      nn = this.noToc ? n : `[${n}](t)`
+      nn = this.noToc ? codedName : `[${codedName}](t)`
     } else {
-      nn = `[${n}](l)`
+      nn = `[${codedName}](l)`
     }
     const d = this.description ? `: ${this.description}` : ''
-    const line = `${t}__${nn}__${d}`
+    const twl = typeWithLink ? `${typeWithLink} ` : ''
+    const line = `${twl}__${nn}__${d}`
     const table = makePropsTable(this.properties, allTypes)
-    const res = `${line}${table}`
-    return res
+    const r = `${line}${table}`
+    return r
   }
 }
 

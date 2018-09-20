@@ -4,7 +4,7 @@ import { collect } from 'catchment'
 import { getStream } from '../../src/lib'
 import Typedefs from '../../src/lib/Typedefs'
 
-const ts = makeTestSuite('test/result/typedefs', {
+const ts = makeTestSuite('test/result/Typedefs', {
   async getResults(input) {
     const s = getStream(input)
     const typedefs = new Typedefs()

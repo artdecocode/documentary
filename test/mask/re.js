@@ -2,6 +2,7 @@ import { makeTestSuite } from 'zoroaster'
 import { deepEqual } from 'zoroaster/assert'
 import mismatch from 'mismatch'
 import { sectionBrakeRe } from '../../src/lib/rules/section-break'
+import { linkRe } from '../../src/lib/rules'
 
 const ts = [
   [
@@ -9,6 +10,12 @@ const ts = [
     'section breaks',
     'section-break.md',
     ['number', 'attrs'],
+  ],
+  [
+    linkRe,
+    'links',
+    'links.md',
+    ['title'],
   ],
 ].reduce((acc, [regex, name, path, keys]) => {
   const p = `test/result/re/${path}`

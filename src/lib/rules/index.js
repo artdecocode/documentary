@@ -25,4 +25,4 @@ export const commentRule = {
 
 // ^[\n because can be part of a table row
 export const linkTitleRe = /\[([^[\n]+?)\]\((t|#+)\)/gm
-export const linkRe = /\[(.+?)\]\(l\)/g
+export const linkRe = /\[([^\n\]]+?)\]\(l\)/gm

@@ -64,6 +64,23 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch Package",
+      "program": "${workspaceFolder}/src/bin/alamode.js",
+      "env": {
+        "NODE_DEBUG": "doc"
+      },
+      "args": [
+        "documentary",
+      ],
+      "cwd": "${workspaceFolder}/../spawncommand",
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch Doc",
       "program": "${workspaceFolder}/src/bin/alamode.js",
       "env": {
