@@ -17,7 +17,7 @@ const LOG = debuglog('doc')
     const [header, ...rows] = res
     const realRows = macroFn ? rows.map(macroFn) : rows
     const replacedData = this.replaceInnerCode
-      ? [header, ...realRows].map(c => c.map(cc => this.replaceInnerCode(cc)))
+      ? [header, ...realRows].map(c => c.map(cc => this.replaceInnerCode(cc || '')))
       : [header, ...realRows]
     const lengths = findLengths(replacedData)
     const sep = lengths.map(l => '-'.repeat(l))
@@ -80,15 +80,16 @@ const padMiddle = (val, length) => {
 
 const getRow = (row, lengths, center = false) => {
   const cols = row.map((col, i) => {
+    const c = col || ''
     const l = lengths[i]
-    const r = center ? padMiddle(col, l) : padRight(col, l)
+    const r = center ? padMiddle(c, l) : padRight(c, l)
     return r
   })
   const s = `| ${cols.join(' | ')} |`
   return s
 }
 
-const re = /```table(?: +(.+) *)?\n([\s\S]+?)\n```$/mg
+const re = /```table(?: +(.+) *)?\n([\s\S]+?)\n```/mg
 
 const tableRule = {
   re,
