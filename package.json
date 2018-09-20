@@ -80,6 +80,7 @@
     "alamode": "1.5.1",
     "eslint-config-artdeco": "1.0.1",
     "snapshot-context": "2.0.4",
+    "temp-context": "1.1.0",
     "yarn-s": "1.1.0",
     "zoroaster": "3.5.1"
   },

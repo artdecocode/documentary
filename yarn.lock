@@ -40,6 +40,13 @@
   dependencies:
     makepromise "2.0.0"
 
+"@wrote/rm@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@wrote/rm/-/rm-1.0.0.tgz#d7e95c4296b346370d313e383397e1eaf02d8eb8"
+  dependencies:
+    "@wrote/read-dir-structure" "1.0.1"
+    makepromise "3.0.1"
+
 alamode@1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/alamode/-/alamode-1.5.1.tgz#416fce8b8a01fcfd91985361d86484b36e9a1e46"
@@ -264,6 +271,17 @@ spawncommand@2.1.0:
   resolved "https://registry.yarnpkg.com/spawncommand/-/spawncommand-2.1.0.tgz#a5ef60ae7892e8718a9c717fc52fe5f54521e0de"
   dependencies:
     catchment "3.1.1"
+
+temp-context@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/temp-context/-/temp-context-1.1.0.tgz#52a744e91a23f979a9548a431fc5abf4f392e0f8"
+  dependencies:
+    "@wrote/clone" "1.0.1"
+    "@wrote/ensure-path" "1.0.3"
+    "@wrote/rm" "1.0.0"
+    catchment "3.1.1"
+    makepromise "3.0.1"
+    pedantry "2.2.0"
 
 usually@1.0.0:
   version "1.0.0"
