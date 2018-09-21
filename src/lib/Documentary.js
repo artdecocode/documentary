@@ -12,9 +12,10 @@ import gifRule from './rules/gif'
 import typeRule from './rules/type'
 import badgeRule from './rules/badge'
 import { typedefMdRe } from './rules/typedef-md'
-import macroRule from './rules/macro'
+import tableMacroRule from './rules/macro'
 import sectionBrakeRule from './rules/section-break'
 import { debuglog } from 'util'
+import { macroRule, useMacroRule } from './rules/macros'
 
 const LOG = debuglog('doc')
 
@@ -61,6 +62,9 @@ export default class Documentary extends Replaceable {
       cutCode,
       stripComments,
 
+      macroRule,
+      useMacroRule,
+
       badgeRule,
       treeRule,
       ...[
@@ -92,7 +96,7 @@ export default class Documentary extends Replaceable {
         },
       },
 
-      macroRule, // macro is for the table
+      tableMacroRule, // macro is for the table
       tableRule,
 
       {

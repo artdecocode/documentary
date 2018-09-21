@@ -3,6 +3,7 @@ import { deepEqual } from 'zoroaster/assert'
 import mismatch from 'mismatch'
 import { sectionBrakeRe } from '../../src/lib/rules/section-break'
 import { linkRe } from '../../src/lib/rules'
+import { macroRe, useMacroRe } from '../../src/lib/rules/macros'
 
 const ts = [
   [
@@ -16,6 +17,18 @@ const ts = [
     'links',
     'links.md',
     ['title'],
+  ],
+  [
+    macroRe,
+    'macros',
+    'macro.md',
+    ['p', 'name', 'body'],
+  ],
+  [
+    useMacroRe,
+    'use-macros',
+    'use-macro.md',
+    ['name', 'body'],
   ],
 ].reduce((acc, [regex, name, path, keys]) => {
   const p = `test/result/re/${path}`
