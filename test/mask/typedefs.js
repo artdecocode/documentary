@@ -34,11 +34,9 @@ const rest = makeTestSuite('test/result/Typedefs', {
    * @param {string} input
    * @param {TempContext} t
    */
-  async getResults(input, { write }) {
-    const path = await write(input, 'test.md')
-    const s = getStream(path)
+  async getResults(input) {
     const typedefs = new Typedefs()
-    s.pipe(typedefs)
+    typedefs.end(input)
     await collect(typedefs)
     const { locations, types } = typedefs
     return { locations: Object.keys(locations), types }

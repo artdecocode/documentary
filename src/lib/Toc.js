@@ -6,13 +6,14 @@ import {
   codeRe, commentRule as stripComments, innerCodeRe, linkTitleRe,
 } from './rules'
 import tableRule from './rules/table'
-import macroRule from './rules/macro'
+import tableMacroRule from './rules/macro'
 import {
   Replaceable, makeCutRule, makePasteRule, makeMarkers,
 } from 'restream'
 import { tableRe } from './rules/table'
 import typeRule from './rules/type'
 import { typedefMdRe } from './rules/typedef-md'
+import { macroRule, useMacroRule } from './rules/macros';
 
 const re = /(?:^|\n) *(#+) +(.+)/g
 
@@ -71,6 +72,9 @@ class ChunkReplaceable extends Replaceable {
       cutCode,
       stripComments,
 
+      macroRule,
+      useMacroRule,
+
       // types will add link titles
       {
         re: typedefMdRe,
@@ -90,7 +94,7 @@ class ChunkReplaceable extends Replaceable {
       insertMethodTitle,
       insertTable,
 
-      macroRule,
+      tableMacroRule,
       tableRule,
       {
         re: underline,

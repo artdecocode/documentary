@@ -7,6 +7,7 @@ import { read } from '.'
 import Type from './typedef/Type'
 import { codeRe, commentRule } from './rules'
 import { methodTitleRe } from './rules/method-title'
+import { macroRule, useMacroRule } from './rules/macros'
 
 const LOG = debuglog('doc')
 
@@ -29,6 +30,8 @@ export default class Typedefs extends Replaceable {
         },
       },
       commentRule,
+      macroRule,
+      useMacroRule,
       {
         re: typedefMdRe,
         async replacement(match, location, typeName) {
