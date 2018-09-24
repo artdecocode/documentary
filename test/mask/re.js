@@ -2,7 +2,7 @@ import { makeTestSuite } from 'zoroaster'
 import { deepEqual } from 'zoroaster/assert'
 import mismatch from 'mismatch'
 import { sectionBrakeRe } from '../../src/lib/rules/section-break'
-import { linkRe } from '../../src/lib/rules'
+import { linkRe, linkTitleRe } from '../../src/lib/rules'
 import { macroRe, useMacroRe } from '../../src/lib/rules/macros'
 
 const ts = [
@@ -16,7 +16,13 @@ const ts = [
     linkRe,
     'links',
     'links.md',
-    ['title'],
+    ['title', 'prefix'],
+  ],
+  [
+    linkTitleRe,
+    'toc links',
+    'toc-links.md',
+    ['title', 'tOrHash', 'prefix'],
   ],
   [
     macroRe,
