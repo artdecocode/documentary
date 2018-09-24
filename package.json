@@ -51,6 +51,7 @@
     "preprocessor",
     "markdown",
     "md",
+    "macro",
     "html",
     "jsdoc",
     "typedef",
