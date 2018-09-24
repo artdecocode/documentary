@@ -12,9 +12,10 @@ let gifRule = require('./rules/gif'); if (gifRule && gifRule.__esModule) gifRule
 let typeRule = require('./rules/type'); if (typeRule && typeRule.__esModule) typeRule = typeRule.default;
 let badgeRule = require('./rules/badge'); if (badgeRule && badgeRule.__esModule) badgeRule = badgeRule.default;
 const { typedefMdRe } = require('./rules/typedef-md');
-let macroRule = require('./rules/macro'); if (macroRule && macroRule.__esModule) macroRule = macroRule.default;
+let tableMacroRule = require('./rules/macro'); if (tableMacroRule && tableMacroRule.__esModule) tableMacroRule = tableMacroRule.default;
 let sectionBrakeRule = require('./rules/section-break'); if (sectionBrakeRule && sectionBrakeRule.__esModule) sectionBrakeRule = sectionBrakeRule.default;
 const { debuglog } = require('util');
+const { macroRule, useMacroRule } = require('./rules/macros');
 
 const LOG = debuglog('doc')
 
@@ -61,6 +62,9 @@ const LOG = debuglog('doc')
       cutCode,
       stripComments,
 
+      macroRule,
+      useMacroRule,
+
       badgeRule,
       treeRule,
       ...[
@@ -82,7 +86,7 @@ const LOG = debuglog('doc')
           const types = locations[location]
           if (!types) {
             LOG('No types for location %s.', location)
-            return match
+            return ''
           }
           const t = typeName ? types.filter(a => a.name == typeName) : types
           const res = t.map((type) => {
@@ -92,7 +96,7 @@ const LOG = debuglog('doc')
         },
       },
 
-      macroRule, // macro is for the table
+      tableMacroRule, // macro is for the table
       tableRule,
 
       {

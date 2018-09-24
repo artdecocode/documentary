@@ -47,7 +47,9 @@ const LOG = debuglog('doc')
 const findLengths = (array) => {
   const [header] = array
   const lengths = array.reduce((acc, columns) => {
-    const columnLengths = columns.map(({ length }) => length)
+    const columnLengths = columns
+      .map(c => c || '')
+      .map(({ length }) => length)
     const newAcc = columnLengths.map((l, i) => {
       const prevLength = acc[i]
       if (l > prevLength) return l

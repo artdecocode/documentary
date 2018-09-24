@@ -7,6 +7,7 @@ const { read } = require('.');
 let Type = require('./typedef/Type'); if (Type && Type.__esModule) Type = Type.default;
 const { codeRe, commentRule } = require('./rules');
 const { methodTitleRe } = require('./rules/method-title');
+const { macroRule, useMacroRule } = require('./rules/macros');
 
 const LOG = debuglog('doc')
 
@@ -29,6 +30,8 @@ const LOG = debuglog('doc')
         },
       },
       commentRule,
+      macroRule,
+      useMacroRule,
       {
         re: typedefMdRe,
         async replacement(match, location, typeName) {

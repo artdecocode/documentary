@@ -6,13 +6,14 @@ const {
   codeRe, commentRule: stripComments, innerCodeRe, linkTitleRe,
 } = require('./rules');
 let tableRule = require('./rules/table'); if (tableRule && tableRule.__esModule) tableRule = tableRule.default;
-let macroRule = require('./rules/macro'); if (macroRule && macroRule.__esModule) macroRule = macroRule.default;
+let tableMacroRule = require('./rules/macro'); if (tableMacroRule && tableMacroRule.__esModule) tableMacroRule = tableMacroRule.default;
 const {
   Replaceable, makeCutRule, makePasteRule, makeMarkers,
 } = require('restream');
 const { tableRe } = require('./rules/table');
 let typeRule = require('./rules/type'); if (typeRule && typeRule.__esModule) typeRule = typeRule.default;
 const { typedefMdRe } = require('./rules/typedef-md');
+const { macroRule, useMacroRule } = require('./rules/macros');;
 
 const re = /(?:^|\n) *(#+) +(.+)/g
 
@@ -71,11 +72,17 @@ class ChunkReplaceable extends Replaceable {
       cutCode,
       stripComments,
 
+      macroRule,
+      useMacroRule,
+
       // types will add link titles
       {
         re: typedefMdRe,
         replacement(match, location, typeName) {
           const types = locations[location]
+          if (!types) {
+            return ''
+          }
           const t = typeName ? types.filter(a => a.name == typeName) : types
           const tt = t.filter(type => !type.noToc)
           const res = tt.map((type) => {
@@ -90,7 +97,7 @@ class ChunkReplaceable extends Replaceable {
       insertMethodTitle,
       insertTable,
 
-      macroRule,
+      tableMacroRule,
       tableRule,
       {
         re: underline,
