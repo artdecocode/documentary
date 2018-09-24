@@ -1,5 +1,10 @@
 %MACRO example
-Package: _[$1](https://nodejs.tools/$2)_
+<details>
+<summary>$1</summary>
+
+NPM: _[$1](https://nodejs.tools/$2)_
+GitHub: _[$1](https://github.com/artdecocode/$2)_
+</details>
 %
 %USE-MACRO example
 <data>Documentary</data>
