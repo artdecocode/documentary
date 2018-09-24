@@ -1,3 +1,9 @@
+## 24 September 2018
+
+### 1.19.0
+
+- [feature] Implement macros to substitute data into placeholders.
+
 ## 20 September 2018
 
 ### 1.18.2
