@@ -1,0 +1,11 @@
+<types>
+  <type name="Return">
+    <prop name="body" type="string|object|Buffer">
+      The return from the server.
+    </prop>
+    <prop name="statusMessage" type="string">
+      The status message set by the server.
+      <e>OK</e>
+    </prop>
+  </type>
+</types>
