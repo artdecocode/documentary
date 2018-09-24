@@ -23,6 +23,6 @@
 <br/><br/>
 </summary>
 
-%TYPEDEF types/index.xml%
+
 </details>
 /**/
