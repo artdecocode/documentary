@@ -86,7 +86,7 @@ export default class Documentary extends Replaceable {
           const types = locations[location]
           if (!types) {
             LOG('No types for location %s.', location)
-            return match
+            return ''
           }
           const t = typeName ? types.filter(a => a.name == typeName) : types
           const res = t.map((type) => {

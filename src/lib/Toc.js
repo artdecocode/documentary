@@ -80,6 +80,9 @@ class ChunkReplaceable extends Replaceable {
         re: typedefMdRe,
         replacement(match, location, typeName) {
           const types = locations[location]
+          if (!types) {
+            return ''
+          }
           const t = typeName ? types.filter(a => a.name == typeName) : types
           const tt = t.filter(type => !type.noToc)
           const res = tt.map((type) => {
