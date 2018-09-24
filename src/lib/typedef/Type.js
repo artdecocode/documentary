@@ -58,7 +58,7 @@ class Type {
     const codedName = `\`${this.name}\``
     let nn
     if (!this.import) {
-      nn = this.noToc ? codedName : `[${codedName}](t)`
+      nn = this.noToc ? `[${codedName}](l)` : `[${codedName}](t)`
     } else {
       nn = `[${codedName}](l)`
     }
