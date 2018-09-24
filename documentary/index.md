@@ -41,6 +41,11 @@ This section has a quick look at the best features available in _Documentary_ an
     "1. Removes the need to manually build tables either by hand, online or using other tools.<br/>2. Provides table macros to reduce repetitive information and substitute only the core data into templates."
   ],
   [
+    "*[Macros](#macros)*",
+    "Reuses a defined template to place the data into placeholders.",
+    "1. Removes the need to copy-paste patterns to different places and change data manually.<br/>2. Maintains an up-to-date version of the template without having to change it everywhere.<br/>3. Reduces the cluttering of the source documentation by noise and helps to focus on important information."
+  ],
+  [
     "*[Live Push](#automatic-push)*",
     "Detects changes to the source documentation files, re-compiles the output README.md and pushes to the remote repository.",
     "1. The preview is available on-line almost immediately after a change is made. <br/>2. Allows to skip writing a commit message and the push command every time a change is made."

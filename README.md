@@ -23,6 +23,7 @@ This section has a quick look at the best features available in _Documentary_ an
 | *[Examples](#examples-placement)*       | Allows to embed the source code into documentation.                                                                      | 1. Increases productivity by eliminating the need to copy and paste the source code manually.<br/>2. Developers can run examples as Node.js scripts to check that they are working correctly and debug them.<br/>3. Examples can also be forked (see below).<br/> 4. It is possible to imports and requires such as `../src` to be displayed as the name of the package.                                                                                                                                                      |
 | *[Forks](#embedding-output)*            | Makes it possible to run an example and embed its `stdout` and `stderr` output directly into documentation. | 1. Enhances productivity by eliminating the need to copy and paste the output by hand.<br/>2. Makes sure the output is always up-to-date with the documented one.<br/>3. Will make it visible if a change to the code base lead to a different output (implicit regression testing).<br/>4. Ensures that examples are actually working.<br/>5. Can print usage of CLI tools by forking them with `-h` command.                                                                                                            |
 | *[Tables](#simple-tables)*              | Compiles tables from arrays without having to write html or markdown.                                                    | 1. Removes the need to manually build tables either by hand, online or using other tools.<br/>2. Provides table macros to reduce repetitive information and substitute only the core data into templates.                                                                                                                                                                                                                                                                                                                                                   |
+| *[Macros](#macros)*                     | Reuses a defined template to place the data into placeholders.                                                           | 1. Removes the need to copy-paste patterns to different places and change data manually.<br/>2. Maintains an up-to-date version of the template without having to change it everywhere.<br/>3. Reduces the cluttering of the source documentation by noise and helps to focus on important information.                                                                                                                                                                                                                                                     |
 | *[Live Push](#automatic-push)*          | Detects changes to the source documentation files, re-compiles the output README.md and pushes to the remote repository. | 1. The preview is available on-line almost immediately after a change is made. <br/>2. Allows to skip writing a commit message and the push command every time a change is made.                                                                                                                                                                                                                                                                                                                                                                            |
 | *[Typedefs](#typedef-organisation)*     | Maintains a types.xml file to place types definition in it, available both for source code and documentation.            | 1. Keeps the types declarations in one place, allowing to quickly update it both in JavaScript JSDoc, and in markdown README.<br/>2. Automatically constructs type tables for documentation.<br/>3. Expands the JSDoc config (options) argument for other developers to have a quick glance at possible options when calling a function.<br/>4. Links all types across the whole documentation for quick navigation.<br/>5. If the `types.xml` file or directory is published, other packages can embed it into documentation also, by using _Documentary_. |
 | *[API Method Titles](#method-titles)*   | Creates good-looking headers for methods.                                                                                | 1. By writing each argument on new line, makes it easier to understand the signature of a function.<br/>2. Can maintain a separate title for the table of contents to keep things simple there.                                                                                                                                                                                                                                                                                                                                                             |
@@ -50,6 +51,7 @@ This section has a quick look at the best features available in _Documentary_ an
   * [`runSoftware(): string`](#runsoftware-string)
   * [`runSoftware()`](#runsoftware-void)
 - [**Comments Stripping**](#comments-stripping)
+- [**Macros**](#macros)
 - [**File Splitting**](#file-splitting)
 - [**Replacement Rules**](#replacement-rules)
 - [**Gif Detail**](#gif-detail)
@@ -551,6 +553,22 @@ Since comments found in `<!-- comment -->` sections are not visible to users, th
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/9.svg?sanitize=true"></a></p>
 
+## **Macros**
+
+When there this a need to present some data in a repeatable format, macros can be used. First, a macro needs to be defined with the `MACRO` rule, and then referenced by the `USE-MACRO` rule.
+
+%EXAMPLE example/macro/index.md, markdown%
+```markdown
+Package: _[Documentary](https://nodejs.tools/documentary)_
+Package: _[Zoroaster](https://nodejs.tools/zoroaster)_
+```
+
+The data will be substituted with into `$N` placeholders using the `<data>` elements found.
+
+> Currently, a macro can only be defined in the same file as its usage. Also, in future, macros will improve my allowing to use named placeholders.
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg?sanitize=true"></a></p>
+
 ## **File Splitting**
 
 _Documentary_ can read a directory and put files together into a single `README` file. The files will be sorted in alphabetical order, and their content merged into a single stream. The `index.md` and `footer.md` are special in this respect, such that the `index.md` of a directory will always go first, and the `footer.md` will go last. To print in reverse order, for example when writing a blog and name files by their dates, the [`--reverse` flag](#reverse-order) can be passed to the CLI.
@@ -577,6 +595,7 @@ documentary
 │   ├── 3-fork.md
 │   ├── 3-method-title.md
 │   ├── 4-comment-stripping.md
+│   ├── 4-macros.md
 │   ├── 5-file-splitting.md
 │   ├── 6-rules.md
 │   ├── 8-gif.md
@@ -591,7 +610,7 @@ documentary
 └── index.md
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true"></a></p>
 
 ## **Replacement Rules**
 
@@ -603,7 +622,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | %NPM: package-name%      | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                               |
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>
 
 ## **Gif Detail**
 
@@ -639,7 +658,7 @@ The actual html placed in the `README` looks like the one below:
 </details>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg?sanitize=true"></a></p>
 
 ## **`Type` Definition**
 
@@ -873,7 +892,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 </table>
 
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg?sanitize=true"></a></p>
 
 ## **`@typedef` Organisation**
 
@@ -1326,7 +1345,7 @@ When a description ends with <code>Default &#96;value&#96;</code>, the default v
 </types>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true"></a></p>
 
 ## CLI
 
@@ -1357,7 +1376,7 @@ DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true"></a></p>
 
 ## API
 
@@ -1449,7 +1468,7 @@ import { createReadStream } from 'fs'
 - [Copyright](#copyright)
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg?sanitize=true"></a></p>
 
 #PRO
 Underlined
@@ -1467,7 +1486,7 @@ Underlined
 
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/18.svg?sanitize=true"></a></p>
 
 ## Glossary
 
