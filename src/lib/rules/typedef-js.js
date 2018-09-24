@@ -1,7 +1,7 @@
 import { debuglog } from 'util'
 import extractTags from 'rexml'
 import { read } from '..'
-import Type from '../typedef/Type'
+import { Type } from 'typal'
 
 const LOG = debuglog('doc')
 

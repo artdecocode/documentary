@@ -2,7 +2,7 @@
 %TYPEDEF test/fixture/typedef/types.xml StaticConfig%
 
 /* expected */
-__<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
+__<a name="type-staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
 |    Name    |     Type     |                 Description                 |   Default    |
 | ---------- | ------------ | ------------------------------------------- | ------------ |
@@ -17,7 +17,7 @@ __<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 %TYPEDEF test/fixture/typedef/types-pipe.xml SessionConfig%
 
 /* expected */
-__<a name="sessionconfig">`SessionConfig`</a>__: Options to setup `koa-session`.
+__<a name="type-sessionconfig">`SessionConfig`</a>__: Options to setup `koa-session`.
 
 |    Name     |        Type         |             Description             | Default |
 | ----------- | ------------------- | ----------------------------------- | ------- |
@@ -28,24 +28,24 @@ __<a name="sessionconfig">`SessionConfig`</a>__: Options to setup `koa-session`.
 %TYPEDEF test/fixture/typedef/types.xml SetHeaders%
 
 /* expected */
-`(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
+`(res: ServerResponse) => any` __<a name="type-setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 /**/
 
 // places all types from a file
 %TYPEDEF test/fixture/typedef/types.xml%
 
 /* expected */
-`import('http').ServerResponse` __<a name="serverresponse">`ServerResponse`</a>__
+`import('http').ServerResponse` __<a name="type-serverresponse">`ServerResponse`</a>__
 
-`(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
+`(res: ServerResponse) => any` __<a name="type-setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 
-__<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
+__<a name="type-staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
-|    Name    |            Type             |                 Description                 |   Default    |
-| ---------- | --------------------------- | ------------------------------------------- | ------------ |
-| __root*__  | _string_                    | Root directory string.                      | -            |
-| maxage     | _number_                    | Browser cache max-age in milliseconds.      | `0`          |
-| hidden     | _boolean_                   | Allow transfer of hidden files.             | `false`      |
-| index      | _string_                    | Default file name.                          | `index.html` |
-| setHeaders | _[SetHeaders](#setheaders)_ | Function to set custom headers on response. | -            |
+|    Name    |               Type               |                 Description                 |   Default    |
+| ---------- | -------------------------------- | ------------------------------------------- | ------------ |
+| __root*__  | _string_                         | Root directory string.                      | -            |
+| maxage     | _number_                         | Browser cache max-age in milliseconds.      | `0`          |
+| hidden     | _boolean_                        | Allow transfer of hidden files.             | `false`      |
+| index      | _string_                         | Default file name.                          | `index.html` |
+| setHeaders | _[SetHeaders](#type-setheaders)_ | Function to set custom headers on response. | -            |
 /**/

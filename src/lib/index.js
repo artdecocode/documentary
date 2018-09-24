@@ -5,7 +5,7 @@ import Pedantry from 'pedantry'
 import tableRule from './rules/table'
 import titleRule from './rules/method-title'
 
-export const getLink = (title) => {
+export const getLink = (title, prefix = '') => {
   const l = title
     .replace(/<\/?code>/g, '')
     .replace(/<\/?strong>/g, '')
@@ -14,7 +14,7 @@ export const getLink = (title) => {
     .replace(/[^\w-\d ]/g, '')
     .toLowerCase()
     .replace(/[, ]/g, '-')
-  return l
+  return `${prefix}${prefix ? '-' : ''}${l}`
 }
 
 export const makeARegexFromRule = (rule) => {

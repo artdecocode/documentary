@@ -6,7 +6,7 @@ import whichStream from 'which-stream'
 import catcher from '../catcher'
 import { debuglog } from 'util'
 import typedefRe from '../../lib/typedef/re'
-import { getNameWithDefault } from '../../lib/typedef'
+import { getNameWithDefault } from 'typal'
 
 const LOG = debuglog('doc')
 

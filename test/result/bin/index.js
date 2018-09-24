@@ -132,24 +132,24 @@ test/fixture/typedef/documentary
 /* stdout */
 ## The Server Config
 
-__<a name="serverconfig">`ServerConfig`</a>__: Options to setup the server.
+__<a name="type-serverconfig">`ServerConfig`</a>__: Options to setup the server.
 
-|       Name        |              Type               |               Description                | Default |
-| ----------------- | ------------------------------- | ---------------------------------------- | ------- |
-| port              | _number_                        | The port on which to run the server.     | `8888`  |
-| __staticConfig*__ | _[StaticConfig](#staticconfig)_ | The configuration for the static server. | -       |
+|       Name        |                 Type                 |               Description                | Default |
+| ----------------- | ------------------------------------ | ---------------------------------------- | ------- |
+| port              | _number_                             | The port on which to run the server.     | `8888`  |
+| __staticConfig*__ | _[StaticConfig](#type-staticconfig)_ | The configuration for the static server. | -       |
 
 ## The Static Config
 
-`import('http').ServerResponse` __<a name="serverresponse">`ServerResponse`</a>__
+`import('http').ServerResponse` __<a name="type-serverresponse">`ServerResponse`</a>__
 
-`(res: ServerResponse) => any` __<a name="setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
+`(res: ServerResponse) => any` __<a name="type-setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 
-__<a name="staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
+__<a name="type-staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
-|    Name    |            Type             |                 Description                 | Default |
-| ---------- | --------------------------- | ------------------------------------------- | ------- |
-| setHeaders | _[SetHeaders](#setheaders)_ | Function to set custom headers on response. | -       |
+|    Name    |               Type               |                 Description                 | Default |
+| ---------- | -------------------------------- | ------------------------------------------- | ------- |
+| setHeaders | _[SetHeaders](#type-setheaders)_ | Function to set custom headers on response. | -       |
 
-__<a name="type2">`Type2`</a>__
+__<a name="type-type2">`Type2`</a>__
 /**/
