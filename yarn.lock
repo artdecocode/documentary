@@ -283,6 +283,13 @@ temp-context@1.1.0:
     makepromise "3.0.1"
     pedantry "2.2.0"
 
+typal@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/typal/-/typal-1.0.0.tgz#69aeaa661ff0a2722eb7083abe117a805dc92981"
+  dependencies:
+    mismatch "1.0.3"
+    rexml "1.1.0"
+
 usually@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/usually/-/usually-1.0.0.tgz#3ace5b09471ddf35cccca85971ca178b5255d4b0"
