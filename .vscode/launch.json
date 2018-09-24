@@ -53,7 +53,7 @@
       "args": [
         "documentary",
       ],
-      "cwd": "${workspaceFolder}/../../idiojs/core",
+      "cwd": "${workspaceFolder}/../../idiocc/core",
       "console": "integratedTerminal",
       "skipFiles": [
         "<node_internals>/**/*.js"

@@ -86,7 +86,7 @@ class ChunkReplaceable extends Replaceable {
           const t = typeName ? types.filter(a => a.name == typeName) : types
           const tt = t.filter(type => !type.noToc)
           const res = tt.map((type) => {
-            return `[\`${type.name}\`](t)` // let toc-titles replacement do the job later
+            return `[\`${type.name}\`](t-type)` // let toc-titles replacement do the job later
           }).join('\n')
           return res
         },
