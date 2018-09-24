@@ -4,7 +4,7 @@ let extractTags = require('rexml'); if (extractTags && extractTags.__esModule) e
 const { collect } = require('catchment');
 const { typedefMdRe } = require('./rules/typedef-md');
 const { read } = require('.');
-let Type = require('./typedef/Type'); if (Type && Type.__esModule) Type = Type.default;
+const { Type } = require('typal');
 const { codeRe, commentRule } = require('./rules');
 const { methodTitleRe } = require('./rules/method-title');
 const { macroRule, useMacroRule } = require('./rules/macros');

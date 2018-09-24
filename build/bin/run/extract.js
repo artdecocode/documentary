@@ -6,7 +6,7 @@ let whichStream = require('which-stream'); if (whichStream && whichStream.__esMo
 let catcher = require('../catcher'); if (catcher && catcher.__esModule) catcher = catcher.default;
 const { debuglog } = require('util');
 let typedefRe = require('../../lib/typedef/re'); if (typedefRe && typedefRe.__esModule) typedefRe = typedefRe.default;
-const { getNameWithDefault } = require('../../lib/typedef');
+const { getNameWithDefault } = require('typal');
 
 const LOG = debuglog('doc')
 

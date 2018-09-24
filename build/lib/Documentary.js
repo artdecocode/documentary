@@ -101,17 +101,17 @@ const LOG = debuglog('doc')
 
       {
         re: linkTitleRe,
-        replacement(match, title) {
+        replacement(match, title, l, prefix) {
           const t = this.replaceInnerCode(title)
-          const link = getLink(t)
+          const link = getLink(t, prefix)
           return `<a name="${link}">${t}</a>`
         },
       },
       {
         re: linkRe, // TODO implement links system
-        replacement(match, title) {
+        replacement(match, title, prefix) {
           // TODO replace inner code as well
-          const link = getLink(title)
+          const link = getLink(title, prefix)
           return `<a name="${link}">${title}</a>`
         },
       },

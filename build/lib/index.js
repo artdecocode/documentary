@@ -5,7 +5,7 @@ let Pedantry = require('pedantry'); if (Pedantry && Pedantry.__esModule) Pedantr
 let tableRule = require('./rules/table'); if (tableRule && tableRule.__esModule) tableRule = tableRule.default;
 let titleRule = require('./rules/method-title'); if (titleRule && titleRule.__esModule) titleRule = titleRule.default;
 
-       const getLink = (title) => {
+       const getLink = (title, prefix = '') => {
   const l = title
     .replace(/<\/?code>/g, '')
     .replace(/<\/?strong>/g, '')
@@ -14,7 +14,7 @@ let titleRule = require('./rules/method-title'); if (titleRule && titleRule.__es
     .replace(/[^\w-\d ]/g, '')
     .toLowerCase()
     .replace(/[, ]/g, '-')
-  return l
+  return `${prefix}${prefix ? '-' : ''}${l}`
 }
 
        const makeARegexFromRule = (rule) => {

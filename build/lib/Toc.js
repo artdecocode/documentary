@@ -186,9 +186,9 @@ class ChunkReplaceable extends Replaceable {
       },
       {
         re: linkTitleRe,
-        replacement(match, title, l, position) {
+        replacement(match, title, l, prefix, position) {
           const t = getTitle(title)
-          const link = getLink(t)
+          const link = getLink(t, prefix)
           this.emit('title', {
             title: t,
             ...(l == 't' ? { parentLevel: true } : { level: l.length }),

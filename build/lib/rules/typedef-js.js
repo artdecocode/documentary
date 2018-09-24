@@ -1,7 +1,7 @@
 const { debuglog } = require('util');
 let extractTags = require('rexml'); if (extractTags && extractTags.__esModule) extractTags = extractTags.default;
 const { read } = require('..');
-let Type = require('../typedef/Type'); if (Type && Type.__esModule) Type = Type.default;
+const { Type } = require('typal');
 
 const LOG = debuglog('doc')
 
