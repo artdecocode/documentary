@@ -3,6 +3,7 @@
 ### 1.19.0
 
 - [feature] Implement macros to substitute data into placeholders.
+- [desc] Decrease the description size.
 
 ## 20 September 2018
 
