@@ -12,7 +12,7 @@ __[`ServerConfig`](t-type)__: Options to setup the server.
 __[`StaticConfig`](t-type)__: Options to setup `koa-static`.
 
 ```table
-[["Name","Type","Description","Default"],["setHeaders","_[SetHeaders](#type-setheaders)_","Function to set custom headers on response.","-"]]
+[["Name","Type","Description"],["setHeaders","_[SetHeaders](#type-setheaders)_","Function to set custom headers on response."]]
 ```
 __[`Type2`](t-type)__
 /**/

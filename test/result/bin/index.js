@@ -147,9 +147,9 @@ __<a name="type-serverconfig">`ServerConfig`</a>__: Options to setup the server.
 
 __<a name="type-staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
-|    Name    |               Type               |                 Description                 | Default |
-| ---------- | -------------------------------- | ------------------------------------------- | ------- |
-| setHeaders | _[SetHeaders](#type-setheaders)_ | Function to set custom headers on response. | -       |
+|    Name    |               Type               |                 Description                 |
+| ---------- | -------------------------------- | ------------------------------------------- |
+| setHeaders | _[SetHeaders](#type-setheaders)_ | Function to set custom headers on response. |
 
 __<a name="type-type2">`Type2`</a>__
 /**/

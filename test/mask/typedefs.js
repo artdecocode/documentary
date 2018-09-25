@@ -32,7 +32,6 @@ const ts = makeTestSuite('test/result/Typedefs-dir.md', {
 const rest = makeTestSuite('test/result/Typedefs', {
   /**
    * @param {string} input
-   * @param {TempContext} t
    */
   async getResults(input) {
     const typedefs = new Typedefs()
@@ -54,10 +53,40 @@ const rest = makeTestSuite('test/result/Typedefs', {
     if(locations) deepEqual(actual, locations)
   },
   jsonProps: ['locations'],
+})
+
+const rest2 = makeTestSuite('test/result/Typedefs2', {
+  /**
+   * @param {string} input
+   * @param {TempContext} t
+   */
+  async getResults(input, { write }) {
+    const pp = await write(input, 'types.xml')
+    const marker = `%TYPEDEF ${pp}%`
+    const typedefs = new Typedefs()
+    typedefs.end(marker)
+    await collect(typedefs)
+    const { locations, types } = typedefs
+    return { locations: Object.keys(locations), types }
+  },
+  /**
+   * @param {{types: import('typal/build/lib/Type')[]}} param
+   */
+  mapActual({ types }) {
+    const res = types.map(type => {
+      return type.toMarkdown(types)
+    }).join('\n')
+    return res
+  },
+  assertResults({ locations: actual }, { locations }) {
+    if(locations) deepEqual(actual, locations)
+  },
+  jsonProps: ['locations'],
   context: TempContext,
 })
 
 export default {
   ...ts,
   ...rest,
+  ...rest2,
 }
