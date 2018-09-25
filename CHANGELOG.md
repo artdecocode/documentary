@@ -1,5 +1,9 @@
 ## 25 September 2018
 
+### 1.20.1
+
+- [fix] Skip the `Default` column in Markdown types when no properties have a default.
+
 ### 1.20.0
 
 - [feature] Parse `Object.<string, Type>` for types linking.
