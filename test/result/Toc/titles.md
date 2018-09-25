@@ -3,10 +3,10 @@ test/fixture/typedef/documentary
 
 /* expected */
 - [The Server Config](#the-server-config)
-  * [`ServerConfig`](#serverconfig)
+  * [`ServerConfig`](#type-serverconfig)
 - [The Static Config](#the-static-config)
-  * [`SetHeaders`](#setheaders)
-  * [`StaticConfig`](#staticconfig)
-  * [`Type2`](#type2)
+  * [`SetHeaders`](#type-setheaders)
+  * [`StaticConfig`](#type-staticconfig)
+  * [`Type2`](#type-type2)
 
 /**/

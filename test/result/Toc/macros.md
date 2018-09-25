@@ -18,12 +18,12 @@
 
 /* expected */
 - [test](#test)
-  * [`ServerConfig`](#serverconfig)
+  * [`ServerConfig`](#type-serverconfig)
 - [test2](#test2)
-  * [`SetHeaders`](#setheaders)
-  * [`StaticConfig`](#staticconfig)
+  * [`SetHeaders`](#type-setheaders)
+  * [`StaticConfig`](#type-staticconfig)
 - [test3](#test3)
-  * [`Type1`](#type1)
-  * [`Type2`](#type2)
+  * [`Type1`](#type-type1)
+  * [`Type2`](#type-type2)
 
 /**/
