@@ -1,3 +1,11 @@
+## 25 September 2018
+
+### 1.20.0
+
+- [feature] Parse `Object.<string, Type>` for types linking.
+- [dep] Move Type and Property classes to the `typal` package.
+- [fix] Prefix links to types with `type`, so that there is no interference with heading titles.
+
 ## 24 September 2018
 
 ### 1.19.0
