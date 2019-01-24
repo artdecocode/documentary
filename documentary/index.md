@@ -36,6 +36,11 @@ This section has a quick look at the best features available in _Documentary_ an
     "1. Enhances productivity by eliminating the need to copy and paste the output by hand.<br/>2. Makes sure the output is always up-to-date with the documented one.<br/>3. Will make it visible if a change to the code base lead to a different output (implicit regression testing).<br/>4. Ensures that examples are actually working.<br/>5. Can print usage of CLI tools by forking them with `-h` command."
   ],
   [
+    "*[JSX Components](#jsx-components)*",
+    "Performs the compilation of custom-defined JSX components into markdown code.",
+    "1. Lets to define custom components and reuse them across documentation where needed. 2. Provides a modern syntax to combine markdown and JavaScript."
+  ],
+  [
     "*[Tables](#simple-tables)*",
     "Compiles tables from arrays without having to write html or markdown.",
     "1. Removes the need to manually build tables either by hand, online or using other tools.<br/>2. Provides table macros to reduce repetitive information and substitute only the core data into templates."
