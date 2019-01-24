@@ -1,3 +1,9 @@
+## 25 January 2018
+
+### 1.21.0
+
+- [feature] Reusable JSX components.
+
 ## 25 September 2018
 
 ### 1.20.1
