@@ -1,5 +1,5 @@
 const { fork } = require('spawncommand');
-const { codeSurround } = require('..');;
+const { codeSurround } = require('..');
 // import { debuglog } from 'util'
 
 // const LOG = debuglog('doc')

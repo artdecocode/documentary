@@ -1,6 +1,6 @@
 const { Replaceable } = require('restream');
-let typedefJsRule = require('./rules/typedef-js'); if (typedefJsRule && typedefJsRule.__esModule) typedefJsRule = typedefJsRule.default;
-let JSDocRule = require('./typedef/jsdoc'); if (JSDocRule && JSDocRule.__esModule) JSDocRule = JSDocRule.default;
+const typedefJsRule = require('./rules/typedef-js');
+const JSDocRule = require('./typedef/jsdoc');
 
                class JSDocumentary extends Replaceable {
   constructor() {

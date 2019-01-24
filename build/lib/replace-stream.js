@@ -1,4 +1,4 @@
-let Documentary = require('./Documentary'); if (Documentary && Documentary.__esModule) Documentary = Documentary.default;
+const Documentary = require('./Documentary');
 
                function createReplaceStream(toc) {
   const s = new Documentary({

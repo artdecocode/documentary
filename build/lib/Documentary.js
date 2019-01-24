@@ -2,22 +2,35 @@ const { Replaceable, makeMarkers, makeCutRule, makePasteRule } = require('restre
 const {
   createTocRule, commentRule: stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe,
 } = require('./rules');
-let tableRule = require('./rules/table'); const { tableRe } = tableRule; if (tableRule && tableRule.__esModule) tableRule = tableRule.default;
-let methodTitleRule = require('./rules/method-title'); const { methodTitleRe } = methodTitleRule; if (methodTitleRule && methodTitleRule.__esModule) methodTitleRule = methodTitleRule.default;
-let treeRule = require('./rules/tree'); if (treeRule && treeRule.__esModule) treeRule = treeRule.default;
-let exampleRule = require('./rules/example'); if (exampleRule && exampleRule.__esModule) exampleRule = exampleRule.default;
-let forkRule = require('./rules/fork'); if (forkRule && forkRule.__esModule) forkRule = forkRule.default;
+const tableRule = require('./rules/table'); const { tableRe } = tableRule;
+const methodTitleRule = require('./rules/method-title'); const { methodTitleRe } = methodTitleRule;
+const treeRule = require('./rules/tree');
+const exampleRule = require('./rules/example');
+const forkRule = require('./rules/fork');
 const { getLink } = require('.');
-let gifRule = require('./rules/gif'); if (gifRule && gifRule.__esModule) gifRule = gifRule.default;
-let typeRule = require('./rules/type'); if (typeRule && typeRule.__esModule) typeRule = typeRule.default;
-let badgeRule = require('./rules/badge'); if (badgeRule && badgeRule.__esModule) badgeRule = badgeRule.default;
+const gifRule = require('./rules/gif');
+const typeRule = require('./rules/type');
+const badgeRule = require('./rules/badge');
 const { typedefMdRe } = require('./rules/typedef-md');
-let tableMacroRule = require('./rules/macro'); if (tableMacroRule && tableMacroRule.__esModule) tableMacroRule = tableMacroRule.default;
-let sectionBrakeRule = require('./rules/section-break'); if (sectionBrakeRule && sectionBrakeRule.__esModule) sectionBrakeRule = sectionBrakeRule.default;
+const tableMacroRule = require('./rules/macro');
+const sectionBrakeRule = require('./rules/section-break');
 const { debuglog } = require('util');
 const { macroRule, useMacroRule } = require('./rules/macros');
+const { join, resolve } = require('path');
+const { homedir } = require('os');
+const loadComponents = require('./components');
 
 const LOG = debuglog('doc')
+
+const getComponents = (path) => {
+  try {
+    const transforms = require(path)
+    const components = loadComponents(transforms)
+    return components
+  } catch (err) {
+    return []
+  }
+}
 
 /**
  * Documentary is a _Replaceable_ stream with transform rules for documentation.
@@ -28,7 +41,13 @@ const LOG = debuglog('doc')
  * @param {string} [options.toc] The table of contents to replace the `%TOC%` marker with.
    */
   constructor(options = {}) {
-    const { toc, locations = {}, types: allTypes = [] } = options
+    const {
+      toc, locations = {}, types: allTypes = [],
+      cwd = '.',
+    } = options
+    const hm = getComponents(join(homedir(), '.documentary'))
+    const cm = getComponents(resolve(cwd, '.documentary'))
+    const components = [...cm, ...hm]
     const tocRule = createTocRule(toc)
 
     const {
@@ -76,7 +95,7 @@ const LOG = debuglog('doc')
       gifRule,
       typeRule,
       sectionBrakeRule,
-
+      ...components,
       insertTable,
       // typedefMdRule, // places a table hence just before table
 

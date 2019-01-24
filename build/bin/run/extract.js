@@ -3,9 +3,9 @@ let createRegexTransformStream = require('restream'); if (createRegexTransformSt
 const { Transform, PassThrough } = require('stream');
 let mismatch = require('mismatch'); if (mismatch && mismatch.__esModule) mismatch = mismatch.default;
 let whichStream = require('which-stream'); if (whichStream && whichStream.__esModule) whichStream = whichStream.default;
-let catcher = require('../catcher'); if (catcher && catcher.__esModule) catcher = catcher.default;
+const catcher = require('../catcher');
 const { debuglog } = require('util');
-let typedefRe = require('../../lib/typedef/re'); if (typedefRe && typedefRe.__esModule) typedefRe = typedefRe.default;
+const typedefRe = require('../../lib/typedef/re');
 const { getNameWithDefault } = require('typal');
 
 const LOG = debuglog('doc')

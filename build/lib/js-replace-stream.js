@@ -1,4 +1,4 @@
-let JSDocumentary = require('./JSDocumentary'); if (JSDocumentary && JSDocumentary.__esModule) JSDocumentary = JSDocumentary.default;
+const JSDocumentary = require('./JSDocumentary');
 
 /** @typedef {import('./typedef/Type').default} Type */
 

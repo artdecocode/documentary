@@ -5,13 +5,13 @@ const { methodTitleRe, replaceTitle } = require('./rules/method-title');
 const {
   codeRe, commentRule: stripComments, innerCodeRe, linkTitleRe,
 } = require('./rules');
-let tableRule = require('./rules/table'); if (tableRule && tableRule.__esModule) tableRule = tableRule.default;
-let tableMacroRule = require('./rules/macro'); if (tableMacroRule && tableMacroRule.__esModule) tableMacroRule = tableMacroRule.default;
+const tableRule = require('./rules/table');
+const tableMacroRule = require('./rules/macro');
 const {
   Replaceable, makeCutRule, makePasteRule, makeMarkers,
 } = require('restream');
 const { tableRe } = require('./rules/table');
-let typeRule = require('./rules/type'); if (typeRule && typeRule.__esModule) typeRule = typeRule.default;
+const typeRule = require('./rules/type');
 const { typedefMdRe } = require('./rules/typedef-md');
 const { macroRule, useMacroRule } = require('./rules/macros');;
 

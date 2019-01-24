@@ -1,6 +1,6 @@
 let whichStream = require('which-stream'); if (whichStream && whichStream.__esModule) whichStream = whichStream.default;
 const { getToc } = require('../lib/Toc');
-let Documentary = require('../lib/Documentary'); if (Documentary && Documentary.__esModule) Documentary = Documentary.default;
+const Documentary = require('../lib/Documentary');
 const { getStream } = require('../lib');
 const { getTypedefs } = require('../lib/Typedefs');
 

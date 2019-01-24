@@ -2,8 +2,8 @@ const { createReadStream, lstatSync } = require('fs');
 let spawn = require('spawncommand'); if (spawn && spawn.__esModule) spawn = spawn.default;
 const { collect } = require('catchment');
 let Pedantry = require('pedantry'); if (Pedantry && Pedantry.__esModule) Pedantry = Pedantry.default;
-let tableRule = require('./rules/table'); if (tableRule && tableRule.__esModule) tableRule = tableRule.default;
-let titleRule = require('./rules/method-title'); if (titleRule && titleRule.__esModule) titleRule = titleRule.default;
+const tableRule = require('./rules/table');
+const titleRule = require('./rules/method-title');
 
        const getLink = (title, prefix = '') => {
   const l = title

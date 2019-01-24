@@ -2,13 +2,20 @@
 const { watch } = require('fs');
 const { debuglog } = require('util');
 const { lstatSync } = require('fs');
-let run = require('./run'); if (run && run.__esModule) run = run.default;
-let getArgs = require('./get-args'); if (getArgs && getArgs.__esModule) getArgs = getArgs.default;
-let generateTypedef = require('./run/generate'); if (generateTypedef && generateTypedef.__esModule) generateTypedef = generateTypedef.default;
-let extractTypedef = require('./run/extract'); if (extractTypedef && extractTypedef.__esModule) extractTypedef = extractTypedef.default;
+let alamode = require('alamode'); if (alamode && alamode.__esModule) alamode = alamode.default;
+const { dirname } = require('path');
+const run = require('./run');
+const getArgs = require('./get-args');
+const generateTypedef = require('./run/generate');
+const extractTypedef = require('./run/extract');
 const { version } = require('../../package.json');
-let catcher = require('./catcher'); if (catcher && catcher.__esModule) catcher = catcher.default;
+const catcher = require('./catcher');
 const { gitPush } = require('../lib');
+
+const preact = dirname(require.resolve('preact/package.json'))
+alamode({
+  pragma: `const { h } = require("${preact}");`,
+})
 
 const LOG = debuglog('doc')
 const DEBUG = /doc/.test(process.env.NODE_DEBUG)

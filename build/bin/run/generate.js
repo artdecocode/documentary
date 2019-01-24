@@ -1,8 +1,8 @@
 const { createReadStream } = require('fs');
 const { debuglog } = require('util');
 let whichStream = require('which-stream'); if (whichStream && whichStream.__esModule) whichStream = whichStream.default;
-let createJsReplaceStream = require('../../lib/js-replace-stream'); if (createJsReplaceStream && createJsReplaceStream.__esModule) createJsReplaceStream = createJsReplaceStream.default;
-let catcher = require('../catcher'); if (catcher && catcher.__esModule) catcher = catcher.default;
+const createJsReplaceStream = require('../../lib/js-replace-stream');
+const catcher = require('../catcher');
 
 const LOG = debuglog('doc')
 
