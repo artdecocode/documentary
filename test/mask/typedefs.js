@@ -61,7 +61,7 @@ const rest2 = makeTestSuite('test/result/Typedefs2', {
    * @param {TempContext} t
    */
   async getResults(input, { write }) {
-    const pp = await write(input, 'types.xml')
+    const pp = await write('types.xml', input)
     const marker = `%TYPEDEF ${pp}%`
     const typedefs = new Typedefs()
     typedefs.end(marker)

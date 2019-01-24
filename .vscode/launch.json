@@ -53,7 +53,8 @@
       "args": [
         "documentary",
       ],
-      "cwd": "${workspaceFolder}/../../idiocc/core",
+      "cwd": "${workspaceFolder}/../catchment",
+      // "cwd": "${workspaceFolder}/../../idiocc/core",
       "console": "integratedTerminal",
       "skipFiles": [
         "<node_internals>/**/*.js"

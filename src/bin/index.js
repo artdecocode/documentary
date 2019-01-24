@@ -2,6 +2,8 @@
 import { watch } from 'fs'
 import { debuglog } from 'util'
 import { lstatSync } from 'fs'
+import alamode from 'alamode'
+import { dirname } from 'path'
 import run from './run'
 import getArgs from './get-args'
 import generateTypedef from './run/generate'
@@ -9,6 +11,11 @@ import extractTypedef from './run/extract'
 import { version } from '../../package.json'
 import catcher from './catcher'
 import { gitPush } from '../lib'
+
+const preact = dirname(require.resolve('preact/package.json'))
+alamode({
+  pragma: `const { h } = require("${preact}");`,
+})
 
 const LOG = debuglog('doc')
 const DEBUG = /doc/.test(process.env.NODE_DEBUG)

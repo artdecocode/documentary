@@ -1,11 +1,31 @@
 import { makeTestSuite } from 'zoroaster'
+import { collect } from 'catchment'
+import TempContext from 'temp-context'
 import Documentary from '../../src/lib/Documentary'
 import Typedefs from '../../src/lib/Typedefs'
-import { collect } from 'catchment'
+import { dirname } from 'path'
+import alamode from 'alamode'
+
+const preact = dirname(require.resolve('preact/package.json'))
+alamode({
+  pragma: `const { h } = require("${preact}");`,
+})
 
 const ts = makeTestSuite('test/result/Documentary', {
   getTransform() {
     const doc = new Documentary()
+    return doc
+  },
+})
+
+export const components = makeTestSuite('test/result/Documentary-components.md', {
+  context: TempContext,
+  /**
+   * @param {TempContext} t
+   */
+  async getTransform({ TEMP, add }) {
+    await add('test/fixture/.documentary')
+    const doc = new Documentary({ cwd: TEMP })
     return doc
   },
 })

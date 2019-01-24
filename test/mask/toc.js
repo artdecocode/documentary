@@ -35,7 +35,7 @@ const macros = makeTestSuite('test/result/Toc/macros.md', {
    * @param {TempContext}
    */
   async getReadable(input, { write }) {
-    const pp = await write(input, 'data.md')
+    const pp = await write('data.md', input)
     const stream = getStream(pp)
     const { locations } = await getTypedefs(stream)
     const toc = new Toc({ locations })

@@ -1,5 +1,5 @@
 import { fork } from 'spawncommand'
-import { codeSurround } from '..';
+import { codeSurround } from '..'
 // import { debuglog } from 'util'
 
 // const LOG = debuglog('doc')

@@ -16,8 +16,21 @@ import tableMacroRule from './rules/macro'
 import sectionBrakeRule from './rules/section-break'
 import { debuglog } from 'util'
 import { macroRule, useMacroRule } from './rules/macros'
+import { join, resolve } from 'path'
+import { homedir } from 'os'
+import loadComponents from './components'
 
 const LOG = debuglog('doc')
+
+const getComponents = (path) => {
+  try {
+    const transforms = require(path)
+    const components = loadComponents(transforms)
+    return components
+  } catch (err) {
+    return []
+  }
+}
 
 /**
  * Documentary is a _Replaceable_ stream with transform rules for documentation.
@@ -28,7 +41,13 @@ export default class Documentary extends Replaceable {
  * @param {string} [options.toc] The table of contents to replace the `%TOC%` marker with.
    */
   constructor(options = {}) {
-    const { toc, locations = {}, types: allTypes = [] } = options
+    const {
+      toc, locations = {}, types: allTypes = [],
+      cwd = '.',
+    } = options
+    const hm = getComponents(join(homedir(), '.documentary'))
+    const cm = getComponents(resolve(cwd, '.documentary'))
+    const components = [...cm, ...hm]
     const tocRule = createTocRule(toc)
 
     const {
@@ -76,7 +95,7 @@ export default class Documentary extends Replaceable {
       gifRule,
       typeRule,
       sectionBrakeRule,
-
+      ...components,
       insertTable,
       // typedefMdRule, // places a table hence just before table
 
