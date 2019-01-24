@@ -38,7 +38,7 @@ This section has a quick look at the best features available in _Documentary_ an
   [
     "*[JSX Components](#jsx-components)*",
     "Performs the compilation of custom-defined JSX components into markdown code.",
-    "1. Lets to define custom components and reuse them across documentation where needed. 2. Provides a modern syntax to combine markdown and JavaScript."
+    "1. Lets to define custom components and reuse them across documentation where needed. <br/>2. Provides a modern syntax to combine markdown and JavaScript."
   ],
   [
     "*[Tables](#simple-tables)*",

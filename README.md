@@ -22,7 +22,7 @@ This section has a quick look at the best features available in _Documentary_ an
 | *[Tables Of Contents](#toc-generation)* | Compiles an accurate table of contents for the content.                                                                  | 1. Makes the structure of the document immediately visible to the reader.<br/>2. Allows to navigate across the page easily.<br/>3. Shows problems with incorrect levels structure which otherwise might not be visible.<br/>4. Allows to place anchor links available from the TOC at any level in any place of the README.<br/>5. Can insert section breaks which visually divide the content and allow to navigate back to the top.                                                                                                                       |
 | *[Examples](#examples-placement)*       | Allows to embed the source code into documentation.                                                                      | 1. Increases productivity by eliminating the need to copy and paste the source code manually.<br/>2. Developers can run examples as Node.js scripts to check that they are working correctly and debug them.<br/>3. Examples can also be forked (see below).<br/> 4. It is possible to imports and requires such as `../src` to be displayed as the name of the package.                                                                                                                                                      |
 | *[Forks](#embedding-output)*            | Makes it possible to run an example and embed its `stdout` and `stderr` output directly into documentation. | 1. Enhances productivity by eliminating the need to copy and paste the output by hand.<br/>2. Makes sure the output is always up-to-date with the documented one.<br/>3. Will make it visible if a change to the code base lead to a different output (implicit regression testing).<br/>4. Ensures that examples are actually working.<br/>5. Can print usage of CLI tools by forking them with `-h` command.                                                                                                            |
-| *[JSX Components](#jsx-components)*     | Performs the compilation of custom-defined JSX components into markdown code.                                            | 1. Lets to define custom components and reuse them across documentation where needed. 2. Provides a modern syntax to combine markdown and JavaScript.                                                                                                                                                                                                                                                                                                                                                                                                       |
+| *[JSX Components](#jsx-components)*     | Performs the compilation of custom-defined JSX components into markdown code.                                            | 1. Lets to define custom components and reuse them across documentation where needed. <br/>2. Provides a modern syntax to combine markdown and JavaScript.                                                                                                                                                                                                                                                                                                                                                                                                  |
 | *[Tables](#simple-tables)*              | Compiles tables from arrays without having to write html or markdown.                                                    | 1. Removes the need to manually build tables either by hand, online or using other tools.<br/>2. Provides table macros to reduce repetitive information and substitute only the core data into templates.                                                                                                                                                                                                                                                                                                                                                   |
 | *[Macros](#macros)*                     | Reuses a defined template to place the data into placeholders.                                                           | 1. Removes the need to copy-paste patterns to different places and change data manually.<br/>2. Maintains an up-to-date version of the template without having to change it everywhere.<br/>3. Reduces the cluttering of the source documentation by noise and helps to focus on important information.                                                                                                                                                                                                                                                     |
 | *[Live Push](#automatic-push)*          | Detects changes to the source documentation files, re-compiles the output README.md and pushes to the remote repository. | 1. The preview is available on-line almost immediately after a change is made. <br/>2. Allows to skip writing a commit message and the push command every time a change is made.                                                                                                                                                                                                                                                                                                                                                                            |
@@ -91,7 +91,6 @@ This section has a quick look at the best features available in _Documentary_ an
 - [Glossary](#glossary)
   * [Online Documentation](#online-documentation)
   * [Editor Documentation](#editor-documentation)
-- [TODO](#todo)
 - [Copyright](#copyright)
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
@@ -1596,26 +1595,29 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-3.svg?sanitize=true"></a></p>
 
-## TODO
-
-- [ ] Test using `zoroaster`'s masks.
-- [ ] Gather all types across the whole documentation first to be able to independently link them even if they are in separate files.
-- [x] Replace the source in example with a `require` call in addition to `import` statement.
-- [ ] Implement caching.
-- [ ] Trigger compilation whenever an embedded example changes.
-- [ ] Purge image cache from CLI (e.g., `curl -X https://github.com/artdecocode/documentary/raw/${BRANCH}${PATH}`)
-- [ ] Implement JS-based `tree`.
-- [ ] Implement a proper logging system without `NODE_DEBUG`.
-- [ ] Add more section breaks.
-
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-2.svg?sanitize=true"></a></p>
 
 ## Copyright
 
 Section breaks from [FoglihtenDeH0](https://www.1001fonts.com/foglihtendeh0-font.html) font.
 
-(c) [Art Deco][1] 2018
-
-[1]: https://artdeco.bz
+<table>
+  <tr>
+    <th>
+      <a href="https://artd.eco">
+        <img src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png" alt="Art Deco" />
+      </a>
+    </th>
+    <th>© <a href="https://artd.eco">Art Deco</a> 2019</th>
+    <th>
+      <a href="https://www.technation.sucks" title="Tech Nation Visa">
+        <img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif" alt="Tech Nation Visa" />
+      </a>
+    </th>
+    <th>
+      <a href="https://www.technation.sucks">Tech Nation Visa Sucks</a>
+    </th>
+  </tr>
+</table>
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg?sanitize=true"></a></p>
