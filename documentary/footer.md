@@ -32,7 +32,7 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 - [ ] Implement a proper logging system without `NODE_DEBUG`.
 - [ ] Add more section breaks. -->
 
-%~ -2%
+<!-- %~ -2% -->
 
 ## Copyright
 

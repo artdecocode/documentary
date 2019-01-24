@@ -1595,8 +1595,6 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-3.svg?sanitize=true"></a></p>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-2.svg?sanitize=true"></a></p>
-
 ## Copyright
 
 Section breaks from [FoglihtenDeH0](https://www.1001fonts.com/foglihtendeh0-font.html) font.
