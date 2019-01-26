@@ -21,12 +21,12 @@
     "example/toc.js": "NODE_DEBUG=doc yarn e example/toc.js",
     "example/toc2.js": "NODE_DEBUG=doc yarn e example/toc2.js",
     "example/typedef.js": "yarn dev example/typedef.js -T",
-    "b": "alamode src -o build -i bin/alamode.js -s",
+    "b": "alamode src -o build -i bin/index.js -s",
     "build": "yarn-s b doc"
   },
   "bin": {
-    "doc": "build/bin/index.js",
-    "doc-dev": "src/bin/alamode.js"
+    "doc": "build/bin/doc.js",
+    "doc-dev": "src/bin/index.js"
   },
   "man": "man/doc.1",
   "files": [

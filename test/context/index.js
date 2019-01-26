@@ -365,5 +365,5 @@ console.log('test')
 
 /** @typedef {import('restream').Rule} Rule */
 
-const BIN = TEST_BUILD ? '../../build/bin' : '../../src/bin/alamode'
+const BIN = TEST_BUILD ? '../../build/bin/doc' : '../../src/bin'
 const DOC = resolve(__dirname, BIN)
