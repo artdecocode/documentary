@@ -1,3 +1,9 @@
+## 26 January 2018
+
+### 1.21.1
+
+- [fix] Detect components with multiline arguments.
+
 ## 25 January 2018
 
 ### 1.21.0
