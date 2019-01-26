@@ -46,4 +46,3 @@ const tableMacroRule = {
 module.exports=tableMacroRule
 
 module.exports.re = re
-//# sourceMappingURL=macro.js.map

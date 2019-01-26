@@ -306,4 +306,3 @@ class ChunkReplaceable extends Replaceable {
 
 module.exports = Toc
 module.exports.getToc = getToc
-//# sourceMappingURL=Toc.js.map

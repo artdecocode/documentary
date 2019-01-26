@@ -34,4 +34,3 @@ module.exports.innerCodeRe = innerCodeRe
 module.exports.commentRule = commentRule
 module.exports.linkTitleRe = linkTitleRe
 module.exports.linkRe = linkRe
-//# sourceMappingURL=index.js.map

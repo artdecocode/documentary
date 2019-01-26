@@ -105,4 +105,3 @@ module.exports=tableRule
 
 module.exports.replacer = replacer
 module.exports.tableRe = re
-//# sourceMappingURL=table.js.map

@@ -40,4 +40,3 @@ const JSDocRule = require('./typedef/jsdoc');
 
 
 module.exports = JSDocumentary
-//# sourceMappingURL=JSDocumentary.js.map

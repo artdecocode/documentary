@@ -64,4 +64,3 @@ module.exports=titleRule
 module.exports.replaceTitle = replaceTitle
 module.exports.replacer = replacer
 module.exports.methodTitleRe = re
-//# sourceMappingURL=method-title.js.map

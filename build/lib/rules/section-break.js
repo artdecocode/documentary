@@ -55,4 +55,3 @@ const getTags = ({
 module.exports=rule
 
 module.exports.sectionBrakeRe = sectionBrakeRe
-//# sourceMappingURL=section-break.js.map

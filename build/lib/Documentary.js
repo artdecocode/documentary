@@ -182,4 +182,3 @@ const getComponents = (path) => {
 
 
 module.exports = Documentary
-//# sourceMappingURL=Documentary.js.map

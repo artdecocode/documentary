@@ -19,4 +19,3 @@ const $_lib_Toc = require('./lib/Toc');
 
 module.exports = documentary
 module.exports.Toc = $_lib_Toc
-//# sourceMappingURL=index.js.map

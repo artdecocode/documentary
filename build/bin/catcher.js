@@ -16,5 +16,3 @@ const catcher = async (err) => {
 }
 
 module.exports=catcher
-
-//# sourceMappingURL=catcher.js.map

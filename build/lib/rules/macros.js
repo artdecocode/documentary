@@ -53,4 +53,3 @@ module.exports.macroRe = macroRe
 module.exports.useMacroRe = useMacroRe
 module.exports.macroRule = macroRule
 module.exports.useMacroRule = useMacroRule
-//# sourceMappingURL=macros.js.map

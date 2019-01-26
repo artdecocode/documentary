@@ -106,4 +106,3 @@ const LOG = debuglog('doc')
 
 module.exports = Typedefs
 module.exports.getTypedefs = getTypedefs
-//# sourceMappingURL=Typedefs.js.map

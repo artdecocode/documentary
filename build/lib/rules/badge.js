@@ -11,4 +11,3 @@ const badgeRule = {
 module.exports=badgeRule
 
 module.exports.badgeRe = badgeRe
-//# sourceMappingURL=badge.js.map

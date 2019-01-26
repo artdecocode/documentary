@@ -74,4 +74,3 @@ module.exports=typedefRule
 
 
 module.exports.typedefJsRe = typedefJsRe
-//# sourceMappingURL=typedef-js.js.map

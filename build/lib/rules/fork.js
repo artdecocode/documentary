@@ -20,5 +20,3 @@ const forkRule = {
 
 
 module.exports=forkRule
-
-//# sourceMappingURL=fork.js.map

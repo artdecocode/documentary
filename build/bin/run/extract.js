@@ -187,4 +187,3 @@ module.exports=extractTypedef
 
 
 module.exports.propExtractRe = propExtractRe
-//# sourceMappingURL=extract.js.map

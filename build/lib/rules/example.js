@@ -73,4 +73,3 @@ module.exports=exampleRule
 
 module.exports.replacer = replacer
 module.exports.re = re
-//# sourceMappingURL=example.js.map

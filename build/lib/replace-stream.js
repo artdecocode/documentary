@@ -18,4 +18,3 @@ const Documentary = require('./Documentary');
 
 
 module.exports = createReplaceStream
-//# sourceMappingURL=replace-stream.js.map

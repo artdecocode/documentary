@@ -9,4 +9,3 @@ const JSDocumentary = require('./JSDocumentary');
 }
 
 module.exports = createJsReplaceStream
-//# sourceMappingURL=js-replace-stream.js.map

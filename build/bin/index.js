@@ -114,5 +114,3 @@ const doc = async ({ source, output, justToc = false, h1, reverse }) => {
     })
   }
 })()
-
-//# sourceMappingURL=index.js.map

@@ -95,4 +95,3 @@ module.exports=typeRule
 
 
 module.exports.typeRe = typeRe
-//# sourceMappingURL=type.js.map

@@ -26,4 +26,3 @@ const JSDocRule = {
 module.exports=JSDocRule
 
 module.exports.jsDocRe = jsDocRe
-//# sourceMappingURL=jsdoc.js.map

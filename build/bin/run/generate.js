@@ -65,5 +65,3 @@ async function generateTypedef(config) {
  */
 
 module.exports=generateTypedef
-
-//# sourceMappingURL=generate.js.map

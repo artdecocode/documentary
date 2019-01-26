@@ -36,4 +36,3 @@ module.exports=gifRule
 
 
 module.exports.gifRe = gifRe
-//# sourceMappingURL=gif.js.map

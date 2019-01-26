@@ -43,4 +43,3 @@ const getArgs = () => {
 }
 
 module.exports=getArgs
-//# sourceMappingURL=get-args.js.map

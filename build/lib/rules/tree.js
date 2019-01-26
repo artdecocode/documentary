@@ -29,5 +29,3 @@ const treeRule = {
 const codeSurround = (m, lang = 'm') => `\`\`\`${lang}\n${m.trim()}\n\`\`\``
 
 module.exports=treeRule
-
-//# sourceMappingURL=tree.js.map

@@ -18,4 +18,3 @@ const typedefMdRule = {
 module.exports=typedefMdRule
 
 module.exports.typedefMdRe = typedefMdRe
-//# sourceMappingURL=typedef-md.js.map
