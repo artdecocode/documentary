@@ -1,8 +1,9 @@
-## 26 January 2018
+## 26 January 2019
 
 ### 1.21.1
 
 - [fix] Detect components with multiline arguments.
+- [refactor] Rename `index.js` to `doc.js` and make `alamode.js` as an executable `bin/index.js`.
 
 ## 25 January 2018
 
