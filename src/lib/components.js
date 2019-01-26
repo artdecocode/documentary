@@ -1,10 +1,15 @@
 import rexml from 'rexml'
 import render from 'preact-render-to-string'
 
+export const makeComponentRe = (key) => {
+  const re = new RegExp(`( *)(<${key}(\\s+.*)*(/>|[\\s\\S]*?<\\/${key}>))`, 'gm')
+  return re
+}
+
 function loadComponents(components) {
   const compsReplacements = Object.keys(components)
     .map((key) => {
-      const re = new RegExp(`( *)(<${key}(\\s+.*)?(/>|[\\s\\S]*?<\\/${key}>))`, 'gm')
+      const re = makeComponentRe(key)
       const replacement = function (m, pad, Component) {
         const [{ content, props }] = rexml(key, Component)
         const instance = components[key]
