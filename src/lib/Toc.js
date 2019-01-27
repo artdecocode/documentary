@@ -13,7 +13,7 @@ import {
 import { tableRe } from './rules/table'
 import typeRule from './rules/type'
 import { typedefMdRe } from './rules/typedef-md'
-import { macroRule, useMacroRule } from './rules/macros';
+import { macroRule, useMacroRule } from './rules/macros'
 
 const re = /(?:^|\n) *(#+) +(.+)/g
 

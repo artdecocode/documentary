@@ -152,3 +152,29 @@ Generated from
     * [`runSoftware()`](#runsoftware-void)
 
 /**/
+
+// Detects multiple levels
+
+### Gotchas
+
+There are a number of things to look out for when compiling a Node.JS program.
+
+#### First
+
+abc
+
+#### Second
+
+def
+
+#### Third
+
+ghi
+
+/* expected */
+  * [Gotchas](#gotchas)
+    * [First](#first)
+    * [Second](#second)
+    * [Third](#third)
+
+/**/
