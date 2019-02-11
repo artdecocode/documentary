@@ -46,14 +46,14 @@
       "type": "node",
       "request": "launch",
       "name": "Launch For Package",
-      "program": "${workspaceFolder}/src/bin/alamode.js",
+      "program": "${workspaceFolder}/src/bin/index.js",
       "env": {
         "NODE_DEBUG": "doc"
       },
       "args": [
         "documentary",
       ],
-      "cwd": "${workspaceFolder}/../catchment",
+      "cwd": "${workspaceFolder}/../../depack/form",
       // "cwd": "${workspaceFolder}/../../idiocc/core",
       "console": "integratedTerminal",
       "skipFiles": [

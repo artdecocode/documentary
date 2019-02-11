@@ -13,7 +13,7 @@ const {
 const { tableRe } = require('./rules/table');
 const typeRule = require('./rules/type');
 const { typedefMdRe } = require('./rules/typedef-md');
-const { macroRule, useMacroRule } = require('./rules/macros');;
+const { macroRule, useMacroRule } = require('./rules/macros');
 
 const re = /(?:^|\n) *(#+) +(.+)/g
 

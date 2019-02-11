@@ -35,7 +35,8 @@ const LOG = debuglog('doc')
       {
         re: typedefMdRe,
         async replacement(match, location, typeName) {
-          if (location in this.locations) return
+          if (this.hasCache(location, typeName)) return
+          this.addCache(location,typeName)
           try {
             const xml = await read(location)
             const root = extractTags('types', xml)
@@ -85,6 +86,13 @@ const LOG = debuglog('doc')
         [location]: [...oldLocationTypes, ...t],
       }
     })
+    this.cache = {}
+  }
+  addCache(location, typename = '') {
+    this.cache[`${location}::${typename}`] = 1
+  }
+  hasCache(location, typename = '') {
+    return this.cache[`${location}::${typename}`]
   }
 }
 
