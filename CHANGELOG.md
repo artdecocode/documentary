@@ -1,3 +1,9 @@
+## 11 February 2019
+
+### 1.21.2
+
+- [fix] Fix the bug in `typedef` caching when the type name is specified.
+
 ## 26 January 2019
 
 ### 1.21.1
