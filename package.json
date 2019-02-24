@@ -25,8 +25,7 @@
     "build": "yarn-s b doc"
   },
   "bin": {
-    "doc": "build/bin/doc.js",
-    "doc-dev": "src/bin/index.js"
+    "doc": "build/bin/doc.js"
   },
   "man": "man/doc.1",
   "files": [
