@@ -1,3 +1,9 @@
+## 26 February 2019
+
+### 1.21.3
+
+- [fix] Strip ANSI from fork output.
+
 ## 11 February 2019
 
 ### 1.21.2
