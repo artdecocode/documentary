@@ -10,10 +10,10 @@ function loadComponents(components) {
   const compsReplacements = Object.keys(components)
     .map((key) => {
       const re = makeComponentRe(key)
-      const replacement = function (m, pad, Component) {
+      const replacement = async function (m, pad, Component) {
         const [{ content, props }] = rexml(key, Component)
         const instance = components[key]
-        const hyperResult = instance({
+        const hyperResult = await instance({
           ...props,
           children: content,
         })
