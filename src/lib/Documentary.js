@@ -28,6 +28,9 @@ const getComponents = (path) => {
     const components = loadComponents(transforms)
     return components
   } catch (err) {
+    if (!/^Cannot find module/.test(err.message)) {
+      console.log(err.stack)
+    }
     return []
   }
 }
