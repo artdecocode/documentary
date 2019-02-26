@@ -14,7 +14,8 @@ const forkRule = {
     })
     const { stdout, stderr } = await promise
     const res = err ? stderr : stdout
-    return codeSurround(res.trim(), lang)
+    const r = res.trim().replace(/\033\[.*?m/g, '')
+    return codeSurround(r, lang)
   },
 }
 
