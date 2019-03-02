@@ -18,7 +18,7 @@ And the example file `examples/example.js`
 
 The program will produce the following output:
 
-%FORK-md src/bin/alamode example/examples.md%
+%FORK-md src/bin example/examples.md%
 
 ### Partial Examples
 

@@ -11,7 +11,7 @@
     "test-build": "ALAMODE_ENV=test-build yarn test",
     "lint": "eslint .",
     "e": "node example",
-    "dev": "NODE_DEBUG=doc node src/bin/alamode",
+    "dev": "NODE_DEBUG=doc node src/bin",
     "d1": "yarn dev src/bin/run.js -g",
     "d2": "yarn dev src/lib/Documentary.js -g",
     "d": "yarn-s d1 d2",

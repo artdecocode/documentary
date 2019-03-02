@@ -14,7 +14,7 @@ For example:
 
 %EXAMPLE: example/section-breaks/index.md%
 
-%FORK src/bin/alamode example/section-breaks/index.md%
+%FORK src/bin example/section-breaks/index.md%
 
 There are 23 available section breaks which will be inserted in incremental order in the document. When the end of the list is reached, the count restarts. There are also 3 ending breaks which can be inserted at the end and do not participate in the rotation, so that they must be inserted manually. To select a specific image, its number can be given.
 

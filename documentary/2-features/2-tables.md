@@ -27,7 +27,7 @@ Whenever there's a pattern for presenting data in a table, such as that input fi
 
 %EXAMPLE: test/result/bin/macro.md, markdown%
 
-%FORK-markdown src/bin/alamode test/result/bin/macro.md%
+%FORK-markdown src/bin test/result/bin/macro.md%
 
 The values in the macro need to be separated with `,` which allows to substitute them into the correct column of the table row. When a `,` needs to be used as part of the column in the macro, it can be escaped with `\` such as `\,` as shown in the last column of the example.
 

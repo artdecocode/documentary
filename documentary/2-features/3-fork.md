@@ -33,7 +33,7 @@ It will make _Documentary_ fork a Node.js module using the `child_process.fork` 
  <tr>
  <td colspan="2">
 
-%FORK src/bin/alamode example/fork/fork.md%
+%FORK src/bin example/fork/fork.md%
  </td>
  </tr>
 </table>
@@ -76,7 +76,7 @@ It works exactly the same as `%FORK%` but will print the output of the process's
  <tr>
  <td colspan="2">
 
-%FORK src/bin/alamode example/fork/fork-stderr.md%
+%FORK src/bin example/fork/fork-stderr.md%
  </td>
  </tr>
 </table>

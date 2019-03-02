@@ -52,6 +52,7 @@ This section has a quick look at the best features available in _Documentary_ an
   * [`runSoftware(): string`](#runsoftware-string)
   * [`runSoftware()`](#runsoftware-void)
 - [**JSX Components**](#jsx-components)
+  * [Async Components](#async-components)
 - [**Comments Stripping**](#comments-stripping)
 - [**Macros**](#macros)
 - [**File Splitting**](#file-splitting)
@@ -555,6 +556,8 @@ _Documentary_ lets users define their custom components in the `.documentary` fo
 For example, the user can define their own component in the following way:
 
 ```jsx
+import read from '@wrote/read'
+
 /**
  * Display the sponsor information.
  */
@@ -573,6 +576,18 @@ export const Sponsor = ({
   </tr>
   {children && <tr><td>{children}</td></tr>}
 </table>
+}
+
+/**
+ * The async component to print the source of the document.
+ */
+export const Source = async ({ src }) => {
+  const res = await read(src)
+  const e = src.split('.')
+  const ext = e[e.length - 1]
+  return `\`\`\`${ext}
+${res}
+\`\`\``
 }
 ```
 
@@ -603,13 +618,23 @@ Get In Touch To Support Documentary
 </td></tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/9.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/9.svg?sanitize=true" width="15"></a></p>
+
+### Async Components
+
+The components can be rendered asynchronously when the component returns a promise. _Documentary_ will wait for the promise to resolve before attempting to render JSX into HTML. Only the root component can be asynchronous, and if it uses other components in its JSX, they must be synchronous.
+
+```js
+<Source src="src/index.js" />
+```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg?sanitize=true"></a></p>
 
 ## **Comments Stripping**
 
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true"></a></p>
 
 ## **Macros**
 
@@ -666,7 +691,7 @@ GitHub: _[Zoroaster](https://github.com/artdecocode/zoroaster)_
 
 > Currently, a macro can only be defined in the same file as its usage. Also, in future, macros will improve my allowing to use named placeholders.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>
 
 ## **File Splitting**
 
@@ -693,7 +718,10 @@ documentary
 │   ├── 3-examples.md
 │   ├── 3-fork.md
 │   ├── 3-method-title.md
-│   ├── 3.5-jsx-components.md
+│   ├── 3.5-components
+│   │   ├── 1-jsx-components.md
+│   │   ├── async.md
+│   │   └── footer.md
 │   ├── 4-comment-stripping.md
 │   ├── 4-macros.md
 │   ├── 5-file-splitting.md
@@ -710,7 +738,7 @@ documentary
 └── index.md
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg?sanitize=true"></a></p>
 
 ## **Replacement Rules**
 
@@ -722,7 +750,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | %NPM: package-name%      | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                               |
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg?sanitize=true"></a></p>
 
 ## **Gif Detail**
 
@@ -758,7 +786,7 @@ The actual html placed in the `README` looks like the one below:
 </details>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true"></a></p>
 
 ## **`Type` Definition**
 
@@ -992,7 +1020,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 </table>
 
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true"></a></p>
 
 ## **`@typedef` Organisation**
 
@@ -1445,7 +1473,7 @@ When a description ends with <code>Default &#96;value&#96;</code>, the default v
 </types>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg?sanitize=true"></a></p>
 
 ## CLI
 
@@ -1476,7 +1504,7 @@ DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/18.svg?sanitize=true"></a></p>
 
 ## API
 
@@ -1568,7 +1596,7 @@ import { createReadStream } from 'fs'
 - [Copyright](#copyright)
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/18.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/19.svg?sanitize=true"></a></p>
 
 #PRO
 Underlined
@@ -1586,7 +1614,7 @@ Underlined
 
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/19.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/20.svg?sanitize=true"></a></p>
 
 ## Glossary
 
@@ -1606,7 +1634,10 @@ Section breaks from [FoglihtenDeH0](https://www.1001fonts.com/foglihtendeh0-font
         <img src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png" alt="Art Deco" />
       </a>
     </th>
-    <th>© <a href="https://artd.eco">Art Deco</a> 2019</th>
+    <th>
+      © <a href="https://artd.eco">Art Deco</a>  
+      2019
+    </th>
     <th>
       <a href="https://www.technation.sucks" title="Tech Nation Visa">
         <img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif" alt="Tech Nation Visa" />

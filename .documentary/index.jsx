@@ -1,3 +1,5 @@
+import read from '@wrote/read'
+
 /**
  * Display the sponsor information.
  */
@@ -16,4 +18,16 @@ export const Sponsor = ({
   </tr>
   {children && <tr><td>{children}</td></tr>}
 </table>
+}
+
+/**
+ * The async component to print the source of the document.
+ */
+export const Source = async ({ src }) => {
+  const res = await read(src)
+  const e = src.split('.')
+  const ext = e[e.length - 1]
+  return `\`\`\`${ext}
+${res}
+\`\`\``
 }

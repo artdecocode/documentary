@@ -24,4 +24,4 @@ The result will be rendered HTML:
 Get In Touch To Support Documentary
 </Sponsor>
 
-%~%
+%~ width="15"%
