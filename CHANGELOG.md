@@ -1,3 +1,10 @@
+## 2 March 2019
+
+### 1.21.4
+
+- [feature] Add async components support.
+- [fix] Correctly replace import statements with new lines in examples.
+
 ## 26 February 2019
 
 ### 1.21.3
