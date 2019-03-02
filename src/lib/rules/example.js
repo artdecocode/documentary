@@ -29,7 +29,7 @@ export const replacer = async (match, source, from, to, type) => {
     f = f.trim()
     if (from && to) {
       f = f
-        .replace(/^(import .+? )(from (['"])(.+)\3)/gm, (m, i, fromSeg, q, fr) => {
+        .replace(/^(import\s+[\s\S]+?\s+)(from\s+(['"])(.+)\3)/gm, (m, i, fromSeg, q, fr) => {
           if (fr == from) {
             const r = fromSeg.replace(fr, to)
             return `${i}${r}`
