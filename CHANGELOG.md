@@ -1,3 +1,9 @@
+## 7 March 2019
+
+### 1.21.5
+
+- [fix] Enable install on NPM.
+
 ## 2 March 2019
 
 ### 1.21.4

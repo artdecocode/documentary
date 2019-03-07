@@ -25,11 +25,13 @@
     "build": "yarn-s b doc"
   },
   "bin": {
-    "doc": "build/bin/doc.js"
+    "doc": "build/bin/doc.js",
+    "doc-dev": "src/bin/index.js"
   },
   "man": "man/doc.1",
   "files": [
-    "build"
+    "build",
+    "src/bin/index.js"
   ],
   "repository": {
     "type": "git",
