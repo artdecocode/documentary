@@ -1,3 +1,9 @@
+## 10 March 2019
+
+### 1.21.6
+
+- [deps] Replace `preact-render-to-string` with `@depack/render`.
+
 ## 7 March 2019
 
 ### 1.21.5
