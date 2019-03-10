@@ -1,5 +1,5 @@
 import rexml from 'rexml'
-import render from 'preact-render-to-string'
+import render from '@depack/render'
 
 export const makeComponentRe = (key) => {
   const re = new RegExp(`( *)(<${key}(\\s+.*)*(/>|[\\s\\S]*?<\\/${key}>))`, 'gm')

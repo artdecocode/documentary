@@ -1,5 +1,5 @@
 let rexml = require('rexml'); if (rexml && rexml.__esModule) rexml = rexml.default;
-let render = require('preact-render-to-string'); if (render && render.__esModule) render = render.default;
+let render = require('@depack/render'); if (render && render.__esModule) render = render.default;
 
        const makeComponentRe = (key) => {
   const re = new RegExp(`( *)(<${key}(\\s+.*)*(/>|[\\s\\S]*?<\\/${key}>))`, 'gm')
