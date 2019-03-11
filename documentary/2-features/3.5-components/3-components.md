@@ -50,10 +50,9 @@ The _shell_ component can be used to print output of a complex unix expression. 
 ```
 
 <table>
-<tr></tr>
-<tr><td>
+<tr><th>
 <shell>
   (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node
 </shell>
-</td><tr>
+</th></tr>
 </table>

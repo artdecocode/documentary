@@ -723,8 +723,7 @@ The _shell_ component can be used to print output of a complex unix expression. 
 ```
 
 <table>
-<tr></tr>
-<tr><td>
+<tr><th>
 
 ```sh
 $ (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node
@@ -738,7 +737,7 @@ def
 ghi
 ```
 
-</td><tr>
+</th></tr>
 </table>
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>
