@@ -723,6 +723,7 @@ The _shell_ component can be used to print output of a complex unix expression. 
 ```
 
 <table>
+<tr></tr>
 <tr><td>
 
 ```sh
