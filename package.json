@@ -84,7 +84,7 @@
     "snapshot-context": "2.0.4",
     "temp-context": "2.1.0",
     "yarn-s": "1.1.0",
-    "zoroaster": "3.8.1"
+    "zoroaster": "3.8.2"
   },
   "dependencies": {
     "@depack/render": "1.1.4",

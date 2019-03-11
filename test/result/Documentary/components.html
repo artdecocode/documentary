@@ -1,6 +1,20 @@
-// !processes shell component
-<shell>ABC</shell>
+// processes shell component
+<shell command="echo">
+  HELLO WORLD
+  TEST123
+  -a
+  arg
+  -b
+</shell>
 
 /* expected */
-TEST
+
+```sh
+$ echo "HELLO WORLD" TEST123 -a arg -b
+```
+
+```sh
+HELLO WORLD TEST123 -a arg -b
+```
+
 /**/

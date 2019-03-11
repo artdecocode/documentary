@@ -4,7 +4,7 @@ import { c, b } from 'erte'
 // import cleanStack from '@artdeco/clean-stack'
 
 export const makeComponentRe = (key) => {
-  const re = new RegExp(`( *)(<${key}(\\s+.*?)?(\\s*?/>|[\\s\\S]*?<\\/${key}>))`, 'gm')
+  const re = new RegExp(`( *)(<${key}(\\s+[\\s\\S]*?)?(\\s*?/>|[\\s\\S]*?<\\/${key}>))`, 'gm')
   return re
 }
 

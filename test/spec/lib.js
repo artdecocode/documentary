@@ -24,4 +24,12 @@ export const GetLink = {
     clientLogo="test2"/>`, ['ws', 'test'])
     equal(res.length, 1)
   },
+  'makes two components of the same kind'() {
+    const re = makeComponentRe('Footer')
+    const res = mismatch(re, `<Footer client="/test"
+    clientLogo="test2"/>
+    <Footer client="/test2"
+    clientLogo="test3"/>`, ['ws', 'test'])
+    equal(res.length, 2)
+  },
 }
