@@ -667,6 +667,8 @@ There are a number of built-in components at the moment.
 
 #### `<`shell command?=""`>`
 
+Either uses `spawn` to spawn a command and pass arguments to it, or `exec` to get the result of a more complex operations such as piping to other commands reachable from shell.
+
 Usage:
 
 ```jsx
@@ -720,6 +722,8 @@ The _shell_ component can be used to print output of a complex unix expression. 
 </shell>
 ```
 
+<table>
+<tr><td>
 
 ```sh
 $ (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node
@@ -733,6 +737,8 @@ def
 ghi
 ```
 
+</td><tr>
+</table>
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>
 

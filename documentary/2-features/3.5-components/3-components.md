@@ -4,6 +4,8 @@ There are a number of built-in components at the moment.
 
 #### `<`shell command?=""`>`
 
+Either uses `spawn` to spawn a command and pass arguments to it, or `exec` to get the result of a more complex operations such as piping to other commands reachable from shell.
+
 Usage:
 
 ```jsx
@@ -47,6 +49,10 @@ The _shell_ component can be used to print output of a complex unix expression. 
 </shell>
 ```
 
+<table>
+<tr><td>
 <shell>
   (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node
 </shell>
+</td><tr>
+</table>
