@@ -654,7 +654,10 @@ HELLO WORLD! EXAMPLE !@£
 ```
 
 
-![The Shell Component Autosuggestions In Documentary](doc/shell.gif)
+
+<a href="doc/shell.gif" title="Open GIF">![The Shell Component Autosuggestions In Documentary](doc/language.png)
+Open Gif
+</a>
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true" width="15"></a></p>
 
