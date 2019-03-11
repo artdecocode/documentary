@@ -1,4 +1,7 @@
 const { Replaceable, makeMarkers, makeCutRule, makePasteRule } = require('restream');
+const { debuglog } = require('util');
+const { join, resolve } = require('path');
+const { homedir } = require('os');
 const {
   createTocRule, commentRule: stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe,
 } = require('./rules');
@@ -14,11 +17,9 @@ const badgeRule = require('./rules/badge');
 const { typedefMdRe } = require('./rules/typedef-md');
 const tableMacroRule = require('./rules/macro');
 const sectionBrakeRule = require('./rules/section-break');
-const { debuglog } = require('util');
 const { macroRule, useMacroRule } = require('./rules/macros');
-const { join, resolve } = require('path');
-const { homedir } = require('os');
 const loadComponents = require('./components');
+const Components = require('../components/');
 
 const LOG = debuglog('doc')
 
@@ -50,7 +51,9 @@ const getComponents = (path) => {
     } = options
     const hm = getComponents(join(homedir(), '.documentary'))
     const cm = getComponents(resolve(cwd, '.documentary'))
-    const components = [...cm, ...hm]
+    const dm = loadComponents(Components)
+    const components = [...cm, ...hm, ...dm]
+    // console.log('loaded components %s', components)
     const tocRule = createTocRule(toc)
 
     const {
@@ -98,7 +101,10 @@ const getComponents = (path) => {
       gifRule,
       typeRule,
       sectionBrakeRule,
-      ...components,
+      ...[
+        ...components, // todo: restream pipe
+        cutCode, // cut code again after inserting components
+      ],
       insertTable,
       // typedefMdRule, // places a table hence just before table
 
