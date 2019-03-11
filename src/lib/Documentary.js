@@ -1,4 +1,7 @@
 import { Replaceable, makeMarkers, makeCutRule, makePasteRule } from 'restream'
+import { debuglog } from 'util'
+import { join, resolve } from 'path'
+import { homedir } from 'os'
 import {
   createTocRule, commentRule as stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe,
 } from './rules'
@@ -14,11 +17,9 @@ import badgeRule from './rules/badge'
 import { typedefMdRe } from './rules/typedef-md'
 import tableMacroRule from './rules/macro'
 import sectionBrakeRule from './rules/section-break'
-import { debuglog } from 'util'
 import { macroRule, useMacroRule } from './rules/macros'
-import { join, resolve } from 'path'
-import { homedir } from 'os'
 import loadComponents from './components'
+import * as Components from '../components/'
 
 const LOG = debuglog('doc')
 
@@ -50,7 +51,9 @@ export default class Documentary extends Replaceable {
     } = options
     const hm = getComponents(join(homedir(), '.documentary'))
     const cm = getComponents(resolve(cwd, '.documentary'))
-    const components = [...cm, ...hm]
+    const dm = loadComponents(Components)
+    const components = [...cm, ...hm, ...dm]
+    // console.log('loaded components %s', components)
     const tocRule = createTocRule(toc)
 
     const {
@@ -98,7 +101,10 @@ export default class Documentary extends Replaceable {
       gifRule,
       typeRule,
       sectionBrakeRule,
-      ...components,
+      ...[
+        ...components, // todo: restream pipe
+        cutCode, // cut code again after inserting components
+      ],
       insertTable,
       // typedefMdRule, // places a table hence just before table
 

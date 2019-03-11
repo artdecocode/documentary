@@ -1,0 +1,16 @@
+<types>
+  <type name="ShellProps" desc="Options for the Shell component. TODO: pass options.">
+    <prop string name="command">
+      The command to execute using the `child_process`.
+    </prop>
+    <prop string name="lang" default="sh">
+      The markdown language of the output.
+    </prop>
+    <prop boolean name="err" default="false">
+      Whether to print SDTERR instead of STDOUT (todo: make print both).
+    </prop>
+    <prop string name="children">
+      The arguments to the program each on new line.
+    </prop>
+  </type>
+</types>

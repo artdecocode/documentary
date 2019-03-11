@@ -5,9 +5,9 @@ import { unlink, createReadStream } from 'fs'
 import { collect } from 'catchment'
 import { Readable } from 'stream'
 import mismatch from 'mismatch'
+import { Replaceable } from 'restream'
 import createReplaceStream  from '../../src/lib/replace-stream'
 import Documentary from '../../src/lib/Documentary'
-import { Replaceable } from 'restream'
 
 // const LOG = debuglog('doc')
 const TEST_BUILD = process.env.ALAMODE_ENV == 'test-build'

@@ -6,7 +6,7 @@ const ts = makeTestSuite('test/result/bin/index.js', {
   fork: Context.DOC,
 })
 
-export const components = makeTestSuite('test/result/bin/components.md', {
+export const components = makeTestSuite('test/result/bin/components.html', {
   context: TempContext,
   fork: {
     module: Context.DOC,
@@ -14,8 +14,8 @@ export const components = makeTestSuite('test/result/bin/components.md', {
      * @param {string} _
      * @param {TempContext} t
      */
-    async getArgs([comp], { add, write }) {
-      await write('test.md', comp)
+    async getArgs(_, { add, write }) {
+      await write('test.md', this.input)
       await add('test/fixture/.documentary')
       return ['test.md']
     },

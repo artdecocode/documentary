@@ -1,8 +1,5 @@
 import { fork } from 'spawncommand'
 import { codeSurround } from '..'
-// import { debuglog } from 'util'
-
-// const LOG = debuglog('doc')
 
 const forkRule = {
   re: /%FORK(ERR)?(?:-(\w+))? (.+)%/mg,
