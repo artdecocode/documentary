@@ -655,7 +655,7 @@ HELLO WORLD! EXAMPLE !@£
 ```
 
 
-![doc/shell.gif](The Shell Component Autosuggestions In Documentary)
+![The Shell Component Autosuggestions In Documentary](doc/shell.gif)
 
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true"></a></p>
