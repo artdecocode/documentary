@@ -38,7 +38,7 @@ This section has a quick look at the best features available in _Documentary_ an
   [
     "*[JSX Components](#jsx-components)*",
     "Performs the compilation of custom-defined JSX components into markdown code.",
-    "1. Lets to define custom components and reuse them across documentation where needed. <br/>2. Provides a modern syntax to combine markdown and JavaScript."
+    "1. Lets to define custom components and reuse them across documentation where needed. <br/>2. Provides a modern syntax to combine markdown and JavaScript. <br/>3. When documentation written in HTML files, the components are documented with `web-components.json` file for the VSCode which will provide autosuggestions for the arguments of the component."
   ],
   [
     "*[Tables](#simple-tables)*",

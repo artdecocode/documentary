@@ -6,7 +6,7 @@ import { codeSurround } from '../lib'
  */
 export const shell = async (props) => {
   const {
-    command, children, lang = 'sh', err = false,
+    command, children, language: lang = 'sh', err = false,
   } = props
   const a = children.trim().split('\n').map(c => {
     return c.trim()

@@ -3,10 +3,10 @@
     <prop string name="command">
       The command to execute using the `child_process`.
     </prop>
-    <prop string name="lang" default="sh">
+    <prop string name="language" default="sh">
       The markdown language of the output.
     </prop>
-    <prop boolean name="err" default="false">
+    <prop opt boolean name="err">
       Whether to print SDTERR instead of STDOUT (todo: make print both).
     </prop>
     <prop string name="children">

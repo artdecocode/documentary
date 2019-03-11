@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "tags": [{
+  "name": "shell",
+   "spec": "https://readme.page/components.html#shell", "description": "Executes a command as if by the user from the terminal, i.e., `$ echo example` and shows its output in ```sh\n{output}\n```\n The language and other properties can be customised via the arguments: command, children, language, err.",
+    "attributes": [{
+      "name": "command",
+      "description": "The command to execute, such as `echo`."
+    }, {
+      "name": "children",
+      "description": "Pass arguments each on new line."
+    }, {
+      "name": "language",
+      "description": "The output language for ```. Default `sh`."
+    }, {
+      "name": "err",
+      "description": "Boolean, whether to print STDERR instead of STDOUT."
+    }]
+  }]
+}

@@ -22,7 +22,7 @@ This section has a quick look at the best features available in _Documentary_ an
 | *[Tables Of Contents](#toc-generation)* | Compiles an accurate table of contents for the content.                                                                  | 1. Makes the structure of the document immediately visible to the reader.<br/>2. Allows to navigate across the page easily.<br/>3. Shows problems with incorrect levels structure which otherwise might not be visible.<br/>4. Allows to place anchor links available from the TOC at any level in any place of the README.<br/>5. Can insert section breaks which visually divide the content and allow to navigate back to the top.                                                                                                                       |
 | *[Examples](#examples-placement)*       | Allows to embed the source code into documentation.                                                                      | 1. Increases productivity by eliminating the need to copy and paste the source code manually.<br/>2. Developers can run examples as Node.js scripts to check that they are working correctly and debug them.<br/>3. Examples can also be forked (see below).<br/> 4. It is possible to imports and requires such as `../src` to be displayed as the name of the package.                                                                                                                                                      |
 | *[Forks](#embedding-output)*            | Makes it possible to run an example and embed its `stdout` and `stderr` output directly into documentation. | 1. Enhances productivity by eliminating the need to copy and paste the output by hand.<br/>2. Makes sure the output is always up-to-date with the documented one.<br/>3. Will make it visible if a change to the code base lead to a different output (implicit regression testing).<br/>4. Ensures that examples are actually working.<br/>5. Can print usage of CLI tools by forking them with `-h` command.                                                                                                            |
-| *[JSX Components](#jsx-components)*     | Performs the compilation of custom-defined JSX components into markdown code.                                            | 1. Lets to define custom components and reuse them across documentation where needed. <br/>2. Provides a modern syntax to combine markdown and JavaScript.                                                                                                                                                                                                                                                                                                                                                                                                  |
+| *[JSX Components](#jsx-components)*     | Performs the compilation of custom-defined JSX components into markdown code.                                            | 1. Lets to define custom components and reuse them across documentation where needed. <br/>2. Provides a modern syntax to combine markdown and JavaScript. <br/>3. When documentation written in HTML files, the components are documented with `web-components.json` file for the VSCode which will provide autosuggestions for the arguments of the component.                                                                                                                                                                           |
 | *[Tables](#simple-tables)*              | Compiles tables from arrays without having to write html or markdown.                                                    | 1. Removes the need to manually build tables either by hand, online or using other tools.<br/>2. Provides table macros to reduce repetitive information and substitute only the core data into templates.                                                                                                                                                                                                                                                                                                                                                   |
 | *[Macros](#macros)*                     | Reuses a defined template to place the data into placeholders.                                                           | 1. Removes the need to copy-paste patterns to different places and change data manually.<br/>2. Maintains an up-to-date version of the template without having to change it everywhere.<br/>3. Reduces the cluttering of the source documentation by noise and helps to focus on important information.                                                                                                                                                                                                                                                     |
 | *[Live Push](#automatic-push)*          | Detects changes to the source documentation files, re-compiles the output README.md and pushes to the remote repository. | 1. The preview is available on-line almost immediately after a change is made. <br/>2. Allows to skip writing a commit message and the push command every time a change is made.                                                                                                                                                                                                                                                                                                                                                                            |
@@ -603,20 +603,9 @@ Get In Touch To Support Documentary
 
 The result will be rendered HTML:
 
-<table>
-  <tr></tr>
-  <tr>
-    <td align="center">
-      <a href="https://www.technation.sucks">
-        <img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif" alt="Tech Nation Visa Sucks" />
-      </a><br />
-      Sponsored by <a href="https://www.technation.sucks">Tech Nation Visa Sucks</a>.
-    </td>
-  </tr>
-  <tr><td>
+<table><tr></tr><tr><td align="center"><a href="https://www.technation.sucks"><img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif" alt="Tech Nation Visa Sucks" /></a><br />Sponsored by <a href="https://www.technation.sucks">Tech Nation Visa Sucks</a>.</td></tr><tr><td>
 Get In Touch To Support Documentary
-</td></tr>
-</table>
+</td></tr></table>
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/9.svg?sanitize=true" width="15"></a></p>
 
@@ -628,13 +617,54 @@ The components can be rendered asynchronously when the component returns a promi
 <Source src="src/index.js" />
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg?sanitize=true"></a></p>
+If a component returns just a string without actually using JSX, then it is pasted into the code as is, see the `Source` example.
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg?sanitize=true" width="15"></a></p>
+
+<h3>Web Components</h3>
+
+To receive access to the autosuggestions powered by _VSCode's_ `customData` implementation of web-components.json standard, documentation files need to be written in HTML file format, and the `.vscode/settings.json` has to be updated to include the `html.experimental.customData` property as shown below:
+
+```json
+{
+  "search.exclude": {
+    "**/README.md": true
+  },
+  "html.experimental.customData": [
+    "./web-components.json"
+  ]
+}
+```
+
+Then, _Documentary_'s components will be available when pressing CMD + SPACE in the editor.
+
+```html
+<shell language="fs" command="echo">
+  the arg 1
+  the_arg_2
+</shell>
+```
+
+
+```sh
+$ echo "HELLO WORLD!" "EXAMPLE !@£"
+```
+
+```fs
+HELLO WORLD! EXAMPLE !@£
+```
+
+
+![doc/shell.gif](The Shell Component Autosuggestions In Documentary)
+
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true"></a></p>
 
 ## **Comments Stripping**
 
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>
 
 ## **Macros**
 
@@ -691,7 +721,7 @@ GitHub: _[Zoroaster](https://github.com/artdecocode/zoroaster)_
 
 > Currently, a macro can only be defined in the same file as its usage. Also, in future, macros will improve my allowing to use named placeholders.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg?sanitize=true"></a></p>
 
 ## **File Splitting**
 
@@ -720,7 +750,8 @@ documentary
 │   ├── 3-method-title.md
 │   ├── 3.5-components
 │   │   ├── 1-jsx-components.md
-│   │   ├── async.md
+│   │   ├── 1.5async.md
+│   │   ├── 2-web-components.html
 │   │   └── footer.md
 │   ├── 4-comment-stripping.md
 │   ├── 4-macros.md
@@ -738,7 +769,7 @@ documentary
 └── index.md
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg?sanitize=true"></a></p>
 
 ## **Replacement Rules**
 
@@ -750,7 +781,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | %NPM: package-name%      | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                               |
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true"></a></p>
 
 ## **Gif Detail**
 
@@ -786,7 +817,7 @@ The actual html placed in the `README` looks like the one below:
 </details>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true"></a></p>
 
 ## **`Type` Definition**
 
@@ -1020,7 +1051,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 </table>
 
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg?sanitize=true"></a></p>
 
 ## **`@typedef` Organisation**
 
@@ -1473,7 +1504,7 @@ When a description ends with <code>Default &#96;value&#96;</code>, the default v
 </types>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/18.svg?sanitize=true"></a></p>
 
 ## CLI
 
@@ -1504,7 +1535,7 @@ DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/18.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/19.svg?sanitize=true"></a></p>
 
 ## API
 
@@ -1596,9 +1627,9 @@ import { createReadStream } from 'fs'
 - [Copyright](#copyright)
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/19.svg?sanitize=true"></a></p>
 
-#PRO
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/20.svg?sanitize=true"></a></p>#PRO
 Underlined
 `Titles`
 ---
@@ -1614,7 +1645,7 @@ Underlined
 
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/20.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/21.svg?sanitize=true"></a></p>
 
 ## Glossary
 
@@ -1627,26 +1658,6 @@ As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/w
 
 Section breaks from [FoglihtenDeH0](https://www.1001fonts.com/foglihtendeh0-font.html) font.
 
-<table>
-  <tr>
-    <th>
-      <a href="https://artd.eco">
-        <img src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png" alt="Art Deco" />
-      </a>
-    </th>
-    <th>
-      © <a href="https://artd.eco">Art Deco</a>  
-      2019
-    </th>
-    <th>
-      <a href="https://www.technation.sucks" title="Tech Nation Visa">
-        <img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif" alt="Tech Nation Visa" />
-      </a>
-    </th>
-    <th>
-      <a href="https://www.technation.sucks">Tech Nation Visa Sucks</a>
-    </th>
-  </tr>
-</table>
+<table><tr><th><a href="https://artd.eco"><img src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png" alt="Art Deco" /></a></th><th>© <a href="https://artd.eco">Art Deco</a>  2019</th><th><a href="https://www.technation.sucks" title="Tech Nation Visa"><img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif" alt="Tech Nation Visa" /></a></th><th><a href="https://www.technation.sucks">Tech Nation Visa Sucks</a></th></tr></table>
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg?sanitize=true"></a></p>
