@@ -4,10 +4,13 @@ There are a number of built-in components at the moment.
 
 #### `<`shell command=""`>`
 
-Executes a command as if by the user from the terminal, i.e., `$ echo example` and shows its output in
+Executes a command as if by the user from the terminal, i.e., `$ echo example` and shows its output after printing the command like
 
 ````sh
 ```sh
+$ {command}
+```
+```{language = sh}
 {output}
 ```
 ````

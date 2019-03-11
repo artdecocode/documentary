@@ -667,22 +667,25 @@ There are a number of built-in components at the moment.
 
 #### `<`shell command=""`>`
 
-Executes a command as if by the user from the terminal, i.e., `$ echo example` and shows its output in
+Executes a command as if by the user from the terminal, i.e., `$ echo example` and shows its output after printing the command like
 
 ````sh
 ```sh
+$ {command}
+```
+```{language = sh}
 {output}
 ```
 ````
 
 __<a name="type-shellprops">`ShellProps`</a>__: Options for the Shell component. TODO: pass options.
 
-|     Name      |   Type    |                            Description                             | Default |
-| ------------- | --------- | ------------------------------------------------------------------ | ------- |
-| __command*__  | _string_  | The command to execute using the `child_process`.                  | -       |
-| language      | _string_  | The markdown language of the output.                               | `sh`    |
-| err           | _boolean_ | Whether to print SDTERR instead of STDOUT (todo: make print both). | -       |
-| __children*__ | _string_  | The arguments to the program each on new line.                     | -       |
+|     Name     |   Type    |                            Description                             | Default |
+| ------------ | --------- | ------------------------------------------------------------------ | ------- |
+| __command*__ | _string_  | The command to execute using the `child_process`.                  | -       |
+| language     | _string_  | The markdown language of the output.                               | `sh`    |
+| err          | _boolean_ | Whether to print SDTERR instead of STDOUT (todo: make print both). | -       |
+| children     | _string_  | The arguments to the program each on new line.                     | -       |
 
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>

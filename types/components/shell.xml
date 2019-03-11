@@ -9,7 +9,7 @@
     <prop opt boolean name="err">
       Whether to print SDTERR instead of STDOUT (todo: make print both).
     </prop>
-    <prop string name="children">
+    <prop string name="children" opt>
       The arguments to the program each on new line.
     </prop>
   </type>
