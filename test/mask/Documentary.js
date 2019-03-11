@@ -1,14 +1,14 @@
 import { makeTestSuite } from 'zoroaster'
 import { collect } from 'catchment'
 import TempContext from 'temp-context'
+import { dirname, relative } from 'path'
+import alamode from 'alamode'
 import Documentary from '../../src/lib/Documentary'
 import Typedefs from '../../src/lib/Typedefs'
-import { dirname } from 'path'
-import alamode from 'alamode'
 
-const preact = dirname(require.resolve('preact/package.json'))
+const preact = relative('', dirname(require.resolve('preact/package.json')))
 alamode({
-  pragma: `const { h } = require("${preact}");`,
+  pragma: `const { h } = require("./${preact}");`,
 })
 
 const ts = makeTestSuite('test/result/Documentary', {

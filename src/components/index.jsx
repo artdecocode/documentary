@@ -20,5 +20,5 @@ export const shell = async (props) => {
     return aa
   }).join(' ')}`, 'sh')
   const output = codeSurround(r, lang)
-  return `${cmd}\n\n${output}`
+  return `\n${cmd}\n\n${output}\n`
 }
