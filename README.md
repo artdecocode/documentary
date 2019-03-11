@@ -53,6 +53,8 @@ This section has a quick look at the best features available in _Documentary_ an
   * [`runSoftware()`](#runsoftware-void)
 - [**JSX Components**](#jsx-components)
   * [Async Components](#async-components)
+  * [Built-In Components](#built-in-components)
+    * [`<`shell command=""`>`](#shell-command)
 - [**Comments Stripping**](#comments-stripping)
 - [**Macros**](#macros)
 - [**File Splitting**](#file-splitting)
@@ -654,14 +656,39 @@ HELLO WORLD! EXAMPLE !@£
 
 ![The Shell Component Autosuggestions In Documentary](doc/shell.gif)
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true" width="15"></a></p>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true"></a></p>
+### Built-In Components
+
+There are a number of built-in components at the moment.
+
+#### `<`shell command=""`>`
+
+Executes a command as if by the user from the terminal, i.e., `$ echo example` and shows its output in
+
+````sh
+```sh
+{output}
+```
+````
+
+__<a name="type-shellprops">`ShellProps`</a>__: Options for the Shell component. TODO: pass options.
+
+|     Name      |   Type    |                            Description                             | Default |
+| ------------- | --------- | ------------------------------------------------------------------ | ------- |
+| __command*__  | _string_  | The command to execute using the `child_process`.                  | -       |
+| language      | _string_  | The markdown language of the output.                               | `sh`    |
+| err           | _boolean_ | Whether to print SDTERR instead of STDOUT (todo: make print both). | -       |
+| __children*__ | _string_  | The arguments to the program each on new line.                     | -       |
+
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>
 
 ## **Comments Stripping**
 
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg?sanitize=true"></a></p>
 
 ## **Macros**
 
@@ -718,7 +745,7 @@ GitHub: _[Zoroaster](https://github.com/artdecocode/zoroaster)_
 
 > Currently, a macro can only be defined in the same file as its usage. Also, in future, macros will improve my allowing to use named placeholders.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg?sanitize=true"></a></p>
 
 ## **File Splitting**
 
@@ -749,6 +776,7 @@ documentary
 │   │   ├── 1-jsx-components.md
 │   │   ├── 1.5async.md
 │   │   ├── 2-web-components.html
+│   │   ├── 3-components.md
 │   │   └── footer.md
 │   ├── 4-comment-stripping.md
 │   ├── 4-macros.md
@@ -766,7 +794,7 @@ documentary
 └── index.md
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true"></a></p>
 
 ## **Replacement Rules**
 
@@ -778,7 +806,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | %NPM: package-name%      | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                               |
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true"></a></p>
 
 ## **Gif Detail**
 
@@ -814,7 +842,7 @@ The actual html placed in the `README` looks like the one below:
 </details>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg?sanitize=true"></a></p>
 
 ## **`Type` Definition**
 
@@ -1048,7 +1076,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 </table>
 
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/18.svg?sanitize=true"></a></p>
 
 ## **`@typedef` Organisation**
 
@@ -1501,7 +1529,7 @@ When a description ends with <code>Default &#96;value&#96;</code>, the default v
 </types>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/18.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/19.svg?sanitize=true"></a></p>
 
 ## CLI
 
@@ -1532,13 +1560,17 @@ DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/19.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/20.svg?sanitize=true"></a></p>
+
+
+
+
+
+
 
 ## API
 
-The programmatic use of _Documentary_ is intended for developers who want to use this software in their projects.
-
-### `Toc` Stream
+The programmatic use of _Documentary_ is intended for developers who want to use this software in their projects.### `Toc` Stream
 
 `Toc` is a transform stream which can generate a table of contents for incoming markdown data. For every title that the transform sees, it will push the appropriate level of the table of contents.
 
@@ -1622,11 +1654,7 @@ import { createReadStream } from 'fs'
   * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
 - [API](#api)
 - [Copyright](#copyright)
-```
-
-
-
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/20.svg?sanitize=true"></a></p>#PRO
+```<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/21.svg?sanitize=true"></a></p>#PRO
 Underlined
 `Titles`
 ---
@@ -1642,7 +1670,7 @@ Underlined
 
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/21.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/22.svg?sanitize=true"></a></p>
 
 ## Glossary
 

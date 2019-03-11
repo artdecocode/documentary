@@ -1,5 +1,5 @@
 <types>
-  <type name="ShellProps" desc="Options for the Shell component. TODO: pass options.">
+  <type name="ShellProps" desc="Options for the Shell component. TODO: pass options." noToc>
     <prop string name="command">
       The command to execute using the `child_process`.
     </prop>
