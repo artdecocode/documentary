@@ -700,13 +700,13 @@ $ {command}
 
 __<a name="type-shellprops">`ShellProps`</a>__: Options for the Shell component. TODO: pass options.
 
-|   Name   |   Type    |                                                                                               Description                                                                                                | Default |
-| -------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| command  | _string_  | The command to execute using the `child_process`. If the command is not passed, the children will be used to pass to `exec`, e.g., `(echo abc; sleep 1; echo def; sleep 1; echo ghi) | node consume.js`. | -       |
-| language | _string_  | The markdown language of the output.                                                                                                                                                                     | `sh`    |
-| err      | _boolean_ | Whether to print SDTERR instead of STDOUT (todo: make print both).                                                                                                                                       | `false` |
-| children | _string_  | The arguments to the program each on new line.                                                                                                                                                           | -       |
-| noTrim   | _boolean_ | Whether to disable trim before printing the output.                                                                                                                                                      | `false` |
+|   Name   |   Type    |                                                                                                Description                                                                                                | Default |
+| -------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| command  | _string_  | The command to execute using the `child_process`. If the command is not passed, the children will be used to pass to `exec`, e.g., `(echo abc; sleep 1; echo def; sleep 1; echo ghi) \| node consume.js`. | -       |
+| language | _string_  | The markdown language of the output.                                                                                                                                                                      | `sh`    |
+| err      | _boolean_ | Whether to print SDTERR instead of STDOUT (todo: make print both).                                                                                                                                        | `false` |
+| children | _string_  | The arguments to the program each on new line.                                                                                                                                                            | -       |
+| noTrim   | _boolean_ | Whether to disable trim before printing the output.                                                                                                                                                       | `false` |
 
 If the command is not passed, the children will be read and executed by the `child_process`._exec_ method. For example, with the following simple receiver:
 
