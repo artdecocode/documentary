@@ -1,7 +1,8 @@
-## 10 March 2019
+## 11 March 2019
 
-### 1.21.6
+### 1.22.0
 
+- [feature] Add **<shell>** component, handle string return by components and errors in them, commit `web-components.json` file.
 - [deps] Replace `preact-render-to-string` with `@depack/render`.
 
 ## 7 March 2019
