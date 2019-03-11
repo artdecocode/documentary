@@ -54,7 +54,7 @@ This section has a quick look at the best features available in _Documentary_ an
 - [**JSX Components**](#jsx-components)
   * [Async Components](#async-components)
   * [Built-In Components](#built-in-components)
-    * [`<`shell command=""`>`](#shell-command)
+    * [`<`shell command?=""`>`](#shell-command)
 - [**Comments Stripping**](#comments-stripping)
 - [**Macros**](#macros)
 - [**File Splitting**](#file-splitting)
@@ -665,7 +665,25 @@ Open Gif
 
 There are a number of built-in components at the moment.
 
-#### `<`shell command=""`>`
+#### `<`shell command?=""`>`
+
+Usage:
+
+```jsx
+<shell command="echo"/>
+<shell command="echo">ABC</shell>
+<shell command="echo">
+  Hello World
+  example123
+</shell>
+
+<shell>
+  (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node consume2.js
+</shell>
+<shell noTrim>
+  (echo abc;) | node consume2.js
+</shell>
+```
 
 Executes a command as if by the user from the terminal, i.e., `$ echo example` and shows its output after printing the command like
 
@@ -680,12 +698,40 @@ $ {command}
 
 __<a name="type-shellprops">`ShellProps`</a>__: Options for the Shell component. TODO: pass options.
 
-|     Name     |   Type    |                            Description                             | Default |
-| ------------ | --------- | ------------------------------------------------------------------ | ------- |
-| __command*__ | _string_  | The command to execute using the `child_process`.                  | -       |
-| language     | _string_  | The markdown language of the output.                               | `sh`    |
-| err          | _boolean_ | Whether to print SDTERR instead of STDOUT (todo: make print both). | -       |
-| children     | _string_  | The arguments to the program each on new line.                     | -       |
+|   Name   |   Type    |                                                                                               Description                                                                                                | Default |
+| -------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| command  | _string_  | The command to execute using the `child_process`. If the command is not passed, the children will be used to pass to `exec`, e.g., `(echo abc; sleep 1; echo def; sleep 1; echo ghi) | node consume.js`. | -       |
+| language | _string_  | The markdown language of the output.                                                                                                                                                                     | `sh`    |
+| err      | _boolean_ | Whether to print SDTERR instead of STDOUT (todo: make print both).                                                                                                                                       | `false` |
+| children | _string_  | The arguments to the program each on new line.                                                                                                                                                           | -       |
+| noTrim   | _boolean_ | Whether to disable trim before printing the output.                                                                                                                                                      | `false` |
+
+If the command is not passed, the children will be read and executed by the `child_process`._exec_ method. For example, with the following simple receiver:
+
+```js
+process.stdin.on('data', d => console.log(`${d}`))
+```
+
+The _shell_ component can be used to print output of a complex unix expression. The output will be trimmed before inserting in the documentation. This can be disabled with the `noTrim` option.
+
+```html
+<shell>
+  (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node
+</shell>
+```
+
+
+```sh
+$ (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node
+```
+
+```sh
+abc
+
+def
+
+ghi
+```
 
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>

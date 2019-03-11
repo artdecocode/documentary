@@ -18,3 +18,38 @@ HELLO WORLD TEST123 -a arg -b
 ```
 
 /**/
+
+// processes pipe and group
+<shell>
+  (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node
+</shell>
+<shell noTrim>
+  (echo abc;) | node test/fixture/node
+</shell>
+
+/* expected */
+
+```sh
+$ (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node
+```
+
+```sh
+abc
+
+def
+
+ghi
+```
+
+
+```sh
+$ (echo abc;) | node test/fixture/node
+```
+
+```sh
+abc
+
+
+```
+
+/**/

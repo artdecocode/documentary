@@ -1,16 +1,19 @@
 <types>
   <type name="ShellProps" desc="Options for the Shell component. TODO: pass options." noToc>
-    <prop string name="command">
-      The command to execute using the `child_process`.
+    <prop opt string name="command">
+      The command to execute using the `child_process`. If the command is not passed, the children will be used to pass to `exec`, e.g., `(echo abc; sleep 1; echo def; sleep 1; echo ghi) | node consume.js`.
     </prop>
     <prop string name="language" default="sh">
       The markdown language of the output.
     </prop>
-    <prop opt boolean name="err">
+    <prop opt boolean name="err" default="false">
       Whether to print SDTERR instead of STDOUT (todo: make print both).
     </prop>
     <prop string name="children" opt>
       The arguments to the program each on new line.
+    </prop>
+    <prop boolean name="noTrim" default="false">
+      Whether to disable trim before printing the output.
     </prop>
   </type>
 </types>

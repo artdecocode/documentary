@@ -2,7 +2,7 @@
   "version": 1,
   "tags": [{
   "name": "shell",
-   "spec": "https://readme.page/components.html#shell", "description": "Executes a command as if by the user from the terminal, i.e., `$ echo example` and shows its output in ```sh\n{output}\n```\n The language and other properties can be customised via the arguments: command, children, language, err.",
+   "spec": "https://readme.page/components.html#shell", "description": "Executes a command as if by the user from the terminal, i.e., `$ echo example` and shows its output in ```sh\n{output}\n```\n The language and other properties can be customised via the arguments: command, children, language, err. If the command is not passed in the argument, then the children are taken literally to be interpreted by `exec` method, so it's possible to write `(echo abc; sleep 1; echo def; sleep 1; echo ghi) | node consume2.js` and get its output.",
     "attributes": [{
       "name": "command",
       "description": "The command to execute, such as `echo`."
@@ -15,6 +15,9 @@
     }, {
       "name": "err",
       "description": "Boolean, whether to print STDERR instead of STDOUT."
+    }, {
+      "name": "noTrim",
+      "description": "Whether to disable trim before printing the output. Default `false`."
     }]
   }]
 }

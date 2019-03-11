@@ -463,6 +463,13 @@ spawncommand@2.1.0:
   dependencies:
     catchment "3.1.1"
 
+spawncommand@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/spawncommand/-/spawncommand-2.1.1.tgz#297393c728c236d2ef11925cdf6795e44479a71e"
+  integrity sha512-4uvLpHyUsts2OBPG5/juVhuwVPj8GBD3FfjcR0fMheV5TW7TYCUnbGbjAqnv19D31SbjG14bOoAVBMY4nB2XEg==
+  dependencies:
+    catchment "3.2.2"
+
 temp-context@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/temp-context/-/temp-context-2.1.0.tgz#0af3aeae7c7aa3bfb0c01fc11fb9963c2ce2db60"
