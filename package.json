@@ -31,7 +31,8 @@
   "man": "man/doc.1",
   "files": [
     "build",
-    "src/bin/index.js"
+    "src/bin/index.js",
+    "web-components.json"
   ],
   "repository": {
     "type": "git",

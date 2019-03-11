@@ -625,13 +625,10 @@ If a component returns just a string without actually using JSX, then it is past
 
 To receive access to the autosuggestions powered by _VSCode's_ `customData` implementation of web-components.json standard, documentation files need to be written in HTML file format, and the `.vscode/settings.json` has to be updated to include the `html.experimental.customData` property as shown below:
 
-```json
+```json5
 {
-  "search.exclude": {
-    "**/README.md": true
-  },
   "html.experimental.customData": [
-    "./web-components.json"
+    "./node_modules/documentary/web-components.json"
   ]
 }
 ```
@@ -639,9 +636,9 @@ To receive access to the autosuggestions powered by _VSCode's_ `customData` impl
 Then, _Documentary_'s components will be available when pressing CMD + SPACE in the editor.
 
 ```html
-<shell language="fs" command="echo">
-  the arg 1
-  the_arg_2
+<shell command="echo" language="fs">
+  HELLO WORLD!
+  EXAMPLE !@£
 </shell>
 ```
 
