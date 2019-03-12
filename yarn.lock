@@ -426,10 +426,6 @@ restream@3.5.0:
   dependencies:
     "@artdeco/clean-stack" "1.0.1"
 
-rexml@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/rexml/-/rexml-1.1.0.tgz#d005c515528aa0c81a39cd456a0da40321ab3fe8"
-
 rexml@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/rexml/-/rexml-1.3.0.tgz#70d773c2e69da392112784e5ef7a65e77bef9612"
@@ -484,13 +480,13 @@ temp-context@2.1.0:
     makepromise "3.0.1"
     pedantry "2.2.0"
 
-typal@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/typal/-/typal-1.2.0.tgz#b9e24fa8d187adf7819c12595cd142a80be18f5f"
-  integrity sha512-9BV9BGD9IRGFgd1V5Xa9LXKWr5oHp7lEBae63gM/Z1lB4t88W+TlR3pveaf6w9yPl4Ru8Ly3S1ObFrAFCUGBug==
+typal@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/typal/-/typal-1.2.1.tgz#3a8291d039fc0c90978e8f870c5cedd30ea7ab62"
+  integrity sha512-T5Y8PW31b5/OeftqTcyBc0F9RWk7qaP3xXfwaw9VOw2PDCY7IDqfeMbPXkhIfbnrjaL3l4oamwr/7P2QYy2SQw==
   dependencies:
     mismatch "1.0.3"
-    rexml "1.1.0"
+    rexml "1.3.0"
 
 usually@1.1.0:
   version "1.1.0"
