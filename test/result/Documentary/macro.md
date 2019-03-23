@@ -1,4 +1,4 @@
-// can use a macro
+## can use a macro
 %%MACRO macro
 <details open>
 <summary><strong>[$1](###)</strong>: $2 <a href="$3">middleware</a>.

@@ -1,18 +1,18 @@
-// picks up a toc link
+## picks up a toc link
 [test](t)
 
 /* matches */
 [{"title": "test", "tOrHash": "t"}]
 /**/
 
-// picks up a toc link with hash
+## picks up a toc link with hash
 [test](##)
 
 /* matches */
 [{"title": "test", "tOrHash": "##"}]
 /**/
 
-// picks up a toc link with prefix
+## picks up a toc link with prefix
 [test](t-type)
 
 /* matches */

@@ -1,4 +1,4 @@
-// replaces components
+## replaces components
 <Component/>
 
 /* expected */

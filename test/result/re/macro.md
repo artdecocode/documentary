@@ -1,4 +1,4 @@
-// detects a macro
+## detects a macro
 %MACRO macro
 <details open>
 <summary><strong>[$1](###)</strong>: $2 <a href="$3">middleware</a>.
@@ -13,7 +13,7 @@
 [{"p": "%", "name": "macro", "body": "<details open>\n<summary><strong>[$1](###)</strong>: $2 <a href=\"$3\">middleware</a>.\n<br/><br/>\n</summary>\n\n%TYPEDEF types/$4.xml%\n</details>"}]
 /**/
 
-// detects multiple macros
+## detects multiple macros
 %MACRO macro
 $1
 %
@@ -27,7 +27,7 @@ test - $1
  {"p": "%", "name": "macro2", "body": "test - $1"}]
 /**/
 
-// detects a macro with double %
+## detects a macro with double %
 %%MACRO macro
 <details open>
 <summary><strong>[$1](###)</strong>: $2 <a href="$3">middleware</a>.

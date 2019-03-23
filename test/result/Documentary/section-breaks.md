@@ -1,4 +1,4 @@
-// replaces a section brake
+## replaces a section brake
 %~%
 
 /* expected */

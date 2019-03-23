@@ -1,14 +1,15 @@
-import { makeTestSuite } from 'zoroaster'
+import makeTestSuite from '@zoroaster/mask'
 import TempContext from 'temp-context'
 import Toc from '../../src/lib/Toc'
 import { getTypedefs } from '../../src/lib/Typedefs'
 import { getStream } from '../../src/lib'
 
-const ts = makeTestSuite('test/result/Toc/index.md', {
+const ts = makeTestSuite('test/result/Toc/default.md', {
   getTransform() {
     const toc = new Toc()
     return toc
   },
+  splitRe: /^\/\/ /gm,
 })
 
 const h1 = makeTestSuite('test/result/Toc/h1.md', {
@@ -44,6 +45,7 @@ const macros = makeTestSuite('test/result/Toc/macros.md', {
     return toc
   },
   context: TempContext,
+  splitRe: /^\/\/ /gm,
 })
 
 export default ts

@@ -1,4 +1,4 @@
-// links types across files
+## links types across files
 test/fixture/typedef/documentary
 
 /* expected */

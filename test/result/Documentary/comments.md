@@ -1,4 +1,4 @@
-// removes comments
+## removes comments
 The program will perform the necessary operations.
 <!-- hello world -->
 After halt, it will have produced the correct result.
@@ -8,21 +8,21 @@ The program will perform the necessary operations.
 After halt, it will have produced the correct result.
 /**/
 
-// removes multiple comments
+## removes multiple comments
 <!-- test -->Hello World<!-- test -->
 
 /* expected */
 Hello World
 /**/
 
-// does not remove comments surrounded by backticks
+## does not remove comments surrounded by backticks
 Text surrounded by the `<!--` and `-->` blocks is not removed.
 
 /* expected */
 Text surrounded by the `<!--` and `-->` blocks is not removed.
 /**/
 
-// removes comments with code blocks
+## removes comments with code blocks
 <!--
 ```
 const t = 'new test value: '
@@ -48,7 +48,7 @@ console.log('hello')
 
 /**/
 
-// does not remove comments from code blocks
+## does not remove comments from code blocks
 ```
 <!-- hello world -->
 ```

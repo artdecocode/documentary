@@ -1,4 +1,4 @@
-// replaces the table
+## replaces the table
 ```table
 [
   ["arg", "description"],
@@ -14,7 +14,7 @@
 | -z  | A list of zones to check  |
 /**/
 
-// replaces the table with whitespace
+## replaces the table with whitespace
 ```table
 
 [
@@ -32,7 +32,7 @@
 | -z  | A list of zones to check  |
 /**/
 
-// returns the match when cannot parse
+## returns the match when cannot parse
 ```table
 match with invalid table
 ```
@@ -43,7 +43,7 @@ match with invalid table
 ```
 /**/
 
-// replaces the with a macro
+## replaces the with a macro
 %TABLE-MACRO TEST
 test-$1, test-$2, test-$3\, test-$4
 %

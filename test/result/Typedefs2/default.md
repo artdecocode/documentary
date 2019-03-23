@@ -1,4 +1,4 @@
-// does not add default column when there are no defaults
+## does not add default column when there are no defaults
 <types>
   <type name="test">
     <prop opt name="prop">TestProp</prop>
@@ -14,7 +14,7 @@ __[`test`](t-type)__
 ```
 /**/
 
-// can link piped types
+## can link piped types
 <types>
   <type name="Type" />
   <type name="Type2">
@@ -29,11 +29,11 @@ __[`Type`](t-type)__
 __[`Type2`](t-type)__
 
 ```table
-[["Name","Type","Description"],["__prop*__","_string\\|[Type](#type-type)_","A property."]]
+[["Name","Type","Description"],["__prop*__","_string \\| [Type](#type-type)_","A property."]]
 ```
 /**/
 
-// can link promised types
+## can link promised types
 <types>
   <type name="Type" />
   <type name="Type2" />
@@ -54,11 +54,11 @@ __[`Type4`](t-type)__
 __[`Type5`](t-type)__
 
 ```table
-[["Name","Type","Description"],["__prop*__","_Promise.&lt;[Type](#type-type)\\|[Type2](#type-type2)&gt;\\|[Type3](#type-type3)\\|[Type4](#type-type4)_","A property."]]
+[["Name","Type","Description"],["__prop*__","_Promise.&lt;[Type](#type-type) \\| [Type2](#type-type2)&gt; \\| [Type3](#type-type3) \\| [Type4](#type-type4)_","A property."]]
 ```
 /**/
 
-// can link the import to a website
+## can link the import to a website
 <types>
   <import
     name="Test"
@@ -71,7 +71,7 @@ __[`Type5`](t-type)__
 [`import('vm').Test`](https://nodejs.org/api/vm.html#Test) __[`Test`](l-type)__
 /**/
 
-// can insert example (WIP)
+## can insert example - WIP
 <types>
   <type name="Return">
     <prop name="body" type="string|object|Buffer">
@@ -88,6 +88,6 @@ __[`Type5`](t-type)__
 __[`Return`](t-type)__
 
 ```table
-[["Name","Type","Description"],["__body*__","_string\\|object\\|Buffer_","The return from the server."],["__statusMessage*__","_string_","The status message set by the server.\n      <e>OK</e>"]]
+[["Name","Type","Description"],["__body*__","_string \\| object \\| Buffer_","The return from the server."],["__statusMessage*__","_string_","The status message set by the server.\n      &lt;e&gt;OK&lt;/e>"]]
 ```
 /**/

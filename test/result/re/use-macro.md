@@ -1,4 +1,4 @@
-// detects a single use
+## detects a single use
 %USE-MACRO test
 <data>hello</data>
 <data>world</data>
@@ -8,7 +8,7 @@
 [{"name": "test", "body": "<data>hello</data>\n<data>world</data>"}]
 /**/
 
-// detects a multiple uses
+## detects a multiple uses
 %USE-MACRO test
 <data>hello</data>
 <data>world</data>

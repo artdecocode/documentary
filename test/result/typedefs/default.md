@@ -1,4 +1,4 @@
-// cuts method titles
+## cuts method titles
 ```## core
 [
   ["middleware?", "MiddlewareConfig"],

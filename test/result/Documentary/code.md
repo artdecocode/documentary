@@ -1,4 +1,4 @@
-// keeps table in a code block
+## keeps table in a code block
 ````
 ```table
 [
@@ -21,7 +21,7 @@
 ````
 /**/
 
-// keeps method title in a code block
+## keeps method title in a code block
 ````
 ```### async runSoftware => string
 [
@@ -52,7 +52,7 @@
 ````
 /**/
 
-// keeps inner code blocks
+## keeps inner code blocks
 ```
 `this is a test`
 ```

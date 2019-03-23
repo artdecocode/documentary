@@ -1,4 +1,4 @@
-// expands the type in function's JSDoc
+## expands the type in function's JSDoc
 import { resolve } from 'path'
 
 /**

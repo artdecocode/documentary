@@ -1,5 +1,5 @@
 import { deepEqual } from 'zoroaster/assert'
-import { makeTestSuite } from 'zoroaster'
+import makeTestSuite from '@zoroaster/mask'
 import { collect } from 'catchment'
 import TempContext from 'temp-context'
 import { getStream } from '../../src/lib'

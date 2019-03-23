@@ -1,4 +1,4 @@
-// can use inside a macro
+## can use inside a macro
 %MACRO test
 %TYPEDEF test/fixture/typedef/types/$1.xml%
 %

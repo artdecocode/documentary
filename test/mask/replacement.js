@@ -1,4 +1,4 @@
-import { makeTestSuite } from 'zoroaster'
+import makeTestSuite from '@zoroaster/mask'
 import { Replaceable } from 'restream'
 import sectionBrakeRule from '../../src/lib/rules/section-break'
 import badgeRule from '../../src/lib/rules/badge'
@@ -11,7 +11,7 @@ import { macroRule, useMacroRule } from '../../src/lib/rules/macros'
 const ts = [
   [sectionBrakeRule, 'section break', 'section-break.md'],
   [badgeRule, 'badge', 'badge.md'],
-  [exampleRule, 'example', 'example/index.md'],
+  [exampleRule, 'example', 'example/default.md'],
   [forkRule, 'fork', 'fork/stderr.md'],
   [[tableMacroRule, tableRule], 'table', 'table'],
   [[macroRule, useMacroRule], 'macro', 'macro'],

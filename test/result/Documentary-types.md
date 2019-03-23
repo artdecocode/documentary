@@ -1,4 +1,4 @@
-// places a single type
+## places a single type
 %TYPEDEF test/fixture/typedef/types.xml StaticConfig%
 
 /* expected */
@@ -13,25 +13,25 @@ __<a name="type-staticconfig">`StaticConfig`</a>__: Options to setup `koa-static
 | setHeaders | _SetHeaders_ | Function to set custom headers on response. | -            |
 /**/
 
-// escapes a | in type's property
+## escapes a | in type's property
 %TYPEDEF test/fixture/typedef/types-pipe.xml SessionConfig%
 
 /* expected */
 __<a name="type-sessionconfig">`SessionConfig`</a>__: Options to setup `koa-session`.
 
-|    Name     |        Type         |             Description             |
-| ----------- | ------------------- | ----------------------------------- |
-| __maxAge*__ | _number\|'session'_ | maxAge in ms with default of 1 day. |
+|    Name     |         Type          |             Description             |
+| ----------- | --------------------- | ----------------------------------- |
+| __maxAge*__ | _number \| 'session'_ | maxAge in ms with default of 1 day. |
 /**/
 
-// places a single type without properties
+## places a single type without properties
 %TYPEDEF test/fixture/typedef/types.xml SetHeaders%
 
 /* expected */
 `(res: ServerResponse) => any` __<a name="type-setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 /**/
 
-// places all types from a file
+## places all types from a file
 %TYPEDEF test/fixture/typedef/types.xml%
 
 /* expected */

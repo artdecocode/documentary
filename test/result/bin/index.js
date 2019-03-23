@@ -11,7 +11,6 @@ test/result/bin/h1.md -h1
 # test2
 
 # test3
-
 /**/
 
 // underlined -h1
@@ -123,7 +122,6 @@ test/fixtures/README-source.md -t
     * [`async runSoftware(string: path, config: Config): string`](#async-runsoftwarestring-pathconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
 - [Example](#example)
 - [Copyright](#copyright)
-
 /**/
 
 // links types across files

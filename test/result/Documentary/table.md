@@ -1,4 +1,4 @@
-// replaces a table
+## replaces a table
 The program accepts the following arguments:
 
 ```table
@@ -19,7 +19,7 @@ The program accepts the following arguments:
 /**/
 
 
-// replaces a table with null data
+## replaces a table with null data
 The program accepts the following arguments:
 
 ```table
@@ -39,7 +39,7 @@ The program accepts the following arguments:
 | -z  |             |
 /**/
 
-// replaces a table with a macro
+## replaces a table with a macro
 %TABLE-MACRO Company
   $1
 %
@@ -56,7 +56,7 @@ The program accepts the following arguments:
 | test |
 /**/
 
-// replaces a table with inner code in data
+## replaces a table with inner code in data
 %TABLE-MACRO Company
   $1
 %
@@ -73,7 +73,7 @@ The program accepts the following arguments:
 | hello `world` |
 /**/
 
-// replaces a table with inner code in macro
+## replaces a table with inner code in macro
 %TABLE-MACRO Company
   `$1`
 %
@@ -90,7 +90,7 @@ The program accepts the following arguments:
 | `hello world` |
 /**/
 
-// replaces followed by a code block
+## replaces followed by a code block
 The program accepts the following arguments:
 
 ```table
@@ -120,7 +120,7 @@ console.log(s)
 ```
 /**/
 
-// replaces multiple tables
+## replaces multiple tables
 ```table
 [
   ["arg", "description"],

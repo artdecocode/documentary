@@ -1,4 +1,4 @@
-// add links to typedefs
+## add links to typedefs
 test/fixture/typedef/documentary
 
 /* expected */

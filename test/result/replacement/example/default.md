@@ -1,4 +1,4 @@
-// replaces local
+## replaces local
 %EXAMPLE: test/result/replacement/example/replace-local.js, ../src => pass%
 
 /* expected */
@@ -8,7 +8,7 @@ const test = require('pass')
 ```
 /**/
 
-// replaces global
+## replaces global
 %EXAMPLE: test/result/replacement/example/replace-global.js, test => pass%
 
 /* expected */

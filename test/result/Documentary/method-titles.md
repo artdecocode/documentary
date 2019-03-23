@@ -1,4 +1,4 @@
-// produces title for method with args and return
+## produces title for method with args and return
 ```#### async runSoftware => string
 [
   ["path", "string"],
@@ -15,7 +15,7 @@
 #### `async runSoftware(`<br/>&nbsp;&nbsp;`path: string,`<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`render?: function,`<br/>&nbsp;&nbsp;`},`<br/>`): string`
 /**/
 
-// produces title for method without args or return
+## produces title for method without args or return
 ```#### runSoftware
 ```
 
