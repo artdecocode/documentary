@@ -1,26 +1,19 @@
 import { ok } from 'assert'
-import SnapshotContext from 'snapshot-context'
+import TempContext from 'temp-context'
 import Context from '../../context'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext)>} */
+/** @type {Object.<string, (c: Context, t:TempContext)>} */
 const T = {
-  context: [
-    Context,
-    SnapshotContext,
-  ],
-  async 'generates correct markdown'({ SNAPSHOT_DIR, doc, README_PATH }, { setDir, test }) {
-    setDir(SNAPSHOT_DIR)
+  context: [Context, TempContext],
+  async 'generates correct markdown'({ doc, README_PATH }) {
     const { stdout } = await doc(README_PATH)
-    await test('bin/markdown.md', stdout.trim())
+    return stdout.trim()
   },
-  async 'generates correct markdown and saves it to a file'(
-    { SNAPSHOT_DIR, doc, README_PATH, OUTPUT, readOutput }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
-    const { stdout } = await doc(README_PATH, '-o', OUTPUT)
+  async '!generates correct markdown and saves it to a file'({ doc, README_PATH }, { TEMP, snapshot }) {
+    const { stdout } = await doc(README_PATH, '-o', `${TEMP}/output.md`)
     ok(/Saved/.test(stdout))
-    const res = await readOutput()
-    await test('bin/markdown.md', res.trim())
+    const s = await snapshot('output.md')
+    return s.trim()
   },
 }
 
