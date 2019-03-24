@@ -1,17 +1,10 @@
-import SnapshotContext from 'snapshot-context'
-import Context from '../../context'
+import Context, { MarkdownSnapshot } from '../../context'
 import createReplaceStream from '../../../src/lib/replace-stream'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
+/** @type {Object.<string, (c: Context)>} */
 const T = {
-  context: [
-    Context,
-    SnapshotContext,
-  ],
-  async 'gives an example'(
-    { createReadable, catchment, EXAMPLE_PATH, SNAPSHOT_DIR }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
+  context: [Context, MarkdownSnapshot],
+  async 'gives an example'({ createReadable, EXAMPLE_PATH }) {
     const s = `
 For example, the program below will insert an example:
 
@@ -20,13 +13,9 @@ For example, the program below will insert an example:
     const rs = createReadable(s)
     const stream = createReplaceStream()
     rs.pipe(stream)
-    const res = await catchment(stream)
-    await test('replace-stream/example/index.md', res)
+    return stream
   },
-  async 'gives a partial example'(
-    { createReadable, catchment, PARTIAL_EXAMPLE_PATH, SNAPSHOT_DIR }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
+  async 'gives a partial example'({ createReadable, PARTIAL_EXAMPLE_PATH }) {
     const s = `
 For example, the program below will insert an example:
 
@@ -35,13 +24,9 @@ For example, the program below will insert an example:
     const rs = createReadable(s)
     const stream = createReplaceStream()
     rs.pipe(stream)
-    const res = await catchment(stream)
-    await test('replace-stream/example/start-end.md', res)
+    return stream
   },
-  async 'gives an example and replaces the path'(
-    { createReadable, catchment, EXAMPLE_PATH, SNAPSHOT_DIR }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
+  async 'gives an example and replaces the path'({ createReadable, EXAMPLE_PATH }) {
     const s = `
 For example, the program below will insert an example:
 
@@ -50,8 +35,7 @@ For example, the program below will insert an example:
     const rs = createReadable(s)
     const stream = createReplaceStream()
     rs.pipe(stream)
-    const res = await catchment(stream)
-    await test('replace-stream/example/path.md', res)
+    return stream
   },
 }
 

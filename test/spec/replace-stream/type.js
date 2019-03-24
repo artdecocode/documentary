@@ -1,40 +1,25 @@
-import SnapshotContext from 'snapshot-context'
-import Context from '../../context'
+import Context, { MarkdownSnapshot } from '../../context'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
+/** @type {Object.<string, (c: Context)>} */
 const T = {
-  context: [
-    Context,
-    SnapshotContext,
-  ],
-  async 'replaces a type'(
-    { createReadable, catchment, type, SNAPSHOT_DIR, replaceStream }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
+  context: [Context, MarkdownSnapshot],
+  async 'replaces a type'({ createReadable, type, replaceStream }) {
     const s = `%TYPE
 ${type}
 %`
     const rs = createReadable(s)
     rs.pipe(replaceStream)
-    const res = await catchment(replaceStream)
-    await test('replace-stream/type.txt', res)
+    return replaceStream
   },
-  async 'replaces a type for toc headings'(
-    { createReadable, catchment, type, SNAPSHOT_DIR, replaceStream }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
+  async 'replaces a type for toc headings'({ createReadable, type, replaceStream }) {
     const s = `%TYPE true
 ${type}
 %`
     const rs = createReadable(s)
     rs.pipe(replaceStream)
-    const res = await catchment(replaceStream)
-    await test('replace-stream/type-headings.txt', res)
+    return replaceStream
   },
-  async 'produces an example row'(
-    { createReadable, catchment, SNAPSHOT_DIR, replaceStream }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
+  async 'produces an example row'({ createReadable, replaceStream }) {
     const s = `%TYPE
 <p name="body" type="string|object|Buffer">
   <d>The return from the server.</d>
@@ -55,13 +40,9 @@ ${type}
 %`
     const rs = createReadable(s)
     rs.pipe(replaceStream)
-    const res = await catchment(replaceStream)
-    await test('replace-stream/type-example-row.txt', res)
+    return replaceStream
   },
-  async 'produces an example row with colspan 3'(
-    { createReadable, catchment, SNAPSHOT_DIR, replaceStream }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
+  async 'produces an example row with colspan 3'({ createReadable, replaceStream }) {
     const s = `%TYPE
 <p name="headers" type="object">
   <d>Incoming headers returned by the server.</d>
@@ -78,13 +59,9 @@ ${type}
 %`
     const rs = createReadable(s)
     rs.pipe(replaceStream)
-    const res = await catchment(replaceStream)
-    await test('replace-stream/type-example-row-3.txt', res)
+    return replaceStream
   },
-  async 'does not add example header when no examples are found'(
-    { createReadable, catchment, SNAPSHOT_DIR, replaceStream }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
+  async 'does not add example header when no examples are found'({ createReadable, replaceStream }) {
     const s = `%TYPE
 <p name="headers" type="object">
   <d>Incoming headers returned by the server.</d>
@@ -95,8 +72,7 @@ ${type}
 %`
     const rs = createReadable(s)
     rs.pipe(replaceStream)
-    const res = await catchment(replaceStream)
-    await test('replace-stream/type-no-examples.txt', res)
+    return replaceStream
   },
 }
 

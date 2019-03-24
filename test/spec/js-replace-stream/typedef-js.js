@@ -1,30 +1,19 @@
-import SnapshotContext from 'snapshot-context'
-import Context from '../../context'
+import Context, { MarkdownSnapshot } from '../../context'
 import createJsReplaceStream from '../../../src/lib/js-replace-stream'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
+/** @type {Object.<string, (c: Context)>} */
 const T = {
-  context: [
-    Context,
-    SnapshotContext,
-  ],
-  async 'places types declaration'(
-    { createReadable, catchment, typesLocation, SNAPSHOT_DIR }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
+  context: [Context, MarkdownSnapshot],
+  async 'places types declaration'({ createReadable, typesLocation }) {
     const s = `/* documentary ${typesLocation} */
 
 `
     const rs = createReadable(s)
     const stream = createJsReplaceStream()
     rs.pipe(stream)
-    const res = await catchment(stream)
-    await test('replace-stream/typedef-js.js', res)
+    return stream
   },
-  async 'places types declaration with existing typedef'(
-    { createReadable, catchment, typesLocation, SNAPSHOT_DIR }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
+  async 'places types declaration with existing typedef'({ createReadable, typesLocation }) {
     const s = `/* documentary ${typesLocation} */
 
 /**
@@ -36,8 +25,7 @@ export default test`
     const rs = createReadable(s)
     const stream = createJsReplaceStream()
     rs.pipe(stream)
-    const res = await catchment(stream)
-    await test('replace-stream/typedef-existing.js', res)
+    return stream
   },
 }
 

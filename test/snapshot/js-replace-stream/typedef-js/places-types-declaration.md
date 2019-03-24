@@ -14,3 +14,4 @@
  * @prop {SetHeaders} [setHeaders] Function to set custom headers on response.
  * @prop {Promise.<RightsConfig>} [rightsPromise] The promise which will be resolved with access rights to files.
  */
+

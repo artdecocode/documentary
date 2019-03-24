@@ -1,3 +1,4 @@
+
 Below is how the program runs on the CLI:
 
 <details>

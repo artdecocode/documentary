@@ -1,17 +1,10 @@
-import SnapshotContext from 'snapshot-context'
-import Context from '../../context'
+import Context, { MarkdownSnapshot } from '../../context'
 import createReplaceStream from '../../../src/lib/replace-stream'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
+/** @type {Object.<string, (c: Context )>} */
 const T = {
-  context: [
-    Context,
-    SnapshotContext,
-  ],
-  async 'inserts a <detail> block around an image'(
-    { createReadable, catchment, SNAPSHOT_DIR }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
+  context: [Context, MarkdownSnapshot],
+  async 'inserts a <detail> block around an image'({ createReadable }) {
     const s = `
 Below is how the program runs on the CLI:
 
@@ -23,8 +16,7 @@ Generating a readme file.
     const rs = createReadable(s)
     const stream = createReplaceStream()
     rs.pipe(stream)
-    const res = await catchment(stream)
-    await test('replace-stream/gif.html', res)
+    return stream
   },
 }
 

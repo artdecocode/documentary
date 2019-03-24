@@ -3,7 +3,7 @@ import { Replaceable } from 'restream'
 import Context, { MarkdownSnapshot } from '../../context'
 import titleRule, { replacer } from '../../../src/lib/rules/method-title'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext)>} */
+/** @type {Object.<string, (c: Context)>} */
 const T = {
   context: [Context, MarkdownSnapshot],
   async 'replaces the title'({ innerTitle }) {

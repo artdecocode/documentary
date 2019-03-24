@@ -1,18 +1,12 @@
 import { equal } from 'zoroaster/assert'
-import SnapshotContext from 'snapshot-context'
-import Context from '../../context'
+import Context, { MarkdownSnapshot } from '../../context'
 import createReplaceStream from '../../../src/lib/replace-stream'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
+/** @type {Object.<string, (c: Context )>} */
 const T = {
-  context: [
-    Context,
-    SnapshotContext,
-  ],
+  context: [Context, MarkdownSnapshot],
   async 'replaces a tree'(
-    { createReadable, catchment, readme_path, SNAPSHOT_DIR }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
+    { createReadable, readme_path }) {
     const s = `
 Below is the directory structure:
 
@@ -21,8 +15,7 @@ Below is the directory structure:
     const rs = createReadable(s)
     const stream = createReplaceStream()
     rs.pipe(stream)
-    const res = await catchment(stream)
-    await test('replace-stream/tree.txt', res)
+    return stream
   },
   async 'does not replace a tree when file not found'(
     { createReadable, catchment }
