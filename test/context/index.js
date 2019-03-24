@@ -6,6 +6,7 @@ import { collect } from 'catchment'
 import { Readable } from 'stream'
 import mismatch from 'mismatch'
 import { Replaceable } from 'restream'
+import Zoroaster from 'zoroaster'
 import createReplaceStream  from '../../src/lib/replace-stream'
 import Documentary from '../../src/lib/Documentary'
 
@@ -367,3 +368,7 @@ console.log('test')
 
 const BIN = TEST_BUILD ? '../../build/bin/doc' : '../../src/bin'
 const DOC = resolve(__dirname, BIN)
+
+export class MarkdownSnapshot extends Zoroaster {
+  static get snapshotExtension() { return 'md' }
+}
