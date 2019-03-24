@@ -372,3 +372,9 @@ const DOC = resolve(__dirname, BIN)
 export class MarkdownSnapshot extends Zoroaster {
   static get snapshotExtension() { return 'md' }
 }
+export class JsSnapshot extends Zoroaster {
+  static get snapshotExtension() { return 'js' }
+}
+export class XmlSnapshot extends Zoroaster {
+  static get snapshotExtension() { return 'xml' }
+}

@@ -1,15 +1,11 @@
 import { equal, deepEqual } from 'zoroaster/assert'
-import SnapshotContext from 'snapshot-context'
 import Context from '../../context'
 import { tableRe } from '../../../src/lib/rules/table'
 import { linkTitleRe } from '../../../src/lib/rules'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
+/** @type {Object.<string, (c: Context)>} */
 const T = {
-  context: [
-    Context,
-    SnapshotContext,
-  ],
+  context: Context,
   async 'matches the table with the re'({ table, innerTable, mismatch }) {
     const res = mismatch(tableRe, table, ['macro', 'content'])
     deepEqual(res, [{ content: innerTable }])

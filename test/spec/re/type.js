@@ -1,14 +1,10 @@
 import { equal } from 'zoroaster/assert'
-import SnapshotContext from 'snapshot-context'
 import Context from '../../context'
 import { typeRe } from '../../../src/lib/rules/type'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
+/** @type {Object.<string, (c: Context)>} */
 const T = {
-  context: [
-    Context,
-    SnapshotContext,
-  ],
+  context: Context,
   async 'matches the TYPE snippet'({ type, getMatches }) {
     const g = `%TYPE true
 ${type}

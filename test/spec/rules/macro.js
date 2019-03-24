@@ -2,7 +2,7 @@ import { equal, deepEqual } from 'zoroaster/assert'
 import Context from '../../context'
 import rule from '../../../src/lib/rules/macro'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext)>} */
+/** @type {Object.<string, (c: Context)>} */
 const T = {
   context: [
     Context,

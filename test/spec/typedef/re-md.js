@@ -1,14 +1,10 @@
 import { deepEqual } from 'zoroaster/assert'
-import SnapshotContext from 'snapshot-context'
 import Context from '../../context'
 import { typedefMdRe } from '../../../src/lib/rules/typedef-md'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
+/** @type {Object.<string, (c: Context)>} */
 const T = {
-  context: [
-    Context,
-    SnapshotContext,
-  ],
+  context: Context,
   async 'matches the TYPEDEF marker'({ getMatches }) {
     const loc = 'types/static.xml'
     const type = 'StaticConfig'

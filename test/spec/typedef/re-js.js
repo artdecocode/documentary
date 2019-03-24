@@ -1,14 +1,10 @@
 import { equal } from 'zoroaster/assert'
-import SnapshotContext from 'snapshot-context'
 import Context from '../../context'
 import { typedefJsRe } from '../../../src/lib/rules/typedef-js'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
+/** @type {Object.<string, (c: Context)>} */
 const T = {
-  context: [
-    Context,
-    SnapshotContext,
-  ],
+  context: Context,
   async 'matches the xml snippet'({ getMatches }) {
     const l = 'types/static.xml'
     const g = `/* documentary ${l} */

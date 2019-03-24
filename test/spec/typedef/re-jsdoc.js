@@ -1,14 +1,10 @@
 import { equal } from 'zoroaster/assert'
-import SnapshotContext from 'snapshot-context'
-import Context from '../../context'
+import Context, { MarkdownSnapshot } from '../../context'
 import { jsDocRe } from '../../../src/lib/typedef/jsdoc'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext)>} */
+/** @type {Object.<string, (c: Context)>} */
 const T = {
-  context: [
-    Context,
-    SnapshotContext,
-  ],
+  context: [Context, MarkdownSnapshot],
   async 'matches the @param JSDoc with description'({ getMatches }) {
     const t = 'StaticConfig'
     const n = 'config'
@@ -41,8 +37,7 @@ function configure(config) {
     equal(type, t)
     equal(name, n)
   },
-  async 'matches processed @param JSDoc'({ mismatch, SNAPSHOT_DIR }, { setDir, test }) {
-    setDir(SNAPSHOT_DIR)
+  async 'matches processed @param JSDoc'({ mismatch }) {
     const g = `
 /**
  * Configure the static middleware.
@@ -71,7 +66,7 @@ function configureInverse(config) {
 }
 `
     const res = mismatch(jsDocRe, g, ['type', 'opt', 'name', 'rest'])
-    await test('typedef/re-jsdoc.json', res)
+    return res
   },
 }
 

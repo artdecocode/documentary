@@ -21,7 +21,7 @@ HELLO WORLD TEST123 -a arg -b
 
 // processes pipe and group
 <shell>
-  (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node
+  (echo abc; sleep .5; echo def; sleep .5; echo ghi) | node test/fixture/node
 </shell>
 <shell noTrim>
   (echo abc;) | node test/fixture/node
@@ -30,7 +30,7 @@ HELLO WORLD TEST123 -a arg -b
 /* expected */
 
 ```sh
-$ (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node
+$ (echo abc; sleep .5; echo def; sleep .5; echo ghi) | node test/fixture/node
 ```
 
 ```sh
