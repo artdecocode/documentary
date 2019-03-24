@@ -1,14 +1,11 @@
+import Zoroaster from 'zoroaster'
 import { ok } from 'zoroaster/assert'
-import SnapshotContext from 'snapshot-context'
 import Context from '../../context'
 import createJsReplaceStream from '../../../src/lib/js-replace-stream'
 
-/** @type {Object.<string, (c: Context, s: SnapshotContext )>} */
+/** @type {Object.<string, (c: Context, z: Zoroaster)>} */
 const T = {
-  context: [
-    Context,
-    SnapshotContext,
-  ],
+  context: [Context, Zoroaster],
   async 'remembers the parsed types in the Replaceable'(
     { typesLocation, catchment, createReadable }
   ) {
@@ -22,10 +19,7 @@ const T = {
     await catchment(stream)
     ok('StaticConfig' in stream.types)
   },
-  async 'expands the type in function\'s JSDoc'(
-    { createReadable, catchment, typesLocation, SNAPSHOT_DIR }, { setDir, test }
-  ) {
-    setDir(SNAPSHOT_DIR)
+  async 'expands the type in function\'s JSDoc'({ createReadable, catchment, typesLocation }, { snapshotExtension }) {
     const s = `import { resolve } from 'path'
 
 /**
@@ -43,12 +37,12 @@ export default configure`
     const stream = createJsReplaceStream()
     rs.pipe(stream)
     const res = await catchment(stream)
-    await test('js-replace-stream/jsdoc.js', res)
+    snapshotExtension('js')
+    return res
   },
   async 'expands an optional type in function\'s JSDoc'(
-    { createReadable, catchment, typesLocation, SNAPSHOT_DIR }, { setDir, test }
+    { createReadable, catchment, typesLocation }, { snapshotExtension }
   ) {
-    setDir(SNAPSHOT_DIR)
     const s = `import { resolve } from 'path'
 
 /**
@@ -66,12 +60,12 @@ export default configure`
     const stream = createJsReplaceStream()
     rs.pipe(stream)
     const res = await catchment(stream)
-    await test('js-replace-stream/jsdoc-optional.js', res)
+    snapshotExtension('js')
+    return res
   },
   async 'expands an expanded type in function\'s JSDoc'(
-    { createReadable, catchment, typesLocation, SNAPSHOT_DIR }, { setDir, test }
+    { createReadable, catchment, typesLocation }, { snapshotSource }
   ) {
-    setDir(SNAPSHOT_DIR)
     const s = `import { resolve } from 'path'
 
 /**
@@ -94,7 +88,8 @@ export default configure`
     const stream = createJsReplaceStream()
     rs.pipe(stream)
     const res = await catchment(stream)
-    await test('js-replace-stream/jsdoc.js', res)
+    snapshotSource('expands the type in function\'s JSDoc', 'js')
+    return res
   },
 }
 
