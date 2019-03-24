@@ -2,11 +2,11 @@ import makeTestSuite from '@zoroaster/mask'
 import TempContext from 'temp-context'
 import Context from '../context'
 
-const ts = makeTestSuite('test/result/bin/index.js', {
+export default makeTestSuite('test/result/bin/index', {
   fork: Context.DOC,
 })
 
-export const components = makeTestSuite('test/result/bin/components.html', {
+export const components = makeTestSuite('test/result/bin/components', {
   context: TempContext,
   fork: {
     module: Context.DOC,
@@ -32,5 +32,3 @@ export const components = makeTestSuite('test/result/bin/components.html', {
     },
   },
 })
-
-export default ts

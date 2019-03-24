@@ -18,7 +18,7 @@ const ts = makeTestSuite('test/result/Documentary', {
   },
 })
 
-export const components = makeTestSuite('test/result/Documentary-components.md', {
+export const components2 = makeTestSuite('test/result/Documentary-components.md', {
   context: TempContext,
   /**
    * @param {TempContext} t

@@ -29,7 +29,7 @@ const ts = makeTestSuite('test/result/Typedefs-dir.md', {
   jsonProps: ['locations'],
 })
 
-const rest = makeTestSuite('test/result/Typedefs', {
+export const main = makeTestSuite('test/result/Typedefs', {
   /**
    * @param {string} input
    */
@@ -87,6 +87,5 @@ const rest2 = makeTestSuite('test/result/Typedefs2', {
 
 export default {
   ...ts,
-  ...rest,
   ...rest2,
 }
