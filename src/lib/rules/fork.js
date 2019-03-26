@@ -4,6 +4,7 @@ import { lstat } from 'fs'
 import { c } from 'erte'
 import makePromise from 'makepromise'
 import { resolve } from 'path'
+import resolveDependency from 'resolve-dependency'
 import { codeSurround } from '..'
 
 const getMtime = async (entry) => {
@@ -27,7 +28,8 @@ const forkRule = {
       const mtime = await getMtime(entry)
       return `${entry} ${mtime}`
     }))
-    const mmtime = await getMtime(mod)
+    const { path: mmod } = await resolveDependency(mod)
+    const mmtime = await getMtime(mmod)
 
     if (cache) {
       const record = cache[m]
