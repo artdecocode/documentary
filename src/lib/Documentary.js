@@ -2,6 +2,8 @@ import { Replaceable, makeMarkers, makeCutRule, makePasteRule } from 'restream'
 import { debuglog } from 'util'
 import { join, resolve } from 'path'
 import { homedir } from 'os'
+import write from '@wrote/write'
+import ensurePath from '@wrote/ensure-path'
 import {
   createTocRule, commentRule as stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe,
 } from './rules'
@@ -47,7 +49,7 @@ export default class Documentary extends Replaceable {
   constructor(options = {}) {
     const {
       toc, locations = {}, types: allTypes = [],
-      cwd = '.',
+      cwd = '.', cacheLocation = './.documentary/cache',
     } = options
     const hm = getComponents(join(homedir(), '.documentary'))
     const cm = getComponents(resolve(cwd, '.documentary'))
@@ -160,9 +162,31 @@ export default class Documentary extends Replaceable {
     this.on('types', types => {
       types.forEach(this.addType.bind(this))
     })
+    this._cacheLocation = cacheLocation
   }
   get innerCode() {
     return this._innerCode
+  }
+  getCache(name, location = this._cacheLocation) {
+    try {
+      const c = require(resolve(`${location}/${name}.json`))
+      return c
+    } catch (err) {
+      return null
+    }
+  }
+  async addCache(name, record, location = this._cacheLocation) {
+    const path = resolve(`${location}/${name}.json`)
+    await ensurePath(path)
+    let c
+    try {
+      c = require(path)
+    } catch (err) {
+      c = {}
+    }
+    const cc = { ...c, ...record }
+    const s = JSON.stringify(cc, null, 2)
+    await write(path, s)
   }
   /**
    * Replace a marked inner code with its actual value.
@@ -174,6 +198,9 @@ export default class Documentary extends Replaceable {
       return val
     })
     return s
+  }
+  get log() {
+    return LOG
   }
   addType(name) {
     this.types[name] = true

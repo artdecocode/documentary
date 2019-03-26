@@ -99,7 +99,7 @@ export default class Context {
     return resolve(__dirname, '../snapshot')
   }
   get FORK_PATH() {
-    return resolve(__dirname, '../fixtures/fork.js')
+    return 'test/fixtures/fork'
   }
   /**
    * Path to the example file.

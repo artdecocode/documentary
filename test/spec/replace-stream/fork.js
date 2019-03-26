@@ -1,4 +1,5 @@
 import Context, { MarkdownSnapshot } from '../../context'
+import TempContext from 'temp-context'
 import createReplaceStream from '../../../src/lib/replace-stream'
 
 /** @type {Object.<string, (c: Context )>} */
@@ -29,3 +30,22 @@ Below is the output of the program:
 }
 
 export default T
+
+/** @type {Object.<string, (c: Context, t: TempContext)>} */
+export const cache = {
+  context: Context,
+  // , { write, resolve }
+  async 'reads the cache of the fork'({ createReadable, catchment }) {
+    const p = 'test/temp/output.txt'
+    const rs = createReadable(`%FORK test/fixture/fork ${p}%`)
+    const stream = createReplaceStream(undefined, 'test/fixture/.documentary/cache')
+    rs.pipe(stream)
+    const stdout = await catchment(stream)
+
+    const rs2 = createReadable(`%FORKERR test/fixture/fork ${p}%`)
+    const stream2 = createReplaceStream(undefined, 'test/fixture/.documentary/cache')
+    rs2.pipe(stream2)
+    const stderr = await catchment(stream2)
+    return { stdout, stderr }
+  },
+}
