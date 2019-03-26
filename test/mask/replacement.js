@@ -20,6 +20,8 @@ const ts = [
   const t = makeTestSuite(p, {
     getTransform() {
       const replaceable = new Replaceable(rule)
+      replaceable.getCache = () => {}
+      replaceable.addCache = () => {}
       return replaceable
     },
   })

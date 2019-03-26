@@ -14,78 +14,89 @@ const getMtime = async (entry) => {
   return mtime.getTime()
 }
 
+const replacement = async function (match, err, lang, m) {
+  const cache = this.getCache('fork')
+  const [mod, ...args] = m.split(' ')
+  const sa = await staticAnalysis(mod, {
+    shallow: true,
+  })
+  const msa = await Promise.all(sa.map(async ({ entry, name, internal, version }) => {
+    if (name) return `${name} ${version}`
+    if (internal) return internal
+    const mtime = await getMtime(entry)
+    return `${entry} ${mtime}`
+  }))
+  const { path: mmod } = await resolveDependency(mod)
+  const mmtime = await getMtime(mmod)
+
+  if (cache) {
+    const record = cache[m]
+    if (record) {
+      if (record.mtime == mmtime) {
+        const added = []
+        const removed = []
+        msa.forEach((mm) => {
+          if (!record.analysis.includes(mm)) {
+            added.push(mm)
+          }
+        })
+        record.analysis.forEach((mm) => {
+          if (!record.analysis.includes(mm)) {
+            removed.push(mm)
+          }
+        })
+        const changed = added.length || removed.length
+        if (!changed) return getOutput(err, record.stderr, record.stdout, lang)
+
+        this.log(`FORK: ${mod} dependencies changed:`)
+        added.forEach((mm) => {
+          const [entry, meta] = mm.split(' ')
+          let mmeta = ''
+          if (meta) {
+            mmeta = /^\d+$/.test(meta) ? new Date(parseInt(meta)).toLocaleString() : meta
+          }
+          this.log(c('+', 'green'), entry, mmeta)
+        })
+        removed.forEach((mm) => {
+          const [entry, meta] = mm.split(' ')
+          let mmeta
+          if (meta) {
+            mmeta = /^\d+$/.test(meta) ? new Date(parseInt(meta)).toLocaleString() : meta
+          }
+          this.log(c('-', 'red'), entry, mmeta)
+        })
+      } else {
+        this.log(`FORK: ${mod} source updated since ${new Date(record.mtime).toLocaleString()}.`)
+      }
+    }
+  }
+  const documentaryFork = resolve(__dirname, '../../fork')
+  const { promise } = fork(documentaryFork, args, {
+    execArgv: [],
+    stdio: 'pipe',
+    env: {
+      DOCUMENTARY_REQUIRE: resolve(mod),
+    },
+  })
+  const { stdout, stderr } = await promise
+
+  const cacheToWrite = makeCache(m, mmtime, msa, stdout, stderr)
+  await this.addCache('fork', cacheToWrite)
+
+  return getOutput(err, stderr, stdout, lang)
+}
+
 const forkRule = {
   re: /%FORK(ERR)?(?:-(\w+))? (.+)%/mg,
   async replacement(match, err, lang, m) {
-    const cache = this.getCache('fork')
-    const [mod, ...args] = m.split(' ')
-    const sa = await staticAnalysis(mod, {
-      shallow: true,
-    })
-    const msa = await Promise.all(sa.map(async ({ entry, name, internal, version }) => {
-      if (name) return `${name} ${version}`
-      if (internal) return internal
-      const mtime = await getMtime(entry)
-      return `${entry} ${mtime}`
-    }))
-    const { path: mmod } = await resolveDependency(mod)
-    const mmtime = await getMtime(mmod)
-
-    if (cache) {
-      const record = cache[m]
-      if (record) {
-        if (record.mtime == mmtime) {
-          const added = []
-          const removed = []
-          msa.forEach((mm) => {
-            if (!record.analysis.includes(mm)) {
-              added.push(mm)
-            }
-          })
-          record.analysis.forEach((mm) => {
-            if (!record.analysis.includes(mm)) {
-              removed.push(mm)
-            }
-          })
-          const changed = added.length || removed.length
-          if (!changed) return getOutput(err, record.stderr, record.stdout, lang)
-
-          this.log(`FORK: ${mod} dependencies changed:`)
-          added.forEach((mm) => {
-            const [entry, meta] = mm.split(' ')
-            let mmeta = ''
-            if (meta) {
-              mmeta = /^\d+$/.test(meta) ? new Date(parseInt(meta)).toLocaleDateString() : meta
-            }
-            this.log(c('+', 'green'), entry, mmeta)
-          })
-          removed.forEach((mm) => {
-            const [entry, meta] = mm.split(' ')
-            let mmeta
-            if (meta) {
-              mmeta = /^\d+$/.test(meta) ? new Date(parseInt(meta)).toLocaleString() : meta
-            }
-            this.log(c('-', 'red'), entry, mmeta)
-          })
-        } else {
-          this.log(`FORK: ${mod} source updated since ${new Date(record.mtime).toLocaleString()}.`)
-        }
-      }
+    this.log(`FORK${err || ''}:`, c(m, 'grey'))
+    try {
+      return await replacement.call(this, match, err, lang, m)
+    } catch (e) {
+      this.log(c(`FORK ${m} error`, 'red'))
+      this.log(e)
+      return match
     }
-    const documentaryFork = resolve(__dirname, '../../fork')
-    const { promise } = fork(documentaryFork, args, {
-      execArgv: [],
-      stdio: 'pipe',
-      env: {
-        DOCUMENTARY_REQUIRE: resolve(mod),
-      },
-    })
-    const { stdout, stderr } = await promise
-
-    const cacheToWrite = makeCache(m, mmtime, msa, stdout, stderr)
-    await this.addCache('fork', cacheToWrite)
-
-    return getOutput(err, stderr, stdout, lang)
   },
 }
 
