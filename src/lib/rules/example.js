@@ -1,5 +1,6 @@
 import { debuglog } from 'util'
 import { parse } from 'path'
+import resolveDependency from 'resolve-dependency'
 import { read, codeSurround } from '..'
 
 const LOG = debuglog('doc')
@@ -25,7 +26,8 @@ const getPartial = (boundExample) => {
 
 export const replacer = async (match, source, from, to, type) => {
   try {
-    let f = await read(source)
+    const { path } = await resolveDependency(source)
+    let f = await read(path)
     f = f.trim()
     if (from && to) {
       f = f
@@ -52,7 +54,7 @@ export const replacer = async (match, source, from, to, type) => {
       LOG('Example: %s', source)
     }
 
-    const lang = getExt(type, source)
+    const lang = getExt(type, path)
     const res = codeSurround(ff.trim(), lang)
     return res
   } catch ({ stack }) {

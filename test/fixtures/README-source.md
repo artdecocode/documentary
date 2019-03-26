@@ -57,7 +57,7 @@ import documentary from 'documentary'
 
 This section will embed an example.
 
-%EXAMPLE: test/fixtures/example.js, ../src => documentation, javascript%
+%EXAMPLE: test/fixtures/example, ../src => documentation, javascript%
 
 ```js
 ## titles from code blocks with language are not included
@@ -70,7 +70,7 @@ This section will embed an example.
 ```
 -->
 
-%FORK-json test/fixtures/fork.js%
+%FORK-json test/fixtures/fork%
 
 ## Copyright
 
