@@ -1,13 +1,13 @@
 #!/usr/bin/env node
+import { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _argv, _generate } from './get-args'
 import { watch } from 'fs'
 import { debuglog } from 'util'
 import { lstatSync } from 'fs'
 import alamode from 'alamode'
 import { dirname } from 'path'
-import run from './run'
-import getArgs from './get-args'
 import generateTypedef from './run/generate'
 import extractTypedef from './run/extract'
+import doc from './run/doc'
 import { version } from '../../package.json'
 import catcher from './catcher'
 import { gitPush } from '../lib'
@@ -18,24 +18,7 @@ alamode({
 })
 
 const LOG = debuglog('doc')
-const DEBUG = /doc/.test(process.env.NODE_DEBUG)
-
-const {
-  source: _source,
-  output: _output,
-  toc: _toc,
-  watch: _watch,
-  push: _push,
-  version: _version,
-  extract: _extract,
-  h1: _h1,
-  reverse: _reverse,
-} = getArgs()
-
-let {
-  generate: _generate,
-  _argv,
-} = getArgs()
+const DEBUG = /doc/.test(process.env['NODE_DEBUG'])
 
 if (_version) {
   console.log(version)
@@ -62,29 +45,18 @@ if (_source) {
   }
 }
 
-const doc = async ({ source, output, justToc = false, h1, reverse }) => {
-  if (!source) {
-    throw new Error('Please specify an input file.')
-  }
-  await run({
-    source, reverse, output, justToc, h1,
-  })
-}
-
 (async () => {
   if (_extract) {
-    await extractTypedef({
+    return await extractTypedef({
       source: _source,
       destination: _extract,
     })
-    return
   }
   if (_generate) {
-    await generateTypedef({
+    return await generateTypedef({
       source: _source,
       destination: _generate,
     })
-    return
   }
   try {
     await doc({
