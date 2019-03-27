@@ -24,7 +24,7 @@ The import will never display in the Table of Contents as its an external type a
 <tr/>
 <tr><td>
 
-%EXAMPLE: example/generate-imports.js, ../src => src, js%
+%EXAMPLE: example/generate-imports, ../src => src%
 </td>
 <td>
 

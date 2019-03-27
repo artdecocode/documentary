@@ -68,6 +68,7 @@ export const git = async (...args) => {
 }
 
 export const codeSurround = (content, lang = '') => {
+  if (lang == 'md') lang = 'markdown'
   const hasBackticks = /```/.test(content)
   const t = hasBackticks ? '````' : '```'
   return `${t}${lang}\n${content}\n${t}`

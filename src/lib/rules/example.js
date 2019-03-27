@@ -6,7 +6,10 @@ import { read, codeSurround } from '..'
 const LOG = debuglog('doc')
 
 const getExt = (type, source) => {
-  return type || parse(source).ext.replace(/^\./, '')
+  if (type) return type
+  const ext = parse(source).ext.replace(/^\./, '')
+  if (ext == 'md') return 'markdown'
+  return ext
 }
 
 const getPartial = (boundExample) => {

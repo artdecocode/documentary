@@ -19,12 +19,12 @@ It will make _Documentary_ fork a Node.js module using the `child_process.fork` 
  <tr>
   <td>
 
-%EXAMPLE: example/fork/fork.md, markdown%
+%EXAMPLE: example/fork/fork.md%
   </td>
 
   <td>
 
-%EXAMPLE: example/fork/fork.js%
+%EXAMPLE: example/fork/fork%
   </td>
  </tr>
  <tr>
@@ -64,12 +64,12 @@ It works exactly the same as `%FORK%` but will print the output of the process's
  <tr>
   <td>
 
-%EXAMPLE: example/fork/fork-stderr.md, markdown%
+%EXAMPLE: example/fork/fork-stderr.md%
   </td>
 
   <td>
 
-%EXAMPLE: example/fork/fork-stderr.js%
+%EXAMPLE: example/fork/fork-stderr%
   </td>
  </tr>
  <tr>
@@ -83,13 +83,13 @@ It works exactly the same as `%FORK%` but will print the output of the process's
  </tr>
 </table>
 
-%width="15"%
+%~ width="15"%
 
 ### Caching
 
 The output of forks will be cached in the `.documentary/cache` directory. When compiling documentation, _Documentary_ will check for the presence of cache, check the _mtime_ of the module and if it is the same as cached, analyse module's dependencies to see if any of them had changes (updates to package dependencies' versions, changes to source files). When the cache is matched, no forking will take place and the value will be taken from the saved outputs. To explicitly prevent caching on a particular _FORK_ marker, it should be prefixed with `!`: `%!FORK module arg1 arg2%`.
 
-%width="15"%
+%~ width="15"%
 
 ### Import/Exports Support
 

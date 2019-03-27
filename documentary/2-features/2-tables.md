@@ -25,7 +25,7 @@ Result:
 
 Whenever there's a pattern for presenting data in a table, such as that input fields can be mapped to output columns, a table macro can be defined. The example below defines a macro to print a row containing a link, logo and description of a company. It is then used in a table, where only the actual values are entered, relying on _Documentary_ to substitute them in the template.
 
-%EXAMPLE: test/result/bin/macro.md, markdown%
+%EXAMPLE: test/result/bin/macro.md%
 
 %FORK-markdown src/bin/doc test/result/bin/macro.md%
 

@@ -10,7 +10,7 @@ When creating a new `Toc` instance, it will accept the following configuration o
   <d>Start the table of contents from level 2, i.e., excluding the <code>#</code> title.</d>
   <e>For example, the following code:
 
-```md
+```markdown
 # Hello World
 
 ## Table Of Contents

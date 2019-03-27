@@ -8,7 +8,7 @@ To include a compiled declaration into the source code, the following line shoul
 
 For example, an unprocessed _JavaScript_ file can look like this:
 
-%EXAMPLE: example/typedef-raw.js%
+%EXAMPLE: example/typedef-raw%
 
 > Please note that the types marker must be placed before `export default` is done (or just `export`) as there's currently a bug in VS Code.
 

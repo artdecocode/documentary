@@ -160,7 +160,7 @@ To insert a section brake, the following marker is used:
 
 For example:
 
-```md
+```markdown
 %~%
 %~ 15%
 %~ -1%
@@ -328,12 +328,16 @@ The first argument is the path to the example relative to the working directory 
 
 Given the documentation section:
 
-```md
+```markdown
 ## API Method
 
 This method allows to generate documentation.
 
 %EXAMPLE: example/example.js, ../src => documentary, javascript%
+
+> JS paths will be resolved automatically:
+
+%EXAMPLE: example/example, ../src => documentary%
 ```
 
 And the example file `examples/example.js`
@@ -349,12 +353,23 @@ import Catchment from 'catchment'
 
 The program will produce the following output:
 
-````md
+````markdown
 ## API Method
 
 This method allows to generate documentation.
 
 ```javascript
+import documentary from 'documentary'
+import Catchment from 'catchment'
+
+(async () => {
+  await documentary()
+})()
+```
+
+> JS paths will be resolved automatically:
+
+```js
 import documentary from 'documentary'
 import Catchment from 'catchment'
 
@@ -494,19 +509,19 @@ An error has occurred.
  </tr>
 </table>
 
-%width="15"%
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/7.svg?sanitize=true" width="15"></a></p>
 
 ### Caching
 
 The output of forks will be cached in the `.documentary/cache` directory. When compiling documentation, _Documentary_ will check for the presence of cache, check the _mtime_ of the module and if it is the same as cached, analyse module's dependencies to see if any of them had changes (updates to package dependencies' versions, changes to source files). When the cache is matched, no forking will take place and the value will be taken from the saved outputs. To explicitly prevent caching on a particular _FORK_ marker, it should be prefixed with `!`: `%!FORK module arg1 arg2%`.
 
-%width="15"%
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/8.svg?sanitize=true" width="15"></a></p>
 
 ### Import/Exports Support
 
 _Documentary_ is able to fork modules that use `import` and `export` without the developer having to write a proxy file that would otherwise require `@babel/register`. It was made possible with _ÀLaMode_ regex-based transpiler that will update the `import/export` statements on-the-fly. If there are any problems while using this feature, it can be disabled with the `_` symbol: `%_FORK module arg1 arg2%`.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/7.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/9.svg?sanitize=true"></a></p>
 
 ## **Method Titles**
 
@@ -565,7 +580,7 @@ Generated from
 ```
 ````
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/8.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg?sanitize=true"></a></p>
 
 ## **JSX Components**
 
@@ -642,7 +657,7 @@ The result will be rendered HTML:
   </tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/9.svg?sanitize=true" width="15"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true" width="15"></a></p>
 
 ### Async Components
 
@@ -654,7 +669,7 @@ The components can be rendered asynchronously when the component returns a promi
 
 If a component returns just a string without actually using JSX, then it is pasted into the code as is, see the `Source` example.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg?sanitize=true" width="15"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true" width="15"></a></p>
 
 <h3>Web Components</h3>
 
@@ -692,7 +707,7 @@ HELLO WORLD! EXAMPLE !@£
 Open Gif
 </a>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true" width="15"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg?sanitize=true" width="15"></a></p>
 
 ### Built-In Components
 
@@ -775,7 +790,7 @@ ghi
 </th></td>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg?sanitize=true"></a></p>
 
 
 
@@ -783,7 +798,7 @@ ghi
 
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true"></a></p>
 
 ## **Macros**
 
@@ -840,7 +855,7 @@ GitHub: _[Zoroaster](https://github.com/artdecocode/zoroaster)_
 
 > Currently, a macro can only be defined in the same file as its usage. Also, in future, macros will improve my allowing to use named placeholders.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true"></a></p>
 
 ## **File Splitting**
 
@@ -888,7 +903,7 @@ documentary
 └── index.md
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg?sanitize=true"></a></p>
 
 ## **Replacement Rules**
 
@@ -900,7 +915,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | %NPM: package-name%      | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                               |
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/18.svg?sanitize=true"></a></p>
 
 ## **Gif Detail**
 
@@ -936,7 +951,7 @@ The actual html placed in the `README` looks like the one below:
 </details>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/19.svg?sanitize=true"></a></p>
 
 ## **`Type` Definition**
 
@@ -1170,7 +1185,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 </table>
 
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/18.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/20.svg?sanitize=true"></a></p>
 
 ## **`@typedef` Organisation**
 
@@ -1567,16 +1582,6 @@ Property of a `@typedef` definition.</th>
 </tbody>
 </table>
 
-
-
-
-
-
-
-
-
-
-
 ### Migration
 
 A JavaScript file can be scanned for the presence of `@typedef` JSDoc comments, which are then extracted to a `types.xml` file. This can be done with the [`doc src/index.js -e types/index.xml`](#extract-types) command. This is primarily a tool to migrate older software to using `types.xml` files which can be used both for [online documentation](#online-documentation) and [editor documentation](#editor-documentation).
@@ -1633,7 +1638,17 @@ When a description ends with <code>Default &#96;value&#96;</code>, the default v
 </types>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/19.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/21.svg?sanitize=true"></a></p>
+
+
+
+
+
+
+
+
+
+
 
 ## CLI
 
@@ -1664,7 +1679,7 @@ DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/20.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/22.svg?sanitize=true"></a></p>
 
 ## API
 
@@ -1691,7 +1706,7 @@ When creating a new `Toc` instance, it will accept the following configuration o
    <td>Start the table of contents from level 2, i.e., excluding the <code>#</code> title.</td>
    <td>For example, the following code:
 
-```md
+```markdown
 # Hello World
 
 ## Table Of Contents
@@ -1701,14 +1716,14 @@ When creating a new `Toc` instance, it will accept the following configuration o
 
 will be compiled to
 
-```md
+```markdown
 - [Table Of Contents](#table-of-contents)
 - [Introduction](#introduction)
 ```
 
 when `skipLevelOne` is not set (by default), and to
 
-```md
+```markdown
 - [Hello World](#hello-world)
   * [Table Of Contents](#table-of-contents)
   * [Introduction](#introduction)
@@ -1754,7 +1769,7 @@ import { createReadStream } from 'fs'
 - [Copyright](#copyright)
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/21.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
 
 #PRO
 Underlined
@@ -1772,7 +1787,7 @@ Underlined
 
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/22.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
 
 ## Glossary
 
