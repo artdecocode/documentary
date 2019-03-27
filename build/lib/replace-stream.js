@@ -1,8 +1,9 @@
 const Documentary = require('./Documentary');
 
-               function createReplaceStream(toc) {
+               function createReplaceStream(toc, cacheLocation) {
   const s = new Documentary({
     toc,
+    cacheLocation,
   })
 
   return s

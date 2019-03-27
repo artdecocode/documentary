@@ -1,13 +1,13 @@
 #!/usr/bin/env node
+const { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _argv, _generate } = require('./get-args');
 const { watch } = require('fs');
 const { debuglog } = require('util');
 const { lstatSync } = require('fs');
 let alamode = require('alamode'); if (alamode && alamode.__esModule) alamode = alamode.default;
 const { dirname } = require('path');
-const run = require('./run');
-const getArgs = require('./get-args');
 const generateTypedef = require('./run/generate');
 const extractTypedef = require('./run/extract');
+const doc = require('./run/doc');
 const { version } = require('../../package.json');
 const catcher = require('./catcher');
 const { gitPush } = require('../lib');
@@ -18,24 +18,7 @@ alamode({
 })
 
 const LOG = debuglog('doc')
-const DEBUG = /doc/.test(process.env.NODE_DEBUG)
-
-const {
-  source: _source,
-  output: _output,
-  toc: _toc,
-  watch: _watch,
-  push: _push,
-  version: _version,
-  extract: _extract,
-  h1: _h1,
-  reverse: _reverse,
-} = getArgs()
-
-let {
-  generate: _generate,
-  _argv,
-} = getArgs()
+const DEBUG = /doc/.test(process.env['NODE_DEBUG'])
 
 if (_version) {
   console.log(version)
@@ -62,29 +45,18 @@ if (_source) {
   }
 }
 
-const doc = async ({ source, output, justToc = false, h1, reverse }) => {
-  if (!source) {
-    throw new Error('Please specify an input file.')
-  }
-  await run({
-    source, reverse, output, justToc, h1,
-  })
-}
-
 (async () => {
   if (_extract) {
-    await extractTypedef({
+    return await extractTypedef({
       source: _source,
       destination: _extract,
     })
-    return
   }
   if (_generate) {
-    await generateTypedef({
+    return await generateTypedef({
       source: _source,
       destination: _generate,
     })
-    return
   }
   try {
     await doc({

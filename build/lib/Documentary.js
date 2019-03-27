@@ -2,6 +2,8 @@ const { Replaceable, makeMarkers, makeCutRule, makePasteRule } = require('restre
 const { debuglog } = require('util');
 const { join, resolve } = require('path');
 const { homedir } = require('os');
+let write = require('@wrote/write'); if (write && write.__esModule) write = write.default;
+let ensurePath = require('@wrote/ensure-path'); if (ensurePath && ensurePath.__esModule) ensurePath = ensurePath.default;
 const {
   createTocRule, commentRule: stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe,
 } = require('./rules');
@@ -47,7 +49,7 @@ const getComponents = (path) => {
   constructor(options = {}) {
     const {
       toc, locations = {}, types: allTypes = [],
-      cwd = '.',
+      cwd = '.', cacheLocation = './.documentary/cache',
     } = options
     const hm = getComponents(join(homedir(), '.documentary'))
     const cm = getComponents(resolve(cwd, '.documentary'))
@@ -160,9 +162,31 @@ const getComponents = (path) => {
     this.on('types', types => {
       types.forEach(this.addType.bind(this))
     })
+    this._cacheLocation = cacheLocation
   }
   get innerCode() {
     return this._innerCode
+  }
+  getCache(name, location = this._cacheLocation) {
+    try {
+      const c = require(resolve(`${location}/${name}.json`))
+      return c
+    } catch (err) {
+      return null
+    }
+  }
+  async addCache(name, record, location = this._cacheLocation) {
+    const path = resolve(`${location}/${name}.json`)
+    await ensurePath(path)
+    let c
+    try {
+      c = require(path)
+    } catch (err) {
+      c = {}
+    }
+    const cc = { ...c, ...record }
+    const s = JSON.stringify(cc, null, 2)
+    await write(path, s)
   }
   /**
    * Replace a marked inner code with its actual value.
@@ -174,6 +198,9 @@ const getComponents = (path) => {
       return val
     })
     return s
+  }
+  get log() {
+    return LOG
   }
   addType(name) {
     this.types[name] = true

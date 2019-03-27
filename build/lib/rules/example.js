@@ -1,5 +1,6 @@
 const { debuglog } = require('util');
 const { parse } = require('path');
+let resolveDependency = require('resolve-dependency'); if (resolveDependency && resolveDependency.__esModule) resolveDependency = resolveDependency.default;
 const { read, codeSurround } = require('..');
 
 const LOG = debuglog('doc')
@@ -25,7 +26,8 @@ const getPartial = (boundExample) => {
 
        const replacer = async (match, source, from, to, type) => {
   try {
-    let f = await read(source)
+    const { path } = await resolveDependency(source)
+    let f = await read(path)
     f = f.trim()
     if (from && to) {
       f = f
@@ -47,12 +49,12 @@ const getPartial = (boundExample) => {
     if (fre) {
       const [, boundExample] = fre
       ff = getPartial(boundExample)
-      LOG('Example (partial): %s', source)
+      LOG('Example (partial): %s', path)
     } else {
-      LOG('Example: %s', source)
+      LOG('Example: %s', path)
     }
 
-    const lang = getExt(type, source)
+    const lang = getExt(type, path)
     const res = codeSurround(ff.trim(), lang)
     return res
   } catch ({ stack }) {
