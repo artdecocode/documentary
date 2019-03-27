@@ -16,13 +16,15 @@ function loadComponents(components) {
       const replacement = async function (m, pad, Component) {
         try {
           const [{ content, props }] = rexml(key, Component)
+          let pretty = true
           const hyperResult = await instance({
             ...props,
             children: content,
+            disablePretty(){ pretty = false },
           })
           if (typeof hyperResult == 'string')
             return hyperResult
-          const r = render(hyperResult)
+          const r = render(hyperResult, { pretty, lineLength: 100 })
           const f = r.replace(/^/gm, pad)
           return f
         } catch (err) {
