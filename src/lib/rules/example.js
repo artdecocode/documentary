@@ -49,9 +49,9 @@ export const replacer = async (match, source, from, to, type) => {
     if (fre) {
       const [, boundExample] = fre
       ff = getPartial(boundExample)
-      LOG('Example (partial): %s', source)
+      LOG('Example (partial): %s', path)
     } else {
-      LOG('Example: %s', source)
+      LOG('Example: %s', path)
     }
 
     const lang = getExt(type, path)

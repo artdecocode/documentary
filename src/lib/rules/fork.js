@@ -17,6 +17,10 @@ const getMtime = async (entry) => {
 const replacement = async function (match, noCache, old, err, lang, m) {
   const cache = this.getCache('fork')
   const [mod, ...args] = m.split(' ')
+
+  const { path: mmod } = await resolveDependency(mod)
+  this.log(`FORK${err || ''}:`, c(mmod, 'yellow'), ...args.map(a => c(a, 'grey')))
+
   if (noCache) {
     const { stdout, stderr } = await doFork(old, mod, args)
     return getOutput(err, stderr, stdout, lang)
@@ -32,7 +36,6 @@ const replacement = async function (match, noCache, old, err, lang, m) {
     const mtime = await getMtime(entry)
     return `${entry} ${mtime}`
   }))
-  const { path: mmod } = await resolveDependency(mod)
   const mmtime = await getMtime(mmod)
 
   if (cache) {
@@ -54,7 +57,7 @@ const replacement = async function (match, noCache, old, err, lang, m) {
         const changed = added.length || removed.length
         if (!changed) return getOutput(err, record.stderr, record.stdout, lang)
 
-        this.log(`FORK: ${mod} dependencies changed:`)
+        this.log(`FORK: ${mmod} dependencies changed:`)
         added.forEach((mm) => {
           const [entry, meta] = mm.split(' ')
           let mmeta = ''
@@ -72,7 +75,7 @@ const replacement = async function (match, noCache, old, err, lang, m) {
           this.log(c('-', 'red'), entry, mmeta)
         })
       } else {
-        this.log(`FORK: ${mod} source updated since ${new Date(record.mtime).toLocaleString()}.`)
+        this.log(`FORK: ${mmod} source updated since ${new Date(record.mtime).toLocaleString()}.`)
       }
     }
   }
@@ -102,7 +105,6 @@ const forkRule = {
   async replacement(match, service, err, lang, m) {
     const noCache = /!/.test(service)
     const old = /_/.test(service)
-    this.log(`FORK${err || ''}:`, c(m, 'grey'))
     try {
       return await replacement.call(this, match, noCache, old, err, lang, m)
     } catch (e) {
