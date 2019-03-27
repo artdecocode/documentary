@@ -1,8 +1,0 @@
-{
-  "test/fixtures/fork": {
-    "mtime": 1536949526000,
-    "analysis": [],
-    "stdout": "{\n  \"hello\": \"world\"\n}\n",
-    "stderr": ""
-  }
-}
