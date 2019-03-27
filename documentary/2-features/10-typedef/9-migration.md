@@ -4,8 +4,10 @@ A JavaScript file can be scanned for the presence of `@typedef` JSDoc comments, 
 
 For example, types can be extracted from a JavaScript file which contains JSDoc in form of comments:
 
-%EXAMPLE: example/extract.js%
+%EXAMPLE: example/extract%
 
 When a description ends with <code>Default &#96;value&#96;</code>, the default value of a type can also be parsed from there.
 
-%FORK-xml src/bin example/extract.js -e -%
+%FORK-xml src/bin/doc example/extract.js -e -%
+
+%~%

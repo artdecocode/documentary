@@ -33,12 +33,14 @@ It will make _Documentary_ fork a Node.js module using the `child_process.fork` 
  <tr>
  <td colspan="2">
 
-%FORK src/bin example/fork/fork.md%
+%FORK src/bin/doc example/fork/fork.md%
  </td>
  </tr>
 </table>
 
 <!-- %FORK example example/fork% -->
+
+%width="15"%
 
 ### Stderr
 
@@ -76,9 +78,21 @@ It works exactly the same as `%FORK%` but will print the output of the process's
  <tr>
  <td colspan="2">
 
-%FORK src/bin example/fork/fork-stderr.md%
+%FORK src/bin/doc example/fork/fork-stderr.md%
  </td>
  </tr>
 </table>
+
+%width="15"%
+
+### Caching
+
+The output of forks will be cached in the `.documentary/cache` directory. When compiling documentation, _Documentary_ will check for the presence of cache, check the _mtime_ of the module and if it is the same as cached, analyse module's dependencies to see if any of them had changes (updates to package dependencies' versions, changes to source files). When the cache is matched, no forking will take place and the value will be taken from the saved outputs. To explicitly prevent caching on a particular _FORK_ marker, it should be prefixed with `!`: `%!FORK module arg1 arg2%`.
+
+%width="15"%
+
+### Import/Exports Support
+
+_Documentary_ is able to fork modules that use `import` and `export` without the developer having to write a proxy file that would otherwise require `@babel/register`. It was made possible with _ÀLaMode_ regex-based transpiler that will update the `import/export` statements on-the-fly. If there are any problems while using this feature, it can be disabled with the `_` symbol: `%_FORK module arg1 arg2%`.
 
 %~%

@@ -20,11 +20,11 @@ When creating a new `Toc` instance, it will accept the following configuration o
 
 will be compiled to
 
-%FORK-md example example/toc2.js -s%
+%FORK-md example/toc2 -s%
 
 when `skipLevelOne` is not set (by default), and to
 
-%FORK-md example example/toc2.js%
+%FORK-md example/toc2%
 
 when `skipLevelOne` is set to `false`.
   </e>
@@ -41,6 +41,8 @@ when `skipLevelOne` is set to `false`.
 
 Create a new instance of a `Toc` stream.
 
-%EXAMPLE: example/toc.js, ../src => documentary, javascript%
+%EXAMPLE: example/toc, ../src => documentary%
 
-%FORK-fs example example/toc.js%
+%FORK-fs example/toc%
+
+%~%

@@ -1,3 +1,5 @@
+
+
 ## CLI
 
 The program is used from the CLI (or `package.json` script).
