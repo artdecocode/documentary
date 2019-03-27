@@ -14,11 +14,17 @@ const getMtime = async (entry) => {
   return mtime.getTime()
 }
 
-const replacement = async function (match, err, lang, m) {
+const replacement = async function (match, noCache, old, err, lang, m) {
   const cache = this.getCache('fork')
   const [mod, ...args] = m.split(' ')
+  if (noCache) {
+    const { stdout, stderr } = await doFork(old, mod, args)
+    return getOutput(err, stderr, stdout, lang)
+  }
+
   const sa = await staticAnalysis(mod, {
     shallow: true,
+    soft: true,
   })
   const msa = await Promise.all(sa.map(async ({ entry, name, internal, version }) => {
     if (name) return `${name} ${version}`
@@ -70,15 +76,7 @@ const replacement = async function (match, err, lang, m) {
       }
     }
   }
-  const documentaryFork = resolve(__dirname, '../../fork')
-  const { promise } = fork(documentaryFork, args, {
-    execArgv: [],
-    stdio: 'pipe',
-    env: {
-      DOCUMENTARY_REQUIRE: resolve(mod),
-    },
-  })
-  const { stdout, stderr } = await promise
+  const { stdout, stderr } = await doFork(old, mod, args)
 
   const cacheToWrite = makeCache(m, mmtime, msa, stdout, stderr)
   await this.addCache('fork', cacheToWrite)
@@ -86,12 +84,27 @@ const replacement = async function (match, err, lang, m) {
   return getOutput(err, stderr, stdout, lang)
 }
 
+const doFork = async (old, mod, args) => {
+  const documentaryFork = resolve(__dirname, '../../fork')
+  const { promise } = fork(old ? mod : documentaryFork, args, {
+    execArgv: [],
+    stdio: 'pipe',
+    ...(old ? {} : {
+      env: { DOCUMENTARY_REQUIRE: resolve(mod) },
+    }),
+  })
+  const { stdout, stderr } = await promise
+  return { stdout, stderr }
+}
+
 const forkRule = {
-  re: /%FORK(ERR)?(?:-(\w+))? (.+)%/mg,
-  async replacement(match, err, lang, m) {
+  re: /%([!_]+)?FORK(ERR)?(?:-(\w+))? (.+)%/mg,
+  async replacement(match, service, err, lang, m) {
+    const noCache = /!/.test(service)
+    const old = /_/.test(service)
     this.log(`FORK${err || ''}:`, c(m, 'grey'))
     try {
-      return await replacement.call(this, match, err, lang, m)
+      return await replacement.call(this, match, noCache, old, err, lang, m)
     } catch (e) {
       this.log(c(`FORK ${m} error`, 'red'))
       this.log(e)

@@ -22,6 +22,7 @@ const ts = [
       const replaceable = new Replaceable(rule)
       replaceable.getCache = () => {}
       replaceable.addCache = () => {}
+      replaceable.log = () => {}
       return replaceable
     },
   })

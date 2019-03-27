@@ -53,7 +53,7 @@
       "args": [
         "documentary",
       ],
-      "cwd": "${workspaceFolder}/../../depack/form",
+      "cwd": "${workspaceFolder}/../../depack/depack",
       // "cwd": "${workspaceFolder}/../../idiocc/core",
       "console": "integratedTerminal",
       "skipFiles": [

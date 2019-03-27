@@ -88,7 +88,7 @@
     "eslint-config-artdeco": "1.0.1",
     "temp-context": "2.1.0",
     "yarn-s": "1.1.0",
-    "zoroaster": "3.11.0"
+    "zoroaster": "3.11.1"
   },
   "dependencies": {
     "@depack/render": "1.1.4",
@@ -107,7 +107,7 @@
     "restream": "3.5.0",
     "rexml": "1.3.0",
     "spawncommand": "2.1.1",
-    "static-analysis": "1.2.0",
+    "static-analysis": "1.3.0",
     "typal": "1.2.1",
     "which-stream": "1.0.1"
   }
