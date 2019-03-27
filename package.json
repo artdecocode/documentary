@@ -88,7 +88,7 @@
     "eslint-config-artdeco": "1.0.1",
     "temp-context": "2.1.0",
     "yarn-s": "1.1.0",
-    "zoroaster": "3.10.0"
+    "zoroaster": "3.11.0"
   },
   "dependencies": {
     "@depack/render": "1.1.4",
