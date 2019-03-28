@@ -1,5 +1,10 @@
 ## 28 March 2019
 
+### [1.23.1](https://github.com/artdecocode/documentary/compare/v1.23.0...v1.23.1)
+
+- [feature] Display filenames by switching _Pedantry_ to the object mode.
+- [fix] Upgrade static-analysis to fix the recursion bug.
+
 ### [1.23.0](https://github.com/artdecocode/documentary/compare/v1.22.0...v1.23.0)
 
 - [feature] Fork output caching; native ÀLaMode for forked modules; handle `\r` in forks.
