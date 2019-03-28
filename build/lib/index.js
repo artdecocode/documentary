@@ -4,6 +4,7 @@ const { collect } = require('catchment');
 let Pedantry = require('pedantry'); if (Pedantry && Pedantry.__esModule) Pedantry = Pedantry.default;
 const tableRule = require('./rules/table');
 const titleRule = require('./rules/method-title');
+const { PassThrough } = require('stream');;
 
        const getLink = (title, prefix = '') => {
   const l = title
@@ -35,17 +36,31 @@ const titleRule = require('./rules/method-title');
  * Create an input stream for all data.
  * @param {string} path Path to the directory or file.
  * @param {boolean} [reverse=false] If directory, read in reverse order.
+ * @param {boolean} [object=false] Read in the object mode to push filenames.
  */
-       const getStream = (path, reverse) => {
+       const getStream = (path, reverse, object = true) => {
   const ls = lstatSync(path)
   let stream
   if (ls.isDirectory()) {
     stream = new Pedantry(path, {
       reverse,
       addBlankLine: true,
+      includeFilename: object,
     })
   } else if (ls.isFile()) {
-    stream = createReadStream(path)
+    stream = new PassThrough({
+      objectMode: object,
+    })
+    const rs = createReadStream(path)
+    rs.on('data', (data) => {
+      if (object) {
+        stream.push({ file: path, data: `${data}` })
+      } else {
+        stream.push(data)
+      }
+    }).on('close', () => {
+      stream.end()
+    })
   }
   return stream
 }

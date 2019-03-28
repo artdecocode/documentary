@@ -1,8 +1,9 @@
 const { Replaceable, makeMarkers, makeCutRule, makePasteRule } = require('restream');
-const { debuglog } = require('util');
+const { debuglog, isBuffer } = require('util');
 const { join, resolve } = require('path');
 const { homedir } = require('os');
 let write = require('@wrote/write'); if (write && write.__esModule) write = write.default;
+const { b } = require('erte');
 let ensurePath = require('@wrote/ensure-path'); if (ensurePath && ensurePath.__esModule) ensurePath = ensurePath.default;
 const { commentRule: stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe } = require('./rules');
 const tableRule = require('./rules/table'); const { tableRe } = tableRule;
@@ -53,7 +54,7 @@ const getComponents = (path) => {
     const {
       locations = {}, types: allTypes = [],
       cwd = '.', cacheLocation = join(cwd, '.documentary/cache'), noCache,
-      disableDtoc,
+      disableDtoc, objectMode = true,
     } = options
     const hm = getComponents(join(homedir(), '.documentary'))
     const cm = getComponents(resolve(cwd, '.documentary'))
@@ -164,7 +165,7 @@ const getComponents = (path) => {
       // those found inside of code blocks
       insertTable,
       insertMethodTitle,
-    ])
+    ], { objectMode })
 
     this._types = {}
 
@@ -249,6 +250,16 @@ const getComponents = (path) => {
   }
   get types() {
     return this._types
+  }
+  async _transform(chunk, _, next) {
+    if (isBuffer(chunk) || typeof chunk == 'string') {
+      await super._transform(chunk, _, next)
+    } else if (typeof chunk == 'object') {
+      chunk.file != 'separator' && LOG(b(chunk.file, 'cyan'))
+      await super._transform(chunk.data, _, next)
+    } else {
+      throw new Error('what are you')
+    }
   }
 }
 

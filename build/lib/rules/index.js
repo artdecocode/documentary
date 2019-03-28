@@ -1,7 +1,3 @@
-const { debuglog } = require('util');
-
-const LOG = debuglog('doc')
-
        const createTocRule = (toc) => {
   return {
     re: /^%TOC%$/gm,
@@ -18,7 +14,7 @@ const LOG = debuglog('doc')
        const commentRule = {
   re: commentRe,
   replacement() {
-    LOG('stripping comment')
+    this.log && this.log('stripping comment')
     return ''
   },
 }
