@@ -1,3 +1,11 @@
+## 28 March 2019
+
+### [1.23.0](https://github.com/artdecocode/documentary/compare/v1.22.0...v1.23.0)
+
+- [feature] Fork output caching; native ÀLaMode for forked modules; handle `\r` in forks.
+- [refactor] Update the TOC logic to get results from _Documentary_ stream, rather than a parallel stream.
+- [fix] Correct typedef indentation for classes.
+
 ## 11 March 2019
 
 ### 1.22.0
