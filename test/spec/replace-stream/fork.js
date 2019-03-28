@@ -5,27 +5,31 @@ import createReplaceStream from '../../../src/lib/replace-stream'
 /** @type {Object.<string, (c: Context )>} */
 const T = {
   context: [Context, MarkdownSnapshot],
-  async 'forks a node.js process'({ createReadable, FORK_PATH }) {
+  async 'forks a node.js process'({ createReadable, FORK_PATH, Documentary }) {
     const s = `
 Below is the output of the program:
 
 %FORK ${FORK_PATH}%
 `
     const rs = createReadable(s)
-    const stream = createReplaceStream()
+    const stream = new Documentary({ noCache: true })
     rs.pipe(stream)
     return stream
   },
-  async 'forks a node.js process with language'({ createReadable, FORK_PATH }) {
+  async 'forks a node.js process with language'({ createReadable, FORK_PATH, Documentary }) {
     const s = `
 Below is the output of the program:
 
 %FORK-json ${FORK_PATH}%
 `
     const rs = createReadable(s)
-    const stream = createReplaceStream()
-    rs.pipe(stream)
-    return stream
+    const stream = new Documentary({ noCache: true })
+    return rs.pipe(stream)
+  },
+  'removes \\r from the output'({ createReadable, Documentary }) {
+    const rs = createReadable('%FORK test/fixture/indicatrix%')
+    const stream = new Documentary({ noCache: true })
+    return rs.pipe(stream)
   },
 }
 

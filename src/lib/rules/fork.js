@@ -125,10 +125,19 @@ const forkRule = {
   },
 }
 
+const replaceR = (s) => {
+  const st = s.split('\n').map(l => {
+    const r = l.split('\r')
+    const last = r[r.length - 1]
+    return last
+  }).join('\n')
+  return st
+}
+
 const getOutput = (err, stderr, stdout, lang) => {
   const res = err ? stderr : stdout
   const r = res.trim().replace(/\033\[.*?m/g, '')
-  return codeSurround(r, lang)
+  return codeSurround(replaceR(r), lang)
 }
 
 /**

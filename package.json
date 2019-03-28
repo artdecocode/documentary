@@ -86,6 +86,7 @@
   "homepage": "https://github.com/artdecocode/documentary#readme",
   "devDependencies": {
     "eslint-config-artdeco": "1.0.1",
+    "indicatrix": "1.0.0",
     "temp-context": "2.1.1",
     "yarn-s": "1.1.0",
     "zoroaster": "3.11.1"
