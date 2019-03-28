@@ -15,7 +15,7 @@ import { getTypedefs } from '../lib/Typedefs'
  */
 export default async function run(options) {
   const {
-    source, output = '-', reverse, justToc, h1,
+    source, output = '-', reverse, justToc, h1, noCache,
   } = options
   const stream = getStream(source, reverse)
   // todo: figure out why can't create a pass-through, pipe into it and pause it
@@ -30,7 +30,7 @@ export default async function run(options) {
   }
 
   const stream3 = getStream(source, reverse)
-  const doc = new Documentary({ toc, locations, types })
+  const doc = new Documentary({ toc, locations, types, noCache })
   stream3.pipe(doc)
   await whichStream({
     readable: doc,

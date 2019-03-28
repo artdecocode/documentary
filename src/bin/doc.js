@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _argv, _generate } from './get-args'
+import { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _argv, _generate, _noCache } from './get-args'
 import { watch } from 'fs'
 import { debuglog } from 'util'
 import { lstatSync } from 'fs'
@@ -58,11 +58,12 @@ if (_source) {
       destination: _generate,
     })
   }
+  const docOptions = {
+    source: _source, output: _output, justToc: _toc, h1: _h1,
+    reverse: _reverse, noCache: _noCache,
+  }
   try {
-    await doc({
-      source: _source, output: _output, justToc: _toc, h1: _h1,
-      reverse: _reverse,
-    })
+    await doc(docOptions)
   } catch ({ stack, message, code }) {
     DEBUG ? LOG(stack) : console.log(message)
   }
@@ -73,10 +74,7 @@ if (_source) {
     watch(_source, { recursive: true }, async () => {
       if (!debounce) {
         debounce = true
-        await doc({
-          source: _source, output: _output, justToc: _toc, h1: _h1,
-          reverse: _reverse,
-        })
+        await doc(docOptions)
         if (_push) {
           console.log('Pushing documentation changes.')
           await gitPush(_source, _output, _push)

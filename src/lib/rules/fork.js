@@ -113,7 +113,7 @@ const doFork = async (old, mod, args) => {
 const forkRule = {
   re: /%([!_]+)?FORK(ERR)?(?:-(\w+))? (.+)%/mg,
   async replacement(match, service, err, lang, m) {
-    const noCache = /!/.test(service)
+    const noCache = /!/.test(service) || this.noCache
     const old = /_/.test(service)
     try {
       return await replacement.call(this, match, noCache, old, err, lang, m)

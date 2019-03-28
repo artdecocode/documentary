@@ -49,7 +49,7 @@ export default class Documentary extends Replaceable {
   constructor(options = {}) {
     const {
       toc, locations = {}, types: allTypes = [],
-      cwd = '.', cacheLocation = './.documentary/cache',
+      cwd = '.', cacheLocation = './.documentary/cache', noCache,
     } = options
     const hm = getComponents(join(homedir(), '.documentary'))
     const cm = getComponents(resolve(cwd, '.documentary'))
@@ -163,6 +163,8 @@ export default class Documentary extends Replaceable {
       types.forEach(this.addType.bind(this))
     })
     this._cacheLocation = cacheLocation
+    // disables caching in forks
+    this.noCache = noCache
   }
   get innerCode() {
     return this._innerCode
