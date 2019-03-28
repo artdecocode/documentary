@@ -24,13 +24,6 @@ export default async function run(options) {
 
   const { types, locations } = await getTypedefs(stream)
 
-  // const stream2 = getStream(source, reverse)
-  // const toc = await getToc(stream2, h1, locations)
-  // if (justToc) {
-  //   console.log(toc)
-  //   process.exit()
-  // }
-
   const stream3 = getStream(source, reverse)
   const doc = new Documentary({ locations, types, noCache })
   stream3.pipe(doc)
@@ -39,7 +32,6 @@ export default async function run(options) {
   const c = new Catchment()
   await whichStream({
     readable: doc,
-    // destination: c,
     writable: c,
   })
   const toc = await tocPromise
@@ -47,6 +39,10 @@ export default async function run(options) {
     .replace('%%_DOCUMENTARY_TOC_CHANGE_LATER_%%', toc)
     .replace(/%%DTOC_(.+?)_(\d+)%%/g, '')
 
+  if (justToc) {
+    console.log(toc)
+    process.exit()
+  }
   if (output != '-') {
     console.log('Saved documentation to %s', output)
     await write(output, result)

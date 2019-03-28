@@ -1683,7 +1683,9 @@ DOC 80734: could not parse the table
 
 ## API
 
-The programmatic use of _Documentary_ is intended for developers who want to use this software in their projects.### `Toc` Stream
+The programmatic use of _Documentary_ is intended for developers who want to use this software in their projects.
+
+### `Toc` Stream
 
 `Toc` is a transform stream which can generate a table of contents for incoming markdown data. For every title that the transform sees, it will push the appropriate level of the table of contents.
 
