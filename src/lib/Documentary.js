@@ -42,12 +42,16 @@ const getComponents = (path) => {
 export default class Documentary extends Replaceable {
   /**
    * @param {DocumentaryOptions} options Options for the Documentary constructor.
- * @param {string} [options.toc] The table of contents to replace the `%TOC%` marker with.
+   * @param {*} [options.locations]
+   * @param {Array} [options.types]
+   * @param {string} [options.cwd="."] The `cwd` that is used to resolve `.documentary` folder. Default `.`.
+   * @param {string} [options.cacheLocation="${cwd}/.documentary/cache"] The folder where the cache is kept. Default `${cwd}/.documentary/cache`.
+   * @param {boolean} [options.noCache=false] Disable caching for forks. Default `false`.
    */
   constructor(options = {}) {
     const {
       locations = {}, types: allTypes = [],
-      cwd = '.', cacheLocation = './.documentary/cache', noCache,
+      cwd = '.', cacheLocation = join(cwd, '.documentary/cache'), noCache,
     } = options
     const hm = getComponents(join(homedir(), '.documentary'))
     const cm = getComponents(resolve(cwd, '.documentary'))
@@ -234,5 +238,9 @@ export default class Documentary extends Replaceable {
 /* documentary types/Documentary.xml */
 /**
  * @typedef {Object} DocumentaryOptions Options for the Documentary constructor.
- * @prop {string} [toc] The table of contents to replace the `%TOC%` marker with.
+ * @prop {*} [locations]
+ * @prop {Array} [types]
+ * @prop {string} [cwd="."] The `cwd` that is used to resolve `.documentary` folder. Default `.`.
+ * @prop {string} [cacheLocation="${cwd}/.documentary/cache"] The folder where the cache is kept. Default `${cwd}/.documentary/cache`.
+ * @prop {boolean} [noCache=false] Disable caching for forks. Default `false`.
  */
