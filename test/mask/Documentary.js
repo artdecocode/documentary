@@ -5,6 +5,7 @@ import { dirname } from 'path'
 import alamode from 'alamode'
 import Documentary from '../../src/lib/Documentary'
 import Typedefs from '../../src/lib/Typedefs'
+import { getStream } from '../../src/lib'
 
 const preact = dirname(require.resolve('preact/package.json'))
 alamode({
@@ -30,7 +31,7 @@ export const components2 = makeTestSuite('test/result/Documentary-components.md'
   },
 })
 
-const typedefs = makeTestSuite('test/result/Documentary-types.md', {
+export const typedefs = makeTestSuite('test/result/Documentary-types.md', {
   async getReadable(input) {
     const t = new Typedefs()
     t.end(input)
@@ -42,5 +43,12 @@ const typedefs = makeTestSuite('test/result/Documentary-types.md', {
   },
 })
 
+export const fixtures = makeTestSuite('test/result/Documentary-fixtures', {
+  async getReadable(input) {
+    const s = getStream(input)
+    const doc = new Documentary({ disableDtoc: true, noCache: true })
+    return s.pipe(doc)
+  },
+})
+
 export default ts
-export { typedefs }
