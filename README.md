@@ -93,7 +93,7 @@ This section has a quick look at the best features available in _Documentary_ an
   * [`TocConfig` Type](#tocconfig-type)
     * [<code>skipLevelOne</code>](#skiplevelone)
   * [`constructor(config?: TocConfig): Toc`](#constructorconfig-skiplevelone-boolean--true-toc)
-- [#PRO<br/>Underlined<br/>`Titles`](#prounderlinedtitles)
+- [♫ PRO<br/>♪ Underlined<br/>♯ `Titles`](#-pro-underlined-titles)
 - [Glossary](#glossary)
   * [Online Documentation](#online-documentation)
   * [Editor Documentation](#editor-documentation)
@@ -131,7 +131,7 @@ Table of contents are useful for navigation in a README document. When a `%TOC%`
 
 By default, top level `h1` headers written with `#` are ignored, but they can be added by passing `-h1` [CLI argument](#h1-in-toc).
 
-```md
+```markdown
 - [Table Of Contents](#table-of-contents)
 - [CLI](#cli)
   * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
@@ -405,7 +405,7 @@ await documentary()
 
 When placing examples, it is important to show the output that they produce. This can be achieved using the `FORK` marker.
 
-```md
+```m
 %FORK(-lang)? module ...args%
 ```
 
@@ -464,7 +464,7 @@ HELLO world
 
 By default, the `FORK` marker will print the `stdout` output. To print the `stderr` output, there is the `FORKERR` marker.
 
-```md
+```m
 %FORKERR(-lang)? module ...args%
 ```
 
@@ -1779,17 +1779,17 @@ import { createReadStream } from 'fs'
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
 
-#PRO
-Underlined
-`Titles`
+♫ PRO
+♪ Underlined
+♯ `Titles`
 ---
 
 Titles written as blocks and underlined with any number of either `===` (for H1) and `---` (for H2), will be also displayed in the table of contents. However, the actual title will appear on a single line.
 
-```md
-#PRO
-Underlined
-`Titles`
+```markdown
+♫PRO
+♪Underlined
+♯ `Titles`
 ---
 ```
 

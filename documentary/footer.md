@@ -1,16 +1,16 @@
 
 
-#PRO
-Underlined
-`Titles`
+♫ PRO
+♪ Underlined
+♯ `Titles`
 ---
 
 Titles written as blocks and underlined with any number of either `===` (for H1) and `---` (for H2), will be also displayed in the table of contents. However, the actual title will appear on a single line.
 
-```md
-#PRO
-Underlined
-`Titles`
+```markdown
+♫PRO
+♪Underlined
+♯ `Titles`
 ---
 ```
 

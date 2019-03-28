@@ -8,7 +8,7 @@ By default, top level `h1` headers written with `#` are ignored, but they can be
 doc -t input-source.md [-r] [-o output.md]
 ``` -->
 
-```md
+```markdown
 - [Table Of Contents](#table-of-contents)
 - [CLI](#cli)
   * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
