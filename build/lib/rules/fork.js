@@ -82,7 +82,7 @@ const replacement = async function (match, noCache, old, err, lang, m) {
         })
       } else {
         printed = true
-        this.log(s, `:: ${mmod} source updated since ${new Date(record.mtime).toLocaleString()}.`)
+        this.log(s, `:: updated since ${new Date(record.mtime).toLocaleString()}.`)
       }
     }
   }
@@ -125,10 +125,24 @@ const forkRule = {
   },
 }
 
+       const replaceR = (s) => {
+  const st = s.split('\n').map(l => {
+    const r = l.split('\r')
+    const t = r.reduce((acc, current, i) => {
+      if (!i) return acc
+      const { length } = current
+      const after = acc.slice(length)
+      return `${current}${after}`
+    }, r[0])
+    return t
+  }).join('\n')
+  return st
+}
+
 const getOutput = (err, stderr, stdout, lang) => {
   const res = err ? stderr : stdout
   const r = res.trim().replace(/\033\[.*?m/g, '')
-  return codeSurround(r, lang)
+  return codeSurround(replaceR(r), lang)
 }
 
 /**
@@ -146,3 +160,5 @@ const makeCache = (m, mtime, analysis, stdout, stderr) => {
 }
 
 module.exports=forkRule
+
+module.exports.replaceR = replaceR
