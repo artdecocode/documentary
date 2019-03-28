@@ -1,19 +1,8 @@
 import { Transform } from 'stream'
 import { collect } from 'catchment'
 import { getLink } from '.'
-import { methodTitleRe, replaceTitle } from './rules/method-title'
-import {
-  codeRe, commentRule as stripComments, innerCodeRe, linkTitleRe,
-} from './rules'
-import tableRule from './rules/table'
-import tableMacroRule from './rules/macro'
-import {
-  Replaceable, makeCutRule, makePasteRule, makeMarkers,
-} from 'restream'
-import { tableRe } from './rules/table'
-import typeRule from './rules/type'
-import { typedefMdRe } from './rules/typedef-md'
-import { macroRule, useMacroRule } from './rules/macros'
+import { codeRe, innerCodeRe } from './rules'
+import { Replaceable, makeCutRule, makeMarkers } from 'restream'
 
 const re = /(?:^|\n) *(#+) +(.+)/g
 
@@ -26,30 +15,17 @@ class ChunkReplaceable extends Replaceable {
    * @param {boolean} skipLevelOne
    * @param {Object.<string,Type[]>} locations
    */
-  constructor(skipLevelOne, locations) {
+  constructor(skipLevelOne, locations, getDtoc) {
     const {
-      methodTitle, code, innerCode, table,
+      code, innerCode,
     } = makeMarkers({
-      methodTitle: methodTitleRe,
       code: codeRe,
       innerCode: innerCodeRe,
-      table: tableRe,
-      linkTitle: linkTitleRe,
     })
 
-    const [
-      cutCode, cutMethodTitle,
-      cutInnerCode, cutTable,
-    ] =
-      [code, methodTitle, innerCode, table].map((marker) => {
+    const [cutCode, cutInnerCode] =
+      [code, innerCode].map((marker) => {
         const rule = makeCutRule(marker)
-        return rule
-      })
-    const [
-      insertMethodTitle, insertTable,
-    ] =
-      [methodTitle, table].map((marker) => {
-        const rule = makePasteRule(marker)
         return rule
       })
 
@@ -63,42 +39,7 @@ class ChunkReplaceable extends Replaceable {
 
     const rules = [
       cutInnerCode, // this ensures no link titles are detected inside of inner code
-
-      // make sure those are not cut with code
-      cutTable,
-      cutMethodTitle,
-
-      // never pasted back
-      cutCode,
-      stripComments,
-
-      macroRule,
-      useMacroRule,
-
-      // types will add link titles
-      {
-        re: typedefMdRe,
-        replacement(match, location, typeName) {
-          const types = locations[location]
-          if (!types) {
-            return ''
-          }
-          const t = typeName ? types.filter(a => a.name == typeName) : types
-          const tt = t.filter(type => !type.noToc)
-          const res = tt.map((type) => {
-            return `[\`${type.name}\`](t-type)` // let toc-titles replacement do the job later
-          }).join('\n')
-          return res
-        },
-      },
-      typeRule,
-
-      // paste those cut out earlier.
-      insertMethodTitle,
-      insertTable,
-
-      tableMacroRule,
-      tableRule,
+      cutCode, // never pasted back
       {
         re: underline,
         replacement(match, u, position, input) {
@@ -148,17 +89,18 @@ class ChunkReplaceable extends Replaceable {
         },
       },
       {
-        re: methodTitleRe,
-        replacement(match, hash, isAsync, name, returnType, jsonArgs, position) {
+        re: /%%DTOC_MT_(\d+)%%/g,
+        replacement(match, int, position) {
+          const {
+            hash, isAsync, name, returnType, args, replacedTitle,
+          } = getDtoc('MT', int)
           try {
             const { length: level } = hash
 
             if (this.skipLine(level)) return match
-            const json = jsonArgs.trim() ? jsonArgs : '[]'
             const bb = [isAsync, name]
               .filter(a => a)
               .join(' ').trim()
-            const args = JSON.parse(json)
             const s = args.map(([argName, type, shortType]) => {
               let tt
               if (shortType) tt = shortType
@@ -166,7 +108,7 @@ class ChunkReplaceable extends Replaceable {
               else tt = 'object'
               return `${argName}: ${tt}`
             })
-            const fullTitle = replaceTitle(hash, isAsync, name, returnType, jsonArgs)
+            const fullTitle = replacedTitle
               .replace(/^#+ +/, '')
             const link = getLink(fullTitle)
 
@@ -185,13 +127,12 @@ class ChunkReplaceable extends Replaceable {
         },
       },
       {
-        re: linkTitleRe,
-        replacement(match, title, l, prefix, position) {
-          const t = getTitle(title)
-          const link = getLink(t, prefix)
+        re: /%%DTOC_LT_(\d+)%%/g,
+        replacement(match, int, position) {
+          const { title, link, level } = getDtoc('LT', int)
           this.emit('title', {
-            title: t,
-            ...(l == 't' ? { parentLevel: true } : { level: l.length }),
+            title,
+            ...(level == 't' ? { parentLevel: true } : { level: level.length }),
             link,
             position,
           })
@@ -219,6 +160,7 @@ export default class Toc extends Transform {
     const {
       skipLevelOne = true,
       locations = {},
+      documentary,
     } = config
 
     super()
@@ -226,6 +168,7 @@ export default class Toc extends Transform {
     this.locations = locations
     this.level = 0
     this.titles = []
+    this.getDtoc = documentary ? documentary.getDtoc.bind(documentary) : () => {}
   }
 
   addTitle({ title, link, position, level, parentLevel }) {
@@ -249,7 +192,7 @@ export default class Toc extends Transform {
   }
 
   async _transform(buffer, enc, next) {
-    const cr = new ChunkReplaceable(this.skipLevelOne, this.locations)
+    const cr = new ChunkReplaceable(this.skipLevelOne, this.locations, this.getDtoc)
     cr
       .on('title', t => this.addTitle(t))
       .end(buffer)
@@ -291,7 +234,7 @@ export default class Toc extends Transform {
  * @returns {string} The table of contents.
  */
 export const getToc = async (stream, h1, locations) => {
-  const toc = new Toc({ skipLevelOne: !h1, locations })
+  const toc = new Toc({ skipLevelOne: !h1, locations, documentary: stream })
   stream.pipe(toc)
   const res = await collect(toc)
   return res.trimRight()

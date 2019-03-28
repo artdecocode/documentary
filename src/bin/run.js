@@ -1,4 +1,6 @@
 import whichStream from 'which-stream'
+import Catchment from 'catchment'
+import write from '@wrote/write'
 import { getToc } from '../lib/Toc'
 import Documentary from '../lib/Documentary'
 import { getStream } from '../lib'
@@ -22,22 +24,34 @@ export default async function run(options) {
 
   const { types, locations } = await getTypedefs(stream)
 
-  const stream2 = getStream(source, reverse)
-  const toc = await getToc(stream2, h1, locations)
-  if (justToc) {
-    console.log(toc)
-    process.exit()
-  }
+  // const stream2 = getStream(source, reverse)
+  // const toc = await getToc(stream2, h1, locations)
+  // if (justToc) {
+  //   console.log(toc)
+  //   process.exit()
+  // }
 
   const stream3 = getStream(source, reverse)
-  const doc = new Documentary({ toc, locations, types, noCache })
+  const doc = new Documentary({ locations, types, noCache })
   stream3.pipe(doc)
+  const tocPromise = getToc(doc, h1, locations)
+
+  const c = new Catchment()
   await whichStream({
     readable: doc,
-    destination: output,
+    // destination: c,
+    writable: c,
   })
+  const toc = await tocPromise
+  const result = (await c.promise)
+    .replace('%%_DOCUMENTARY_TOC_CHANGE_LATER_%%', toc)
+    .replace(/%%DTOC_(.+?)_(\d+)%%/g, '')
+
   if (output != '-') {
     console.log('Saved documentation to %s', output)
+    await write(output, result)
+  } else {
+    console.log(result)
   }
 }
 

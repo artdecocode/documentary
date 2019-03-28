@@ -4,9 +4,7 @@ import { join, resolve } from 'path'
 import { homedir } from 'os'
 import write from '@wrote/write'
 import ensurePath from '@wrote/ensure-path'
-import {
-  createTocRule, commentRule as stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe,
-} from './rules'
+import { commentRule as stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe } from './rules'
 import tableRule, { tableRe } from './rules/table'
 import methodTitleRule, { methodTitleRe } from './rules/method-title'
 import treeRule from './rules/tree'
@@ -48,7 +46,7 @@ export default class Documentary extends Replaceable {
    */
   constructor(options = {}) {
     const {
-      toc, locations = {}, types: allTypes = [],
+      locations = {}, types: allTypes = [],
       cwd = '.', cacheLocation = './.documentary/cache', noCache,
     } = options
     const hm = getComponents(join(homedir(), '.documentary'))
@@ -56,7 +54,7 @@ export default class Documentary extends Replaceable {
     const dm = loadComponents(Components)
     const components = [...cm, ...hm, ...dm]
     // console.log('loaded components %s', components)
-    const tocRule = createTocRule(toc)
+    // const tocRule = createTocRule(toc)
 
     const {
       table, methodTitle, code, innerCode, linkTitle,
@@ -99,7 +97,11 @@ export default class Documentary extends Replaceable {
         cutCode, // cut code again after inserting example
       ],
       forkRule,
-      tocRule,
+      // tocRule,
+      {
+        re: /^%TOC%$/gm,
+        replacement: '%%_DOCUMENTARY_TOC_CHANGE_LATER_%%',
+      },
       gifRule,
       typeRule,
       sectionBrakeRule,
@@ -131,10 +133,13 @@ export default class Documentary extends Replaceable {
 
       {
         re: linkTitleRe,
-        replacement(match, title, l, prefix) {
+        replacement(match, title, level, prefix) {
           const t = this.replaceInnerCode(title)
           const link = getLink(t, prefix)
-          return `<a name="${link}">${t}</a>`
+          const dtoc = this.addDtoc('LT', {
+            title: t, link, level,
+          })
+          return `${dtoc}<a name="${link}">${t}</a>`
         },
       },
       {
@@ -163,8 +168,22 @@ export default class Documentary extends Replaceable {
       types.forEach(this.addType.bind(this))
     })
     this._cacheLocation = cacheLocation
+    this._dtoc = {}
     // disables caching in forks
     this.noCache = noCache
+  }
+  /**
+   * Adds some information for generating TOC later.
+   * @param {string} name
+   */
+  addDtoc(name, value) {
+    if (!this._dtoc[name]) this._dtoc[name] = []
+    const arr = this._dtoc[name]
+    arr.push(value)
+    return `%%DTOC_${name}_${arr.length - 1}%%`
+  }
+  getDtoc(name, int) {
+    return this._dtoc[name][int]
   }
   get innerCode() {
     return this._innerCode

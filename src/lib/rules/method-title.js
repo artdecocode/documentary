@@ -2,16 +2,12 @@ import { debuglog } from 'util'
 
 const LOG = debuglog('doc')
 
-export const replaceTitle = (level, isAsync, method, returnType, title) => {
-  const t = title.trim()
+export const replaceTitle = function (level, isAsync, method, returnType, args) {
   const sig = `${level} ${isAsync ? '`async ' : '`'}${method}(`
   const endSig = `): ${returnType ? returnType : 'void'}\``
   const nl = '<br/>'
   const i = '&nbsp;&nbsp;'
   const single = `${sig}${endSig}`
-  if (!t.trim()) return single
-  /** @type {[]} */
-  const args = JSON.parse(t)
   if (!args.length) return single
 
   const lines = args.map(([name, type]) => {
@@ -41,21 +37,29 @@ export const replaceTitle = (level, isAsync, method, returnType, title) => {
 
 const re = /```(#+)( async)? (\w+)(?: => (.+)\n)?([\s\S]*?)```/g
 
-export const replacer = (match, level, isAsync, method, returnType, jsonArgs) => {
-  const args = jsonArgs ? jsonArgs : '[]'
+export const replacer = function (match, level, isAsync, method, returnType, jsonArgs) {
   try {
-    const res = replaceTitle(level, isAsync, method, returnType, args)
-    return res
+    jsonArgs = jsonArgs.trim()
+    /** @type {Array} */
+    const args = JSON.parse(jsonArgs || '[]')
+
+    const val = {
+      hash: level, isAsync, name: method, returnType, args,
+    }
+    const dtoc = this.addDtoc('MT', val)
+    const res = replaceTitle.call(this, level, isAsync, method, returnType, args)
+    val.replacedTitle = res
+    return `${dtoc}${res}`
   } catch (err) {
     LOG('Could not parse the method title')
     return match
   }
 }
 
-const titleRule = {
+const methodTitleRule = {
   re,
   replacement: replacer,
 }
 
 export { re as methodTitleRe }
-export default titleRule
+export default methodTitleRule
