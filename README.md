@@ -457,7 +457,7 @@ HELLO world
  </tr>
 </table>
 
-%width="15"%
+%~width="15"%
 
 ### Stderr
 

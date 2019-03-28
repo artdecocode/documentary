@@ -40,7 +40,7 @@ It will make _Documentary_ fork a _Node.JS_ module using the `child_process.fork
 
 <!-- %FORK example example/fork% -->
 
-%width="15"%
+%~width="15"%
 
 ### Stderr
 
