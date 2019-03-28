@@ -490,10 +490,10 @@ spawncommand@2.1.1:
   dependencies:
     catchment "3.2.2"
 
-static-analysis@1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/static-analysis/-/static-analysis-1.3.1.tgz#2a85f6dbe72619653d056cedddc614a27c385497"
-  integrity sha512-PGtNHYWOfzdn+ecCLpM/KaH2yzsUPrsj8O+wUu8CCZ2JUKcouUaZAYIsndxaWRNbGwEsnOUM19Imp661nVMKBg==
+static-analysis@1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/static-analysis/-/static-analysis-1.3.2.tgz#a3e81974cf4873e93aba6550d87f813217297865"
+  integrity sha512-fNkvg4olySxOGsg1QOvBAgg8VIXUIKXJ5qvnqW6xrUINbcgIB+QL+zH9NeUe9Wiq+w0g2BQjdz8/TopwypB3Ig==
   dependencies:
     "@depack/detect" "1.0.0"
     "@wrote/read" "1.0.2"
@@ -555,10 +555,10 @@ yarn-s@1.1.0:
   dependencies:
     spawncommand "1.1.0"
 
-zoroaster@3.11.1:
-  version "3.11.1"
-  resolved "https://registry.yarnpkg.com/zoroaster/-/zoroaster-3.11.1.tgz#e99600c5ef1f88e8a0fff1c8c551476863ffcdc9"
-  integrity sha512-MQ0GTdl5G7eMbWdMtQTlSETdp7q5AosQEGLV6g8MmS387wWUlKGzSYGlfmuc44pcEJCd4cCWS+1osdDcpDW6+A==
+zoroaster@3.11.2:
+  version "3.11.2"
+  resolved "https://registry.yarnpkg.com/zoroaster/-/zoroaster-3.11.2.tgz#a7788c9dc4f4ba58e50b0fb559670e9d0176fb66"
+  integrity sha512-bUUJoo0DT7g2hJruCw77BbjY9mBCDOqoGsjlILaA/KbwI2AD7eaaIvpCgvkanDCQ7qRQiZ+S4qBq391AFsWC+g==
   dependencies:
     "@artdeco/clean-stack" "1.0.1"
     "@wrote/exists" "1.0.1"
