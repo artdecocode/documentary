@@ -6,7 +6,7 @@ When placing examples, it is important to show the output that they produce. Thi
 %FORK(-lang)? module ...args%
 ```
 
-It will make _Documentary_ fork a Node.js module using the `child_process.fork` function. The output is printed in a code block, with optionally given language.
+It will make _Documentary_ fork a _Node.JS_ module using the `child_process.fork` function. The output is printed in a code block, with optionally given language. If the process cleared lines with `\r`, the output will be adjusted to account for that to be displayed like it would be in the terminal.
 
 <table>
 <thead>

@@ -125,11 +125,16 @@ const forkRule = {
   },
 }
 
-const replaceR = (s) => {
+export const replaceR = (s) => {
   const st = s.split('\n').map(l => {
     const r = l.split('\r')
-    const last = r[r.length - 1]
-    return last
+    const t = r.reduce((acc, current, i) => {
+      if (!i) return acc
+      const { length } = current
+      const after = acc.slice(length)
+      return `${current}${after}`
+    }, r[0])
+    return t
   }).join('\n')
   return st
 }
