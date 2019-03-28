@@ -82,7 +82,7 @@ const replacement = async function (match, noCache, old, err, lang, m) {
         })
       } else {
         printed = true
-        this.log(s, `:: ${mmod} source updated since ${new Date(record.mtime).toLocaleString()}.`)
+        this.log(s, `:: updated since ${new Date(record.mtime).toLocaleString()}.`)
       }
     }
   }

@@ -69,8 +69,8 @@
         "NODE_DEBUG": "doc"
       },
       "args": [
-        // "documentary",
-        "src/lib/Documentary.js", "-g"
+        "documentary",
+        // "src/lib/Documentary.js", "-g"
       ],
       "console": "integratedTerminal",
       "skipFiles": [

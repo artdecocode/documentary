@@ -178,6 +178,7 @@ export default class Documentary extends Replaceable {
     // disables caching in forks
     this.noCache = noCache
     this._disableDtoc = disableDtoc
+    this.writingCache = Promise.resolve()
   }
   /**
    * Adds some information for generating TOC later.
@@ -208,17 +209,26 @@ export default class Documentary extends Replaceable {
     }
   }
   async addCache(name, record, location = this._cacheLocation) {
-    const path = resolve(`${location}/${name}.json`)
-    await ensurePath(path)
-    let c
-    try {
-      c = require(path)
-    } catch (err) {
-      c = {}
-    }
-    const cc = { ...c, ...record }
-    const s = JSON.stringify(cc, null, 2)
-    await write(path, s)
+    await this.writingCache
+    this.writingCache = new Promise(async (r, j) => {
+      try {
+        const path = resolve(`${location}/${name}.json`)
+        await ensurePath(path)
+        let c
+        try {
+          delete require.cache[path]
+          c = require(path)
+        } catch (err) {
+          c = {}
+        }
+        const cc = { ...c, ...record }
+        const s = JSON.stringify(cc, null, 2)
+        await write(path, s)
+        r()
+      } catch (err) {
+        return j(err)
+      }
+    })
   }
   /**
    * Replace a marked inner code with its actual value.

@@ -38,7 +38,7 @@ export default T
 /** @type {Object.<string, (c: Context, t: TempContext)>} */
 export const cache = {
   context: Context,
-  // , { write, resolve }
+  // this will break on git clone when fixture's mtime changes, todo mock fs.lstat
   async 'reads the cache of the fork'({ createReadable, catchment }) {
     const p = 'test/temp/output.txt'
     const rs = createReadable(`%FORK test/fixture/fork ${p}%`)
