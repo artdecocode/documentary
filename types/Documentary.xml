@@ -15,5 +15,8 @@
     <prop boolean name="noCache" default="false">
       Disable caching for forks.
     </prop>
+    <prop boolean name="disableDtoc" default="false">
+      Assume that no table of contents will be generated afterwards. Disables adding of `%%DTOC_MT_N%%` and `%%DTOC_LT_N%%` strings that would be used later by TOC generator and removed by the `run` method manually.
+    </prop>
   </type>
 </types>

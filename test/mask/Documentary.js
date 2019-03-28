@@ -13,7 +13,7 @@ alamode({
 
 const ts = makeTestSuite('test/result/Documentary', {
   getTransform() {
-    const doc = new Documentary()
+    const doc = new Documentary({ disableDtoc: true })
     return doc
   },
 })
@@ -25,7 +25,7 @@ export const components2 = makeTestSuite('test/result/Documentary-components.md'
    */
   async getTransform({ TEMP, add }) {
     await add('test/fixture/.documentary')
-    const doc = new Documentary({ cwd: TEMP })
+    const doc = new Documentary({ cwd: TEMP, disableDtoc: true })
     return doc
   },
 })
@@ -36,7 +36,7 @@ const typedefs = makeTestSuite('test/result/Documentary-types.md', {
     t.end(input)
     await collect(t)
     const { types, locations } = t
-    const doc = new Documentary({ locations, types })
+    const doc = new Documentary({ locations, types, disableDtoc: true })
     doc.end(input)
     return doc
   },

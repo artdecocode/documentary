@@ -21,7 +21,8 @@ export function replacer(match, macro, table) {
       : [header, ...realRows]
     const lengths = findLengths(replacedData)
     const sep = lengths.map(l => '-'.repeat(l))
-    const h = getRow(header, lengths, true)
+    const replacedHeader = replacedData[0]
+    const h = getRow(header, lengths, true, replacedHeader)
     const a = [
       sep,
       ...realRows,
@@ -80,12 +81,14 @@ const padMiddle = (val, length) => {
   return res
 }
 
-const getRow = (row, lengths, center = false) => {
+const getRow = (row, lengths, center = false, adjustments) => {
   const cols = row.map((col, i) => {
     const c = col || ''
     const l = lengths[i]
-    const r = center ? padMiddle(c, l) : padRight(c, l)
-    return r
+    const realValue = adjustments ? adjustments[i] || '' : c
+    const r = center ? padMiddle(realValue, l) : padRight(realValue, l)
+    const rr = r.replace(realValue, c)
+    return rr
   })
   const s = `| ${cols.join(' | ')} |`
   return s

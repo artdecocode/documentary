@@ -64,12 +64,13 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Doc",
-      "program": "${workspaceFolder}/src/bin/alamode.js",
+      "program": "${workspaceFolder}/src/bin/index.js",
       "env": {
         "NODE_DEBUG": "doc"
       },
       "args": [
-        "documentary",
+        // "documentary",
+        "src/lib/Documentary.js", "-g"
       ],
       "console": "integratedTerminal",
       "skipFiles": [

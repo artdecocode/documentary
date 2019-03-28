@@ -1,4 +1,6 @@
-## expands the type in function's JSDoc
+> THIS FILE IS NOT PART OF ROOT TEST SUITE AS THE MASK IS NOT IMPLEMENTED
+
+## !expands the type in function's JSDoc
 import { resolve } from 'path'
 
 /**

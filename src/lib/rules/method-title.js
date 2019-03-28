@@ -46,7 +46,7 @@ export const replacer = function (match, level, isAsync, method, returnType, jso
     const val = {
       hash: level, isAsync, name: method, returnType, args,
     }
-    const dtoc = this.addDtoc('MT', val)
+    const dtoc = this.addDtoc ? this.addDtoc('MT', val) : ''
     const res = replaceTitle.call(this, level, isAsync, method, returnType, args)
     val.replacedTitle = res
     return `${dtoc}${res}`

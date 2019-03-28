@@ -186,8 +186,7 @@ ${withArgs ? this.innerTitle : ''}
 ]`
   }
   getTitle(a = true, args = true, ret = true) {
-    return `
-## API
+    return `## API
 
 ${this.getRawMethodTitle(a, args, ret)}`
   }
@@ -337,6 +336,9 @@ console.log('test')
   get replaceStream() {
     const rs = createReplaceStream()
     return rs
+  }
+  get DocumentaryNoDToc() {
+    return new Documentary({ disableDtoc: true })
   }
   /**
    * Returns a reference to a documentary stream with the full set of rules.

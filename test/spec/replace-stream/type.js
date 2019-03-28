@@ -11,13 +11,12 @@ ${type}
     rs.pipe(replaceStream)
     return replaceStream
   },
-  async 'replaces a type for toc headings'({ createReadable, type, replaceStream }) {
+  async 'replaces a type for toc headings'({ createReadable, type, DocumentaryNoDToc }) {
     const s = `%TYPE true
 ${type}
 %`
     const rs = createReadable(s)
-    rs.pipe(replaceStream)
-    return replaceStream
+    return rs.pipe(DocumentaryNoDToc)
   },
   async 'produces an example row'({ createReadable, replaceStream }) {
     const s = `%TYPE
@@ -39,8 +38,7 @@ ${type}
 </p>
 %`
     const rs = createReadable(s)
-    rs.pipe(replaceStream)
-    return replaceStream
+    return rs.pipe(replaceStream)
   },
   async 'produces an example row with colspan 3'({ createReadable, replaceStream }) {
     const s = `%TYPE

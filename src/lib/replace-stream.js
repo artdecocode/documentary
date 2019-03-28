@@ -1,8 +1,7 @@
 import Documentary from './Documentary'
 
-export default function createReplaceStream(toc, cacheLocation) {
+export default function createReplaceStream(cacheLocation) {
   const s = new Documentary({
-    toc,
     cacheLocation,
   })
 

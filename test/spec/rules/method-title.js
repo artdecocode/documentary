@@ -14,37 +14,29 @@ const T = {
     const res = replacer('', level, a, title, ret, innerTitle)
     return res.trim()
   },
-  async 'replaces async function'({ getTitle, createReadable, catchment }) {
+  async 'replaces async function'({ getTitle, createReadable }) {
     const t = getTitle()
     const r = createReadable(t)
     const rs = new Replaceable(titleRule)
-    r.pipe(rs)
-    const res = await catchment(rs)
-    return res
+    return r.pipe(rs)
   },
-  async 'replaces function without return'({ getTitle, createReadable, catchment }) {
+  async 'replaces function without return'({ getTitle, createReadable }) {
     const t = getTitle(true, true, false)
     const r = createReadable(t)
     const rs = new Replaceable(titleRule)
-    r.pipe(rs)
-    const res = await catchment(rs)
-    return res
+    return r.pipe(rs)
   },
-  async 'replaces non-async function'({ getTitle, createReadable, catchment }) {
+  async 'replaces non-async function'({ getTitle, createReadable }) {
     const t = getTitle(false)
     const r = createReadable(t)
     const rs = new Replaceable(titleRule)
-    r.pipe(rs)
-    const res = await catchment(rs)
-    return res
+    return r.pipe(rs)
   },
-  async 'replaces single line function'({ getTitle, createReadable, catchment }) {
+  async 'replaces single line function'({ getTitle, createReadable }) {
     const t = getTitle(false, false)
     const r = createReadable(t)
     const rs = new Replaceable(titleRule)
-    r.pipe(rs)
-    const res = await catchment(rs)
-    return res
+    return r.pipe(rs)
   },
   async 'returns match when cannot parse the table'() {
     const m = '### async run => string'

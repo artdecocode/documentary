@@ -17,7 +17,7 @@ function configure(config) {
   return resolve('test')
 }
 `
-    const { type, name } = getMatches(g, jsDocRe, ['type', 'opt', 'name'])
+    const { type, name } = getMatches(g, jsDocRe, ['ws', 'type', 'opt', 'name'])
     equal(type, t)
     equal(name, n)
   },
@@ -33,7 +33,7 @@ function configure(config) {
   return resolve('test')
 }
 `
-    const { type, name } = getMatches(g, jsDocRe, ['type', 'opt', 'name'])
+    const { type, name } = getMatches(g, jsDocRe, ['ws', 'type', 'opt', 'name'])
     equal(type, t)
     equal(name, n)
   },
@@ -65,7 +65,7 @@ function configureInverse(config) {
   return resolve('test')
 }
 `
-    const res = mismatch(jsDocRe, g, ['type', 'opt', 'name', 'rest'])
+    const res = mismatch(jsDocRe, g, ['ws', 'type', 'opt', 'name', 'rest'])
     return res
   },
 }

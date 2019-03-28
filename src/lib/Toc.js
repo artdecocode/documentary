@@ -15,7 +15,7 @@ class ChunkReplaceable extends Replaceable {
    * @param {boolean} skipLevelOne
    * @param {Object.<string,Type[]>} locations
    */
-  constructor(skipLevelOne, locations, getDtoc) {
+  constructor(skipLevelOne, getDtoc) {
     const {
       code, innerCode,
     } = makeMarkers({
@@ -159,13 +159,11 @@ export default class Toc extends Transform {
   constructor(config = {}) {
     const {
       skipLevelOne = true,
-      locations = {},
       documentary,
     } = config
 
     super()
     this.skipLevelOne = skipLevelOne
-    this.locations = locations
     this.level = 0
     this.titles = []
     this.getDtoc = documentary ? documentary.getDtoc.bind(documentary) : () => {}
@@ -192,7 +190,7 @@ export default class Toc extends Transform {
   }
 
   async _transform(buffer, enc, next) {
-    const cr = new ChunkReplaceable(this.skipLevelOne, this.locations, this.getDtoc)
+    const cr = new ChunkReplaceable(this.skipLevelOne, this.getDtoc)
     cr
       .on('title', t => this.addTitle(t))
       .end(buffer)

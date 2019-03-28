@@ -47,11 +47,13 @@ export default class Documentary extends Replaceable {
    * @param {string} [options.cwd="."] The `cwd` that is used to resolve `.documentary` folder. Default `.`.
    * @param {string} [options.cacheLocation="${cwd}/.documentary/cache"] The folder where the cache is kept. Default `${cwd}/.documentary/cache`.
    * @param {boolean} [options.noCache=false] Disable caching for forks. Default `false`.
+   * @param {boolean} [options.disableDtoc=false] Assume that no table of contents will be generated afterwards. Disables adding of `%%DTOC_MT_N%%` and `%%DTOC_LT_N%%` strings that would be used later by TOC generator and removed by the `run` method manually. Default `false`.
    */
   constructor(options = {}) {
     const {
       locations = {}, types: allTypes = [],
       cwd = '.', cacheLocation = join(cwd, '.documentary/cache'), noCache,
+      disableDtoc,
     } = options
     const hm = getComponents(join(homedir(), '.documentary'))
     const cm = getComponents(resolve(cwd, '.documentary'))
@@ -175,17 +177,22 @@ export default class Documentary extends Replaceable {
     this._dtoc = {}
     // disables caching in forks
     this.noCache = noCache
+    this._disableDtoc = disableDtoc
   }
   /**
    * Adds some information for generating TOC later.
    * @param {string} name
    */
   addDtoc(name, value) {
+    if (this._disableDtoc) return ''
     if (!this._dtoc[name]) this._dtoc[name] = []
     const arr = this._dtoc[name]
     arr.push(value)
     return `%%DTOC_${name}_${arr.length - 1}%%`
   }
+  /**
+   * Used by the Toc stream later to create lines for link and method titles.
+   */
   getDtoc(name, int) {
     return this._dtoc[name][int]
   }
@@ -243,4 +250,5 @@ export default class Documentary extends Replaceable {
  * @prop {string} [cwd="."] The `cwd` that is used to resolve `.documentary` folder. Default `.`.
  * @prop {string} [cacheLocation="${cwd}/.documentary/cache"] The folder where the cache is kept. Default `${cwd}/.documentary/cache`.
  * @prop {boolean} [noCache=false] Disable caching for forks. Default `false`.
+ * @prop {boolean} [disableDtoc=false] Assume that no table of contents will be generated afterwards. Disables adding of `%%DTOC_MT_N%%` and `%%DTOC_LT_N%%` strings that would be used later by TOC generator and removed by the `run` method manually. Default `false`.
  */

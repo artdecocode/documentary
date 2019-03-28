@@ -6,7 +6,7 @@ A package to manage documentation of Node.js packages.
 
 ## Table Of Contents
 
-%TOC%
+%%_DOCUMENTARY_TOC_CHANGE_LATER_%%
 
 ## CLI
 
