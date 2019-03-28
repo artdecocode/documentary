@@ -45,6 +45,6 @@ Create a new instance of a `Toc` stream.
 
 %EXAMPLE: example/toc, ../src => documentary%
 
-%FORK-fs example/toc%
+%FORK-md example/toc%
 
 %~%

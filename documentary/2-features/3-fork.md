@@ -2,7 +2,7 @@
 
 When placing examples, it is important to show the output that they produce. This can be achieved using the `FORK` marker.
 
-```m
+```t
 %FORK(-lang)? module ...args%
 ```
 
@@ -40,13 +40,13 @@ It will make _Documentary_ fork a _Node.JS_ module using the `child_process.fork
 
 <!-- %FORK example example/fork% -->
 
-%~width="15"%
+%~ width="15"%
 
 ### Stderr
 
 By default, the `FORK` marker will print the `stdout` output. To print the `stderr` output, there is the `FORKERR` marker.
 
-```m
+```t
 %FORKERR(-lang)? module ...args%
 ```
 
