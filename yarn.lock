@@ -397,6 +397,13 @@ pedantry@2.2.0:
   dependencies:
     "@wrote/read-dir-structure" "1.0.1"
 
+pedantry@2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/pedantry/-/pedantry-2.3.1.tgz#953e5de705f157136a6031187b1ec4fba5f36827"
+  integrity sha512-X4Vqc+TWMRlSnEp/JwgpFhY2k9tWw0Qh+HQUAiDRItmW5b3gEn/q3RzxZHaUbf22xZJvRX0dIj89GJuBFCX2nA==
+  dependencies:
+    "@wrote/read-dir-structure" "1.0.2"
+
 pirates@4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/pirates/-/pirates-4.0.1.tgz#643a92caf894566f91b2b986d2c66950a8e2fb87"
@@ -439,6 +446,13 @@ restream@3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/restream/-/restream-3.5.0.tgz#8790f4592b4ef5cd84855c243bac2899d90044b4"
   integrity sha512-qJbNhhC7y0E4FKBeFAUr1HicaCotL49blKqz95X2uoFTZHDjUmsXP35jgDK4jGdoVC0wP4w0LbZN8oAvJe7Z+g==
+  dependencies:
+    "@artdeco/clean-stack" "1.0.1"
+
+restream@3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/restream/-/restream-3.5.1.tgz#569ef5b3c1b3e177058d4ce12be9b6323ca969b8"
+  integrity sha512-z3SLUpAE/i/N9xFraDXME69RuRA4E50SEVsNXpY5fBSiznLKP4JxCcjKX2KYW6SRID/BqF8dyVtNVvOseGUB6g==
   dependencies:
     "@artdeco/clean-stack" "1.0.1"
 

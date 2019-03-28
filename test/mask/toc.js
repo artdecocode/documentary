@@ -26,7 +26,7 @@ const h1 = makeTestSuite('test/result/Toc/h1', {
 
 const typedefs = makeTestSuite('test/result/Toc/titles', {
   async getReadable(input) {
-    const stream = getStream(input)
+    const stream = getStream(input, false, false)
     const { locations } = await getTypedefs(stream)
     const documentary = new Documentary({ noCache: true, locations })
     const toc = new Toc({ documentary })
@@ -42,7 +42,7 @@ const macros = makeTestSuite('test/result/Toc/macros', {
    */
   async getReadable(input, { write }) {
     const pp = await write('data.md', input)
-    const stream = getStream(pp)
+    const stream = getStream(pp, false, false)
     const { locations } = await getTypedefs(stream)
 
     const documentary = new Documentary({ noCache: true, locations })

@@ -1,8 +1,9 @@
 import { Replaceable, makeMarkers, makeCutRule, makePasteRule } from 'restream'
-import { debuglog } from 'util'
+import { debuglog, isBuffer } from 'util'
 import { join, resolve } from 'path'
 import { homedir } from 'os'
 import write from '@wrote/write'
+import { b } from 'erte'
 import ensurePath from '@wrote/ensure-path'
 import { commentRule as stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe } from './rules'
 import tableRule, { tableRe } from './rules/table'
@@ -53,7 +54,7 @@ export default class Documentary extends Replaceable {
     const {
       locations = {}, types: allTypes = [],
       cwd = '.', cacheLocation = join(cwd, '.documentary/cache'), noCache,
-      disableDtoc,
+      disableDtoc, objectMode = true,
     } = options
     const hm = getComponents(join(homedir(), '.documentary'))
     const cm = getComponents(resolve(cwd, '.documentary'))
@@ -164,7 +165,7 @@ export default class Documentary extends Replaceable {
       // those found inside of code blocks
       insertTable,
       insertMethodTitle,
-    ])
+    ], { objectMode })
 
     this._types = {}
 
@@ -249,6 +250,16 @@ export default class Documentary extends Replaceable {
   }
   get types() {
     return this._types
+  }
+  async _transform(chunk, _, next) {
+    if (isBuffer(chunk) || typeof chunk == 'string') {
+      await super._transform(chunk, _, next)
+    } else if (typeof chunk == 'object') {
+      chunk.file != 'separator' && LOG(b(chunk.file, 'cyan'))
+      await super._transform(chunk.data, _, next)
+    } else {
+      throw new Error('what are you')
+    }
   }
 }
 

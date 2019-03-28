@@ -1645,16 +1645,6 @@ When a description ends with <code>Default &#96;value&#96;</code>, the default v
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/22.svg?sanitize=true"></a></p>
 
-
-
-
-
-
-
-
-
-
-
 ## CLI
 
 The program is used from the CLI (or `package.json` script).

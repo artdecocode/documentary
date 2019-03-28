@@ -69,7 +69,8 @@
         "NODE_DEBUG": "doc"
       },
       "args": [
-        "documentary",
+        // "documentary",
+        "test/fixtures/README-source.md"
         // "src/lib/Documentary.js", "-g"
       ],
       "console": "integratedTerminal",

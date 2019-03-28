@@ -1,7 +1,3 @@
-import { debuglog } from 'util'
-
-const LOG = debuglog('doc')
-
 export const createTocRule = (toc) => {
   return {
     re: /^%TOC%$/gm,
@@ -18,7 +14,7 @@ export const innerCodeRe = /`[^`\n]+?`/gm
 export const commentRule = {
   re: commentRe,
   replacement() {
-    LOG('stripping comment')
+    this.log && this.log('stripping comment')
     return ''
   },
 }
