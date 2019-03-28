@@ -1,4 +1,6 @@
 let whichStream = require('which-stream'); if (whichStream && whichStream.__esModule) whichStream = whichStream.default;
+let Catchment = require('catchment'); if (Catchment && Catchment.__esModule) Catchment = Catchment.default;
+let write = require('@wrote/write'); if (write && write.__esModule) write = write.default;
 const { getToc } = require('../lib/Toc');
 const Documentary = require('../lib/Documentary');
 const { getStream } = require('../lib');
@@ -15,29 +17,37 @@ const { getTypedefs } = require('../lib/Typedefs');
  */
                async function run(options) {
   const {
-    source, output = '-', reverse, justToc, h1,
+    source, output = '-', reverse, justToc, h1, noCache,
   } = options
   const stream = getStream(source, reverse)
   // todo: figure out why can't create a pass-through, pipe into it and pause it
 
   const { types, locations } = await getTypedefs(stream)
 
-  const stream2 = getStream(source, reverse)
-  const toc = await getToc(stream2, h1, locations)
+  const stream3 = getStream(source, reverse)
+  const doc = new Documentary({ locations, types, noCache })
+  stream3.pipe(doc)
+  const tocPromise = getToc(doc, h1, locations)
+
+  const c = new Catchment()
+  await whichStream({
+    readable: doc,
+    writable: c,
+  })
+  const toc = await tocPromise
+  const result = (await c.promise)
+    .replace('%%_DOCUMENTARY_TOC_CHANGE_LATER_%%', toc)
+    .replace(/%%DTOC_(.+?)_(\d+)%%/g, '')
+
   if (justToc) {
     console.log(toc)
     process.exit()
   }
-
-  const stream3 = getStream(source, reverse)
-  const doc = new Documentary({ toc, locations, types })
-  stream3.pipe(doc)
-  await whichStream({
-    readable: doc,
-    destination: output,
-  })
   if (output != '-') {
     console.log('Saved documentation to %s', output)
+    await write(output, result)
+  } else {
+    console.log(result)
   }
 }
 

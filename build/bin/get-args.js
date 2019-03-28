@@ -11,6 +11,7 @@ const args = argufy({
   },
   'watch': { short: 'w', boolean: true },
   'output': 'o',
+  'no-cache': { short: 'c', boolean: true },
   'push': { short: 'p' },
   'generate': { short: 'g',
     description: 'Process a JavaScript file to include typedef documentation in their source code. The target file should contain `/* documentary path/to/types.xml */` marker in place where types are to be inserted.',
@@ -83,6 +84,12 @@ const args = argufy({
        const _extract = args['extract']
 
 /**
+ * Disable cache.
+ * @type {boolean}
+ */
+       const _noCache = args['no-cache']
+
+/**
  * Any additional arguments.
  * @type {Array<string>}
  */
@@ -98,4 +105,5 @@ module.exports._push = _push
 module.exports._generate = _generate
 module.exports._version = _version
 module.exports._extract = _extract
+module.exports._noCache = _noCache
 module.exports._argv = _argv

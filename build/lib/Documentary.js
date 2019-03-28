@@ -4,9 +4,7 @@ const { join, resolve } = require('path');
 const { homedir } = require('os');
 let write = require('@wrote/write'); if (write && write.__esModule) write = write.default;
 let ensurePath = require('@wrote/ensure-path'); if (ensurePath && ensurePath.__esModule) ensurePath = ensurePath.default;
-const {
-  createTocRule, commentRule: stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe,
-} = require('./rules');
+const { commentRule: stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe } = require('./rules');
 const tableRule = require('./rules/table'); const { tableRe } = tableRule;
 const methodTitleRule = require('./rules/method-title'); const { methodTitleRe } = methodTitleRule;
 const treeRule = require('./rules/tree');
@@ -44,19 +42,25 @@ const getComponents = (path) => {
                class Documentary extends Replaceable {
   /**
    * @param {DocumentaryOptions} options Options for the Documentary constructor.
- * @param {string} [options.toc] The table of contents to replace the `%TOC%` marker with.
+   * @param {*} [options.locations]
+   * @param {Array} [options.types]
+   * @param {string} [options.cwd="."] The `cwd` that is used to resolve `.documentary` folder. Default `.`.
+   * @param {string} [options.cacheLocation="${cwd}/.documentary/cache"] The folder where the cache is kept. Default `${cwd}/.documentary/cache`.
+   * @param {boolean} [options.noCache=false] Disable caching for forks. Default `false`.
+   * @param {boolean} [options.disableDtoc=false] Assume that no table of contents will be generated afterwards. Disables adding of `%%DTOC_MT_N%%` and `%%DTOC_LT_N%%` strings that would be used later by TOC generator and removed by the `run` method manually. Default `false`.
    */
   constructor(options = {}) {
     const {
-      toc, locations = {}, types: allTypes = [],
-      cwd = '.', cacheLocation = './.documentary/cache',
+      locations = {}, types: allTypes = [],
+      cwd = '.', cacheLocation = join(cwd, '.documentary/cache'), noCache,
+      disableDtoc,
     } = options
     const hm = getComponents(join(homedir(), '.documentary'))
     const cm = getComponents(resolve(cwd, '.documentary'))
     const dm = loadComponents(Components)
     const components = [...cm, ...hm, ...dm]
     // console.log('loaded components %s', components)
-    const tocRule = createTocRule(toc)
+    // const tocRule = createTocRule(toc)
 
     const {
       table, methodTitle, code, innerCode, linkTitle,
@@ -99,7 +103,11 @@ const getComponents = (path) => {
         cutCode, // cut code again after inserting example
       ],
       forkRule,
-      tocRule,
+      // tocRule,
+      {
+        re: /^%TOC%$/gm,
+        replacement: '%%_DOCUMENTARY_TOC_CHANGE_LATER_%%',
+      },
       gifRule,
       typeRule,
       sectionBrakeRule,
@@ -131,10 +139,13 @@ const getComponents = (path) => {
 
       {
         re: linkTitleRe,
-        replacement(match, title, l, prefix) {
+        replacement(match, title, level, prefix) {
           const t = this.replaceInnerCode(title)
           const link = getLink(t, prefix)
-          return `<a name="${link}">${t}</a>`
+          const dtoc = this.addDtoc('LT', {
+            title: t, link, level,
+          })
+          return `${dtoc}<a name="${link}">${t}</a>`
         },
       },
       {
@@ -163,6 +174,27 @@ const getComponents = (path) => {
       types.forEach(this.addType.bind(this))
     })
     this._cacheLocation = cacheLocation
+    this._dtoc = {}
+    // disables caching in forks
+    this.noCache = noCache
+    this._disableDtoc = disableDtoc
+  }
+  /**
+   * Adds some information for generating TOC later.
+   * @param {string} name
+   */
+  addDtoc(name, value) {
+    if (this._disableDtoc) return ''
+    if (!this._dtoc[name]) this._dtoc[name] = []
+    const arr = this._dtoc[name]
+    arr.push(value)
+    return `%%DTOC_${name}_${arr.length - 1}%%`
+  }
+  /**
+   * Used by the Toc stream later to create lines for link and method titles.
+   */
+  getDtoc(name, int) {
+    return this._dtoc[name][int]
   }
   get innerCode() {
     return this._innerCode
@@ -213,7 +245,12 @@ const getComponents = (path) => {
 /* documentary types/Documentary.xml */
 /**
  * @typedef {Object} DocumentaryOptions Options for the Documentary constructor.
- * @prop {string} [toc] The table of contents to replace the `%TOC%` marker with.
+ * @prop {*} [locations]
+ * @prop {Array} [types]
+ * @prop {string} [cwd="."] The `cwd` that is used to resolve `.documentary` folder. Default `.`.
+ * @prop {string} [cacheLocation="${cwd}/.documentary/cache"] The folder where the cache is kept. Default `${cwd}/.documentary/cache`.
+ * @prop {boolean} [noCache=false] Disable caching for forks. Default `false`.
+ * @prop {boolean} [disableDtoc=false] Assume that no table of contents will be generated afterwards. Disables adding of `%%DTOC_MT_N%%` and `%%DTOC_LT_N%%` strings that would be used later by TOC generator and removed by the `run` method manually. Default `false`.
  */
 
 

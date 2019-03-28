@@ -68,11 +68,11 @@ const titleRule = require('./rules/method-title');
 }
 
        const codeSurround = (content, lang = '') => {
+  if (lang == 'md') lang = 'markdown'
   const hasBackticks = /```/.test(content)
   const t = hasBackticks ? '````' : '```'
   return `${t}${lang}\n${content}\n${t}`
 }
-
 
 module.exports.getLink = getLink
 module.exports.makeARegexFromRule = makeARegexFromRule

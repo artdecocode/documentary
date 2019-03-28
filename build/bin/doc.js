@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _argv, _generate } = require('./get-args');
+const { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _argv, _generate, _noCache } = require('./get-args');
 const { watch } = require('fs');
 const { debuglog } = require('util');
 const { lstatSync } = require('fs');
@@ -32,8 +32,9 @@ if (process.argv.find(a => a == '-e') && !_extract) {
   catcher('Please specify where to extract typedefs (- for stdout).')
 }
 
+let generate = _generate
 if (_argv.find(g => g == '-g') && !_generate) {
-  _generate = _source
+  generate = _source
 }
 
 if (_source) {
@@ -52,17 +53,18 @@ if (_source) {
       destination: _extract,
     })
   }
-  if (_generate) {
+  if (generate) {
     return await generateTypedef({
       source: _source,
-      destination: _generate,
+      destination: generate,
     })
   }
+  const docOptions = {
+    source: _source, output: _output, justToc: _toc, h1: _h1,
+    reverse: _reverse, noCache: _noCache,
+  }
   try {
-    await doc({
-      source: _source, output: _output, justToc: _toc, h1: _h1,
-      reverse: _reverse,
-    })
+    await doc(docOptions)
   } catch ({ stack, message, code }) {
     DEBUG ? LOG(stack) : console.log(message)
   }
@@ -73,10 +75,7 @@ if (_source) {
     watch(_source, { recursive: true }, async () => {
       if (!debounce) {
         debounce = true
-        await doc({
-          source: _source, output: _output, justToc: _toc, h1: _h1,
-          reverse: _reverse,
-        })
+        await doc(docOptions)
         if (_push) {
           console.log('Pushing documentation changes.')
           await gitPush(_source, _output, _push)

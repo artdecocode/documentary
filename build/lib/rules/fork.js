@@ -19,9 +19,11 @@ const replacement = async function (match, noCache, old, err, lang, m) {
   const [mod, ...args] = m.split(' ')
 
   const { path: mmod } = await resolveDependency(mod)
-  this.log(`FORK${err || ''}:`, c(mmod, 'yellow'), ...args.map(a => c(a, 'grey')))
+  const s = `FORK${err || ''}${lang ? `-${lang}` : ''}: ${c(mmod, 'yellow')} ${
+    args.map(a => c(a, 'grey')).join(' ')}`
 
   if (noCache) {
+    this.log(s, noCache ? ':: no cache' : '')
     const { stdout, stderr } = await doFork(old, mod, args)
     return getOutput(err, stderr, stdout, lang)
   }
@@ -38,6 +40,7 @@ const replacement = async function (match, noCache, old, err, lang, m) {
   }))
   const mmtime = await getMtime(mmod)
 
+  let printed = false
   if (cache) {
     const record = cache[m]
     if (record) {
@@ -55,9 +58,12 @@ const replacement = async function (match, noCache, old, err, lang, m) {
           }
         })
         const changed = added.length || removed.length
-        if (!changed) return getOutput(err, record.stderr, record.stdout, lang)
-
-        this.log(`FORK: ${mmod} dependencies changed:`)
+        if (!changed) {
+          this.log(s, ':: returning cache')
+          return getOutput(err, record.stderr, record.stdout, lang)
+        }
+        printed = true
+        this.log(s, ':: dependencies changed')
         added.forEach((mm) => {
           const [entry, meta] = mm.split(' ')
           let mmeta = ''
@@ -75,10 +81,14 @@ const replacement = async function (match, noCache, old, err, lang, m) {
           this.log(c('-', 'red'), entry, mmeta)
         })
       } else {
-        this.log(`FORK: ${mmod} source updated since ${new Date(record.mtime).toLocaleString()}.`)
+        printed = true
+        this.log(s, `:: ${mmod} source updated since ${new Date(record.mtime).toLocaleString()}.`)
       }
     }
   }
+
+  !printed && this.log(s)
+
   const { stdout, stderr } = await doFork(old, mod, args)
 
   const cacheToWrite = makeCache(m, mmtime, msa, stdout, stderr)
@@ -103,7 +113,7 @@ const doFork = async (old, mod, args) => {
 const forkRule = {
   re: /%([!_]+)?FORK(ERR)?(?:-(\w+))? (.+)%/mg,
   async replacement(match, service, err, lang, m) {
-    const noCache = /!/.test(service)
+    const noCache = /!/.test(service) || this.noCache
     const old = /_/.test(service)
     try {
       return await replacement.call(this, match, noCache, old, err, lang, m)
