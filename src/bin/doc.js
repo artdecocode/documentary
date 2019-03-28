@@ -32,8 +32,9 @@ if (process.argv.find(a => a == '-e') && !_extract) {
   catcher('Please specify where to extract typedefs (- for stdout).')
 }
 
+let generate = _generate
 if (_argv.find(g => g == '-g') && !_generate) {
-  _generate = _source
+  generate = _source
 }
 
 if (_source) {
@@ -52,10 +53,10 @@ if (_source) {
       destination: _extract,
     })
   }
-  if (_generate) {
+  if (generate) {
     return await generateTypedef({
       source: _source,
-      destination: _generate,
+      destination: generate,
     })
   }
   const docOptions = {
