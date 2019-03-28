@@ -56,6 +56,11 @@ The arguments it accepts are:
     "-r",
     "Reverse Order",
     "Reverse the output order of files, such as that `2.md` will come before `1.md`. This could be useful when writing blogs. The `index.md` and `footer.md` files will still come first and last respectively."
+  ],
+  [
+    "-c",
+    "Disable Cache",
+    "Disables caching for all forks."
   ]
 ]
 ```
