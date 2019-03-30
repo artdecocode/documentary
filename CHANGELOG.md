@@ -1,3 +1,9 @@
+## 30 March 2019
+
+### [1.23.2](https://github.com/artdecocode/documentary/compare/v1.23.1...v1.23.2)
+
+- [fix] Fix special characters in TOC hrefs.
+
 ## 28 March 2019
 
 ### [1.23.1](https://github.com/artdecocode/documentary/compare/v1.23.0...v1.23.1)
