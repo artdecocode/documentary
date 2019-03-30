@@ -4,7 +4,7 @@ const { collect } = require('catchment');
 let Pedantry = require('pedantry'); if (Pedantry && Pedantry.__esModule) Pedantry = Pedantry.default;
 const tableRule = require('./rules/table');
 const titleRule = require('./rules/method-title');
-const { PassThrough } = require('stream');;
+const { PassThrough } = require('stream');
 
        const getLink = (title, prefix = '') => {
   const l = title
@@ -12,7 +12,7 @@ const { PassThrough } = require('stream');;
     .replace(/<\/?strong>/g, '')
     .replace(/<br\/>/g, '')
     .replace(/&nbsp;/g, '')
-    .replace(/[^\w-\d ]/g, '')
+    .replace(/[^\u00C0-\u1FFF\u2C00-\uD7FF\w\-\d ]/gu, '')
     .toLowerCase()
     .replace(/[, ]/g, '-')
   return `${prefix}${prefix ? '-' : ''}${l}`

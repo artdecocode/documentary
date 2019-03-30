@@ -4,7 +4,7 @@ import { collect } from 'catchment'
 import Pedantry from 'pedantry'
 import tableRule from './rules/table'
 import titleRule from './rules/method-title'
-import { PassThrough } from 'stream';
+import { PassThrough } from 'stream'
 
 export const getLink = (title, prefix = '') => {
   const l = title
@@ -12,7 +12,7 @@ export const getLink = (title, prefix = '') => {
     .replace(/<\/?strong>/g, '')
     .replace(/<br\/>/g, '')
     .replace(/&nbsp;/g, '')
-    .replace(/[^\w-\d ]/g, '')
+    .replace(/[^\u00C0-\u1FFF\u2C00-\uD7FF\w\-\d ]/gu, '')
     .toLowerCase()
     .replace(/[, ]/g, '-')
   return `${prefix}${prefix ? '-' : ''}${l}`

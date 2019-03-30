@@ -20,6 +20,10 @@ export const GetLink = {
     const message = 'koa2jsxreducer-functionview-containeractions-objectstatic-boolean--truerender-function-function'
     equal(link, message)
   },
+  async 'keeps special characters'() {
+    const link = getLink('ÀLaNode')
+    equal(link, 'àlanode')
+  },
   'makes a component re'() {
     const re = makeComponentRe('Footer')
     const res = mismatch(re, '<Footer client="/test"/>', ['ws', 'test'])
