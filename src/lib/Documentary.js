@@ -206,31 +206,34 @@ export default class Documentary extends Replaceable {
       const c = require(resolve(`${location}/${name}.json`))
       return c
     } catch (err) {
-      return null
+      return undefined
     }
   }
   async addCache(name, record, location = this._cacheLocation) {
-    await this.writingCache
-    this.writingCache = new Promise(async (r, j) => {
-      try {
-        const path = resolve(`${location}/${name}.json`)
-        await ensurePath(path)
-        let c
+    this.writingCache = this.writingCache.then(() => {
+      return new Promise(async (r, j) => {
         try {
-          delete require.cache[path]
-          c = require(path)
+          const path = resolve(`${location}/${name}.json`)
+          await ensurePath(path)
+          let c
+          try {
+            delete require.cache[path]
+            c = require(path)
+          } catch (err) {
+            c = {}
+          }
+          const cc = { ...c, ...record }
+          const s = JSON.stringify(cc, null, 2)
+          await write(path, s)
+          r()
         } catch (err) {
-          c = {}
+          return j(err)
         }
-        const cc = { ...c, ...record }
-        const s = JSON.stringify(cc, null, 2)
-        await write(path, s)
-        r()
-      } catch (err) {
-        return j(err)
-      }
+      })
     })
+    await this.writingCache
   }
+
   /**
    * Replace a marked inner code with its actual value.
    * @param {string} data

@@ -2,16 +2,6 @@ import { equal } from 'zoroaster/assert'
 import mismatch from 'mismatch'
 import { getLink } from '../../src/lib'
 import { makeComponentRe } from '../../src/lib/components'
-import { replaceR } from '../../src/lib/rules/fork'
-
-export const misc = {
-  'replaces \\r correctly'() {
-    const res = replaceR(`hello world
-...\r..?\r.!`)
-    equal(res, `hello world
-.!?`)
-  },
-}
 
 /** @type {Object.<string, (c: Context)>} */
 export const GetLink = {
