@@ -69,14 +69,8 @@
     "table",
     "toc",
     "heading",
-    "vuepress",
-    "d3",
-    "docusaurus",
-    "redoc",
-    "docsify",
-    "esdoc",
-    "docco",
-    "documentation.js"
+    "jsx",
+    "components"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
