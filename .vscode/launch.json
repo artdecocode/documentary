@@ -53,7 +53,7 @@
       "args": [
         "documentary",
       ],
-      "cwd": "${workspaceFolder}/../../depack/depack",
+      "cwd": "${workspaceFolder}/../../a-la/alanode",
       // "cwd": "${workspaceFolder}/../../idiocc/core",
       "console": "integratedTerminal",
       "skipFiles": [
@@ -64,13 +64,14 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Doc",
-      "program": "${workspaceFolder}/src/bin/index.js",
+      "program": "${workspaceFolder}/node_modules/.bin/alanode",
       "env": {
         "NODE_DEBUG": "doc"
       },
       "args": [
-        // "documentary",
-        "test/fixtures/README-source.md"
+        "src/bin/doc",
+        "documentary",
+        // "test/fixtures/README-source.md"
         // "src/lib/Documentary.js", "-g"
       ],
       "console": "integratedTerminal",

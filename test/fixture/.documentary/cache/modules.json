@@ -1,0 +1,11 @@
+{
+  "test/fixture/fork/index.js": {
+    "mtime": 1553568524000,
+    "hash": [
+      "test/fixture/fork/c.js 1553565684000",
+      "os",
+      "@wrote/write 1.0.3"
+    ],
+    "md5": "6e2746a704c340e76897c9bb8a515253"
+  }
+}

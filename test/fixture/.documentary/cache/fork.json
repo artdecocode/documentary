@@ -1,11 +1,5 @@
 {
-  "test/fixture/fork test/temp/output.txt": {
-    "mtime": 1553568524000,
-    "analysis": [
-      "test/fixture/fork/c.js 1553565684000",
-      "os",
-      "@wrote/write 1.0.2"
-    ],
+  "[6e2746a704c340e76897c9bb8a515253] test/fixture/fork test/temp/output.txt": {
     "stdout": "File has been written (read from cache).\n",
     "stderr": "There has been no errors (read from cache).\n"
   }
