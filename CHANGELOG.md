@@ -1,5 +1,9 @@
 ## 4 April 2019
 
+### [1.23.4](https://github.com/artdecocode/documentary/compare/v1.23.3...v1.23.4)
+
+- [deps] Update `typal`.
+
 ### [1.23.3](https://github.com/artdecocode/documentary/compare/v1.23.2...v1.23.3)
 
 - [deps] Unfix some dependencies.
