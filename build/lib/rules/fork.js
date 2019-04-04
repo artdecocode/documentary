@@ -1,26 +1,17 @@
 const { fork } = require('spawncommand');
-let staticAnalysis = require('static-analysis'); if (staticAnalysis && staticAnalysis.__esModule) staticAnalysis = staticAnalysis.default;
-const { lstat } = require('fs');
 const { c } = require('erte');
-let makePromise = require('makepromise'); if (makePromise && makePromise.__esModule) makePromise = makePromise.default;
 const { resolve } = require('path');
 let resolveDependency = require('resolve-dependency'); if (resolveDependency && resolveDependency.__esModule) resolveDependency = resolveDependency.default;
+let clearR = require('clearr'); if (clearR && clearR.__esModule) clearR = clearR.default;
+let compare = require('@depack/cache'); if (compare && compare.__esModule) compare = compare.default;
 const { codeSurround } = require('..');
 
-const getMtime = async (entry) => {
-  /** @type {import('fs').Stats} */
-  const stat = await makePromise(lstat, entry)
-  const mtime = stat.mtime
-  return mtime.getTime()
-}
-
 const replacement = async function (match, noCache, old, err, lang, m) {
-  const cache = this.getCache('fork')
   const [mod, ...args] = m.split(' ')
 
   const { path: mmod } = await resolveDependency(mod)
   const s = `FORK${err || ''}${lang ? `-${lang}` : ''}: ${c(mmod, 'yellow')} ${
-    args.map(a => c(a, 'grey')).join(' ')}`
+    args.map(a => c(a, 'grey')).join(' ')}`.trim()
 
   if (noCache) {
     this.log(s, noCache ? ':: no cache' : '')
@@ -28,62 +19,36 @@ const replacement = async function (match, noCache, old, err, lang, m) {
     return getOutput(err, stderr, stdout, lang)
   }
 
-  const sa = await staticAnalysis(mod, {
-    shallow: true,
-    soft: true,
-  })
-  const msa = await Promise.all(sa.map(async ({ entry, name, internal, version }) => {
-    if (name) return `${name} ${version}`
-    if (internal) return internal
-    const mtime = await getMtime(entry)
-    return `${entry} ${mtime}`
-  }))
-  const mmtime = await getMtime(mmod)
+  const modules = this.getCache('modules')
 
   let printed = false
-  if (cache) {
-    const record = cache[m]
+  const { hash, mtime, reason, result, currentMtime, md5 } =
+    await compare(mmod, modules, (...a) => {
+      if (!printed) this.log(s)
+      printed = true
+      console.log(...a)
+    })
+  if (!result) {
+    printed = true
+    if (reason == 'NO_CACHE') {
+      this.log(`${s} module has no cache`)
+    } else if (reason == 'MTIME_CHANGE') {
+      this.log(`${s} changed since %s`, currentMtime)
+    }
+    const cacheToWrite = { [mmod]: {
+      'mtime': mtime, 'hash': hash, 'md5': md5,
+    } }
+    await this.addCache('modules', cacheToWrite)
+  } else {
+    const cache = this.getCache('fork')
+    const record = cache[`[${md5}] ${m}`]
     if (record) {
-      if (record.mtime == mmtime) {
-        const added = []
-        const removed = []
-        msa.forEach((mm) => {
-          if (!record.analysis.includes(mm)) {
-            added.push(mm)
-          }
-        })
-        record.analysis.forEach((mm) => {
-          if (!record.analysis.includes(mm)) {
-            removed.push(mm)
-          }
-        })
-        const changed = added.length || removed.length
-        if (!changed) {
-          this.log(s, ':: returning cache')
-          return getOutput(err, record.stderr, record.stdout, lang)
-        }
-        printed = true
-        this.log(s, ':: dependencies changed')
-        added.forEach((mm) => {
-          const [entry, meta] = mm.split(' ')
-          let mmeta = ''
-          if (meta) {
-            mmeta = /^\d+$/.test(meta) ? new Date(parseInt(meta)).toLocaleString() : meta
-          }
-          this.log(c('+', 'green'), entry, mmeta)
-        })
-        removed.forEach((mm) => {
-          const [entry, meta] = mm.split(' ')
-          let mmeta
-          if (meta) {
-            mmeta = /^\d+$/.test(meta) ? new Date(parseInt(meta)).toLocaleString() : meta
-          }
-          this.log(c('-', 'red'), entry, mmeta)
-        })
-      } else {
-        printed = true
-        this.log(s, `:: updated since ${new Date(record.mtime).toLocaleString()}.`)
-      }
+      this.log('%s cached', s)
+      const { 'stderr': stderr, 'stdout': stdout } = record
+      return getOutput(err, stderr, stdout, lang)
+    } else {
+      printed = true
+      this.log('%s arguments not cached', s)
     }
   }
 
@@ -91,7 +56,9 @@ const replacement = async function (match, noCache, old, err, lang, m) {
 
   const { stdout, stderr } = await doFork(old, mod, args)
 
-  const cacheToWrite = makeCache(m, mmtime, msa, stdout, stderr)
+  const cacheToWrite = { [`[${md5}] ${m}`]: {
+    'stdout': stdout, 'stderr': stderr,
+  } }
   await this.addCache('fork', cacheToWrite)
 
   return getOutput(err, stderr, stdout, lang)
@@ -125,24 +92,10 @@ const forkRule = {
   },
 }
 
-       const replaceR = (s) => {
-  const st = s.split('\n').map(l => {
-    const r = l.split('\r')
-    const t = r.reduce((acc, current, i) => {
-      if (!i) return acc
-      const { length } = current
-      const after = acc.slice(length)
-      return `${current}${after}`
-    }, r[0])
-    return t
-  }).join('\n')
-  return st
-}
-
 const getOutput = (err, stderr, stdout, lang) => {
   const res = err ? stderr : stdout
   const r = res.trim().replace(/\033\[.*?m/g, '')
-  return codeSurround(replaceR(r), lang)
+  return codeSurround(clearR(r), lang)
 }
 
 /**
@@ -160,5 +113,3 @@ const makeCache = (m, mtime, analysis, stdout, stderr) => {
 }
 
 module.exports=forkRule
-
-module.exports.replaceR = replaceR
