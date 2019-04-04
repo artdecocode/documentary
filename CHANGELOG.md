@@ -1,3 +1,10 @@
+## 4 April 2019
+
+### [1.23.3](https://github.com/artdecocode/documentary/compare/v1.23.2...v1.23.3)
+
+- [deps] Unfix some dependencies.
+- [deps] Move functionality into `clearr` and `@depack/cache`.
+
 ## 30 March 2019
 
 ### [1.23.2](https://github.com/artdecocode/documentary/compare/v1.23.1...v1.23.2)
