@@ -35,7 +35,7 @@ __<a name="type-sessionconfig">`SessionConfig`</a>__: Options to setup `koa-sess
 %TYPEDEF test/fixture/typedef/types.xml%
 
 /* expected */
-`import('http').ServerResponse` __<a name="type-serverresponse">`ServerResponse`</a>__
+`import('http').ServerResponse` __<a name="type-httpserverresponse">`http.ServerResponse`</a>__
 
 `(res: ServerResponse) => any` __<a name="type-setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 

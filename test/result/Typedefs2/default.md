@@ -10,7 +10,23 @@
 __[`test`](t-type)__
 
 ```table
-[["Name","Type","Description"],["prop","_*_","TestProp"],["__prop*__","_*_","TestProp2"]]
+[
+  [
+    "Name",
+    "Type",
+    "Description"
+  ],
+  [
+    "prop",
+    "_*_",
+    "TestProp"
+  ],
+  [
+    "__prop*__",
+    "_*_",
+    "TestProp2"
+  ]
+]
 ```
 /**/
 
@@ -29,7 +45,18 @@ __[`Type`](t-type)__
 __[`Type2`](t-type)__
 
 ```table
-[["Name","Type","Description"],["__prop*__","_string \\| [Type](#type-type)_","A property."]]
+[
+  [
+    "Name",
+    "Type",
+    "Description"
+  ],
+  [
+    "__prop*__",
+    "_string \\| [Type](#type-type)_",
+    "A property."
+  ]
+]
 ```
 /**/
 
@@ -54,7 +81,18 @@ __[`Type4`](t-type)__
 __[`Type5`](t-type)__
 
 ```table
-[["Name","Type","Description"],["__prop*__","_Promise.&lt;[Type](#type-type) \\| [Type2](#type-type2)&gt; \\| [Type3](#type-type3) \\| [Type4](#type-type4)_","A property."]]
+[
+  [
+    "Name",
+    "Type",
+    "Description"
+  ],
+  [
+    "__prop*__",
+    "_Promise.&lt;[Type](#type-type) \\| [Type2](#type-type2)&gt; \\| [Type3](#type-type3) \\| [Type4](#type-type4)_",
+    "A property."
+  ]
+]
 ```
 /**/
 
@@ -68,7 +106,7 @@ __[`Type5`](t-type)__
 </types>
 
 /* expected */
-[`import('vm').Test`](https://nodejs.org/api/vm.html#Test) __[`Test`](l-type)__
+[`import('vm').Test`](https://nodejs.org/api/vm.html#Test) __[`vm.Test`](l-type)__
 /**/
 
 ## can insert example - WIP
@@ -88,6 +126,22 @@ __[`Type5`](t-type)__
 __[`Return`](t-type)__
 
 ```table
-[["Name","Type","Description"],["__body*__","_string \\| object \\| Buffer_","The return from the server."],["__statusMessage*__","_string_","The status message set by the server.\n      &lt;e&gt;OK&lt;/e>"]]
+[
+  [
+    "Name",
+    "Type",
+    "Description"
+  ],
+  [
+    "__body*__",
+    "_string \\| object \\| Buffer_",
+    "The return from the server."
+  ],
+  [
+    "__statusMessage*__",
+    "_string_",
+    "The status message set by the server.\n      &lt;e&gt;OK&lt;/e>"
+  ]
+]
 ```
 /**/
