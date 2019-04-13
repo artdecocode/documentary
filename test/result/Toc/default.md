@@ -60,6 +60,14 @@
 
 /**/
 
+// filters out markdown from links
+## _Title_ World
+
+/* expected */
+- [_Title_ World](#title-world)
+
+/**/
+
 // supports titles with explicit level
 
 ## Title
