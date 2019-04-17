@@ -26,7 +26,8 @@
     "src": "alamode src -o build -i bin/index.js -s",
     "jsx": "alamode build/components -o build/components -s -j -p",
     "b2": "alamode build/components -o build/components -s",
-    "build": "yarn-s b doc"
+    "build": "yarn-s b doc",
+    "args": "argufy types/arguments.xml -o src/bin/get-args.js"
   },
   "bin": {
     "doc": "build/bin/doc.js",
@@ -106,6 +107,7 @@
     "spawncommand": "^2.1.2",
     "static-analysis": "^1.4.0",
     "typal": "^1.3.0",
+    "usually": "^1.2.0",
     "which-stream": "^1.0.1"
   }
 }

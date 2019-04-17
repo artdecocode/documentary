@@ -1,0 +1,49 @@
+<arguments>
+  <arg command name="source">
+    The documentary file or directory to process.
+  </arg>
+  <arg string name="output" short="o">
+    Where to save the output (e.g., `README.md`).
+    If not passed, prints to `stdout`.
+  </arg>
+  <arg boolean name="toc" short="t">
+    Just print the table of contents.
+  </arg>
+  <arg boolean name="reverse" short="r">
+    Print files in reverse order. Useful for blogs.
+  </arg>
+  <arg boolean name="h1" short="h1">
+    Add `h1` headings to the Table of Contents.
+  </arg>
+  <arg boolean name="watch" short="w">
+    Watch files for changes and recompile the documentation.
+  </arg>
+  <arg boolean name="no-cache" short="c">
+    Disable forks' cache for the run. The new output of
+    forks will be updated in cache so that it can be used
+    next time without `-c` arg.
+  </arg>
+  <arg boolean name="namespace" short="n">
+    The root namespace: types within it will not be printed
+    with their namespace prefix.
+  </arg>
+  <arg string name="push" short="p">
+    Starts _Documentary_ in watch mode. After changes are
+    detected, the commit is undone, and new one is made over
+    it, forcing git push.
+  </arg>
+  <arg boolean name="generate" short="g">
+    [Deprecated] Places typedefs definitions into JavaScript
+    files from types.xml. Use `typal` instead.
+  </arg>
+  <arg boolean name="extract" short="e">
+    [Deprecated] Migrates existing typedefs from a JavaScript
+    file into types.xml. Use `typal -m` instead.
+  </arg>
+  <arg boolean name="version" short="v">
+    Prints the current version.
+  </arg>
+  <arg boolean name="help" short="h">
+    Shows the usage information.
+  </arg>
+</arguments>
