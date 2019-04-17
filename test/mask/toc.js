@@ -5,7 +5,7 @@ import { getTypedefs } from '../../src/lib/Typedefs'
 import { getStream } from '../../src/lib'
 import Documentary from '../../src/lib/Documentary'
 
-const ts = makeTestSuite('test/result/Toc/default', {
+export default makeTestSuite('test/result/Toc/default', {
   getReadable(input) {
     const documentary = new Documentary({ noCache: true })
     const toc = new Toc({ documentary })
@@ -54,5 +54,4 @@ const macros = makeTestSuite('test/result/Toc/macros', {
   splitRe: /^\/\/ /gm,
 })
 
-export default ts
 export { h1, typedefs, macros }

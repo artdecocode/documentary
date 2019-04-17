@@ -19,12 +19,6 @@ const T = {
     snapshotSource('generates correct markdown', 'md')
     return s.trim()
   },
-  async 'generates JSDoc to stdout'({ doc, generateImports }, { snapshotExtension }) {
-    const { stdout } = await doc(generateImports, '-g', '-')
-    const res = stdout.trim()
-    snapshotExtension('js')
-    return res
-  },
 }
 
 export default T
