@@ -78,15 +78,6 @@ This section has a quick look at the best features available in _Documentary_ an
   * [XML Schema](#xml-schema)
   * [Migration](#migration)
 - [CLI](#cli)
-  * [Output Location](#output-location)
-  * [Only TOC](#only-toc)
-  * [Generate Types](#generate-types)
-  * [Extract Types](#extract-types)
-  * [Watch Mode](#watch-mode)
-  * [Automatic Push](#automatic-push)
-  * [h1 In Toc](#h1-in-toc)
-  * [Reverse Order](#reverse-order)
-  * [Disable Cache](#disable-cache)
   * [`NODE_DEBUG=doc`](#node_debugdoc)
 - [API](#api)
   * [`Toc` Stream](#toc-stream)
@@ -1266,35 +1257,10 @@ export default configure
 The file is then processed with [`doc src/config-static.js -g`](#generate-types) command and updated in place, unless `-` is given as an argument, which will print the output to _stdout_, or the path to the output file is specified. After the processing is done, the source code will be transformed to include all types specified in the XML file. This routine can be repeated whenever types are updated.
 
 ```js
-/* src/config-static.js */
-import Static from 'koa-static'
+Typal: smart typedefs https://artdecocode.com/typal/
+Please use typal (included w/ Documentary):
 
-/**
- * Configure the middleware.
- */
-function configure(config) {
-  const middleware = Static(config)
-  return middleware
-}
-
-/* documentary types/static.xml */
-/**
- * @typedef {import('http').ServerResponse} ServerResponse
- *
- * @typedef {(res: ServerResponse) => any} SetHeaders Function to set custom headers on response.
- *
- * @typedef {{ location: string, rights: number }[]} RightsConfig Configuration of read and write access rights.
- *
- * @typedef {Object} StaticConfig Options to setup `koa-static`.
- * @prop {string} root Root directory string.
- * @prop {number} [maxage=0] Browser cache max-age in milliseconds. Default `0`.
- * @prop {boolean} [hidden=false] Allow transfer of hidden files. Default `false`.
- * @prop {string} [index="index.html"] Default file name. Default `index.html`.
- * @prop {SetHeaders} [setHeaders] Function to set custom headers on response.
- * @prop {Promise.<RightsConfig>} [rightsPromise] The promise which will be resolved with access rights to files.
- */
-
-export default configure
+typal example/typedef-raw.js [--closure]
 ```
 
 #### Expanded `@param`
@@ -1370,7 +1336,7 @@ or a single marker to include all types in order in which they appear in the `xm
 
 and embed resulting type definitions (with the imported type linked to the Node.js documentation due to its `link` attribute):
 
-[`import('http').ServerResponse`](https://nodejs.org/api/http.html#http_class_http_serverresponse) __<a name="type-serverresponse">`ServerResponse`</a>__
+[`import('http').ServerResponse`](https://nodejs.org/api/http.html#http_class_http_serverresponse) __<a name="type-httpserverresponse">`http.ServerResponse`</a>__
 
 `(res: ServerResponse) => any` __<a name="type-setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 
@@ -1497,21 +1463,10 @@ export default example
 <td colspan="2">
 
 ```js
-async function example() {
-  process.stdout.write('example\n')
-}
+Typal: smart typedefs https://artdecocode.com/typal/
+Please use typal (included w/ Documentary):
 
-/* documentary types/import.xml */
-/**
- * @typedef {import('http').IncomingMessage} IncomingMessage
- * @typedef {import('http').ServerResponse} ServerResponse
- * @typedef {import('koa-multer').StorageEngine} StorageEngine
- * @typedef {import('koa-multer').File} File
- *
- * @typedef {(f: File) => void} Function A function to save a file.
- */
-
-export default example
+typal example/generate-imports.js [--closure]
 ```
 </td>
 </tr>
@@ -1620,27 +1575,10 @@ export default test
 When a description ends with <code>Default &#96;value&#96;</code>, the default value of a type can also be parsed from there.
 
 ```xml
-<types>
-  <import name="IncomingMessage" from="http" />
-  <type name="Test" type="(m: IncomingMessage)" desc="This is test function." />
-  <type name="SessionConfig" desc="Description of Session Config.">
-    <prop string name="key">
-      cookie key.
-    </prop>
-    <prop type="number|'session'" name="maxAge" default="86400000">
-      maxAge in ms. `session` will result in a cookie that expires when session/browser is closed.
-    </prop>
-    <prop boolean name="overwrite" default="true">
-      Can overwrite or not.
-    </prop>
-    <prop boolean name="httpOnly" default="true">
-      httpOnly or not or not.
-    </prop>
-    <prop boolean name="renew" default="false">
-      Renew session when session is nearly expired, so we can always keep user logged in.
-    </prop>
-  </type>
-</types>
+Typal: smart typedefs https://artdecocode.com/typal/
+Please use typal (included w/ Documentary):
+
+typal example/extract.js -m
 ```
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/22.svg?sanitize=true"></a></p>
@@ -1650,25 +1588,85 @@ When a description ends with <code>Default &#96;value&#96;</code>, the default v
 The program is used from the CLI (or `package.json` script).
 
 ```sh
-doc README-source.md [-o README.md] [-tgewp]
+doc source [-o output] [-trwcn] [-p "commit message"] [-h1] [-eg] [-vh]
 ```
 
 The arguments it accepts are:
 
+<table>
+  <tr><th>Argument</th><th>Short</th><th>Description</th></tr>
+  <tr><td>source</td><td></td><td>
+    The documentary file or directory to process.
+  </td>
+  </tr>
+  <tr>
+    <td>--output</td>
+    <td>-o</td>
+    <td>
+      Where to save the output (e.g., <code>README.md</code>).
+          If not passed, prints to <code>stdout</code>.
+    </td>
+  </tr>
+  <tr><td>--toc</td><td>-t</td><td>Just print the table of contents.</td></tr>
+  <tr><td>--reverse</td><td>-r</td><td>
+    Print files in reverse order. Useful for blogs.
+  </td>
+  </tr>
+  <tr><td>--h1</td><td>-h1</td><td>
+    Add <code>h1</code> headings to the Table of Contents.
+  </td>
+  </tr>
+  <tr><td>--watch</td><td>-w</td><td>
+    Watch files for changes and recompile the documentation.
+  </td>
+  </tr>
+  <tr>
+    <td>--no-cache</td>
+    <td>-c</td>
+    <td>
+      Disable forks' cache for the run. The new output of
+          forks will be updated in cache so that it can be used
+          next time without <code>-c</code> arg.
+    </td>
+  </tr>
+  <tr>
+    <td>--namespace</td>
+    <td>-n</td>
+    <td>
+      The root namespace: types within it will not be printed
+          with their namespace prefix.
+    </td>
+  </tr>
+  <tr>
+    <td>--push</td>
+    <td>-p</td>
+    <td>
+      Starts <em>Documentary</em> in watch mode. After changes are
+          detected, the commit is undone, and new one is made over
+          it, forcing git push.
+    </td>
+  </tr>
+  <tr>
+    <td>--generate</td>
+    <td>-g</td>
+    <td>
+      [Deprecated] Places typedefs definitions into JavaScript
+          files from types.xml. Use <code>typal</code> instead.
+    </td>
+  </tr>
+  <tr>
+    <td>--extract</td>
+    <td>-e</td>
+    <td>
+      [Deprecated] Migrates existing typedefs from a JavaScript
+          file into types.xml. Use <code>typal -m</code> instead.
+    </td>
+  </tr>
+  <tr><td>--version</td><td>-v</td><td>Prints the current version.</td></tr>
+  <tr><td>--help</td><td>-h</td><td>Shows the usage information.</td></tr>
+</table>
 
-|         Flag          |       Meaning        |                                                                                                Description                                                                                                 |
-| --------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `-o path`             | <a name="output-location">Output Location</a> | Where to save the processed `README` file. If not specified, the output is written to the `stdout`.                                        |
-| `-t`                  | <a name="only-toc">Only TOC</a>        | Only extract and print the table of contents.                                                                                                                                                              |
-| `-g [path]`           | <a name="generate-types">Generate Types</a>  | Insert `@typedef` _JSDoc_ into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
-| `-e [path]`           | <a name="extract-types">Extract Types</a>   | Insert `@typedef` JSDoc into JavaScript files. When no path is given, the files are updated in place, and when `-` is passed, the output is printed to _stdout_. |
-| `-w`                  | <a name="watch-mode">Watch Mode</a>      | Watch mode: re-run the program when changes to the source file are detected.                                                                                                                               |
-| `-p 'commit message'` | <a name="automatic-push">Automatic Push</a>  | Watch + push: automatically push changes to a remote git branch by squashing them into a single commit.                                                                                                    |
-| `-h1`                 | <a name="h1-in-toc">h1 In Toc</a>       | Include `h1` headers in the table of contents.                                                                                                                         |
-| `-r`                  | <a name="reverse-order">Reverse Order</a>   | Reverse the output order of files, such as that `2.md` will come before `1.md`. This could be useful when writing blogs. The `index.md` and `footer.md` files will still come first and last respectively. |
-| `-c`                  | <a name="disable-cache">Disable Cache</a>   | Disables caching for all forks.                                                                                                                                                                            |
-
-When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print debug information, e.g.,
+When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print processing information, e.g.,
 
 ```
 DOC 80734: stripping comment
