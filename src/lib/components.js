@@ -8,7 +8,7 @@ export const makeComponentRe = (key) => {
   return re
 }
 
-function loadComponents(components) {
+function loadComponents(components, options = {}) {
   const compsReplacements = Object.keys(components)
     .map((key) => {
       const instance = components[key]
@@ -17,14 +17,19 @@ function loadComponents(components) {
         try {
           const [{ content, props }] = rexml(key, Component)
           let pretty = true
+          let lineLength = 100
           const hyperResult = await instance({
             ...props,
             children: content,
-            disablePretty(){ pretty = false },
+            documentary: {
+              setLineLength(l) { lineLength = l },
+              disablePretty(){ pretty = false },
+              ...options,
+            },
           })
           if (typeof hyperResult == 'string')
             return hyperResult
-          const r = render(hyperResult, { pretty, lineLength: 100 })
+          const r = render(hyperResult, { pretty, lineLength })
           const f = r.replace(/^/gm, pad)
           return f
         } catch (err) {
