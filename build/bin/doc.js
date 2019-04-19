@@ -1,41 +1,37 @@
 #!/usr/bin/env node
-const { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _argv, _generate, _noCache } = require('./get-args');
+const { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _generate, _noCache, _namespace, _help, argsConfig } = require('./get-args');
 const { watch } = require('fs');
 const { debuglog } = require('util');
 const { lstatSync } = require('fs');
 let alamode = require('alamode'); if (alamode && alamode.__esModule) alamode = alamode.default;
 const { dirname } = require('path');
-const generateTypedef = require('./run/generate');
-const extractTypedef = require('./run/extract');
+let usually = require('usually'); if (usually && usually.__esModule) usually = usually.default;
+const { reduceUsage } = require('argufy');
 const doc = require('./run/doc');
-const { version } = require('../../package.json');
 const catcher = require('./catcher');
 const { gitPush } = require('../lib');
-
-const preact = dirname(require.resolve('preact/package.json'))
-alamode({
-  pragma: `const { h } = require("${preact}");`,
-})
 
 const LOG = debuglog('doc')
 const DEBUG = /doc/.test(process.env['NODE_DEBUG'])
 
 if (_version) {
-  console.log(version)
+  console.log(require('../../package.json').version)
   process.exit(0)
+} else if (_help) {
+  const u = usually({
+    description: 'Documentation generator https://artdecocode.com/documentary',
+    usage: reduceUsage(argsConfig),
+    line: 'doc source [-o output] [-trwcn] [-p "commit message"] [-h1] [-eg] [-vh]',
+    example: 'doc documentary -o README.md',
+  })
+  console.log(u)
+  process.exit(1)
 }
 
-if (process.argv.find(a => a == '-p') && !_push) {
-  catcher('Please specify a commit message.')
-}
-if (process.argv.find(a => a == '-e') && !_extract) {
-  catcher('Please specify where to extract typedefs (- for stdout).')
-}
-
-let generate = _generate
-if (_argv.find(g => g == '-g') && !_generate) {
-  generate = _source
-}
+const preact = dirname(require.resolve('preact/package.json'))
+alamode({
+  pragma: `const { h } = require("${preact}");`,
+})
 
 if (_source) {
   try {
@@ -48,20 +44,20 @@ if (_source) {
 
 (async () => {
   if (_extract) {
-    return await extractTypedef({
-      source: _source,
-      destination: _extract,
-    })
+    console.log('Typal: smart typedefs https://artdecocode.com/typal/')
+    console.log('Please use typal (included w/ Documentary):')
+    console.log('\ntypal %s -m', _source)
+    return
   }
-  if (generate) {
-    return await generateTypedef({
-      source: _source,
-      destination: generate,
-    })
+  if (_generate) {
+    console.log('Typal: smart typedefs https://artdecocode.com/typal/')
+    console.log('Please use typal (included w/ Documentary):')
+    console.log('\ntypal %s [--closure]', _source)
+    return
   }
   const docOptions = {
     source: _source, output: _output, justToc: _toc, h1: _h1,
-    reverse: _reverse, noCache: _noCache,
+    reverse: _reverse, noCache: _noCache, rootNamespace: _namespace,
   }
   try {
     await doc(docOptions)

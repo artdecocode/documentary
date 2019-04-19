@@ -13,24 +13,22 @@ const replacement = async function (match, noCache, old, err, lang, m) {
   const s = `FORK${err || ''}${lang ? `-${lang}` : ''}: ${c(mmod, 'yellow')} ${
     args.map(a => c(a, 'grey')).join(' ')}`.trim()
 
-  if (noCache) {
-    this.log(s, noCache ? ':: no cache' : '')
-    const { stdout, stderr } = await doFork(old, mod, args)
-    return getOutput(err, stderr, stdout, lang)
-  }
+  let printed = false
 
   const modules = this.getCache('modules')
 
-  let printed = false
+  if (noCache) delete modules[mmod]
   const { hash, mtime, reason, result, currentMtime, md5 } =
     await compare(mmod, modules, (...a) => {
       if (!printed) this.log(s)
       printed = true
       console.log(...a)
     })
-  if (!result) {
+  if (noCache || !result) {
     printed = true
-    if (reason == 'NO_CACHE') {
+    if (noCache) { // saving cache for next time
+      this.log(s, ':: no cache')
+    } else if (reason == 'NO_CACHE') {
       this.log(`${s} module has no cache`)
     } else if (reason == 'MTIME_CHANGE') {
       this.log(`${s} changed since %s`, currentMtime)
@@ -70,7 +68,10 @@ const doFork = async (old, mod, args) => {
     execArgv: [],
     stdio: 'pipe',
     ...(old ? {} : {
-      env: { DOCUMENTARY_REQUIRE: resolve(mod) },
+      env: {
+        DOCUMENTARY_REQUIRE: resolve(mod),
+        ...process.env,
+      },
     }),
   })
   const { stdout, stderr } = await promise
@@ -78,12 +79,15 @@ const doFork = async (old, mod, args) => {
 }
 
 const forkRule = {
-  re: /%([!_]+)?FORK(ERR)?(?:-(\w+))? (.+)%/mg,
-  async replacement(match, service, err, lang, m) {
+  re: /( *)%([!_]+)?FORK(ERR)?(?:-(\w+))? (.+)%/mg,
+  async replacement(match, ws, service, err, lang, m) {
     const noCache = /!/.test(service) || this.noCache
     const old = /_/.test(service)
     try {
-      return await replacement.call(this, match, noCache, old, err, lang, m)
+      let res =
+        await replacement.call(this, match, noCache, old, err, lang, m)
+      if (ws) res = res.replace(/^/gm, ws)
+      return res
     } catch (e) {
       this.log(c(`FORK ${m} error`, 'red'))
       this.log(e)

@@ -1,109 +1,162 @@
 let argufy = require('argufy'); if (argufy && argufy.__esModule) argufy = argufy.default;
 
-const args = argufy({
-  'source': { command: true },
-  'toc': { short: 't', boolean: true },
-  'reverse': { short: 'r', boolean: true,
+       const argsConfig = {
+  'source': {
+    description: 'The documentary file or directory to process.',
+    command: true,
+    default: 'documentary',
+  },
+  'output': {
+    description: 'Where to save the output (e.g., `README.md`).\nIf not passed, prints to `stdout`.',
+    short: 'o',
+  },
+  'toc': {
+    description: 'Just print the table of contents.',
+    boolean: true,
+    short: 't',
+  },
+  'reverse': {
     description: 'Print files in reverse order. Useful for blogs.',
+    boolean: true,
+    short: 'r',
   },
-  'h1': { short: 'h1', boolean: true,
-    description: 'Process h1 headings',
+  'h1': {
+    description: 'Add `h1` headings to the Table of Contents.',
+    boolean: true,
+    short: 'h1',
   },
-  'watch': { short: 'w', boolean: true },
-  'output': 'o',
-  'no-cache': { short: 'c', boolean: true },
-  'push': { short: 'p' },
-  'generate': { short: 'g',
-    description: 'Process a JavaScript file to include typedef documentation in their source code. The target file should contain `/* documentary path/to/types.xml */` marker in place where types are to be inserted.',
+  'watch': {
+    description: 'Watch files for changes and recompile the documentation.',
+    boolean: true,
+    short: 'w',
   },
-  'version': { short: 'v', boolean: true },
-  'extract': { short: 'e',
-    description: 'Extract @typedef JSDoc comments and place them in a file.',
+  'no-cache': {
+    description: 'Disable forks\' cache for the run. The new output of\nforks will be updated in cache so that it can be used\nnext time without `-c` arg.',
+    boolean: true,
+    short: 'c',
   },
-})
+  'namespace': {
+    description: 'The root namespace: types within it will not be printed\nwith their namespace prefix.',
+    boolean: true,
+    short: 'n',
+  },
+  'push': {
+    description: 'Starts _Documentary_ in watch mode. After changes are\ndetected, the commit is undone, and new one is made over\nit, forcing git push.',
+    short: 'p',
+  },
+  'generate': {
+    description: '[Deprecated] Places typedefs definitions into JavaScript\nfiles from types.xml. Use `typal` instead.',
+    boolean: true,
+    short: 'g',
+  },
+  'extract': {
+    description: '[Deprecated] Migrates existing typedefs from a JavaScript\nfile into types.xml. Use `typal -m` instead.',
+    boolean: true,
+    short: 'e',
+  },
+  'version': {
+    description: 'Prints the current version.',
+    boolean: true,
+    short: 'v',
+  },
+  'help': {
+    description: 'Shows the usage information.',
+    boolean: true,
+    short: 'h',
+  },
+}
+const args = argufy(argsConfig)
 
 /**
- * The entry file to compile.
- * @type {string}
+ * The documentary file or directory to process. Default `documentary`.
  */
-       const _source = args['source']
+       const _source = /** @type {string} */ (args['source']) || 'documentary'
 
 /**
- * Only generate the table of contents.
- * @type {boolean}
+ * Where to save the output (e.g., `README.md`).
+    If not passed, prints to `stdout`.
  */
-       const _toc = args['toc']
+       const _output = /** @type {string} */ (args['output'])
 
 /**
- * Compile documentation in reverse order.
- * @type {boolean}
+ * Just print the table of contents.
  */
-       const _reverse = args['reverse']
+       const _toc = /** @type {boolean} */ (args['toc'])
 
 /**
- * Process h1 headings.
- * @type {boolean}
+ * Print files in reverse order. Useful for blogs.
  */
-       const _h1 = args['h1']
+       const _reverse = /** @type {boolean} */ (args['reverse'])
 
 /**
- * Watch for changes.
- * @type {boolean}
+ * Add `h1` headings to the Table of Contents.
  */
-       const _watch = args['watch']
+       const _h1 = /** @type {boolean} */ (args['h1'])
 
 /**
- * The output README file.
- * @type {string}
+ * Watch files for changes and recompile the documentation.
  */
-       const _output = args['output']
+       const _watch = /** @type {boolean} */ (args['watch'])
 
 /**
- * Push changes to GitHub after each change.
- * @type {boolean}
- * @todo Update examples and other files referenced in the code.
+ * Disable forks' cache for the run. The new output of
+    forks will be updated in cache so that it can be used
+    next time without `-c` arg.
  */
-       const _push = args['push']
+       const _noCache = /** @type {boolean} */ (args['no-cache'])
 
 /**
- * Generate the JSDoc documentation of types.
- * @type {boolean}
+ * The root namespace: types within it will not be printed
+    with their namespace prefix.
  */
-       const _generate = args['generate']
+       const _namespace = /** @type {boolean} */ (args['namespace'])
 
 /**
- * Print the version information and quit.
- * @type {boolean}
+ * Starts _Documentary_ in watch mode. After changes are
+    detected, the commit is undone, and new one is made over
+    it, forcing git push.
  */
-       const _version = args['version']
+       const _push = /** @type {string} */ (args['push'])
 
 /**
- * Extract types from a JS file and place them into types.xml (for migration).
- * @type {boolean}
+ * [Deprecated] Places typedefs definitions into JavaScript
+    files from types.xml. Use `typal` instead.
  */
-       const _extract = args['extract']
+       const _generate = /** @type {boolean} */ (args['generate'])
 
 /**
- * Disable cache.
- * @type {boolean}
+ * [Deprecated] Migrates existing typedefs from a JavaScript
+    file into types.xml. Use `typal -m` instead.
  */
-       const _noCache = args['no-cache']
+       const _extract = /** @type {boolean} */ (args['extract'])
 
 /**
- * Any additional arguments.
- * @type {Array<string>}
+ * Prints the current version.
  */
-       const _argv = args._argv
+       const _version = /** @type {boolean} */ (args['version'])
 
+/**
+ * Shows the usage information.
+ */
+       const _help = /** @type {boolean} */ (args['help'])
+
+/**
+ * The additional arguments passed to the program.
+ */
+       const _argv = /** @type {!Array<string>} */ (args._argv)
+
+module.exports.argsConfig = argsConfig
 module.exports._source = _source
+module.exports._output = _output
 module.exports._toc = _toc
 module.exports._reverse = _reverse
 module.exports._h1 = _h1
 module.exports._watch = _watch
-module.exports._output = _output
+module.exports._noCache = _noCache
+module.exports._namespace = _namespace
 module.exports._push = _push
 module.exports._generate = _generate
-module.exports._version = _version
 module.exports._extract = _extract
-module.exports._noCache = _noCache
+module.exports._version = _version
+module.exports._help = _help
 module.exports._argv = _argv

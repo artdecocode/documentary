@@ -1,20 +1,6 @@
-const { debuglog } = require('util');
-const LOG = debuglog('doc')
-
-       const typedefMdRe = /^%TYPEDEF (.+?)(?: (.+?))?%$/mg
-
 /**
- * This rule is used to used to parse a typedefs XML file and place the definition of a type into documentation.
- * @todo Cache extracted types from XML files.
- * @type {{re: RegExp, replacement: AsyncReplacer}}
+ * Finds the `%TYPEDEF types.xml TypeName%` marker.
  */
-const typedefMdRule = {
-  re: typedefMdRe,
-  async replacement(match, location, typeName) {
-
-  },
-}
-
-module.exports=typedefMdRule
+       const typedefMdRe = /^%TYPEDEF (.+?)(?: (.+?))?%$/mg
 
 module.exports.typedefMdRe = typedefMdRe

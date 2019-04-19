@@ -7,7 +7,7 @@ import { codeSurround } from '../lib'
  * @param {ShellProps} props Options for the Shell component. TODO: pass options.
  * @param {string} [props.command] The command to execute using the `child_process`. If the command is not passed, the children will be used to pass to `exec`, e.g., `(echo abc; sleep 1; echo def; sleep 1; echo ghi) | node consume.js`.
  * @param {string} [props.language="sh"] The markdown language of the output. Default `sh`.
- * @param {boolean} [props.err=false] Whether to print SDTERR instead of STDOUT (todo: make print both). Default `false`.
+ * @param {boolean} [props.err=false] Whether to print STDERR instead of STDOUT (todo: make print both). Default `false`.
  * @param {string} [props.children] The arguments to the program each on new line.
  * @param {boolean} [props.noTrim=false] Whether to disable trim before printing the output. Default `false`.
  * @example
@@ -53,7 +53,7 @@ export default shell
  * @typedef {Object} ShellProps Options for the Shell component. TODO: pass options.
  * @prop {string} [command] The command to execute using the `child_process`. If the command is not passed, the children will be used to pass to `exec`, e.g., `(echo abc; sleep 1; echo def; sleep 1; echo ghi) | node consume.js`.
  * @prop {string} [language="sh"] The markdown language of the output. Default `sh`.
- * @prop {boolean} [err=false] Whether to print SDTERR instead of STDOUT (todo: make print both). Default `false`.
+ * @prop {boolean} [err=false] Whether to print STDERR instead of STDOUT (todo: make print both). Default `false`.
  * @prop {string} [children] The arguments to the program each on new line.
  * @prop {boolean} [noTrim=false] Whether to disable trim before printing the output. Default `false`.
  */

@@ -78,10 +78,14 @@ class ChunkReplaceable extends Replaceable {
         replacement(match, { length: level }, title, position) {
           if (this.skipLine(level)) return match
           const t = getTitle(title)
+          const lt = t.replace(/__(.+?)__/g, '$1')
+            .replace(/\*\*(.+?)\*\*/g, '$1')
+            .replace(/_(.+?)_/g, '$1')
+            .replace(/\*(.+?)\*/g, '$1')
 
           this.emit('title', {
             title: t,
-            link: getLink(t),
+            link: getLink(lt),
             position,
             level,
           })

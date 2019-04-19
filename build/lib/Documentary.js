@@ -56,10 +56,7 @@ const getComponents = (path) => {
       cwd = '.', cacheLocation = join(cwd, '.documentary/cache'), noCache,
       disableDtoc, objectMode = true,
     } = options
-    const hm = getComponents(join(homedir(), '.documentary'))
-    const cm = getComponents(resolve(cwd, '.documentary'))
-    const dm = loadComponents(Components)
-    const components = [...cm, ...hm, ...dm]
+
     // console.log('loaded components %s', components)
     // const tocRule = createTocRule(toc)
 
@@ -86,6 +83,11 @@ const getComponents = (path) => {
         const rule = makePasteRule(marker)
         return rule
       })
+
+    const hm = getComponents(join(homedir(), '.documentary'))
+    const cm = getComponents(resolve(cwd, '.documentary'))
+    const dm = loadComponents(Components, { insertInnerCode })
+    const components = [...cm, ...hm, ...dm]
 
     super([
       cutInnerCode, // don't want other rules being detected inside of inner code, including toc-titles

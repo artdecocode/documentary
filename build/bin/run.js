@@ -17,12 +17,12 @@ const { getTypedefs } = require('../lib/Typedefs');
  */
                async function run(options) {
   const {
-    source, output = '-', reverse, justToc, h1, noCache,
+    source, output = '-', reverse, justToc, h1, noCache, rootNamespace,
   } = options
   const stream = getStream(source, reverse, false)
   // todo: figure out why can't create a pass-through, pipe into it and pause it
 
-  const { types, locations } = await getTypedefs(stream)
+  const { types, locations } = await getTypedefs(stream, rootNamespace)
 
   const stream3 = getStream(source, reverse, true)
   const doc = new Documentary({ locations, types, noCache, objectMode: true })

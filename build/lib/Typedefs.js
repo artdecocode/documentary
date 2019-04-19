@@ -1,10 +1,9 @@
 const { debuglog } = require('util');
 const { Replaceable } = require('restream');
-let extractTags = require('rexml'); if (extractTags && extractTags.__esModule) extractTags = extractTags.default;
 const { collect } = require('catchment');
 const { typedefMdRe } = require('./rules/typedef-md');
 const { read } = require('.');
-const { Type } = require('typal');
+const { Type, parseFile } = require('typal');
 const { codeRe, commentRule } = require('./rules');
 const { methodTitleRe } = require('./rules/method-title');
 const { macroRule, useMacroRule } = require('./rules/macros');
@@ -15,7 +14,7 @@ const LOG = debuglog('doc')
  * A Typedefs class will detect and store in a map all type definitions embedded into the documentation.
  */
                class Typedefs extends Replaceable {
-  constructor() {
+  constructor(rootNamespace) {
     super([
       {
         re: methodTitleRe,
@@ -39,20 +38,10 @@ const LOG = debuglog('doc')
           this.addCache(location,typeName)
           try {
             const xml = await read(location)
-            const root = extractTags('types', xml)
-            if (!root.length) throw new Error('XML file should contain root types element.')
+            const { types, imports } = parseFile(xml, rootNamespace)
 
-            const [{ content: Root }] = root
-            const types = extractTags('type', Root)
-            const typedefs = types
-              .map(({ content, props }) => {
-                const type = new Type()
-                type.fromXML(content, props)
-                return type
-              })
-
-            const imports = extractTags('import', Root)
-              .map(({ props: { name, from, desc, link } }) => {
+            const Imports = imports
+              .map(({ name, from, desc, link }) => {
                 const type = new Type()
                 type.fromXML('', {
                   name,
@@ -61,16 +50,17 @@ const LOG = debuglog('doc')
                   import: true,
                   desc,
                   link,
-                })
+                }, from)
                 return type
               })
             this.emit('types', {
               location,
-              types: [...imports, ...typedefs],
+              types: [...Imports, ...types],
               typeName,
             })
           } catch (e) {
             LOG('(%s) Could not process typedef-md: %s', location, e.message)
+            LOG(e.stack)
           }
         },
       },
@@ -104,8 +94,8 @@ const LOG = debuglog('doc')
 //   },
 // },
 
-       const getTypedefs = async (stream) => {
-  const typedefs = new Typedefs()
+       const getTypedefs = async (stream, namespace) => {
+  const typedefs = new Typedefs(namespace)
   stream.pipe(typedefs)
   await collect(typedefs)
   const { types, locations } = typedefs

@@ -7,7 +7,7 @@
       The markdown language of the output.
     </prop>
     <prop opt boolean name="err" default="false">
-      Whether to print SDTERR instead of STDOUT (todo: make print both).
+      Whether to print STDERR instead of STDOUT (todo: make print both).
     </prop>
     <prop string name="children" opt>
       The arguments to the program each on new line.
