@@ -5,10 +5,10 @@ Documentary
 
 <a href="https://github.com/artdecocode/documentary"><img src="images/LOGO.svg?sanitize=true" width="150" align="left"></a>
 
-_Documentary_ is a command-line tool and a library to manage documentation of Node.js packages. Due to the fact that there is usually a lot of manual labour involved in creating and keeping up-to-date a README document, such as copying examples and the output they produce, there is a need for software that can help automate the process and focus on what is really important. _Documentary_ serves as a pre-processor of documentation and enhances every area of the task of making available quality docs for Node.js (and other languages) packages for fellow developers.
+_Documentary_ is a command-line tool to manage documentation of _Node.JS_ packages of any size. Due to the fact that there is usually a lot of manual labour involved in creating and keeping up-to-date a README document, such as copying examples and the output they produce, there is a need for software that can help automate the process and focus on what is really important, i.e., documenting the features. _Documentary_ serves as a pre-processor of documentation and enhances every area of the task of making available quality docs for Node.JS (and other languages) packages for fellow developers.
 
 ```sh
-yarn add -DE documentary
+yarn add -D documentary
 ```
 
 %~%
@@ -32,7 +32,7 @@ This section has a quick look at the best features available in _Documentary_ an
   ],
   [
     "*[Forks](#embedding-output)*",
-    "Makes it possible to run an example and embed its `stdout` and `stderr` output directly into documentation.",
+    "Makes it possible to run an example and embed its `stdout` and `stderr` output directly into documentation. Supports `import` and `export` statements without _Babel_. Allows to save cache for faster re-runs.",
     "1. Enhances productivity by eliminating the need to copy and paste the output by hand.<br/>2. Makes sure the output is always up-to-date with the documented one.<br/>3. Will make it visible if a change to the code base lead to a different output (implicit regression testing).<br/>4. Supports optional caching, so that programs don't have to be re-run each time a change to documentation in a different place is made.<br/>5. Forked modules can use **import** and **export** statements natively, making it very easy to document the output of examples written in modern syntax.<br/>6. Ensures that examples are actually working.<br/>7. Can print usage of CLI tools by forking them with `-h` command."
   ],
   [

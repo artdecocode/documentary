@@ -27,7 +27,7 @@ Usage:
 Executes a command as if by the user from the terminal, i.e., `$ echo example` and shows its output after printing the command like
 
 ````sh
-```sh
+```{language}
 $ {command}
 ```
 ```{language = sh}
@@ -49,14 +49,54 @@ The _shell_ component can be used to print output of a complex unix expression. 
 </shell>
 ```
 
-_Result_:
-
 <table>
+<tr><th>Result Embedded Into README</th></tr>
+<tr/>
 <tr><td>
 <shell>
   (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node
 </shell>
 </th></td>
+</table>
+
+%~ width="20"%
+
+#### `<`argufy`>`
+
+This component is used together with _Argufy_ package which keeps arguments to command-line programs in an XML file, and allows to generate JS to extract them from `process.argv` easily and in _Google Closure Compiler_-compatible way. _Documentary_ allows to place the table with all arguments defined in the `arguments.xml` file by using `<argufy>types/arguments.xml</argufy>` marker. It's child is the location of the arguments file, and if not given, it will default to `types/arguments.xml`. If an `arg` element had `toc` property, it will also be liked to the ToC using a toc-title. [See the table](#cli) generated for _Documentary_ for an example of how the documentation of CLI arguments will look like.
+
+%~ width="20"%
+
+#### `<`md2html`>`
+
+Converts the markdown with `_`/`__`/`*`/`**`/<code>`</code> into html. The main use of this widget is to be able to write tables with markdown and avoid having a whitespace at the bottom of the table row:
+
+```html
+<table>
+<tr><td>
+
+  `Hello World`: _notice_ the padding at the **bottom** of this row.
+</td></tr>
+<tr><td>
+<md2html>
+
+  `Markdown 2 HTML`: _the text_ has been updated with the **md2html** component.
+</md2html>
+</td></tr>
+</table>
+```
+
+<table>
+<tr><td>
+
+  `Hello World`: _notice_ the padding at the **bottom** of this row.
+</td></tr>
+<tr><td>
+<md2html>
+
+  `Markdown 2 HTML`: _the text_ has been updated with the **md2html** component.
+</md2html>
+</td></tr>
 </table>
 
 %~%
