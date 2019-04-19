@@ -18,10 +18,11 @@ const parse = (xml) => {
     'multiple': multiple,
     'short': short,
     'toc': toc,
+    'default': def,
   } }) => {
     return {
       description: description.trim(),
-      command, boolean, number, multiple, short, name, toc,
+      command, boolean, number, multiple, short, name, toc, def,
     }
   })
   return args
@@ -40,9 +41,10 @@ const Argufy = async (props) => {
   const xml = await read(children)
   const args = parse(xml)
   const hasShort = args.some(({ short }) => short)
-  const trs = args.map(({ command, description, name, short, toc }, i) => {
+  const trs = args.map(({ command, description, name, short, toc, def }, i) => {
     const n = command ? name : `--${name}`
     const nn = toc ? `[${n}](t)` : n
+    if (def) description += ` Default \`${def}\`.`
     const d = Md2Html({ children: description, documentary })
     return (<tr key={i}>
       <td>{nn}</td>
