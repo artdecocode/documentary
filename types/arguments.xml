@@ -1,5 +1,5 @@
 <arguments>
-  <arg command name="source">
+  <arg command name="source" default="documentary">
     The documentary file or directory to process.
   </arg>
   <arg string name="output" short="o">

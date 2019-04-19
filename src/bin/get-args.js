@@ -4,6 +4,7 @@ export const argsConfig = {
   'source': {
     description: 'The documentary file or directory to process.',
     command: true,
+    default: 'documentary',
   },
   'output': {
     description: 'Where to save the output (e.g., `README.md`).\nIf not passed, prints to `stdout`.',
@@ -41,7 +42,6 @@ export const argsConfig = {
   },
   'push': {
     description: 'Starts _Documentary_ in watch mode. After changes are\ndetected, the commit is undone, and new one is made over\nit, forcing git push.',
-    boolean: true,
     short: 'p',
   },
   'generate': {
@@ -68,9 +68,9 @@ export const argsConfig = {
 const args = argufy(argsConfig)
 
 /**
- * The documentary file or directory to process.
+ * The documentary file or directory to process. Default `documentary`.
  */
-export const _source = /** @type {string} */ (args['source'])
+export const _source = /** @type {string} */ (args['source']) || 'documentary'
 
 /**
  * Where to save the output (e.g., `README.md`).
@@ -116,7 +116,7 @@ export const _namespace = /** @type {boolean} */ (args['namespace'])
     detected, the commit is undone, and new one is made over
     it, forcing git push.
  */
-export const _push = /** @type {boolean} */ (args['push'])
+export const _push = /** @type {string} */ (args['push'])
 
 /**
  * [Deprecated] Places typedefs definitions into JavaScript

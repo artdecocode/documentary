@@ -1279,7 +1279,7 @@ The arguments it accepts are:
 <table>
   <tr><th>Argument</th><th>Short</th><th>Description</th></tr>
   <tr><td>source</td><td></td><td>
-    The documentary file or directory to process.
+    The documentary file or directory to process. Default <code>documentary</code>.
   </td>
   </tr>
   <tr>
