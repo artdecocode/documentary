@@ -63,7 +63,7 @@ This section has a quick look at the best features available in _Documentary_ an
 - [**Replacement Rules**](#replacement-rules)
 - [**Gif Detail**](#gif-detail)
   * [<code>yarn doc</code>](#yarn-doc)
-- [_Typal_: Smart Typedefs](#typal-smart-typedefs)
+- [**_Typal_: Smart Typedefs**](#typal-smart-typedefs)
   * [README placement](#readme-placement)
     * [`SetHeaders`](#type-setheaders)
     * [`RightsConfig`](#type-rightsconfig)
@@ -935,7 +935,7 @@ The actual html placed in the `README` looks like the one below:
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/20.svg?sanitize=true"></a></p>
 
-## _Typal_: Smart Typedefs
+## **_Typal_: Smart Typedefs**
 
 [_Typal_](https://artdecocode.com/typal/) is a package to manage JSDoc typedefs from a separate `types.xml` file (or files). They can then be placed into JavaScript, used to generate _Google Closure Compiler_ externs and embedded into documentation with _Documentary_. When placed in JS, one of the advantages is that it allows to expand function parameters' properties, so that they are better visible from the IDE:
 
