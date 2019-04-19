@@ -30,7 +30,7 @@ if (_version) {
 
 const preact = dirname(require.resolve('preact/package.json'))
 alamode({
-  pragma: `const { h } = require("${preact}");`,
+  pragma: 'const { h } = r'+`equire("${preact}");`,
 })
 
 if (_source) {

@@ -53,11 +53,11 @@
     static-analysis "^1.3.3"
 
 "@depack/detect@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@depack/detect/-/detect-1.0.1.tgz#912a0384f8ba01c9bab3e73bb6c4581783cb3c91"
-  integrity sha512-Kz4YvMdlZTKMw1BGX10iUkQm11AegAaJR9TfbEqOYJApEQqQSKWT6W7JH5KGFbVQvWkOp/06+t68+uKeAlJpmA==
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@depack/detect/-/detect-1.0.2.tgz#79992a37e23bfa5747b328d929f378fba6233d14"
+  integrity sha512-kSE1k+qvBgnfKwU5jVnEOoBY/tYxBz6o1lxzyTqLG8fezY1aeRywq7E91B/jdJ4FMu3HA8osCSG13zw8V76mUg==
   dependencies:
-    mismatch "1.1.0"
+    mismatch "^1.1.1"
 
 "@depack/render@^1.1.4":
   version "1.1.4"
@@ -78,7 +78,7 @@
     "@wrote/read-dir-structure" "^1.0.3"
     makepromise "^3.0.3"
 
-"@wrote/ensure-path@^1.0.6":
+"@wrote/ensure-path@^1.0.6", "@wrote/ensure-path@^1.0.8":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@wrote/ensure-path/-/ensure-path-1.0.8.tgz#68b985c851948dc5094f1019d0b0a979ccf585e9"
   integrity sha512-IlK31uEKPlCTLG9E4WRWW6KqgF6LHOQ6erxdwycIc63Aa/6GwrJZG8mgxebOsPbTkcFyXxfiGzbb5eOZYyq2rA==
@@ -184,7 +184,7 @@ alamode@^1.9.3:
     usually "^1.1.0"
     which-stream "^1.0.1"
 
-argufy@^1.3.3, argufy@^1.4.0, argufy@^1.5.0:
+argufy@^1.3.3, argufy@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/argufy/-/argufy-1.5.0.tgz#a2a6a78d86c8676f24f282aca918f1ccab42dac2"
   integrity sha512-7XUzQd2HTFhGu6lvvKsw3CD2bOkbzeMqg82dZJpGSMOCq7vxRRQzgNogM5zpU0zWK7GrvDL1+UfWlanPaiwovg==
@@ -349,11 +349,6 @@ makepromise@^3.0.3, makepromise@^3.1.0:
   dependencies:
     erotic "^2.1.0"
 
-mismatch@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/mismatch/-/mismatch-1.1.0.tgz#0f5cee695d3afa0f909f87fab34fe9ac63f8c064"
-  integrity sha512-/nVtAFATS/DPGc4qrlNQzNrxg3b64NOwZbhlrEm9tLlGduq54uMCZhlqSF5Kmy/dhQeoPZDu1iCUcOUruGcO3g==
-
 mismatch@^1.1.0, mismatch@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/mismatch/-/mismatch-1.1.1.tgz#db632cf3adc2cf9ba5ae917e1336d2005f40b232"
@@ -369,7 +364,7 @@ paddys@1.1.0:
   resolved "https://registry.yarnpkg.com/paddys/-/paddys-1.1.0.tgz#38f23de14ea0e1af629710fab84f65b3215b3618"
   integrity sha512-cdis3a0TexvTEz12xQ4qBwQ6EwtzNTk9zgdQnBgXOS3QTj8uYv1IWwCJPqPVrUddGV4qvrotz1ijtw90JCUhig==
 
-pedantry@^2.3.1:
+pedantry@^2.3.1, pedantry@^2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/pedantry/-/pedantry-2.3.2.tgz#d31f36e360a466f49a19384b726ba2e7a8bc79b4"
   integrity sha512-dx7nkmHTD/n2jVZmcZ9ciN5nUY2Kei9ZzW7QSSvkpjiuYRJa3Z0hAbKbSF63I9zfyUWJPqJQe8cdH6U99Tx6rw==
@@ -457,7 +452,7 @@ spawncommand@^2.1.2:
   dependencies:
     catchment "^3.2.3"
 
-static-analysis@^1.3.3, static-analysis@^1.4.0:
+static-analysis@^1.3.3, static-analysis@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/static-analysis/-/static-analysis-1.6.0.tgz#fa635d76560cde35d1f92f73441db321ea4f1e3c"
   integrity sha512-Erz6FK1TfOOP6roD/csLjSo980SQDC0C96c1kWDyiZaQ2GGaQA/EUZRkESpON/jV5QacgtxKmN4Lts+/ljhyJA==
@@ -516,7 +511,7 @@ yarn-s@1.1.0:
   dependencies:
     spawncommand "1.1.0"
 
-zoroaster@^3.11.5:
+zoroaster@^3.11.6:
   version "3.11.6"
   resolved "https://registry.yarnpkg.com/zoroaster/-/zoroaster-3.11.6.tgz#d711810262dad952f2b41cbebaae1567d430a95c"
   integrity sha512-xBHFg1ng9CmatxN2ReQpkOV772Q0RPMioOVXTzqoN/+UMO/Osu7uRB/L02To2YlTyYJvcyLRqtNitL82mot3Yw==
