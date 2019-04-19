@@ -53,14 +53,14 @@ function configure(config) {
 
 This makes it possible to see the properties of the argument to the `configure` function fully:
 
-![preview of the configure function](doc/typedef-config.gif)
+![preview of the configure function](./typedef-config.gif)
 
 And the description of each property will be available when passing an argument to the function:
 
-![preview of a property description](doc/desc.gif)
+![preview of a property description](./desc.gif)
 
 Compare that to the preview without _JSDoc_ expansion:
 
-![preview of the configure function without expanded params](doc/no-expansion.gif)
+![preview of the configure function without expanded params](./no-expansion.gif)
 
 To prevent the expansion, the `noExpand` attribute should be added to the type.

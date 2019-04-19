@@ -39,11 +39,11 @@ function configure(config) {
 
 The properties will be visible in the preview:
 
-![preview of the configure function with stread params](doc/spread.gif)
+![preview of the configure function with stread params](./spread.gif)
 
 However, this method has one disadvantage as there will be no descriptions of the properties when trying to use them in a call to function:
 
-![spread will not have a description](doc/no-desc.gif)
+![spread will not have a description](./no-desc.gif)
 
 Therefore, it must be considered what is the best for developers -- to see descriptions of properties when passing a configuration object to a function, but not see all possible properties, or to see the full list of properties, but have no visibility of what they mean.
 
