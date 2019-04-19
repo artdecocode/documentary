@@ -1,3 +1,19 @@
+# _Typal_ And _Documentary_
+
+This readme page describes the usage of the purpose and use cases of _Typal_.
+
+- [**`@typedef` Organisation**](#typedef-organisation)
+  * [JS Placement](#js-placement)
+    * [Expanded `@param`](#expanded-param)
+  * [README placement](#readme-placement)
+  * [Advanced Usage](#advanced-usage)
+    * [Spread `@param`](#spread-param)
+  * [Importing Types](#importing-types)
+  * [XML Schema](#xml-schema)
+  * [Migration](#migration)
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
+
 ## **`@typedef` Organisation**
 
 For the purpose of easier maintenance of _JSDoc_ `@typedef` declarations, _Documentary_ allows to keep them in a separate XML file, and then place compiled versions into both source code as well as documentation. By doing this, more flexibility is achieved as types are kept in one place but can be reused for various purposes across multiple files. It is different from _TypeScript_ type declarations as _Documentary_ will generate _JSDoc_ comments rather than type definitions which means that a project does not have to be written in _TypeScript_.
