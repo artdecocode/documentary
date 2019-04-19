@@ -1,5 +1,9 @@
 ## 19 April 2019
 
+### [1.24.1](https://github.com/artdecocode/documentary/compare/v1.24.0...v1.24.1)
+
+- [package] Export _Typal_ in the `bin` field of _package.json_.
+
 ### [1.24.0](https://github.com/artdecocode/documentary/compare/v1.23.4...v1.24.0)
 
 - [fix] Save cache after running without cache; filter markdown in ToC headings' links.
