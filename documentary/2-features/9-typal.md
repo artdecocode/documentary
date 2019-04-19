@@ -12,6 +12,12 @@ The main use of _Typal_ is together with _Documentary_ to insert tables with typ
 
 To place a type definition as a table into a `README` file, the `TYPEDEF` marker can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed. Moreover, links to the type descriptions will be created in the table of contents using the [__TOC Titles__](#toc-titles), but to prevent this, the `noToc` attribute should be set for a type.
 
+<details>
+<summary>Show Types.Xml</summary>
+
+%EXAMPLE: types/static.xml%
+</details>
+
 ```
 %TYPEDEF path/definitions.xml [TypeName]%
 ```

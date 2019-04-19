@@ -949,6 +949,44 @@ The main use of _Typal_ is together with _Documentary_ to insert tables with typ
 
 To place a type definition as a table into a `README` file, the `TYPEDEF` marker can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed. Moreover, links to the type descriptions will be created in the table of contents using the [__TOC Titles__](#toc-titles), but to prevent this, the `noToc` attribute should be set for a type.
 
+<details>
+<summary>Show Types.Xml</summary>
+
+```xml
+<types>
+  <import name="ServerResponse" from="http"
+    link="https://nodejs.org/api/http.html#http_class_http_serverresponse"
+  />
+  <type name="SetHeaders"
+    type="(res: ServerResponse) => any"
+    desc="Function to set custom headers on response." />
+  <type name="RightsConfig"
+    type="{ location: string, rights: number }[]"
+    desc="Configuration of read and write access rights." />
+  <type name="StaticConfig" desc="Options to setup `koa-static`.">
+    <prop string name="root">
+      Root directory string.
+    </prop>
+    <prop number name="maxage" default="0">
+      Browser cache max-age in milliseconds.
+    </prop>
+    <prop boolean name="hidden" default="false">
+      Allow transfer of hidden files.
+    </prop>
+    <prop string name="index" default="index.html">
+      Default file name.
+    </prop>
+    <prop opt type="SetHeaders" name="setHeaders">
+      Function to set custom headers on response.
+    </prop>
+    <prop opt type="Promise.<RightsConfig>" name="rightsPromise">
+      The promise which will be resolved with access rights to files.
+    </prop>
+  </type>
+</types>
+```
+</details>
+
 ```
 %TYPEDEF path/definitions.xml [TypeName]%
 ```

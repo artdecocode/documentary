@@ -12,8 +12,6 @@ This readme page describes the usage of the purpose and use cases of _Typal_.
   * [XML Schema](#xml-schema)
   * [Migration](#migration)
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
-
 ## **`@typedef` Organisation**
 
 For the purpose of easier maintenance of _JSDoc_ `@typedef` declarations, _Documentary_ allows to keep them in a separate XML file, and then place compiled versions into both source code as well as documentation. By doing this, more flexibility is achieved as types are kept in one place but can be reused for various purposes across multiple files. It is different from _TypeScript_ type declarations as _Documentary_ will generate _JSDoc_ comments rather than type definitions which means that a project does not have to be written in _TypeScript_.
@@ -279,10 +277,20 @@ export default example
 <td colspan="2">
 
 ```js
-Typal: smart typedefs https://artdecocode.com/typal/
-Please use typal (included w/ Documentary):
+async function example() {
+  process.stdout.write('example\n')
+}
 
-typal example/generate-imports.js [--closure]
+/* documentary types/import.xml */
+/**
+ * @typedef {import('http').IncomingMessage} IncomingMessage
+ * @typedef {import('http').ServerResponse} ServerResponse
+ * @typedef {import('koa-multer').StorageEngine} StorageEngine
+ * @typedef {import('koa-multer').File} File
+ * @typedef {(f: File) => void} Function A function to save a file.
+ */
+
+export default example
 ```
 </td>
 </tr>
@@ -391,8 +399,25 @@ export default test
 When a description ends with <code>Default &#96;value&#96;</code>, the default value of a type can also be parsed from there.
 
 ```xml
-Typal: smart typedefs https://artdecocode.com/typal/
-Please use typal (included w/ Documentary):
-
-typal example/extract.js -m
+<types>
+  <import name="IncomingMessage" from="http" />
+  <type name="Test" type="(m: IncomingMessage)" desc="This is test function." />
+  <type name="SessionConfig" desc="Description of Session Config.">
+    <prop string name="key">
+      cookie key.
+    </prop>
+    <prop type="number|'session'" name="maxAge" default="86400000">
+      maxAge in ms. `session` will result in a cookie that expires when session/browser is closed.
+    </prop>
+    <prop boolean name="overwrite" default="true">
+      Can overwrite or not.
+    </prop>
+    <prop boolean name="httpOnly" default="true">
+      httpOnly or not or not.
+    </prop>
+    <prop boolean name="renew" default="false">
+      Renew session when session is nearly expired, so we can always keep user logged in.
+    </prop>
+  </type>
+</types>
 ```

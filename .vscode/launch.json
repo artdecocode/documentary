@@ -53,7 +53,8 @@
       "args": [
         "documentary",
       ],
-      "cwd": "${workspaceFolder}/../../a-la/alanode",
+      "cwd": "${workspaceFolder}/../typal",
+      // "cwd": "${workspaceFolder}/../../a-la/alanode",
       // "cwd": "${workspaceFolder}/../../idiocc/core",
       "console": "integratedTerminal",
       "skipFiles": [

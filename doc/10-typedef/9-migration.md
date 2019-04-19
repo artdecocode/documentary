@@ -8,4 +8,4 @@ For example, types can be extracted from a JavaScript file which contains JSDoc 
 
 When a description ends with <code>Default &#96;value&#96;</code>, the default value of a type can also be parsed from there.
 
-%FORK-xml src/bin/doc example/extract.js -e -%
+%FORK-xml node_modules/.bin/typal example/extract.js -m%

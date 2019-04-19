@@ -38,7 +38,7 @@ The import will never display in the Table of Contents as its an external type a
 <tr>
 <td colspan="2">
 
-%FORK-js src/bin/doc example/generate-imports.js -g -%
+%FORK-js node_modules/.bin/typal example/generate-imports.js -o -%
 </td>
 </tr>
 </tbody>
