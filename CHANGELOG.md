@@ -1,3 +1,13 @@
+## 13 April 2019
+
+### [1.24.0](https://github.com/artdecocode/documentary/compare/v1.23.4...v1.24.0)
+
+- [fix] Save cache after running without cache; filter markdown in ToC headings' links.
+- [feature] Indent fork output, pass env variables; set the default source location to `documentary`.
+- [components] `md2html`, `argufy` components.
+- [deps] Use [_Argufy_](https://artdecocode.com/argufy/) for CLI arguments and _Typal_(https://artdecocode.com/typal/) for typedefs.
+- [doc] Move advanced _Typal_ usage to a separate readme page.
+
 ## 4 April 2019
 
 ### [1.23.4](https://github.com/artdecocode/documentary/compare/v1.23.3...v1.23.4)
