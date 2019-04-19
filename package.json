@@ -30,7 +30,8 @@
   },
   "bin": {
     "doc": "build/bin/doc.js",
-    "doc-dev": "src/bin/index.js"
+    "doc-dev": "src/bin/index.js",
+    "typal": "build/bin/typal.js"
   },
   "man": "man/doc.1",
   "files": [
