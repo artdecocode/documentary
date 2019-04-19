@@ -3,7 +3,7 @@
 The program is used from the CLI (or `package.json` script).
 
 ```sh
-doc source [-o output] [-trwcn] [-p "commit message"] [-h1] [-eg] [-vh]
+doc [source] [-o output] [-trwcn] [-p "commit message"] [-h1] [-eg] [-vh]
 ```
 
 The arguments it accepts are:

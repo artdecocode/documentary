@@ -6,7 +6,7 @@ When placing examples, it is important to show the output that they produce. Thi
 %FORK(-lang)? module ...args%
 ```
 
-It will make _Documentary_ fork a _Node.JS_ module using the `child_process.fork` function. The output is printed in a code block, with optionally given language. If the process cleared lines with `\r`, the output will be adjusted to account for that to be displayed like it would be in the terminal.
+It will make _Documentary_ fork a _Node.JS_ module using the `child_process.fork` function. The output is printed in a code block, with optionally given language. If the process cleared lines with `\r`, the output will be adjusted to account for that to be displayed like it would be in the terminal. The environment variables will be inherited from the parent `doc` process.
 
 <table>
 <thead>
@@ -87,7 +87,7 @@ It works exactly the same as `%FORK%` but will print the output of the process's
 
 ### Caching
 
-The output of forks will be cached in the `.documentary/cache` directory. When compiling documentation, _Documentary_ will check for the presence of cache, check the _mtime_ of the module and if it is the same as cached, analyse module's dependencies to see if any of them had changes (updates to package dependencies' versions, changes to source files). When the cache is matched, no forking will take place and the value will be taken from the saved outputs. To explicitly prevent caching on a particular _FORK_ marker, it should be prefixed with `!`: `%!FORK module arg1 arg2%`. To disable caching across all _forks_, the [`-c`](#disable-cache) option can be passed to the CLI.
+The output of forks will be cached in the `.documentary/cache` directory. When compiling documentation, _Documentary_ will check for the presence of cache, check the _mtime_ of the module and if it is the same as cached, analyse module's dependencies to see if any of them had changes (updates to package dependencies' versions, changes to source files). When the cache is matched, no forking will take place and the value will be taken from the saved outputs. To explicitly prevent caching on a particular _FORK_ marker, it should be prefixed with `!`: `%!FORK module arg1 arg2%`. To disable caching across all _forks_, the [`-c`](#disable-cache) option can be passed to the CLI. Even if cache is disabled, the output will be saved so that when _Documentary_ is run next time, the latest known output is placed instantly.
 
 %~ width="15"%
 
