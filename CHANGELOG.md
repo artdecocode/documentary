@@ -1,4 +1,4 @@
-## 13 April 2019
+## 19 April 2019
 
 ### [1.24.0](https://github.com/artdecocode/documentary/compare/v1.23.4...v1.24.0)
 
