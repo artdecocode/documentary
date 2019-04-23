@@ -235,10 +235,10 @@ cli-color@~0.1.6:
   dependencies:
     es5-ext "0.8.x"
 
-competent@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/competent/-/competent-1.0.0.tgz#fd234beaf62c1da5fc4b428ffc290cc3b0b0ece5"
-  integrity sha512-hmb4yz+XQtiH21EvZugY8G2+M4nDWFngCJgV3cIeSK/A+1x7gwbrCWBJTLiP9764ZkxoSDRwdQikefpv8oYHrA==
+competent@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/competent/-/competent-1.0.1.tgz#39e2092df196650fede9dd2e8a00231850edec01"
+  integrity sha512-0aB+ARgWoQTxeWXd0iDrVBnZ8F71dzrqgO5bV9fAsIdt1tT+viBuZwK9xE6GNo0gW1ez/FGeg3z8zwJkItBnlA==
   dependencies:
     "@depack/render" "^1.1.4"
     restream "^3.7.1"
