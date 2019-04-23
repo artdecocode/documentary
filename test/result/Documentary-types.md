@@ -4,13 +4,13 @@
 /* expected */
 __<a name="type-staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
-|    Name    |     Type     |                 Description                 |   Default    |
-| ---------- | ------------ | ------------------------------------------- | ------------ |
-| __root*__  | _string_     | Root directory string.                      | -            |
-| maxage     | _number_     | Browser cache max-age in milliseconds.      | `0`          |
-| hidden     | _boolean_    | Allow transfer of hidden files.             | `false`      |
-| index      | _string_     | Default file name.                          | `index.html` |
-| setHeaders | _SetHeaders_ | Function to set custom headers on response. | -            |
+|    Name    |        Type         |                 Description                 |   Default    |
+| ---------- | ------------------- | ------------------------------------------- | ------------ |
+| __root*__  | <em>string</em>     | Root directory string.                      | -            |
+| maxage     | <em>number</em>     | Browser cache max-age in milliseconds.      | `0`          |
+| hidden     | <em>boolean</em>    | Allow transfer of hidden files.             | `false`      |
+| index      | <em>string</em>     | Default file name.                          | `index.html` |
+| setHeaders | <em>SetHeaders</em> | Function to set custom headers on response. | -            |
 /**/
 
 ## escapes a | in type's property
@@ -19,9 +19,9 @@ __<a name="type-staticconfig">`StaticConfig`</a>__: Options to setup `koa-static
 /* expected */
 __<a name="type-sessionconfig">`SessionConfig`</a>__: Options to setup `koa-session`.
 
-|    Name     |         Type          |             Description             |
-| ----------- | --------------------- | ----------------------------------- |
-| __maxAge*__ | _number \| 'session'_ | maxAge in ms with default of 1 day. |
+|    Name     |             Type             |             Description             |
+| ----------- | ---------------------------- | ----------------------------------- |
+| __maxAge*__ | <em>number \| 'session'</em> | maxAge in ms with default of 1 day. |
 /**/
 
 ## places a single type without properties
@@ -41,11 +41,11 @@ __<a name="type-sessionconfig">`SessionConfig`</a>__: Options to setup `koa-sess
 
 __<a name="type-staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
-|    Name    |               Type               |                 Description                 |   Default    |
-| ---------- | -------------------------------- | ------------------------------------------- | ------------ |
-| __root*__  | _string_                         | Root directory string.                      | -            |
-| maxage     | _number_                         | Browser cache max-age in milliseconds.      | `0`          |
-| hidden     | _boolean_                        | Allow transfer of hidden files.             | `false`      |
-| index      | _string_                         | Default file name.                          | `index.html` |
-| setHeaders | _[SetHeaders](#type-setheaders)_ | Function to set custom headers on response. | -            |
+|    Name    |                  Type                   |                 Description                 |   Default    |
+| ---------- | --------------------------------------- | ------------------------------------------- | ------------ |
+| __root*__  | <em>string</em>                         | Root directory string.                      | -            |
+| maxage     | <em>number</em>                         | Browser cache max-age in milliseconds.      | `0`          |
+| hidden     | <em>boolean</em>                        | Allow transfer of hidden files.             | `false`      |
+| index      | <em>string</em>                         | Default file name.                          | `index.html` |
+| setHeaders | <em>[SetHeaders](#type-setheaders)</em> | Function to set custom headers on response. | -            |
 /**/

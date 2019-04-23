@@ -27,7 +27,7 @@ const getPartial = (boundExample) => {
   return e
 }
 
-export const replacer = async (match, source, from, to, type) => {
+export const replacer = async (match, ws, source, from, to, type) => {
   try {
     const { path } = await resolveDependency(source)
     let f = await read(path)
@@ -58,7 +58,8 @@ export const replacer = async (match, source, from, to, type) => {
     }
 
     const lang = getExt(type, path)
-    const res = codeSurround(ff.trim(), lang)
+    let res = codeSurround(ff.trim(), lang)
+    if (ws) res = res.replace(/^/gm, ws)
     return res
   } catch ({ stack }) {
     LOG('Could not read an example from %s.', source)
@@ -66,7 +67,7 @@ export const replacer = async (match, source, from, to, type) => {
     return match
   }
 }
-export const re = /^%EXAMPLE: (.[^\n,]+)(?:, (.+?) => (.[^\s,]+))?(?:, (.+))?%$/gm
+export const re = /^( *)%EXAMPLE: (.[^\n,]+)(?:, (.+?) => (.[^\s,]+))?(?:, (.+))?%$/gm
 
 const exampleRule = {
   re,

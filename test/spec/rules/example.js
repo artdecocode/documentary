@@ -10,7 +10,7 @@ const T = {
     const res = re.exec(`%EXAMPLE: ${examplePath}%`)
     ok(res)
     const [, ...a] = res
-    deepEqual(a, [examplePath, undefined, undefined, undefined])
+    deepEqual(a, ['', examplePath, undefined, undefined, undefined])
   },
   'matches 2 arguments'({ examplePath, resetRe }) {
     const from = '../src'
@@ -21,7 +21,7 @@ const T = {
     const res = re.exec(s)
     ok(res)
     const [, ...a] = res
-    deepEqual(a, [examplePath, from, to, undefined])
+    deepEqual(a, ['', examplePath, from, to, undefined])
   },
   'matches 2 arguments without replacement'({ examplePath, resetRe }) {
     const type = 'js'
@@ -30,7 +30,7 @@ const T = {
     const res = re.exec(s)
     ok(res)
     const [, ...a] = res
-    deepEqual(a, [examplePath, undefined, undefined, type])
+    deepEqual(a, ['', examplePath, undefined, undefined, type])
   },
   'matches 3 arguments'({ examplePath, resetRe }) {
     const from = '../src'
@@ -42,7 +42,7 @@ const T = {
     const res = re.exec(s)
     ok(res)
     const [, ...a] = res
-    deepEqual(a, [examplePath, from, to, type])
+    deepEqual(a, ['', examplePath, from, to, type])
   },
   async 'replaces an example without replacement'({ replace, examplePath }) {
     const s = `%EXAMPLE: ${examplePath}%`

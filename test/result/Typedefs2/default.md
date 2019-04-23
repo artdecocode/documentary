@@ -18,12 +18,12 @@ __[`test`](t-type)__
   ],
   [
     "prop",
-    "_*_",
+    "<em>*</em>",
     "TestProp"
   ],
   [
     "__prop*__",
-    "_*_",
+    "<em>*</em>",
     "TestProp2"
   ]
 ]
@@ -53,7 +53,7 @@ __[`Type2`](t-type)__
   ],
   [
     "__prop*__",
-    "_string \\| [Type](#type-type)_",
+    "<em>string \\| [Type](#type-type)</em>",
     "A property."
   ]
 ]
@@ -89,7 +89,7 @@ __[`Type5`](t-type)__
   ],
   [
     "__prop*__",
-    "_Promise.&lt;[Type](#type-type) \\| [Type2](#type-type2)&gt; \\| [Type3](#type-type3) \\| [Type4](#type-type4)_",
+    "<em>Promise&lt;[Type](#type-type) \\| [Type2](#type-type2)&gt; \\| [Type3](#type-type3) \\| [Type4](#type-type4)</em>",
     "A property."
   ]
 ]
@@ -134,12 +134,12 @@ __[`Return`](t-type)__
   ],
   [
     "__body*__",
-    "_string \\| object \\| Buffer_",
+    "<em>string \\| object \\| Buffer</em>",
     "The return from the server."
   ],
   [
     "__statusMessage*__",
-    "_string_",
+    "<em>string</em>",
     "The status message set by the server.\n      &lt;e&gt;OK&lt;/e>"
   ]
 ]

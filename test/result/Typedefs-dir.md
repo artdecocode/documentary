@@ -14,13 +14,13 @@ __[`ServerConfig`](t-type)__: Options to setup the server.
   ],
   [
     "port",
-    "_number_",
+    "<em>number</em>",
     "The port on which to run the server.",
     "`8888`"
   ],
   [
     "__staticConfig*__",
-    "_[StaticConfig](#type-staticconfig)_",
+    "<em>[StaticConfig](#type-staticconfig)</em>",
     "The configuration for the static server.",
     "-"
   ]
@@ -39,7 +39,7 @@ __[`StaticConfig`](t-type)__: Options to setup `koa-static`.
   ],
   [
     "setHeaders",
-    "_[SetHeaders](#type-setheaders)_",
+    "<em>[SetHeaders](#type-setheaders)</em>",
     "Function to set custom headers on response."
   ]
 ]

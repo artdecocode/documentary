@@ -12,14 +12,12 @@
       "env": {
         "NODE_DEBUG": "doc",
         "DEBUG": "1",
+        "ZOROASTER_INTERACTIVE": "1",
       },
       "console": "integratedTerminal",
       "args": [
-        "test/mask",
-        "test/spec",
-        "-a",
-        "-w",
-        "-t", "99999999"
+        "test/mask", "test/spec", "-a",
+        "-w", "-t", "99999999"
       ],
       "autoAttachChildProcesses": true,
       "skipFiles": [
@@ -47,13 +45,8 @@
       "request": "launch",
       "name": "Launch For Package",
       "program": "${workspaceFolder}/src/bin/index.js",
-      "env": {
-        "NODE_DEBUG": "doc"
-      },
-      "args": [
-        "documentary",
-      ],
-      "cwd": "${workspaceFolder}/../typal",
+      "env": { "NODE_DEBUG": "doc" },
+      "cwd": "${workspaceFolder}/../../depack/externs",
       // "cwd": "${workspaceFolder}/../../a-la/alanode",
       // "cwd": "${workspaceFolder}/../../idiocc/core",
       "console": "integratedTerminal",
