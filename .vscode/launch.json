@@ -16,7 +16,7 @@
       },
       "console": "integratedTerminal",
       "args": [
-        "test/mask", "test/spec", "-a",
+        "test/mask", "test/spec", "-a", "-i",
         "-w", "-t", "99999999"
       ],
       "autoAttachChildProcesses": true,

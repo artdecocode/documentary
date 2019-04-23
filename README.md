@@ -636,7 +636,7 @@ The result will be rendered HTML:
           alt="Tech Nation Visa Sucks" />
       </a>
       <br />
-      Sponsored by 
+      Sponsored by
       <a href="https://www.technation.sucks">Tech Nation Visa Sucks</a>
       .
     </td>
