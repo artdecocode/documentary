@@ -1,55 +1,30 @@
-let rexml = require('rexml'); if (rexml && rexml.__esModule) rexml = rexml.default;
-let render = require('@depack/render'); if (render && render.__esModule) render = render.default;
 const { c, b } = require('erte');
-// import cleanStack from '@artdeco/clean-stack'
-
-       const makeComponentRe = (key) => {
-  const re = new RegExp(`( *)(<${key}(\\s+[\\s\\S]*?)?(\\s*?/>|[\\s\\S]*?<\\/${key}>))`, 'gm')
-  return re
-}
+let competent = require('competent'); if (competent && competent.__esModule) competent = competent.default;
 
 function loadComponents(components, options = {}) {
-  const compsReplacements = Object.keys(components)
-    .map((key) => {
-      const instance = components[key]
-      const re = makeComponentRe(key)
-      const replacement = async function (m, pad, Component) {
-        try {
-          const [{ content, props }] = rexml(key, Component)
-          let pretty = true
-          let lineLength = 100
-          const hyperResult = await instance({
-            ...props,
-            children: content,
-            documentary: {
-              setLineLength(l) { lineLength = l },
-              disablePretty(){ pretty = false },
-              ...options,
-            },
-          })
-          if (typeof hyperResult == 'string')
-            return hyperResult
-          const r = render(hyperResult, { pretty, lineLength })
-          const f = r.replace(/^/gm, pad)
-          return f
-        } catch (err) {
-          console.error(`Could not process component ${b(`<${key}>`, 'magenta')}:`)
-          const reg = new RegExp(`^ +at ${key} .+`, 'm')
-          let i
-          const stack = err.stack.replace(reg, (mm, j) => {
-            i = j + mm.length
-            return mm
-          }).slice(0, i)
-          console.error(`${c(stack, 'red')}`)
-          return m
-        }
+  const rule = competent(components, {
+    onFail(key, err) {
+      console.error(`Could not process component ${b(`<${key}>`, 'magenta')}:`)
+      const reg = new RegExp(`^ +at ${key} .+`, 'm')
+      let i
+      const stack = err.stack.replace(reg, (mm, j) => {
+        i = j + mm.length
+        return mm
+      }).slice(0, i)
+      console.error(`${c(stack, 'red')}`)
+    },
+    getProps(htmlProps, meta) {
+      meta.setPretty(true, 100)
+      return {
+        ...htmlProps,
+        documentary: {
+          ...options,
+          ...meta,
+        },
       }
-      const rule = { re, replacement }
-      return rule
-    })
-  return compsReplacements
+    },
+  })
+  return [rule]
 }
 
 module.exports=loadComponents
-
-module.exports.makeComponentRe = makeComponentRe

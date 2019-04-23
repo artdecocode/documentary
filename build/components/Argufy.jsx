@@ -37,15 +37,15 @@ const Argufy = async (props) => {
     children,
     documentary,
   } = props
-  // documentary.setLineLength(60)
-  const xml = await read(children)
+  const [child] = children
+  const xml = await read(child)
   const args = parse(xml)
   const hasShort = args.some(({ short }) => short)
   const trs = args.map(({ command, description, name, short, toc, def }, i) => {
     const n = command ? name : `--${name}`
     const nn = toc ? `[${n}](t)` : n
     if (def) description += ` Default \`${def}\`.`
-    const d = Md2Html({ children: description, documentary })
+    const d = Md2Html({ children: [description], documentary })
     return (<tr key={i}>
       <td>{nn}</td>
       {hasShort && <td>{short ? `-${short}` : ''}</td>}

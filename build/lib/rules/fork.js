@@ -102,18 +102,4 @@ const getOutput = (err, stderr, stdout, lang) => {
   return codeSurround(clearR(r), lang)
 }
 
-/**
- * @param {string} m The path to the module and arguments
- */
-const makeCache = (m, mtime, analysis, stdout, stderr) => {
-  return {
-    [m]: {
-      mtime,
-      analysis,
-      stdout,
-      stderr,
-    },
-  }
-}
-
 module.exports=forkRule

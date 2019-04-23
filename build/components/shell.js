@@ -19,9 +19,10 @@ const shell = async (props) => {
     command, children, language: lang = 'sh', err = false,
     noTrim = false,
   } = props
+  const [child] = children
   let s, cmd
   if (!command) {
-    cmd = children.trim()
+    cmd = child.trim()
     s = await new Promise((r, j) => {
       exec(cmd, (error, stdout, stderr) => {
         if (error) return j(error)
@@ -29,7 +30,7 @@ const shell = async (props) => {
       })
     })
   } else {
-    const a = children.trim().split('\n').map(c => {
+    const a = child.trim().split('\n').map(c => {
       return c.trim()
     })
     const p = spawn(command, a)

@@ -3,7 +3,8 @@ const Md2Html = ({ children, documentary }) => {
   const codes = {}
   /** @type {import('restream').Rule} */
   const insertInnerCode = documentary.insertInnerCode
-  const d = children.trim()
+  const [c] = children
+  const d = c.trim()
     .replace(insertInnerCode.re, insertInnerCode.replacement)
     .replace(/`(.+?)`/g, (m, code, i) => {
       codes[i] = code

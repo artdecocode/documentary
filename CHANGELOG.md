@@ -1,3 +1,10 @@
+## 23 April 2019
+
+### [1.25.0](https://github.com/artdecocode/documentary/compare/v1.24.1...v1.25.0)
+
+- [feature] Indent the `EXAMPLE` output if there was padding.
+- [deps] Use `competent` for components rendering.
+
 ## 19 April 2019
 
 ### [1.24.1](https://github.com/artdecocode/documentary/compare/v1.24.0...v1.24.1)
