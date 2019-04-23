@@ -739,13 +739,13 @@ $ {command}
 
 __<a name="type-shellprops">`ShellProps`</a>__: Options for the Shell component. TODO: pass options.
 
-|   Name   |   Type    |                                                                                                Description                                                                                                | Default |
-| -------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| command  | _string_  | The command to execute using the `child_process`. If the command is not passed, the children will be used to pass to `exec`, e.g., `(echo abc; sleep 1; echo def; sleep 1; echo ghi) \| node consume.js`. | -       |
-| language | _string_  | The markdown language of the output.                                                                                                                                                                      | `sh`    |
-| err      | _boolean_ | Whether to print STDERR instead of STDOUT (todo: make print both).                                                                                                                                        | `false` |
-| children | _string_  | The arguments to the program each on new line.                                                                                                                                                            | -       |
-| noTrim   | _boolean_ | Whether to disable trim before printing the output.                                                                                                                                                       | `false` |
+|   Name   |       Type       |                                                                                                Description                                                                                                | Default |
+| -------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| command  | <em>string</em>  | The command to execute using the `child_process`. If the command is not passed, the children will be used to pass to `exec`, e.g., `(echo abc; sleep 1; echo def; sleep 1; echo ghi) \| node consume.js`. | -       |
+| language | <em>string</em>  | The markdown language of the output.                                                                                                                                                                      | `sh`    |
+| err      | <em>boolean</em> | Whether to print STDERR instead of STDOUT (todo: make print both).                                                                                                                                        | `false` |
+| children | <em>string</em>  | The arguments to the program each on new line.                                                                                                                                                            | -       |
+| noTrim   | <em>boolean</em> | Whether to disable trim before printing the output.                                                                                                                                                       | `false` |
 
 If the command is not passed, the children will be read and executed by the `child_process`._exec_ method. For example, with the following simple receiver:
 
@@ -1054,14 +1054,14 @@ and embed resulting type definitions (with the imported type linked to the Node.
 
 __<a name="type-staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
-|     Name      |                         Type                         |                           Description                           |   Default    |
-| ------------- | ---------------------------------------------------- | --------------------------------------------------------------- | ------------ |
-| __root*__     | _string_                                             | Root directory string.                                          | -            |
-| maxage        | _number_                                             | Browser cache max-age in milliseconds.                          | `0`          |
-| hidden        | _boolean_                                            | Allow transfer of hidden files.                                 | `false`      |
-| index         | _string_                                             | Default file name.                                              | `index.html` |
-| setHeaders    | _[SetHeaders](#type-setheaders)_                     | Function to set custom headers on response.                     | -            |
-| rightsPromise | _Promise.&lt;[RightsConfig](#type-rightsconfig)&gt;_ | The promise which will be resolved with access rights to files. | -            |
+|     Name      |                            Type                            |                           Description                           |   Default    |
+| ------------- | ---------------------------------------------------------- | --------------------------------------------------------------- | ------------ |
+| __root*__     | <em>string</em>                                            | Root directory string.                                          | -            |
+| maxage        | <em>number</em>                                            | Browser cache max-age in milliseconds.                          | `0`          |
+| hidden        | <em>boolean</em>                                           | Allow transfer of hidden files.                                 | `false`      |
+| index         | <em>string</em>                                            | Default file name.                                              | `index.html` |
+| setHeaders    | <em>[SetHeaders](#type-setheaders)</em>                    | Function to set custom headers on response.                     | -            |
+| rightsPromise | <em>Promise&lt;[RightsConfig](#type-rightsconfig)&gt;</em> | The promise which will be resolved with access rights to files. | -            |
 
 _Documentary_ wil scan each source file of the documentation first to build a map of all types. Whenever a property appears to be of a known type, it will be automatically linked to the location where it was defined. It is also true for properties described as generic types, such as `Promise.<Type>`. This makes it possible to define all types in one place, and then reference them in the API documentation.
 
