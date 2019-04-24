@@ -84,7 +84,7 @@
     "indicatrix": "^1.1.0",
     "temp-context": "^2.1.3",
     "yarn-s": "1.1.0",
-    "zoroaster": "^3.12.0"
+    "zoroaster": "^3.13.0"
   },
   "dependencies": {
     "@depack/cache": "^1.0.0",
@@ -93,7 +93,7 @@
     "@wrote/ensure-path": "^1.0.8",
     "@wrote/write": "^1.0.4",
     "alamode": "^2.0.0",
-    "argufy": "^1.5.0",
+    "argufy": "^1.6.3",
     "catchment": "^3.3.0",
     "clearr": "^1.0.0",
     "competent": "^1.1.0",
