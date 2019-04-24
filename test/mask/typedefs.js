@@ -41,7 +41,7 @@ export const main = makeTestSuite('test/result/Typedefs', {
     return { locations: Object.keys(locations), types }
   },
   /**
-   * @param {{types: import('../../src/lib/typedef/Type').default[]}} param
+   * @param {{types: import('typal/src/lib/Type').default[]}} param
    */
   mapActual({ types }) {
     const res = types.map(type => {
@@ -70,7 +70,7 @@ const rest2 = makeTestSuite('test/result/Typedefs2', {
     return { locations: Object.keys(locations), types }
   },
   /**
-   * @param {{types: import('typal/build/lib/Type')[]}} param
+   * @param {{types: import('typal/src/lib/Type').default[]}} param
    */
   mapActual({ types }) {
     const res = types.map(type => {
