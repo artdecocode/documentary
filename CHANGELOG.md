@@ -1,3 +1,9 @@
+## 24 April 2019
+
+### [1.26.0](https://github.com/artdecocode/documentary/compare/v1.25.0...v1.26.0)
+
+- [deps] Upgrade to _ÀLaMode@v2_.
+
 ## 23 April 2019
 
 ### [1.25.0](https://github.com/artdecocode/documentary/compare/v1.24.1...v1.25.0)
