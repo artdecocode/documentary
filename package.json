@@ -107,7 +107,7 @@
     "rexml": "^1.4.0",
     "spawncommand": "^2.1.2",
     "static-analysis": "^1.6.0",
-    "typal": "^1.3.2",
+    "typal": "^1.4.0",
     "usually": "^1.2.0",
     "which-stream": "^1.1.0"
   }

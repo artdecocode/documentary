@@ -405,12 +405,12 @@ temp-context@^2.1.3:
     makepromise "^3.0.3"
     pedantry "^2.3.1"
 
-typal@^1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/typal/-/typal-1.3.2.tgz#2ae846aeb827a6cb4219a41994fb8d2f3353c668"
-  integrity sha512-Aio8C0XH01ur0a1YYnCWuVTNTSjMO75Y4GxySqgkMVq9I9zSiO21tjKlLpWayBFAytCtAtCP11SJJ9VmZbgyfQ==
+typal@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/typal/-/typal-1.4.0.tgz#943dd7752d3fc6a6ed1d5c5070111968df7e4f3c"
+  integrity sha512-YZqNAfqDeDq3Ri0f84FeGgtxb1weSKNAS31aXBixeXUXSfgHqWA3P+0b9Vb9CbqLFRgQn4Q/ZEYEUBoKQ3g8eA==
   dependencies:
-    mismatch "^1.1.1"
+    mismatch "^1.2.0"
     rexml "^1.4.0"
 
 usually@^1.2.0:
