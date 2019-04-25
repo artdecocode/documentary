@@ -70,7 +70,7 @@ const args = argufy(argsConfig)
 /**
  * The documentary file or directory to process. Default `documentary`.
  */
-       const _source = /** @type {string} */ (args['source']) || 'documentary'
+       const _source = /** @type {string} */ (args['source'] || 'documentary')
 
 /**
  * Where to save the output (e.g., `README.md`).
