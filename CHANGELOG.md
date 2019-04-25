@@ -1,3 +1,9 @@
+## 25 April 2019
+
+### [1.26.1](https://github.com/artdecocode/documentary/compare/v1.26.0...v1.26.1)
+
+- [feature] Await for the same fork on a different stream (stderr/stdout).
+
 ## 24 April 2019
 
 ### [1.26.0](https://github.com/artdecocode/documentary/compare/v1.25.0...v1.26.0)
