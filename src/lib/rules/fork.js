@@ -6,7 +6,10 @@ import clearR from 'clearr'
 import compare from '@depack/cache'
 import { codeSurround } from '..'
 
-const replacement = async function (match, noCache, old, err, lang, m) {
+const queue = {}
+
+const replacement = async function (noCache, old, err, lang, m, awaited = false) {
+  if (awaited) noCache = false
   const [mod, ...args] = m.split(' ')
 
   const { path: mmod } = await resolveDependency(mod)
@@ -41,7 +44,7 @@ const replacement = async function (match, noCache, old, err, lang, m) {
     const cache = this.getCache('fork')
     const record = cache[`[${md5}] ${m}`]
     if (record) {
-      this.log('%s cached', s)
+      this.log('%s %s', s, awaited ? 'awaited' : 'cached')
       const { 'stderr': stderr, 'stdout': stdout } = record
       return getOutput(err, stderr, stdout, lang)
     } else {
@@ -84,8 +87,16 @@ const forkRule = {
     const noCache = /!/.test(service) || this.noCache
     const old = /_/.test(service)
     try {
-      let res =
-        await replacement.call(this, match, noCache, old, err, lang, m)
+      let awaited = false
+      const q = queue[m]
+      if (q) {
+        this.log(`FORK: ${m} `, c(`awaiting ${q.err ? 'stderr' : 'stdout'}`, 'yellow'))
+        await q.promise
+        awaited = true
+      }
+      const promise = replacement.call(this, noCache, old, err, lang, m, awaited)
+      queue[m] = { promise, err }
+      let res = await promise
       if (ws) res = res.replace(/^/gm, ws)
       return res
     } catch (e) {

@@ -205,7 +205,9 @@ const getComponents = (path) => {
   }
   getCache(name, location = this._cacheLocation) {
     try {
-      const c = require(resolve(`${location}/${name}.json`))
+      const p = resolve(`${location}/${name}.json`)
+      delete require.cache[p]
+      const c = require(p)
       return c
     } catch (err) {
       return undefined
