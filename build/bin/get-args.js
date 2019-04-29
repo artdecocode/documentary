@@ -37,7 +37,6 @@ let argufy = require('argufy'); if (argufy && argufy.__esModule) argufy = argufy
   },
   'namespace': {
     description: 'The root namespace: types within it will not be printed\nwith their namespace prefix.',
-    boolean: true,
     short: 'n',
   },
   'push': {
@@ -109,7 +108,7 @@ const args = argufy(argsConfig)
  * The root namespace: types within it will not be printed
     with their namespace prefix.
  */
-       const _namespace = /** @type {boolean} */ (args['namespace'])
+       const _namespace = /** @type {string} */ (args['namespace'])
 
 /**
  * Starts _Documentary_ in watch mode. After changes are
