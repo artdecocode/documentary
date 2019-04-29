@@ -2,7 +2,7 @@
   <arg command name="source" default="documentary">
     The documentary file or directory to process.
   </arg>
-  <arg string name="output" short="o">
+  <arg name="output" short="o">
     Where to save the output (e.g., `README.md`).
     If not passed, prints to `stdout`.
   </arg>
@@ -23,11 +23,11 @@
     forks will be updated in cache so that it can be used
     next time without `-c` arg.
   </arg>
-  <arg boolean name="namespace" short="n">
+  <arg name="namespace" short="n">
     The root namespace: types within it will not be printed
     with their namespace prefix.
   </arg>
-  <arg string name="push" short="p">
+  <arg name="push" short="p">
     Starts _Documentary_ in watch mode. After changes are
     detected, the commit is undone, and new one is made over
     it, forcing git push.

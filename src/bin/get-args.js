@@ -37,7 +37,6 @@ export const argsConfig = {
   },
   'namespace': {
     description: 'The root namespace: types within it will not be printed\nwith their namespace prefix.',
-    boolean: true,
     short: 'n',
   },
   'push': {
@@ -109,7 +108,7 @@ export const _noCache = /** @type {boolean} */ (args['no-cache'])
  * The root namespace: types within it will not be printed
     with their namespace prefix.
  */
-export const _namespace = /** @type {boolean} */ (args['namespace'])
+export const _namespace = /** @type {string} */ (args['namespace'])
 
 /**
  * Starts _Documentary_ in watch mode. After changes are

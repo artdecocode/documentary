@@ -1044,7 +1044,7 @@ or a single marker to include all types in order in which they appear in the `xm
 %TYPEDEF types/static.xml%
 ```
 
-and embed resulting type definitions (with the imported type linked to the Node.js documentation due to its `link` attribute):
+and embed resulting type definitions (with the imported type linked to the _Node.JS_ documentation due to its `link` attribute):
 
 [`import('http').ServerResponse`](https://nodejs.org/api/http.html#http_class_http_serverresponse) __<a name="type-httpserverresponse">`http.ServerResponse`</a>__
 
@@ -1063,7 +1063,7 @@ __<a name="type-staticconfig">`StaticConfig`</a>__: Options to setup `koa-static
 | setHeaders    | <em>[SetHeaders](#type-setheaders)</em>                    | Function to set custom headers on response.                     | -            |
 | rightsPromise | <em>Promise&lt;[RightsConfig](#type-rightsconfig)&gt;</em> | The promise which will be resolved with access rights to files. | -            |
 
-_Documentary_ wil scan each source file of the documentation first to build a map of all types. Whenever a property appears to be of a known type, it will be automatically linked to the location where it was defined. It is also true for properties described as generic types, such as `Promise.<Type>`. This makes it possible to define all types in one place, and then reference them in the API documentation.
+_Documentary_ wil scan each source file of the documentation first to build a map of all types. Whenever a property appears to be of a known type, it will be automatically linked to the location where it was defined. It is also true for properties described as generic types, such as `Promise<Type>`. This makes it possible to define all types in one place, and then reference them in the API documentation. For the full list of supported types for linking, see [_Typal_'s documentation](https://github.com/artdecocode/typal/#markdown-documentation).
 
 [Read More](doc/typal.md) about types in _Documentary_ including advanced usage with the spread option.
 
