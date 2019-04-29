@@ -1,3 +1,10 @@
+## 29 April 2019
+
+### [1.26.1](https://github.com/artdecocode/documentary/compare/v1.26.1...v1.26.2)
+
+- [fix] Change namespace argument to be a string.
+- [deps] Update [_Typal_](https://artdecocode.com/typal) to use typedefs parser, and give link to supported types for linking.
+
 ## 25 April 2019
 
 ### [1.26.1](https://github.com/artdecocode/documentary/compare/v1.26.0...v1.26.1)
