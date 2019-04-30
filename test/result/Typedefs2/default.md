@@ -53,7 +53,7 @@ __[`Type2`](t-type)__
   ],
   [
     "__prop*__",
-    "<em>string \\| [Type](#type-type)</em>",
+    "<em>(string \\| [Type](#type-type))</em>",
     "A property."
   ]
 ]
@@ -89,7 +89,7 @@ __[`Type5`](t-type)__
   ],
   [
     "__prop*__",
-    "<em>Promise&lt;[Type](#type-type) \\| [Type2](#type-type2)&gt; \\| [Type3](#type-type3) \\| [Type4](#type-type4)</em>",
+    "<em>(Promise&lt;([Type](#type-type) \\| [Type2](#type-type2))&gt; \\| [Type3](#type-type3) \\| [Type4](#type-type4))</em>",
     "A property."
   ]
 ]
