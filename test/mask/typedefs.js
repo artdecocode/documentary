@@ -6,8 +6,8 @@ import { getStream } from '../../src/lib'
 import Typedefs from '../../src/lib/Typedefs'
 
 const ts = makeTestSuite('test/result/Typedefs-dir.md', {
-  async getResults(input) {
-    const s = getStream(input, false, false)
+  async getResults() {
+    const s = getStream(this.input, false, false)
     const typedefs = new Typedefs()
     s.pipe(typedefs)
     await collect(typedefs)
@@ -30,12 +30,9 @@ const ts = makeTestSuite('test/result/Typedefs-dir.md', {
 })
 
 export const main = makeTestSuite('test/result/Typedefs', {
-  /**
-   * @param {string} input
-   */
-  async getResults(input) {
+  async getResults() {
     const typedefs = new Typedefs()
-    typedefs.end(input)
+    typedefs.end(this.input)
     await collect(typedefs)
     const { locations, types } = typedefs
     return { locations: Object.keys(locations), types }
@@ -57,11 +54,10 @@ export const main = makeTestSuite('test/result/Typedefs', {
 
 const rest2 = makeTestSuite('test/result/Typedefs2', {
   /**
-   * @param {string} input
    * @param {TempContext} t
    */
-  async getResults(input, { write }) {
-    const pp = await write('types.xml', input)
+  async getResults({ write }) {
+    const pp = await write('types.xml', this.input)
     const marker = `%TYPEDEF ${pp}%`
     const typedefs = new Typedefs()
     typedefs.end(marker)

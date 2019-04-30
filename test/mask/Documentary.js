@@ -32,20 +32,20 @@ export const components2 = makeTestSuite('test/result/Documentary-components.md'
 })
 
 export const typedefs = makeTestSuite('test/result/Documentary-types.md', {
-  async getReadable(input) {
+  async getReadable() {
     const t = new Typedefs()
-    t.end(input)
+    t.end(this.input)
     await collect(t)
     const { types, locations } = t
     const doc = new Documentary({ locations, types, disableDtoc: true })
-    doc.end(input)
+    doc.end(this.input)
     return doc
   },
 })
 
 export const fixtures = makeTestSuite('test/result/Documentary-fixtures', {
-  async getReadable(input) {
-    const s = getStream(input)
+  async getReadable() {
+    const s = getStream(this.input)
     const doc = new Documentary({ disableDtoc: true, noCache: true })
     return s.pipe(doc)
   },

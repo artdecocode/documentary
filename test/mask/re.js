@@ -42,8 +42,8 @@ const ts = [
     /**
      * @param {string} input
      */
-    async getResults(input) {
-      const s = mismatch(regex, input, keys)
+    async getResults() {
+      const s = mismatch(regex, this.input, keys)
       return s
     },
     assertResults(result, { matches }) {

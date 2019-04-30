@@ -3,7 +3,7 @@ const { Replaceable } = require('restream');
 const { collect } = require('catchment');
 const { typedefMdRe } = require('./rules/typedef-md');
 const { read } = require('.');
-const { Type, parseFile } = require('typal');
+const { parseFile } = require('typal');
 const { codeRe, commentRule } = require('./rules');
 const { methodTitleRe } = require('./rules/method-title');
 const { macroRule, useMacroRule } = require('./rules/macros');
@@ -38,21 +38,8 @@ const LOG = debuglog('doc')
           this.addCache(location,typeName)
           try {
             const xml = await read(location)
-            const { types, imports } = parseFile(xml, rootNamespace)
+            const { types, Imports } = parseFile(xml, rootNamespace)
 
-            const Imports = imports
-              .map(({ name, from, desc, link }) => {
-                const type = new Type()
-                type.fromXML('', {
-                  name,
-                  type: `import('${from}').${name}`,
-                  noToc: true,
-                  import: true,
-                  desc,
-                  link,
-                }, from)
-                return type
-              })
             this.emit('types', {
               location,
               types: [...Imports, ...types],

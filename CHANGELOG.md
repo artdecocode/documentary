@@ -1,5 +1,9 @@
 ## 30 April 2019
 
+### [1.26.4](https://github.com/artdecocode/documentary/compare/v1.26.3...v1.26.4)
+
+- [build] Build the update.
+
 ### [1.26.3](https://github.com/artdecocode/documentary/compare/v1.26.2...v1.26.3)
 
 - [deps] Upgrade `typal`.

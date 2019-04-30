@@ -6,42 +6,41 @@ import { getStream } from '../../src/lib'
 import Documentary from '../../src/lib/Documentary'
 
 export default makeTestSuite('test/result/Toc/default', {
-  getReadable(input) {
+  getReadable() {
     const documentary = new Documentary({ noCache: true })
     const toc = new Toc({ documentary })
-    documentary.end(input)
+    documentary.end(this.input)
     return documentary.pipe(toc)
   },
   splitRe: /^\/\/ /gm,
 })
 
 const h1 = makeTestSuite('test/result/Toc/h1', {
-  getReadable(input) {
+  getReadable() {
     const documentary = new Documentary({ noCache: true })
     const toc = new Toc({ skipLevelOne: false })
-    documentary.end(input)
+    documentary.end(this.input)
     return documentary.pipe(toc)
   },
 })
 
 const typedefs = makeTestSuite('test/result/Toc/titles', {
-  async getReadable(input) {
-    const stream = getStream(input, false, false)
+  async getReadable() {
+    const stream = getStream(this.input, false, false)
     const { locations } = await getTypedefs(stream)
     const documentary = new Documentary({ noCache: true, locations })
     const toc = new Toc({ documentary })
-    const s2 = getStream(input)
+    const s2 = getStream(this.input)
     return s2.pipe(documentary).pipe(toc)
   },
 })
 
 const macros = makeTestSuite('test/result/Toc/macros', {
   /**
-   * @param {string} input
    * @param {TempContext}
    */
-  async getReadable(input, { write }) {
-    const pp = await write('data.md', input)
+  async getReadable({ write }) {
+    const pp = await write('data.md', this.input)
     const stream = getStream(pp, false, false)
     const { locations } = await getTypedefs(stream)
 
