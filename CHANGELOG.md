@@ -1,3 +1,9 @@
+## 1 May 2019
+
+### [1.26.5](https://github.com/artdecocode/documentary/compare/v1.26.4...v1.26.5)
+
+- [typal] Update typal to fix extra escapes and allow to give description of a linked type in a `title` attribute of an `a` element.
+
 ## 30 April 2019
 
 ### [1.26.4](https://github.com/artdecocode/documentary/compare/v1.26.3...v1.26.4)
