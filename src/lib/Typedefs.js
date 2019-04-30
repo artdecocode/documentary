@@ -3,7 +3,7 @@ import { Replaceable } from 'restream'
 import { collect } from 'catchment'
 import { typedefMdRe } from './rules/typedef-md'
 import { read } from '.'
-import { Type, parseFile } from 'typal'
+import { parseFile } from 'typal'
 import { codeRe, commentRule } from './rules'
 import { methodTitleRe } from './rules/method-title'
 import { macroRule, useMacroRule } from './rules/macros'
@@ -38,21 +38,8 @@ export default class Typedefs extends Replaceable {
           this.addCache(location,typeName)
           try {
             const xml = await read(location)
-            const { types, imports } = parseFile(xml, rootNamespace)
+            const { types, Imports } = parseFile(xml, rootNamespace)
 
-            const Imports = imports
-              .map(({ name, from, desc, link }) => {
-                const type = new Type()
-                type.fromXML('', {
-                  name,
-                  type: `import('${from}').${name}`,
-                  noToc: true,
-                  import: true,
-                  desc,
-                  link,
-                }, from)
-                return type
-              })
             this.emit('types', {
               location,
               types: [...Imports, ...types],

@@ -97,7 +97,7 @@
     "catchment": "^3.3.0",
     "clearr": "^1.0.0",
     "competent": "^1.1.0",
-    "erte": "^1.1.7",
+    "erte": "^1.2.0",
     "makepromise": "^3.1.0",
     "mismatch": "^1.2.0",
     "pedantry": "^2.3.2",
@@ -107,7 +107,7 @@
     "rexml": "^1.4.0",
     "spawncommand": "^2.2.0",
     "static-analysis": "^1.7.1",
-    "typal": "^1.6.2",
+    "typal": "^1.9.2",
     "usually": "^1.2.0",
     "which-stream": "^1.1.0"
   }
