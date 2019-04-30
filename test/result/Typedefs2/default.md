@@ -109,7 +109,7 @@ __[`Type5`](t-type)__
 [`import('vm').Test`](https://nodejs.org/api/vm.html#Test) __[`vm.Test`](l-type)__
 /**/
 
-## !can insert example - WIP
+## can insert example - WIP
 <types>
   <type name="Return">
     <prop name="body" type="string|object|Buffer">
@@ -134,7 +134,7 @@ __[`Return`](t-type)__
   ],
   [
     "__body*__",
-    "<em>string \\| object \\| Buffer</em>",
+    "<em>(string \\| object \\| Buffer)</em>",
     "The return from the server."
   ],
   [
