@@ -12,11 +12,10 @@
       "env": {
         "NODE_DEBUG": "doc",
         "DEBUG": "1",
-        "ZOROASTER_INTERACTIVE": "1",
       },
       "console": "integratedTerminal",
       "args": [
-        "test/mask", "test/spec", "-a", "-i",
+        "test/mask", "test/spec", "-a",
         "-w", "-t", "99999999"
       ],
       "autoAttachChildProcesses": true,

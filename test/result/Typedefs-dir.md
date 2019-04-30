@@ -20,7 +20,7 @@ __[`ServerConfig`](t-type)__: Options to setup the server.
   ],
   [
     "__staticConfig*__",
-    "<em>[StaticConfig](#type-staticconfig)</em>",
+    "<em><a href=\"#type-staticconfig\" title=\"Options to setup `koa-static`.\">StaticConfig</a></em>",
     "The configuration for the static server.",
     "-"
   ]
@@ -39,7 +39,7 @@ __[`StaticConfig`](t-type)__: Options to setup `koa-static`.
   ],
   [
     "setHeaders",
-    "<em>[SetHeaders](#type-setheaders)</em>",
+    "<em><a href=\"#type-setheaders\" title=\"Function to set custom headers on response.\">SetHeaders</a></em>",
     "Function to set custom headers on response."
   ]
 ]
