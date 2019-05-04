@@ -1,7 +1,20 @@
 import { debuglog } from 'util'
 import { c as color } from 'erte'
+import Md2html from '../../components/Html'
+import render from '@depack/render'
 
 const LOG = debuglog('doc')
+
+/**
+ * Check if any of the columns had new lines.
+ */
+const hasNewLines = (rows) => {
+  return rows.some((row) => {
+    return row.some((column) => {
+      return /\n/.test(column)
+    })
+  })
+}
 
 const mapNewLines = (rows) => {
   return rows.map((row) => {
@@ -9,6 +22,23 @@ const mapNewLines = (rows) => {
       return column.replace(/\n/g, '<br/>')
     })
   })
+}
+
+const HtmlTable = ({ header = [], rows = [], insertInnerCode }) => {
+  return (<table>
+    <tr>{header.map((he, i)=> {
+      return <th key={i} dangerouslySetInnerHTML={{
+        __html: Md2html({ children: [he], documentary: { insertInnerCode } }),
+      }} />
+    })}</tr>
+    {rows.map((row, i) => {
+      return <tr key={i}>{row.map((c, j) => {
+        return <td key={j} dangerouslySetInnerHTML={{
+          __html: Md2html({ children: [c], documentary: { insertInnerCode } }),
+        }} />
+      })}</tr>
+    })}
+  </table>)
 }
 
 /**
@@ -24,6 +54,12 @@ export function replacer(match, macro, table) {
     let res = JSON.parse(table)
     res = mapNewLines(res)
     const [header, ...rows] = res
+    // const newLines = hasNewLines(res)
+    // if (newLines) return render(<HtmlTable
+    //   header={header} rows={rows} insertInnerCode={this.insertInnerCode} />, {
+    //   pretty: true,
+    //   lineLength: 100,
+    // })
     const realRows = macroFn ? rows.map(macroFn) : rows
     const replacedData = this.replaceInnerCode
       ? [header, ...realRows].map(c => c.map(cc => this.replaceInnerCode(cc || '')))
@@ -31,12 +67,12 @@ export function replacer(match, macro, table) {
     const lengths = findLengths(replacedData)
     const sep = lengths.map(l => '-'.repeat(l))
     const replacedHeader = replacedData[0]
-    const h = getRow(header, lengths, true, replacedHeader)
+    const he = getRow(header, lengths, true, replacedHeader)
     const a = [
       sep,
       ...realRows,
     ].map(r => getRow(r, lengths))
-    return [h, ...a].join('\n')
+    return [he, ...a].join('\n')
   } catch (err) {
     const token = /Unexpected token (.) in JSON at position (\d+)/.exec(err.message)
     if (token) {

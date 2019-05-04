@@ -45,14 +45,15 @@
       "name": "Launch For Package",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },
-      "args": ["-o", "README.md", "-p", "doc types"],
+      "args": ["-o", "README.md", "-w"],
       // "args": ["-n", "_contextTesting"],
       // "cwd": "${workspaceFolder}/../../contexttesting/mask",
-      "cwd": "${workspaceFolder}/../../idiocc/koa",
+      "cwd": "${workspaceFolder}/../../idiocc/goa",
       // "cwd": "${workspaceFolder}/../../depack/depack",
       // "cwd": "${workspaceFolder}/../../a-la/alanode",
       // "cwd": "${workspaceFolder}/../../idiocc/core",
       "console": "integratedTerminal",
+      "sourceMaps": false,
       "skipFiles": [
         "<node_internals>/**/*.js"
       ]
