@@ -65,7 +65,6 @@
       },
       "args": [
         "src/bin/doc",
-        "documentary",
         // "test/fixtures/README-source.md"
         // "src/lib/Documentary.js", "-g"
       ],

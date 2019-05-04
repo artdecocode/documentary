@@ -49,6 +49,7 @@ export default async function run(options) {
   } else {
     console.log(result)
   }
+  return [...Object.keys(locations), ...doc.assets]
 }
 
 /* documentary types/run.xml */

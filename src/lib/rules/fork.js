@@ -46,6 +46,7 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false)
     if (record) {
       this.log('%s %s', s, awaited ? 'awaited' : 'cached')
       const { 'stderr': stderr, 'stdout': stdout } = record
+      this.addAsset(mmod)
       return getOutput(err, stderr, stdout, lang)
     } else {
       printed = true
@@ -62,6 +63,7 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false)
   } }
   await this.addCache('fork', cacheToWrite)
 
+  this.addAsset(mmod)
   return getOutput(err, stderr, stdout, lang)
 }
 

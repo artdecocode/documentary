@@ -59,8 +59,9 @@ if (_source) {
     source: _source, output: _output, justToc: _toc, h1: _h1,
     reverse: _reverse, noCache: _noCache, rootNamespace: _namespace,
   }
+  let files
   try {
-    await doc(docOptions)
+    files = await doc(docOptions)
   } catch ({ stack, message, code }) {
     DEBUG ? LOG(stack) : console.log(message)
   }
@@ -71,10 +72,10 @@ if (_source) {
     watch(_source, { recursive: true }, async () => {
       if (!debounce) {
         debounce = true
-        await doc(docOptions)
+        files = await doc(docOptions)
         if (_push) {
           console.log('Pushing documentation changes.')
-          await gitPush(_source, _output, _push)
+          await gitPush(_source, _output, _push, files)
         }
         debounce = false
       }

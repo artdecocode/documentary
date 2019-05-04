@@ -65,14 +65,14 @@ export const getStream = (path, reverse, object = true) => {
   return stream
 }
 
-export const gitPush = async (source, output, message) => {
+export const gitPush = async (source, output, message, files = []) => {
   const { promise } = spawn('git', ['log', '--format=%B', '-n', '1'])
   const { stdout } = await promise
   const s = stdout.trim()
   if (s == message) {
     await git('reset', 'HEAD~1')
   }
-  await git('add', source, output)
+  await git('add', source, output, ...files)
   await git('commit', '-m', message)
   await git('push', '-f')
 }

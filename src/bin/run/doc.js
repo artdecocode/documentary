@@ -1,10 +1,13 @@
 import run from '../run'
 
+/**
+ * Returns the list of additional files that were involved, e.g., examples, forks, typedefs.
+ */
 const doc = async (options) => {
   if (!options.source) {
     throw new Error('Please specify an input file.')
   }
-  await run(options)
+  return await run(options)
 }
 
 export default doc
