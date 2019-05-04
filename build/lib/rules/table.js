@@ -6,6 +6,7 @@ const LOG = debuglog('doc')
 const mapNewLines = (rows) => {
   return rows.map((row) => {
     return row.map((column) => {
+      if (!column) return column
       /** @type {!Array<string>} */
       let c = column.split('\n')
       c = c.map((t, i) => {

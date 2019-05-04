@@ -1,5 +1,9 @@
 ## 4 May 2019
 
+### [1.27.1](https://github.com/artdecocode/documentary/compare/v1.27.0...v1.27.1)
+
+- [fix+feature] New lines and `li` mappings in the table rule.
+
 ### [1.27.0](https://github.com/artdecocode/documentary/compare/v1.26.5...v1.27.0)
 
 - [feature] Watch assets for update, try to git push straight after running the command.
