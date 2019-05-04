@@ -6,7 +6,21 @@ const LOG = debuglog('doc')
 const mapNewLines = (rows) => {
   return rows.map((row) => {
     return row.map((column) => {
-      return column.replace(/\n/g, '<br/>')
+      /** @type {!Array<string>} */
+      let c = column.split('\n')
+      c = c.map((t, i) => {
+        t = t.replace(/`(.+?)`/, (m, g) => {
+          // (possibly) temp fix for typal escaping
+          g = g.replace(/&lt;/g, '<')
+          g = g.replace(/&gt;/g, '>')
+          return `\`${g.replace(/&lt;/g, '<')}\``
+        })
+        if (t.trim().startsWith('- '))
+          return `<li>${t.replace('- ', '')}</li>`
+        if (i>0) return `<br/>${t}`
+        return t
+      })
+      return c.join('')
     })
   })
 }

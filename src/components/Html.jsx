@@ -1,9 +1,13 @@
 /** The component to replace markdown with html. */
 const Md2Html = ({ children, documentary }) => {
-  const codes = {}
   /** @type {import('restream').Rule} */
   const insertInnerCode = documentary.insertInnerCode
   const [c] = children
+  return replace(c, insertInnerCode)
+}
+
+export const replace = (c, insertInnerCode) => {
+  const codes = {}
   const d = c.trim()
     .replace(insertInnerCode.re, insertInnerCode.replacement)
     .replace(/`(.+?)`/g, (m, code, i) => {

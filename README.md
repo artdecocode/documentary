@@ -1054,14 +1054,14 @@ and embed resulting type definitions (with the imported type linked to the _Node
 
 __<a name="type-staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
-|     Name      |                            Type                            |                           Description                           |   Default    |
-| ------------- | ---------------------------------------------------------- | --------------------------------------------------------------- | ------------ |
-| __root*__     | <em>string</em>                                            | Root directory string.                                          | -            |
-| maxage        | <em>number</em>                                            | Browser cache max-age in milliseconds.                          | `0`          |
-| hidden        | <em>boolean</em>                                           | Allow transfer of hidden files.                                 | `false`      |
-| index         | <em>string</em>                                            | Default file name.                                              | `index.html` |
-| setHeaders    | <em>[SetHeaders](#type-setheaders)</em>                    | Function to set custom headers on response.                     | -            |
-| rightsPromise | <em>Promise&lt;[RightsConfig](#type-rightsconfig)&gt;</em> | The promise which will be resolved with access rights to files. | -            |
+|     Name      |                                                             Type                                                             |                           Description                           |   Default    |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------ |
+| __root*__     | <em>string</em>                                                                                                              | Root directory string.                                          | -            |
+| maxage        | <em>number</em>                                                                                                              | Browser cache max-age in milliseconds.                          | `0`          |
+| hidden        | <em>boolean</em>                                                                                                             | Allow transfer of hidden files.                                 | `false`      |
+| index         | <em>string</em>                                                                                                              | Default file name.                                              | `index.html` |
+| setHeaders    | <em><a href="#type-setheaders" title="Function to set custom headers on response.">SetHeaders</a></em>                       | Function to set custom headers on response.                     | -            |
+| rightsPromise | <em>Promise&lt;<a href="#type-rightsconfig" title="Configuration of read and write access rights.">RightsConfig</a>&gt;</em> | The promise which will be resolved with access rights to files. | -            |
 
 _Documentary_ wil scan each source file of the documentation first to build a map of all types. Whenever a property appears to be of a known type, it will be automatically linked to the location where it was defined. It is also true for properties described as generic types, such as `Promise<Type>`. This makes it possible to define all types in one place, and then reference them in the API documentation. For the full list of supported types for linking, see [_Typal_'s documentation](https://github.com/artdecocode/typal/#markdown-documentation).
 
