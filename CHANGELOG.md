@@ -1,3 +1,9 @@
+## 4 May 2019
+
+### [1.27.0](https://github.com/artdecocode/documentary/compare/v1.26.5...v1.27.0)
+
+- [feature] Watch assets for update, try to git push straight after running the command.
+
 ## 1 May 2019
 
 ### [1.26.5](https://github.com/artdecocode/documentary/compare/v1.26.4...v1.26.5)

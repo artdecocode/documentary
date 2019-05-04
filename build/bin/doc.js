@@ -59,25 +59,43 @@ if (_source) {
     source: _source, output: _output, justToc: _toc, h1: _h1,
     reverse: _reverse, noCache: _noCache, rootNamespace: _namespace,
   }
+  let files
   try {
-    await doc(docOptions)
+    files = await doc(docOptions)
   } catch ({ stack, message, code }) {
     DEBUG ? LOG(stack) : console.log(message)
   }
 
-  let debounce = false
   if (_watch || _push) {
-    // todo: also watch referenced example files.
-    watch(_source, { recursive: true }, async () => {
-      if (!debounce) {
-        debounce = true
-        await doc(docOptions)
-        if (_push) {
-          console.log('Pushing documentation changes.')
-          await gitPush(_source, _output, _push)
-        }
-        debounce = false
+    let debounce = false
+    /** @type {!Array<!fs.FSWatcher>} */
+    let filesWatching = []
+
+    const watcher = async () => {
+      if (debounce) return
+      debounce = true
+      filesWatching.forEach((fs) => {
+        fs.close()
+      })
+
+      files = await doc(docOptions)
+      if (_push) {
+        console.log('Pushing documentation changes.')
+        await gitPush(_source, _output, _push, files)
       }
-    })
+      filesWatching = files.map((file) => {
+        const fs = watch(file, watcher)
+        return fs
+      })
+      debounce = false
+    }
+    // todo: also watch referenced example files.
+    watch(_source, { recursive: true }, watcher)
+    await watcher()
   }
 })()
+
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('fs').FSWatcher} fs.FSWatcher
+ */

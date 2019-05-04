@@ -182,6 +182,12 @@ const getComponents = (path) => {
     this.noCache = noCache
     this._disableDtoc = disableDtoc
     this.writingCache = Promise.resolve()
+
+    /**
+     * The list of files referenced in documentation: examples, forks.
+     * @type {!Array<string>}
+     */
+    this.assets = []
   }
   /**
    * Adds some information for generating TOC later.
@@ -267,6 +273,10 @@ const getComponents = (path) => {
     } else {
       throw new Error('what are you')
     }
+  }
+  /** @param {string} asset */
+  addAsset(asset) {
+    if (!this.assets.includes(asset)) this.assets.push(asset)
   }
 }
 

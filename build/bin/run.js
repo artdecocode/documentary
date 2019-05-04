@@ -49,6 +49,7 @@ const { getTypedefs } = require('../lib/Typedefs');
   } else {
     console.log(result)
   }
+  return [...Object.keys(locations), ...doc.assets]
 }
 
 /* documentary types/run.xml */
