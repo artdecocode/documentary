@@ -73,13 +73,14 @@ export const gitPush = async (source, output, message, files = []) => {
     await git('reset', 'HEAD~1')
   }
   await git('add', source, output, ...files)
-  await git('commit', '-m', message)
+  const res = await git('commit', '-m', message)
+  if (res.code != 0) return
   await git('push', '-f')
 }
 
 export const git = async (...args) => {
   const { promise } = spawn('git', args, { stdio: 'inherit' })
-  await promise
+  return await promise
 }
 
 export const codeSurround = (content, lang = '') => {
