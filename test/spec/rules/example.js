@@ -44,25 +44,29 @@ const T = {
     const [, ...a] = res
     deepEqual(a, ['', examplePath, from, to, type])
   },
-  async 'replaces an example without replacement'({ replace, examplePath }) {
+  'replaces an example without replacement'({ examplePath, mockDoc }) {
     const s = `%EXAMPLE: ${examplePath}%`
-    const { res } = await replace(exampleRule, s)
-    return res
+    const rs = mockDoc(exampleRule)
+    rs.end(s)
+    return rs
   },
-  async 'replaces an example with type'({ replace, examplePath }) {
+  'replaces an example with type'({ mockDoc, examplePath }) {
     const s = `%EXAMPLE: ${examplePath}, javascript%`
-    const { res } = await replace(exampleRule, s)
-    return res
+    const rs = mockDoc(exampleRule)
+    rs.end(s)
+    return rs
   },
-  async 'replaces an example with replacement'({ replace, examplePath }) {
+  'replaces an example with replacement'({ mockDoc, examplePath }) {
     const s = `%EXAMPLE: ${examplePath}, ../src => documentary%`
-    const { res } = await replace(exampleRule, s)
-    return res
+    const rs = mockDoc(exampleRule)
+    rs.end(s)
+    return rs
   },
-  async 'replaces an example with replacement and type'({ replace, examplePath }) {
+  'replaces an example with replacement and type'({ mockDoc, examplePath }) {
     const s = `%EXAMPLE: ${examplePath}, ../src => documentary, javascript%`
-    const { res } = await replace(exampleRule, s)
-    return res
+    const rs = mockDoc(exampleRule)
+    rs.end(s)
+    return rs
   },
   async 'does nothing when file cannot be read'({ replace }) {
     const s = `## API Method

@@ -23,6 +23,7 @@ const ts = [
       replaceable.getCache = () => {}
       replaceable.addCache = () => {}
       replaceable.log = () => {}
+      replaceable.addAsset = () => {}
       return replaceable
     },
   })

@@ -80,6 +80,12 @@ export default class Context {
     })
     return rs
   }
+  mockDoc(rules) {
+    const rs = new Replaceable(rules)
+    rs.log = () => {}
+    rs.addAsset = () => {}
+    return rs
+  }
   // get README() {
   //   return
   // }
@@ -327,6 +333,7 @@ console.log('test')
   async replace(rule, s) {
     const replaceable = new Replaceable(rule)
     replaceable.end(s)
+    replaceable.log = () => {}
     const res = await this.catchment(replaceable, true)
     return { res, replaceable }
   }
