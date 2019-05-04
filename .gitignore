@@ -66,3 +66,5 @@ shell.gif2.gif
 shell.gif1
 .documentary/cache
 test/temp
+build/components/*.jsx
+build/lib/rules/*.jsx

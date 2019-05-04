@@ -62,6 +62,8 @@ export function replacer(match, macro, table) {
       const r = color(t, 'red')
       const tt = `${s}${r}${s2}`
       LOG(tt)
+    } else {
+      LOG(err.stack)
     }
     LOG('Could not parse the table.')
     return match

@@ -3,6 +3,28 @@ const { c: color } = require('erte');
 
 const LOG = debuglog('doc')
 
+const mapNewLines = (rows) => {
+  return rows.map((row) => {
+    return row.map((column) => {
+      /** @type {!Array<string>} */
+      let c = column.split('\n')
+      c = c.map((t, i) => {
+        t = t.replace(/`(.+?)`/, (m, g) => {
+          // (possibly) temp fix for typal escaping
+          g = g.replace(/&lt;/g, '<')
+          g = g.replace(/&gt;/g, '>')
+          return `\`${g.replace(/&lt;/g, '<')}\``
+        })
+        if (t.trim().startsWith('- '))
+          return `<li>${t.replace('- ', '')}</li>`
+        if (i>0) return `<br/>${t}`
+        return t
+      })
+      return c.join('')
+    })
+  })
+}
+
 /**
  *
  * @param {*} match
@@ -13,7 +35,8 @@ const LOG = debuglog('doc')
   const { tableMacros = {} } = this
   const macroFn = tableMacros[macro]
   try {
-    const res = JSON.parse(table)
+    let res = JSON.parse(table)
+    res = mapNewLines(res)
     const [header, ...rows] = res
     const realRows = macroFn ? rows.map(macroFn) : rows
     const replacedData = this.replaceInnerCode
@@ -39,6 +62,8 @@ const LOG = debuglog('doc')
       const r = color(t, 'red')
       const tt = `${s}${r}${s2}`
       LOG(tt)
+    } else {
+      LOG(err.stack)
     }
     LOG('Could not parse the table.')
     return match
