@@ -1,4 +1,4 @@
-import { equal } from 'zoroaster/assert'
+import { equal } from '@zoroaster/assert'
 import mismatch from 'mismatch'
 import { getLink } from '../../src/lib'
 import { makeComponentRe } from '../../src/lib/components'

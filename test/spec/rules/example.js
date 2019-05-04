@@ -1,5 +1,5 @@
 import { ok, equal } from 'assert'
-import { deepEqual } from 'zoroaster/assert'
+import { deepEqual } from '@zoroaster/assert'
 import Context, { MarkdownSnapshot } from '../../context'
 import exampleRule, { re } from '../../../src/lib/rules/example'
 

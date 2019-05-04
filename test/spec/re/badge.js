@@ -1,4 +1,4 @@
-import { equal } from 'zoroaster/assert'
+import { equal } from '@zoroaster/assert'
 import Context from '../../context'
 import { badgeRe } from '../../../src/lib/rules/badge'
 

@@ -1,5 +1,5 @@
 import makeTestSuite from '@zoroaster/mask'
-import { deepEqual } from 'zoroaster/assert'
+import { deepEqual } from '@zoroaster/assert'
 import mismatch from 'mismatch'
 import { sectionBrakeRe } from '../../src/lib/rules/section-break'
 import { linkRe, linkTitleRe } from '../../src/lib/rules'

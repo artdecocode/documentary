@@ -1,4 +1,4 @@
-import { equal } from 'zoroaster/assert'
+import { equal } from '@zoroaster/assert'
 import Context, { MarkdownSnapshot } from '../../context'
 import createReplaceStream from '../../../src/lib/replace-stream'
 

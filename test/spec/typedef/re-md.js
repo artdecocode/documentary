@@ -1,4 +1,4 @@
-import { deepEqual } from 'zoroaster/assert'
+import { deepEqual } from '@zoroaster/assert'
 import Context from '../../context'
 import { typedefMdRe } from '../../../src/lib/rules/typedef-md'
 

@@ -1,4 +1,4 @@
-import { deepEqual } from 'zoroaster/assert'
+import { deepEqual } from '@zoroaster/assert'
 import Context from '../../context'
 import { tableRe } from '../../../src/lib/rules/table'
 
