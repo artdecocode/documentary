@@ -1,3 +1,9 @@
+## 7 May 2019
+
+### [1.27.2](https://github.com/artdecocode/documentary/compare/v1.27.1...v1.27.2)
+
+- [feature] Allow to write `-` as `<li>` tags into typedef tables.
+
 ## 4 May 2019
 
 ### [1.27.1](https://github.com/artdecocode/documentary/compare/v1.27.0...v1.27.1)

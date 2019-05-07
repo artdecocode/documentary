@@ -5,6 +5,7 @@ const LOG = debuglog('doc')
 
 const mapNewLines = (rows) => {
   return rows.map((row) => {
+    let prevLi = false
     return row.map((column) => {
       if (!column) return column
       /** @type {!Array<string>} */
@@ -16,10 +17,13 @@ const mapNewLines = (rows) => {
           g = g.replace(/&gt;/g, '>')
           return `\`${g.replace(/&lt;/g, '<')}\``
         })
-        if (t.trim().startsWith('- '))
+        if (t.trim().startsWith('- ')) {
+          prevLi = true
           return `<li>${t.replace('- ', '')}</li>`
-        if (i>0) return `<br/>${t}`
-        return t
+        }
+        let toReturn = i>0 && !prevLi ? `<br/>${t}` : t
+        prevLi = false
+        return toReturn
       })
       return c.join('')
     })
