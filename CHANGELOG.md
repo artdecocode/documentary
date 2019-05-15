@@ -1,3 +1,9 @@
+## 15 May 2019
+
+### [1.27.3](https://github.com/artdecocode/documentary/compare/v1.27.2...v1.27.3)
+
+- [fix] Absolute path to section breaks.
+
 ## 7 May 2019
 
 ### [1.27.2](https://github.com/artdecocode/documentary/compare/v1.27.1...v1.27.2)
