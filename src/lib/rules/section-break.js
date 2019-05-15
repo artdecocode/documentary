@@ -29,7 +29,7 @@ const rule = {
       const nn = `${name}?sanitize=true`
       await clone(imgPath, to)
 
-      const tags = getTags({ src: join(to, nn), ...a })
+      const tags = getTags({ src: '/' + join(to, nn), ...a })
       return tags
     } catch (err) {
       const h = c(err.message, 'red')
