@@ -11,7 +11,7 @@ _Documentary_ is a command-line tool to manage documentation of _Node.JS_ packag
 yarn add -D documentary
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/0.svg?sanitize=true"></a></p>
 
 ## Key Features
 
@@ -29,7 +29,7 @@ This section has a quick look at the best features available in _Documentary_ an
 | *[Typedefs](#typedef-organisation)*     | Maintains a types.xml file to place types definition in it, available both for source code and documentation.                                                                                                   | 1. Keeps the types declarations in one place, allowing to quickly update it both in JavaScript JSDoc, and in markdown README.<br/>2. Automatically constructs type tables for documentation.<br/>3. Expands the JSDoc config (options) argument for other developers to have a quick glance at possible options when calling a function.<br/>4. Links all types across the whole documentation for quick navigation.<br/>5. If the `types.xml` file or directory is published, other packages can embed it into documentation also, by using _Documentary_.                                                                                                                                    |
 | *[API Method Titles](#method-titles)*   | Creates good-looking headers for methods.                                                                                                                                                                       | 1. By writing each argument on new line, makes it easier to understand the signature of a function.<br/>2. Can maintain a separate title for the table of contents to keep things simple there.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/1.svg?sanitize=true"></a></p>
 
 ## Table Of Contents
 
@@ -85,7 +85,7 @@ This section has a quick look at the best features available in _Documentary_ an
   * [Editor Documentation](#editor-documentation)
 - [Copyright](#copyright)
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/2.svg?sanitize=true"></a></p>
 
 ## Installation & Usage
 
@@ -109,7 +109,7 @@ yarn doc
 
 When actively working on documentation, it is possible to use the `watch` mode with `-w` flag, or `-p` flag to also automatically push changes to a remote git repository, merging them into a single commit every time.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/3.svg?sanitize=true"></a></p>
 
 ## **TOC Generation**
 
@@ -155,10 +155,10 @@ For example:
 ```
 
 ```
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true"></a></p>
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg?sanitize=true"></a></p>
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true" href="https://hello.world" width="200"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/0.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/15.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/-1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/16.svg?sanitize=true" href="https://hello.world" width="200"></a></p>
 ```
 
 There are 23 available section breaks which will be inserted in incremental order in the document. When the end of the list is reached, the count restarts. There are also 3 ending breaks which can be inserted at the end and do not participate in the rotation, so that they must be inserted manually. To select a specific image, its number can be given.
@@ -245,7 +245,7 @@ There are 23 available section breaks which will be inserted in incremental orde
 
 By default, the section brake will link to the table of contents, however this can be changed by setting the `href` attribute. The images are also SVGs therefore it is possible to give them any width via the `width` attribute and they will stretch without any loss of quality. _Documentary_ will copy images from its source code to the `.documentary/section-breaks` directory in the repository. To control the destination, set the `to` attribute on section breaks.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/4.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/4.svg?sanitize=true"></a></p>
 
 ## **Simple Tables**
 
@@ -301,7 +301,7 @@ The values in the macro need to be separated with `,` which allows to substitute
 | ------- | -------- | ----------------- |
 | <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018 |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/5.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/5.svg?sanitize=true"></a></p>
 
 ## **Examples Placement**
 
@@ -385,7 +385,7 @@ import Catchment from 'catchment'
 await documentary()
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/6.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/6.svg?sanitize=true"></a></p>
 
 ## **Embedding Output**
 
@@ -444,7 +444,7 @@ HELLO world
  </tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/7.svg?sanitize=true" width="15"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/7.svg?sanitize=true" width="15"></a></p>
 
 ### Stderr
 
@@ -500,19 +500,19 @@ An error has occurred.
  </tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/8.svg?sanitize=true" width="15"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/8.svg?sanitize=true" width="15"></a></p>
 
 ### Caching
 
 The output of forks will be cached in the `.documentary/cache` directory. When compiling documentation, _Documentary_ will check for the presence of cache, check the _mtime_ of the module and if it is the same as cached, analyse module's dependencies to see if any of them had changes (updates to package dependencies' versions, changes to source files). When the cache is matched, no forking will take place and the value will be taken from the saved outputs. To explicitly prevent caching on a particular _FORK_ marker, it should be prefixed with `!`: `%!FORK module arg1 arg2%`. To disable caching across all _forks_, the [`-c`](#disable-cache) option can be passed to the CLI. Even if cache is disabled, the output will be saved so that when _Documentary_ is run next time, the latest known output is placed instantly.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/9.svg?sanitize=true" width="15"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/9.svg?sanitize=true" width="15"></a></p>
 
 ### Import/Exports Support
 
 _Documentary_ is able to fork modules that use `import` and `export` without the developer having to write a proxy file that would otherwise require `@babel/register`. It was made possible with _ÀLaMode_ regex-based transpiler that will update the `import/export` statements on-the-fly. If there are any problems while using this feature, it can be disabled with the `_` symbol: `%_FORK module arg1 arg2%`.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/10.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/10.svg?sanitize=true"></a></p>
 
 ## **Method Titles**
 
@@ -571,7 +571,7 @@ Generated from
 ```
 ````
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/11.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/11.svg?sanitize=true"></a></p>
 
 ## **JSX Components**
 
@@ -633,9 +633,9 @@ The result will be rendered HTML:
     <td align="center">
       <a href="https://www.technation.sucks">
         <img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif"
-          alt="Tech Nation Visa Sucks" />
+          alt="Tech Nation Visa Sucks">
       </a>
-      <br />
+      <br>
       Sponsored by 
       <a href="https://www.technation.sucks">Tech Nation Visa Sucks</a>
       .
@@ -648,7 +648,7 @@ The result will be rendered HTML:
   </tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/12.svg?sanitize=true" width="15"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/12.svg?sanitize=true" width="15"></a></p>
 
 ### Async Components
 
@@ -660,7 +660,7 @@ The components can be rendered asynchronously when the component returns a promi
 
 If a component returns just a string without actually using JSX, then it is pasted into the code as is, see the `Source` example.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/13.svg?sanitize=true" width="15"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/13.svg?sanitize=true" width="15"></a></p>
 
 <h3>Web Components</h3>
 
@@ -698,7 +698,7 @@ HELLO WORLD! EXAMPLE !@£
 <br>Open Gif
 </a>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/14.svg?sanitize=true" width="15"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/14.svg?sanitize=true" width="15"></a></p>
 
 ### Built-In Components
 
@@ -781,13 +781,13 @@ ghi
 </th></td>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/15.svg?sanitize=true" width="20"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/15.svg?sanitize=true" width="20"></a></p>
 
 #### `<`argufy`>`
 
 This component is used together with _Argufy_ package which keeps arguments to command-line programs in an XML file, and allows to generate JS to extract them from `process.argv` easily and in _Google Closure Compiler_-compatible way. _Documentary_ allows to place the table with all arguments defined in the `arguments.xml` file by using `<argufy>types/arguments.xml</argufy>` marker. It's child is the location of the arguments file, and if not given, it will default to `types/arguments.xml`. If an `arg` element had `toc` property, it will also be liked to the ToC using a toc-title. [See the table](#cli) generated for _Documentary_ for an example of how the documentation of CLI arguments will look like.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/16.svg?sanitize=true" width="20"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/16.svg?sanitize=true" width="20"></a></p>
 
 #### `<`md2html`>`
 
@@ -818,7 +818,7 @@ Converts the markdown with `_`/`__`/`*`/`**`/<code>`</code> into html. The main 
 </td></tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/17.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/17.svg?sanitize=true"></a></p>
 
 
 
@@ -826,7 +826,7 @@ Converts the markdown with `_`/`__`/`*`/`**`/<code>`</code> into html. The main 
 
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/18.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/18.svg?sanitize=true"></a></p>
 
 ## **Macros**
 
@@ -883,7 +883,7 @@ GitHub: _[Zoroaster](https://github.com/artdecocode/zoroaster)_
 
 > Currently, a macro can only be defined in the same file as its usage. Also, in future, macros will improve my allowing to use named placeholders.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/19.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/19.svg?sanitize=true"></a></p>
 
 ## **File Splitting**
 
@@ -924,7 +924,7 @@ documentary
 └── index.md
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/20.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/20.svg?sanitize=true"></a></p>
 
 ## **Replacement Rules**
 
@@ -936,7 +936,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | %NPM: package-name%      | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                              |
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/21.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/21.svg?sanitize=true"></a></p>
 
 ## **Gif Detail**
 
@@ -972,7 +972,7 @@ The actual html placed in the `README` looks like the one below:
 </details>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/22.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/22.svg?sanitize=true"></a></p>
 
 ## **_Typal_: Smart Typedefs**
 
@@ -982,7 +982,7 @@ The actual html placed in the `README` looks like the one below:
 
 The main use of _Typal_ is together with _Documentary_ to insert tables with types' descriptions.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true" width="20"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/0.svg?sanitize=true" width="20"></a></p>
 
 ### README placement
 
@@ -1067,7 +1067,7 @@ _Documentary_ wil scan each source file of the documentation first to build a ma
 
 [Read More](doc/typal.md) about types in _Documentary_ including advanced usage with the spread option.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/1.svg?sanitize=true"></a></p>
 
 ## **`Type` Definition**
 
@@ -1301,9 +1301,9 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 </table>
 
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/2.svg?sanitize=true"></a></p>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>
+
 
 ## CLI
 
@@ -1395,7 +1395,7 @@ DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/4.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/3.svg?sanitize=true"></a></p>
 
 ## API
 
@@ -1487,7 +1487,7 @@ import { createReadStream } from 'fs'
 - [Copyright](#copyright)
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/5.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/4.svg?sanitize=true"></a></p>
 
 ♫ PRO
 ♪ Underlined
@@ -1505,14 +1505,14 @@ Titles written as blocks and underlined with any number of either `===` (for H1)
 
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/6.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/5.svg?sanitize=true"></a></p>
 
 ## Glossary
 
 - **<a name="online-documentation">Online Documentation</a>**: documentation which is accessible online, such as on a GitHub website, or a language reference, e.g., [Node.js Documentation](https://nodejs.org/api/stream.html).
 - **<a name="editor-documentation">Editor Documentation</a>**: hints available to the users of an IDE, or an editor, in form of suggestions and descriptive hints on hover over variables' names.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-3.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/-3.svg?sanitize=true"></a></p>
 
 ## Copyright
 
@@ -1522,18 +1522,18 @@ Section breaks from [FoglihtenDeH0](https://www.1001fonts.com/foglihtendeh0-font
   <tr>
     <th>
       <a href="https://artd.eco">
-        <img src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png" alt="Art Deco" />
+        <img src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png" alt="Art Deco">
       </a>
     </th>
     <th>© <a href="https://artd.eco">Art Deco</a>   2019</th>
     <th>
       <a href="https://www.technation.sucks" title="Tech Nation Visa">
         <img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif"
-          alt="Tech Nation Visa" />
+          alt="Tech Nation Visa">
       </a>
     </th>
     <th><a href="https://www.technation.sucks">Tech Nation Visa Sucks</a></th>
   </tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/-1.svg?sanitize=true"></a></p>
