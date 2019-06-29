@@ -1,3 +1,10 @@
+## 29 June 2019
+
+### [1.27.4](https://github.com/artdecocode/documentary/compare/v1.27.3...v1.27.4)
+
+- [deps] Upgrade dependencies.
+- [docs] Fix extra section break.
+
 ## 15 May 2019
 
 ### [1.27.3](https://github.com/artdecocode/documentary/compare/v1.27.2...v1.27.3)
