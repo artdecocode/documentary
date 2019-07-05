@@ -90,7 +90,7 @@
     "@depack/cache": "^1.0.0",
     "@depack/render": "^1.2.0",
     "@wrote/clone": "^1.2.1",
-    "@wrote/ensure-path": "^1.0.8",
+    "@wrote/ensure-path": "^1.1.0",
     "@wrote/write": "^1.0.4",
     "alamode": "^2.3.4",
     "argufy": "^1.7.0",
