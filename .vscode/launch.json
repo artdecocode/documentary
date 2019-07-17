@@ -61,6 +61,29 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch For Depack/Doc",
+      "program": "${workspaceFolder}/src/bin/index.js",
+      "env": { "NODE_DEBUG": "doc" },
+      "args": [
+        "documentary/3-0-commonjs.md",
+        // "-o", "README.md",
+        "-w",
+      ],
+      // "args": ["-n", "_contextTesting"],
+      // "cwd": "${workspaceFolder}/../../contexttesting/mask",
+      "cwd": "${workspaceFolder}/../../depack/depack",
+      // "cwd": "${workspaceFolder}/../../depack/depack",
+      // "cwd": "${workspaceFolder}/../../a-la/alanode",
+      // "cwd": "${workspaceFolder}/../../idiocc/core",
+      "console": "integratedTerminal",
+      "sourceMaps": false,
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch Doc",
       "program": "${workspaceFolder}/node_modules/.bin/alanode",
       "env": {
