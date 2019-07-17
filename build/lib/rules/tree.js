@@ -1,4 +1,4 @@
-let spawn = require('spawncommand'); if (spawn && spawn.__esModule) spawn = spawn.default;
+const spawn = require('spawncommand');
 const { debuglog } = require('util');
 
 const LOG = debuglog('doc')

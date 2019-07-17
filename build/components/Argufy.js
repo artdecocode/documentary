@@ -1,7 +1,7 @@
 const { h } = require('preact');
-let read = require('@wrote/read'); if (read && read.__esModule) read = read.default;
+const read = require('@wrote/read');
 const Md2Html = require('./Html');
-let rexml = require('rexml'); if (rexml && rexml.__esModule) rexml = rexml.default;
+const rexml = require('rexml');
 
 const parse = (xml) => {
   const root = rexml('arguments', xml)

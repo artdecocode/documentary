@@ -1,4 +1,4 @@
-let extractTags = require('rexml'); if (extractTags && extractTags.__esModule) extractTags = extractTags.default;
+const extractTags = require('rexml');
 const macroRe = /^(%+)MACRO (.+)\n([\s\S]+?)\n\1(\n|$)/gm
 const useMacroRe = /^%USE-MACRO (.+)\n([\s\S]+?)\n%$/gm
 

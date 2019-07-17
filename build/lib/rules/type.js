@@ -1,5 +1,5 @@
 const { debuglog } = require('util');
-let extractTags = require('rexml'); if (extractTags && extractTags.__esModule) extractTags = extractTags.default;
+const extractTags = require('rexml');
 
 const LOG = debuglog('doc')
 

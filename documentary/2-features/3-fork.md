@@ -3,7 +3,7 @@
 When placing examples, it is important to show the output that they produce. This can be achieved using the `FORK` marker.
 
 ```t
-%FORK(-lang)? module ...args%
+%[/!_]FORK(-lang)? module ...args%
 ```
 
 It will make _Documentary_ fork a _Node.JS_ module using the `child_process.fork` function. The output is printed in a code block, with optionally given language. If the process cleared lines with `\r`, the output will be adjusted to account for that to be displayed like it would be in the terminal. The environment variables will be inherited from the parent `doc` process.
@@ -94,5 +94,15 @@ The output of forks will be cached in the `.documentary/cache` directory. When c
 ### Import/Exports Support
 
 _Documentary_ is able to fork modules that use `import` and `export` without the developer having to write a proxy file that would otherwise require `@babel/register`. It was made possible with _ÀLaMode_ regex-based transpiler that will update the `import/export` statements on-the-fly. If there are any problems while using this feature, it can be disabled with the `_` symbol: `%_FORK module arg1 arg2%`.
+
+%~ width="15"%
+
+### Replace Absolute Paths
+
+With the <kbd>/</kbd> prefix in the FORK command, all absolute paths that contain the current working directory, will be replaced with relative paths.
+
+```
+%/FORKERR-table example/print-table%
+```
 
 %~%

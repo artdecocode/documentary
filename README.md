@@ -48,6 +48,7 @@ This section has a quick look at the best features available in _Documentary_ an
   * [Stderr](#stderr)
   * [Caching](#caching)
   * [Import/Exports Support](#importexports-support)
+  * [Replace Absolute Paths](#replace-absolute-paths)
 - [**Method Titles**](#method-titles)
   * [`async runSoftware(path: string, config: Config): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
   * [`async runSoftware(path: string)`](#async-runsoftwarepath-string-void)
@@ -392,7 +393,7 @@ await documentary()
 When placing examples, it is important to show the output that they produce. This can be achieved using the `FORK` marker.
 
 ```t
-%FORK(-lang)? module ...args%
+%[/!_]FORK(-lang)? module ...args%
 ```
 
 It will make _Documentary_ fork a _Node.JS_ module using the `child_process.fork` function. The output is printed in a code block, with optionally given language. If the process cleared lines with `\r`, the output will be adjusted to account for that to be displayed like it would be in the terminal. The environment variables will be inherited from the parent `doc` process.
@@ -512,7 +513,17 @@ The output of forks will be cached in the `.documentary/cache` directory. When c
 
 _Documentary_ is able to fork modules that use `import` and `export` without the developer having to write a proxy file that would otherwise require `@babel/register`. It was made possible with _ÀLaMode_ regex-based transpiler that will update the `import/export` statements on-the-fly. If there are any problems while using this feature, it can be disabled with the `_` symbol: `%_FORK module arg1 arg2%`.
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/10.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/10.svg?sanitize=true" width="15"></a></p>
+
+### Replace Absolute Paths
+
+With the <kbd>/</kbd> prefix in the FORK command, all absolute paths that contain the current working directory, will be replaced with relative paths.
+
+```
+%/FORKERR-table example/print-table%
+```
+
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/11.svg?sanitize=true"></a></p>
 
 ## **Method Titles**
 
@@ -571,7 +582,7 @@ Generated from
 ```
 ````
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/11.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/12.svg?sanitize=true"></a></p>
 
 ## **JSX Components**
 
@@ -648,7 +659,7 @@ The result will be rendered HTML:
   </tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/12.svg?sanitize=true" width="15"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/13.svg?sanitize=true" width="15"></a></p>
 
 ### Async Components
 
@@ -660,7 +671,7 @@ The components can be rendered asynchronously when the component returns a promi
 
 If a component returns just a string without actually using JSX, then it is pasted into the code as is, see the `Source` example.
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/13.svg?sanitize=true" width="15"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/14.svg?sanitize=true" width="15"></a></p>
 
 <h3>Web Components</h3>
 
@@ -698,7 +709,7 @@ HELLO WORLD! EXAMPLE !@£
 <br>Open Gif
 </a>
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/14.svg?sanitize=true" width="15"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/15.svg?sanitize=true" width="15"></a></p>
 
 ### Built-In Components
 
@@ -781,13 +792,13 @@ ghi
 </th></td>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/15.svg?sanitize=true" width="20"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/16.svg?sanitize=true" width="20"></a></p>
 
 #### `<`argufy`>`
 
 This component is used together with _Argufy_ package which keeps arguments to command-line programs in an XML file, and allows to generate JS to extract them from `process.argv` easily and in _Google Closure Compiler_-compatible way. _Documentary_ allows to place the table with all arguments defined in the `arguments.xml` file by using `<argufy>types/arguments.xml</argufy>` marker. It's child is the location of the arguments file, and if not given, it will default to `types/arguments.xml`. If an `arg` element had `toc` property, it will also be liked to the ToC using a toc-title. [See the table](#cli) generated for _Documentary_ for an example of how the documentation of CLI arguments will look like.
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/16.svg?sanitize=true" width="20"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/17.svg?sanitize=true" width="20"></a></p>
 
 #### `<`md2html`>`
 
@@ -818,7 +829,7 @@ Converts the markdown with `_`/`__`/`*`/`**`/<code>`</code> into html. The main 
 </td></tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/17.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/18.svg?sanitize=true"></a></p>
 
 
 
@@ -826,7 +837,7 @@ Converts the markdown with `_`/`__`/`*`/`**`/<code>`</code> into html. The main 
 
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/18.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/19.svg?sanitize=true"></a></p>
 
 ## **Macros**
 
@@ -883,7 +894,7 @@ GitHub: _[Zoroaster](https://github.com/artdecocode/zoroaster)_
 
 > Currently, a macro can only be defined in the same file as its usage. Also, in future, macros will improve my allowing to use named placeholders.
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/19.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/20.svg?sanitize=true"></a></p>
 
 ## **File Splitting**
 
@@ -924,7 +935,7 @@ documentary
 └── index.md
 ```
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/20.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/21.svg?sanitize=true"></a></p>
 
 ## **Replacement Rules**
 
@@ -936,7 +947,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | %NPM: package-name%      | Adds an NPM badge, e.g., `[![npm version] (https://badge.fury.io/js/documentary.svg)] (https://npmjs.org/package/documentary)`                                                              |
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/21.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/22.svg?sanitize=true"></a></p>
 
 ## **Gif Detail**
 
@@ -972,7 +983,7 @@ The actual html placed in the `README` looks like the one below:
 </details>
 ```
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/22.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/0.svg?sanitize=true"></a></p>
 
 ## **_Typal_: Smart Typedefs**
 
@@ -982,7 +993,7 @@ The actual html placed in the `README` looks like the one below:
 
 The main use of _Typal_ is together with _Documentary_ to insert tables with types' descriptions.
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/0.svg?sanitize=true" width="20"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/1.svg?sanitize=true" width="20"></a></p>
 
 ### README placement
 
@@ -1067,7 +1078,7 @@ _Documentary_ wil scan each source file of the documentation first to build a ma
 
 [Read More](doc/typal.md) about types in _Documentary_ including advanced usage with the spread option.
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/2.svg?sanitize=true"></a></p>
 
 ## **`Type` Definition**
 
@@ -1301,7 +1312,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 </table>
 
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/2.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/3.svg?sanitize=true"></a></p>
 
 
 
@@ -1395,7 +1406,7 @@ DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/3.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/4.svg?sanitize=true"></a></p>
 
 ## API
 
@@ -1487,7 +1498,7 @@ import { createReadStream } from 'fs'
 - [Copyright](#copyright)
 ```
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/4.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/5.svg?sanitize=true"></a></p>
 
 ♫ PRO
 ♪ Underlined
@@ -1505,7 +1516,7 @@ Titles written as blocks and underlined with any number of either `===` (for H1)
 
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/5.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/6.svg?sanitize=true"></a></p>
 
 ## Glossary
 

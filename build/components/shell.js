@@ -1,5 +1,5 @@
 const { h } = require('preact');
-let spawn = require('spawncommand'); if (spawn && spawn.__esModule) spawn = spawn.default;
+const spawn = require('spawncommand');
 const { exec } = require('child_process');
 const { codeSurround } = require('../lib');
 

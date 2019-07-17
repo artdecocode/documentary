@@ -2,8 +2,8 @@ const { fork } = require('spawncommand');
 const { c } = require('erte');
 const { resolve } = require('path');
 let resolveDependency = require('resolve-dependency'); if (resolveDependency && resolveDependency.__esModule) resolveDependency = resolveDependency.default;
-let clearR = require('clearr'); if (clearR && clearR.__esModule) clearR = clearR.default;
-let compare = require('@depack/cache'); if (compare && compare.__esModule) compare = compare.default;
+const clearR = require('clearr');
+const compare = require('@depack/cache');
 const { codeSurround } = require('..');
 
 const queue = {}
@@ -88,7 +88,7 @@ const forkRule = {
   async replacement(match, ws, service, err, lang, m) {
     const noCache = /!/.test(service) || this.noCache
     const old = /_/.test(service)
-    const noRelative = /\//.test(service)
+    const relative = /\//.test(service)
     try {
       let awaited = false
       const q = queue[m]
@@ -101,7 +101,7 @@ const forkRule = {
       queue[m] = { promise, err }
       let res = await promise
       if (ws) res = res.replace(/^/gm, ws)
-      if (!noRelative) res = res.replace(process.cwd(), '')
+      if (relative) res = res.replace(new RegExp(`${process.cwd()}/?`, 'g'), '')
       return res
     } catch (e) {
       this.log(c(`FORK ${m} error`, 'red'))
