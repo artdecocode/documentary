@@ -13,7 +13,7 @@ const LOG = debuglog('doc')
 /**
  * A Typedefs class will detect and store in a map all type definitions embedded into the documentation.
  */
-               class Typedefs extends Replaceable {
+class Typedefs extends Replaceable {
   constructor(rootNamespace) {
     super([
       {
@@ -81,7 +81,7 @@ const LOG = debuglog('doc')
 //   },
 // },
 
-       const getTypedefs = async (stream, namespace) => {
+const getTypedefs = async (stream, namespace) => {
   const typedefs = new Typedefs(namespace)
   stream.pipe(typedefs)
   await collect(typedefs)

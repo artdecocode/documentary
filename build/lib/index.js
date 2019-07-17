@@ -6,7 +6,7 @@ const tableRule = require('./rules/table');
 const titleRule = require('./rules/method-title');
 const { PassThrough } = require('stream');
 
-       const getLink = (title, prefix = '') => {
+const getLink = (title, prefix = '') => {
   const l = title
     .replace(/<\/?code>/g, '')
     .replace(/<\/?strong>/g, '')
@@ -18,15 +18,15 @@ const { PassThrough } = require('stream');
   return `${prefix}${prefix ? '-' : ''}${l}`
 }
 
-       const makeARegexFromRule = (rule) => {
+const makeARegexFromRule = (rule) => {
   const re = new RegExp(`^${rule.re.source}`)
   return re
 }
 
-       const exactTable = makeARegexFromRule(tableRule)
-       const exactMethodTitle = makeARegexFromRule(titleRule)
+const exactTable = makeARegexFromRule(tableRule)
+const exactMethodTitle = makeARegexFromRule(titleRule)
 
-       const read = async (source) => {
+const read = async (source) => {
   const rs = createReadStream(source)
   const data = await collect(rs)
   return data
@@ -38,7 +38,7 @@ const { PassThrough } = require('stream');
  * @param {boolean} [reverse=false] If directory, read in reverse order.
  * @param {boolean} [object=false] Read in the object mode to push filenames.
  */
-       const getStream = (path, reverse, object = true) => {
+const getStream = (path, reverse, object = true) => {
   const ls = lstatSync(path)
   let stream
   if (ls.isDirectory()) {
@@ -65,7 +65,7 @@ const { PassThrough } = require('stream');
   return stream
 }
 
-       const gitPush = async (source, output, message, files = []) => {
+const gitPush = async (source, output, message, files = []) => {
   const { promise } = spawn('git', ['log', '--format=%B', '-n', '1'])
   const { stdout } = await promise
   const s = stdout.trim()
@@ -78,12 +78,12 @@ const { PassThrough } = require('stream');
   await git('push', '-f')
 }
 
-       const git = async (...args) => {
+const git = async (...args) => {
   const { promise } = spawn('git', args, { stdio: 'inherit' })
   return await promise
 }
 
-       const codeSurround = (content, lang = '') => {
+const codeSurround = (content, lang = '') => {
   if (lang == 'md') lang = 'markdown'
   const hasBackticks = /```/.test(content)
   const t = hasBackticks ? '````' : '```'

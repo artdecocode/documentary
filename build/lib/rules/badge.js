@@ -1,4 +1,4 @@
-       const badgeRe = /^%NPM: ((?:[@\w\d-_]+\/)?[\w\d-_]+)%$/gm
+const badgeRe = /^%NPM: ((?:[@\w\d-_]+\/)?[\w\d-_]+)%$/gm
 
 const badgeRule = {
   re: badgeRe,

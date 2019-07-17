@@ -1,7 +1,7 @@
 /**
  * This is the main package file.
  */
-               async function documentary() {
+async function documentary() {
   console.log('documentary called')
 }
 

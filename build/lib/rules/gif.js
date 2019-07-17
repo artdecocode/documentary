@@ -10,7 +10,6 @@ summary
 const gifRe = /^%GIF (.+)\n(.+)\n(.+)\n%$/mg
 
 
-
 const gifRule = {
   re: gifRe,
   replacement(match, path, alt, summary) {

@@ -24,7 +24,7 @@ const getPartial = (boundExample) => {
   return e
 }
 
-       async function replacer(match, ws, source, from, to, type) {
+async function replacer(match, ws, source, from, to, type) {
   try {
     const { path } = await resolveDependency(source)
     let f = await read(path)
@@ -65,7 +65,7 @@ const getPartial = (boundExample) => {
     return match
   }
 }
-       const re = /^( *)%EXAMPLE: (.[^\n,]+)(?:, (.+?) => (.[^\s,]+))?(?:, (.+))?%$/gm
+const re = /^( *)%EXAMPLE: (.[^\n,]+)(?:, (.+?) => (.[^\s,]+))?(?:, (.+))?%$/gm
 
 const exampleRule = {
   re,

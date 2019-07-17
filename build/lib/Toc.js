@@ -153,7 +153,7 @@ class ChunkReplaceable extends Replaceable {
   }
 }
 
-               class Toc extends Transform {
+class Toc extends Transform {
   /**
    * A transform stream which will extract the titles in the markdown document and transform them into a markdown nested list with links.
    * @param {Config} [config] Configuration object.
@@ -235,7 +235,7 @@ class ChunkReplaceable extends Replaceable {
  * Gather all titles from the stream and return the table of contents as a string.
  * @returns {string} The table of contents.
  */
-       const getToc = async (stream, h1, locations) => {
+const getToc = async (stream, h1, locations) => {
   const toc = new Toc({ skipLevelOne: !h1, locations, documentary: stream })
   stream.pipe(toc)
   const res = await collect(toc)

@@ -1,6 +1,6 @@
 let extractTags = require('rexml'); if (extractTags && extractTags.__esModule) extractTags = extractTags.default;
-       const macroRe = /^(%+)MACRO (.+)\n([\s\S]+?)\n\1(\n|$)/gm
-       const useMacroRe = /^%USE-MACRO (.+)\n([\s\S]+?)\n%$/gm
+const macroRe = /^(%+)MACRO (.+)\n([\s\S]+?)\n\1(\n|$)/gm
+const useMacroRe = /^%USE-MACRO (.+)\n([\s\S]+?)\n%$/gm
 
 /**
  * @param {string} match
@@ -38,11 +38,11 @@ function useMacroReplacement(match, macro, body) {
   }
 }
 
-       const macroRule = {
+const macroRule = {
   re: macroRe,
   replacement: macroReplacement,
 }
-       const useMacroRule = {
+const useMacroRule = {
   re: useMacroRe,
   replacement: useMacroReplacement,
 }

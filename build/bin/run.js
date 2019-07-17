@@ -15,7 +15,7 @@ const { getTypedefs } = require('../lib/Typedefs');
  * @param {boolean} [options.justToc=false] Only print the table of contents and exit. Default `false`.
  * @param {boolean} [options.h1=false] Include `H1` headers in the table of contents. Default `false`.
  */
-               async function run(options) {
+async function run(options) {
   const {
     source, output = '-', reverse, justToc, h1, noCache, rootNamespace,
   } = options

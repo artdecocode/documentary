@@ -84,10 +84,11 @@ const doFork = async (old, mod, args) => {
 }
 
 const forkRule = {
-  re: /( *)%([!_]+)?FORK(ERR)?(?:-(\w+))? (.+)%/mg,
+  re: /( *)%([/!_]+)?FORK(ERR)?(?:-(\w+))? (.+)%/mg,
   async replacement(match, ws, service, err, lang, m) {
     const noCache = /!/.test(service) || this.noCache
     const old = /_/.test(service)
+    const noRelative = /\//.test(service)
     try {
       let awaited = false
       const q = queue[m]
@@ -100,6 +101,7 @@ const forkRule = {
       queue[m] = { promise, err }
       let res = await promise
       if (ws) res = res.replace(/^/gm, ws)
+      if (!noRelative) res = res.replace(process.cwd(), '')
       return res
     } catch (e) {
       this.log(c(`FORK ${m} error`, 'red'))

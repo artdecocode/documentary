@@ -51,7 +51,6 @@ const getTags = ({
   return s
 }
 
-
 module.exports=rule
 
 module.exports.sectionBrakeRe = sectionBrakeRe

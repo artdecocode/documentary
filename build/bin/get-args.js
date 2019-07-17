@@ -1,6 +1,6 @@
 let argufy = require('argufy'); if (argufy && argufy.__esModule) argufy = argufy.default;
 
-       const argsConfig = {
+const argsConfig = {
   'source': {
     description: 'The documentary file or directory to process.',
     command: true,
@@ -69,80 +69,80 @@ const args = argufy(argsConfig)
 /**
  * The documentary file or directory to process. Default `documentary`.
  */
-       const _source = /** @type {string} */ (args['source'] || 'documentary')
+const _source = /** @type {string} */ (args['source'] || 'documentary')
 
 /**
  * Where to save the output (e.g., `README.md`).
     If not passed, prints to `stdout`.
  */
-       const _output = /** @type {string} */ (args['output'])
+const _output = /** @type {string} */ (args['output'])
 
 /**
  * Just print the table of contents.
  */
-       const _toc = /** @type {boolean} */ (args['toc'])
+const _toc = /** @type {boolean} */ (args['toc'])
 
 /**
  * Print files in reverse order. Useful for blogs.
  */
-       const _reverse = /** @type {boolean} */ (args['reverse'])
+const _reverse = /** @type {boolean} */ (args['reverse'])
 
 /**
  * Add `h1` headings to the Table of Contents.
  */
-       const _h1 = /** @type {boolean} */ (args['h1'])
+const _h1 = /** @type {boolean} */ (args['h1'])
 
 /**
  * Watch files for changes and recompile the documentation.
  */
-       const _watch = /** @type {boolean} */ (args['watch'])
+const _watch = /** @type {boolean} */ (args['watch'])
 
 /**
  * Disable forks' cache for the run. The new output of
     forks will be updated in cache so that it can be used
     next time without `-c` arg.
  */
-       const _noCache = /** @type {boolean} */ (args['no-cache'])
+const _noCache = /** @type {boolean} */ (args['no-cache'])
 
 /**
  * The root namespace: types within it will not be printed
     with their namespace prefix.
  */
-       const _namespace = /** @type {string} */ (args['namespace'])
+const _namespace = /** @type {string} */ (args['namespace'])
 
 /**
  * Starts _Documentary_ in watch mode. After changes are
     detected, the commit is undone, and new one is made over
     it, forcing git push.
  */
-       const _push = /** @type {string} */ (args['push'])
+const _push = /** @type {string} */ (args['push'])
 
 /**
  * [Deprecated] Places typedefs definitions into JavaScript
     files from types.xml. Use `typal` instead.
  */
-       const _generate = /** @type {boolean} */ (args['generate'])
+const _generate = /** @type {boolean} */ (args['generate'])
 
 /**
  * [Deprecated] Migrates existing typedefs from a JavaScript
     file into types.xml. Use `typal -m` instead.
  */
-       const _extract = /** @type {boolean} */ (args['extract'])
+const _extract = /** @type {boolean} */ (args['extract'])
 
 /**
  * Prints the current version.
  */
-       const _version = /** @type {boolean} */ (args['version'])
+const _version = /** @type {boolean} */ (args['version'])
 
 /**
  * Shows the usage information.
  */
-       const _help = /** @type {boolean} */ (args['help'])
+const _help = /** @type {boolean} */ (args['help'])
 
 /**
  * The additional arguments passed to the program.
  */
-       const _argv = /** @type {!Array<string>} */ (args._argv)
+const _argv = /** @type {!Array<string>} */ (args._argv)
 
 module.exports.argsConfig = argsConfig
 module.exports._source = _source

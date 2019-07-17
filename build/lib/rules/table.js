@@ -36,7 +36,7 @@ const mapNewLines = (rows) => {
  * @param {*} macro
  * @param {string} table
  */
-       function replacer(match, macro, table) {
+function replacer(match, macro, table) {
   const { tableMacros = {} } = this
   const macroFn = tableMacros[macro]
   try {
@@ -130,7 +130,6 @@ const tableRule = {
   re,
   replacement: replacer,
 }
-
 
 
 module.exports=tableRule

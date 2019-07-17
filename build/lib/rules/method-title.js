@@ -2,7 +2,7 @@ const { debuglog } = require('util');
 
 const LOG = debuglog('doc')
 
-       const replaceTitle = function (level, isAsync, method, returnType, args) {
+const replaceTitle = function (level, isAsync, method, returnType, args) {
   const sig = `${level} ${isAsync ? '`async ' : '`'}${method}(`
   const endSig = `): ${returnType ? returnType : 'void'}\``
   const nl = '<br/>'
@@ -37,7 +37,7 @@ const LOG = debuglog('doc')
 
 const re = /```(#+)( async)? (\w+)(?: => (.+)\n)?([\s\S]*?)```/g
 
-       const replacer = function (match, level, isAsync, method, returnType, jsonArgs) {
+const replacer = function (match, level, isAsync, method, returnType, jsonArgs) {
   try {
     jsonArgs = jsonArgs.trim()
     /** @type {Array} */
@@ -60,7 +60,6 @@ const methodTitleRule = {
   re,
   replacement: replacer,
 }
-
 
 module.exports=methodTitleRule
 

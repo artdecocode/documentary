@@ -7,7 +7,7 @@ const Md2Html = ({ children, documentary }) => {
   return replace(c, insertInnerCode)
 }
 
-       const replace = (c, insertInnerCode) => {
+const replace = (c, insertInnerCode) => {
   const codes = {}
   const d = c.trim()
     .replace(insertInnerCode.re, insertInnerCode.replacement)

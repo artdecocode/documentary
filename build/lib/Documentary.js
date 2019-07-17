@@ -40,7 +40,7 @@ const getComponents = (path) => {
 /**
  * Documentary is a _Replaceable_ stream with transform rules for documentation.
  */
-               class Documentary extends Replaceable {
+class Documentary extends Replaceable {
   /**
    * @param {DocumentaryOptions} options Options for the Documentary constructor.
    * @param {*} [options.locations]

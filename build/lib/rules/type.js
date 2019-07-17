@@ -6,7 +6,6 @@ const LOG = debuglog('doc')
 const typeRe = /^%TYPE( .+)?\n([\s\S]+?)\n%$/mg
 
 
-
 const tag = (t, s) => `<${t}>${s}</${t}>`
 const strong = s => tag('strong', s)
 
