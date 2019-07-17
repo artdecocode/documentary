@@ -1,3 +1,10 @@
+## 17 July 2019
+
+### [1.27.5](https://github.com/artdecocode/documentary/compare/v1.27.4...v1.27.5)
+
+- [feature] Fold absolute paths using `/` in FORK.
+- [fix] Don't cut `table` blocks out to be able to process tables created with a fork process.
+
 ## 29 June 2019
 
 ### [1.27.4](https://github.com/artdecocode/documentary/compare/v1.27.3...v1.27.4)
