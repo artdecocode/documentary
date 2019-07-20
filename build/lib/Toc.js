@@ -57,7 +57,8 @@ class ChunkReplaceable extends Replaceable {
             }
             ok = /^ *(?!\s*(?:>|(?:[+*-] )|(?:\d+\.)|(?:# )|`{3,}))[^\s]+.*$/.test(t)
             if (ok) {
-              lines.unshift(t)
+              const ft = t.replace(/\[(.+?)\]\(.+?\)/g, '$1')
+              lines.unshift(ft)
               s = s.substr(0, s.length - t.length - 1)
             } else {
               break

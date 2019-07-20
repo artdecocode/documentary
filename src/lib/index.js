@@ -11,6 +11,7 @@ export const getLink = (title, prefix = '') => {
     .replace(/<\/?code>/g, '')
     .replace(/<\/?strong>/g, '')
     .replace(/<br\/>/g, '')
+    .replace(/<\/?kbd>/g, '')
     .replace(/&nbsp;/g, '')
     .replace(/[^\u00C0-\u1FFF\u2C00-\uD7FF\w\-\d ]/gu, '')
     .toLowerCase()
