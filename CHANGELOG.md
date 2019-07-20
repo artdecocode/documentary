@@ -1,3 +1,7 @@
+## 20 July 2019
+
+### [1.27.6](https://github.com/artdecocode/documentary/compare/v1.27.5...v1.27.6)
+
 ## 17 July 2019
 
 ### [1.27.5](https://github.com/artdecocode/documentary/compare/v1.27.4...v1.27.5)
