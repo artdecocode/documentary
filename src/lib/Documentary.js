@@ -100,11 +100,7 @@ export default class Documentary extends Replaceable {
       useMacroRule,
 
       badgeRule,
-      treeRule,
-      ...[
-        exampleRule,
-        cutCode, // cut code again after inserting example
-      ],
+
       forkRule,
       // tocRule,
       {
@@ -118,6 +114,11 @@ export default class Documentary extends Replaceable {
         ...components, // todo: restream pipe
         cutCode, // cut code again after inserting components
       ],
+      ...[
+        exampleRule,
+        cutCode, // cut code again after inserting example
+      ],
+      treeRule,
       insertTable,
       // typedefMdRule, // places a table hence just before table
 

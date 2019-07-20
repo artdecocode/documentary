@@ -4,8 +4,8 @@ import { debuglog } from 'util'
 const LOG = debuglog('doc')
 
 const treeRule = {
-  re: /%TREE (.+)%/mg,
-  async replacement(match, m) {
+  re: /( *)%TREE (.+)%/mg,
+  async replacement(match, ws, m) {
     const args = m.split(' ')
     const p = spawn('tree', ['--noreport', ...args])
     try {
@@ -14,7 +14,9 @@ const treeRule = {
         LOG('Could not generate a tree for %s', args.join(' '))
         return match
       }
-      return codeSurround(stdout)
+      let s = codeSurround(stdout)
+      s = s.replace(/^/mg, ws)
+      return s
     } catch (err) {
       if (err.code == 'ENOENT') {
         console.warn('tree is not installed')
