@@ -1,3 +1,9 @@
+## 21 July 2019
+
+### [1.27.7](https://github.com/artdecocode/documentary/compare/v1.27.6...v1.27.7)
+
+- [fix] Remove `[link](#link)` anchor tag from underlined titles in table of contents.
+
 ## 20 July 2019
 
 ### [1.27.6](https://github.com/artdecocode/documentary/compare/v1.27.5...v1.27.6)
