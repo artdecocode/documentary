@@ -1,6 +1,6 @@
 {
   "name": "documentary",
-  "version": "1.27.6",
+  "version": "1.27.7",
   "description": "A Documentation Pre-processor To Generate The Table Of Contents, Embed Examples With Their Output, Make Markdown Tables, Maintain Typedefs For JavaScript And README, Watch Changes To Push, Use Macros And Prettify API Titles.",
   "main": "build",
   "scripts": {
