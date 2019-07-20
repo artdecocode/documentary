@@ -2,6 +2,9 @@
 
 ### [1.27.6](https://github.com/artdecocode/documentary/compare/v1.27.5...v1.27.6)
 
+- [feature] Align TREE with the indentation it receives.
+- [fix] Place Example And Tree rules after the components so that components ran render TREE and EXAMPLE.
+
 ## 17 July 2019
 
 ### [1.27.5](https://github.com/artdecocode/documentary/compare/v1.27.4...v1.27.5)
