@@ -80,6 +80,25 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch For goa-wiki",
+      "program": "${workspaceFolder}/src/bin/index.js",
+      "env": { "NODE_DEBUG": "doc" },
+      "args": ["../goa/wiki/Application.md", "-o", "Application.md"],
+      // "args": ["-n", "_contextTesting"],
+      // "cwd": "${workspaceFolder}/../../contexttesting/mask",
+      "cwd": "${workspaceFolder}/../../idiocc/goa.wiki",
+      // "cwd": "${workspaceFolder}/../../depack/depack",
+      // "cwd": "${workspaceFolder}/../../a-la/alanode",
+      // "cwd": "${workspaceFolder}/../../idiocc/core",
+      "console": "integratedTerminal",
+      "sourceMaps": false,
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch For Depack/Doc",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },

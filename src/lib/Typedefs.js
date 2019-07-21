@@ -7,6 +7,7 @@ import { parseFile } from 'typal'
 import { codeRe, commentRule } from './rules'
 import { methodTitleRe } from './rules/method-title'
 import { macroRule, useMacroRule } from './rules/macros'
+import competent from 'competent'
 
 const LOG = debuglog('doc')
 
@@ -83,8 +84,18 @@ export default class Typedefs extends Replaceable {
 
 export const getTypedefs = async (stream, namespace) => {
   const typedefs = new Typedefs(namespace)
-  stream.pipe(typedefs)
+  const c = competent({
+    'typedef'({ name, children }) {
+      const r = `%TYPEDEF ${children[0]}${name ? ` ${name}` : ''}%`
+      return r
+    },
+  })
+
+  const r = new Replaceable(c)
+  stream.pipe(r).pipe(typedefs)
+
   await collect(typedefs)
+
   const { types, locations } = typedefs
   return { types, locations }
 }

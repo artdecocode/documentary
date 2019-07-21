@@ -86,7 +86,7 @@ export default class Documentary extends Replaceable {
 
     const hm = getComponents(join(homedir(), '.documentary'))
     const cm = getComponents(resolve(cwd, '.documentary'))
-    const dm = loadComponents(Components, { insertInnerCode })
+    const dm = loadComponents(Components, { insertInnerCode, locations, allTypes })
     const components = [...cm, ...hm, ...dm]
 
     super([

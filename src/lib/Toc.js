@@ -164,7 +164,6 @@ export default class Toc extends Transform {
    * A transform stream which will extract the titles in the markdown document and transform them into a markdown nested list with links.
    * @param {Config} [config] Configuration object.
    * @param {boolean} [config.skipLevelOne=true] Don't use the first title in the TOC (default `true`).
-   * @param {Object.<string,Type[]>} locations
    */
   constructor(config = {}) {
     const {
