@@ -1,4 +1,4 @@
-export default function typedef({ documentary: { locations, allTypes }, children, name, narrow }) {
+export default function typedef({ documentary: { locations, allTypes }, children, name, narrow, flatten }) {
   const [location] = children
   const types = locations[location]
   if (!types) {
@@ -6,7 +6,7 @@ export default function typedef({ documentary: { locations, allTypes }, children
   }
   const t = name ? types.filter(a => a.name == name) : types
   const res = t.map((type) => {
-    return type.toMarkdown(allTypes, { narrow })
+    return type.toMarkdown(allTypes, { narrow, flatten })
   }).join('\n\n')
   return res
 }
