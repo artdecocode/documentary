@@ -43,7 +43,12 @@ class ChunkReplaceable extends Replaceable {
       {
         re: underline,
         replacement(match, u, position, input) {
-          const level = u.indexOf('-') + 2 // either 0 or -1
+          // const actual = match[0]
+          let level
+          if (match[0] == '-') level = 1
+          else if (match[0] == '=') level = 2
+          if (this.skipLevelOne) level++
+          // const level = u.indexOf('-') + 2 // either 0 or -1
           if (this.skipLine(level)) return match
           const lines = []
           let ok = true
