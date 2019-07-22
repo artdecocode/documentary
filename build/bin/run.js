@@ -17,7 +17,7 @@ const { getTypedefs } = require('../lib/Typedefs');
  */
 async function run(options) {
   const {
-    source, output = '-', reverse, justToc, h1, noCache, rootNamespace,
+    source, output = '-', reverse, justToc, h1, noCache, rootNamespace, wiki,
   } = options
   const stream = getStream(source, reverse, false)
   // todo: figure out why can't create a pass-through, pipe into it and pause it

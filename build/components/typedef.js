@@ -5,6 +5,7 @@ function typedef({ documentary: { locations, allTypes }, children, name, narrow,
   if (!types) {
     throw new Error(`No types for location ${location}`, )
   }
+  // const { imports, types } =
   const t = name ? types.filter(a => a.name == name) : types
 
   const typesToMd = t.filter(({ import: i }) => !i)

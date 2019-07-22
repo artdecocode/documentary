@@ -6,6 +6,9 @@
     Where to save the output (e.g., `README.md`).
     If not passed, prints to `stdout`.
   </arg>
+  <arg boolean name="wiki" short="W">
+    Generate documentation in Wiki mode.
+  </arg>
   <arg boolean name="toc" short="t">
     Just print the table of contents.
   </arg>

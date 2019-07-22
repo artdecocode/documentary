@@ -10,6 +10,11 @@ export const argsConfig = {
     description: 'Where to save the output (e.g., `README.md`).\nIf not passed, prints to `stdout`.',
     short: 'o',
   },
+  'wiki': {
+    description: 'Generate documentation in Wiki mode.',
+    boolean: true,
+    short: 'W',
+  },
   'toc': {
     description: 'Just print the table of contents.',
     boolean: true,
@@ -76,6 +81,11 @@ export const _source = /** @type {string} */ (args['source'] || 'documentary')
     If not passed, prints to `stdout`.
  */
 export const _output = /** @type {string} */ (args['output'])
+
+/**
+ * Generate documentation in Wiki mode.
+ */
+export const _wiki = /** @type {boolean} */ (args['wiki'])
 
 /**
  * Just print the table of contents.

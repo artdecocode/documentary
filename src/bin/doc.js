@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _generate, _noCache, _namespace, _help, argsConfig } from './get-args'
+import { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _generate, _noCache, _namespace, _help, argsConfig, _wiki } from './get-args'
 import { watch } from 'fs'
 import { debuglog } from 'util'
 import { lstatSync } from 'fs'
@@ -58,10 +58,11 @@ if (_source) {
   const docOptions = {
     source: _source, output: _output, justToc: _toc, h1: _h1,
     reverse: _reverse, noCache: _noCache, rootNamespace: _namespace,
+    wiki: _wiki,
   }
   let files
   try {
-    files = await doc(docOptions)
+    files = await doc(docOptions) // ./run.js
   } catch ({ stack, message, code }) {
     DEBUG ? LOG(stack) : console.log(message)
   }

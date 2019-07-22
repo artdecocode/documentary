@@ -35,6 +35,7 @@ class Typedefs extends Replaceable {
       {
         re: typedefMdRe,
         async replacement(match, location, typeName) {
+          // the cache doesn't work so this must be synced
           if (this.hasCache(location, typeName)) return
           this.addCache(location,typeName)
           try {
@@ -56,12 +57,36 @@ class Typedefs extends Replaceable {
     this.types = []
     this.locations = {}
     this.on('types', ({ location, types, typeName }) => {
-      const t = typeName ? types.filter(tt => tt.name == typeName) : types
-      this.types.push(...t)
+      // here don't just push on type name, always push all types
+      // const t = typeName ? types.filter(tt => tt.name == typeName) : types
+
+      // always add imports, and if typeName given, add only it, but if not given,
+      // add all types.
+      const added = types.map(b => {
+        const { fullName, import: imp, name } = b
+        const f = this.types.find(({ fullName: fn }) => fn == fullName)
+        if (f) return
+        if (imp) {
+          LOG('Adding import %s', fullName)
+          this.types.push(b)
+          return b
+        }
+        if (typeName && name == typeName) {
+          LOG('Adding type by matched name %s', fullName)
+          this.types.push(b)
+          return b
+        } else if (typeName) {
+          return
+        }
+        LOG('Adding type %s', fullName)
+        this.types.push(b)
+        return b
+      }).filter(Boolean)
+      // this.types.push(...types)
       const oldLocationTypes = this.locations[location] || []
       this.locations = {
         ...this.locations,
-        [location]: [...oldLocationTypes, ...t],
+        [location]: [...oldLocationTypes, ...added],
       }
     })
     this.cache = {}
