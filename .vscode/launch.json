@@ -83,7 +83,7 @@
       "name": "Launch For goa-wiki",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },
-      "args": ["../goa/wiki/Application.md", "-o", "Application.md"],
+      "args": ["../goa/wiki/Request.md", "-o", "Request.md"],
       // "args": ["-n", "_contextTesting"],
       // "cwd": "${workspaceFolder}/../../contexttesting/mask",
       "cwd": "${workspaceFolder}/../../idiocc/goa.wiki",

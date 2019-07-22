@@ -112,6 +112,7 @@ class Documentary extends Replaceable {
       sectionBrakeRule,
       ...[
         ...components, // todo: restream pipe
+        cutTable,
         cutCode, // cut code again after inserting components
       ],
       ...[
@@ -140,7 +141,6 @@ class Documentary extends Replaceable {
 
       tableMacroRule, // macro is for the table
       tableRule,
-
       {
         re: linkTitleRe,
         replacement(match, title, level, prefix) {

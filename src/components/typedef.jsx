@@ -18,8 +18,8 @@ export default function typedef({ documentary: { locations, allTypes }, children
   const j = importsToMd.map(i => i.toMarkdown(allTypes, { narrow, flatten }))
 
   const res = [
-    ...tt,
     ...j,
+    ...tt,
   ].join('\n\n')
 
   return res
