@@ -13,6 +13,10 @@ function loadComponents(components, options = {}) {
       }).slice(0, i)
       console.error(`${c(stack, 'red')}`)
     },
+    /**
+     * @param {Object} htmlProps
+     * @param {import('competent').Meta} meta
+     */
     getProps(htmlProps, meta) {
       meta.setPretty(true, 100)
       return {

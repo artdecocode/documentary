@@ -24,20 +24,20 @@
   dependencies:
     mismatch "^1.2.0"
 
-"@depack/render@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@depack/render/-/render-1.2.0.tgz#014fb920195f207f2697d1533616faf46988a228"
-  integrity sha512-XfegLkYLxXBJLTZ4brXsU51tKFv8l1cuF4RGMYpnS48pXC+AUYw99kbws0/gbCNyFy3/H23rDSCHakVvh49zug==
+"@depack/render@^1.2.0", "@depack/render@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@depack/render/-/render-1.2.1.tgz#c8454b2b39721b30656afdade764fee3f0ea90e0"
+  integrity sha512-c14hQdLYFncLJTp20Rk4tWgG4RqCVC1wqfik3liOEYlN2XE56yJCqiKhoQhg+LxKCQlARwKz5+bP3+/fTNRc9g==
 
 "@depack/split@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@depack/split/-/split-1.0.0.tgz#37fea28d9bc6f01e5a2da87d393f402781bb7e99"
   integrity sha512-PNJPl01VFMKtyN7qBZ2cds4N/lO2KvzLrR7JamODFiuuL2X8mGoTKp1SI8fxlT2MwLV8mScCUKn55QPwsUX7iA==
 
-"@typedefs/parser@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@typedefs/parser/-/parser-1.3.0.tgz#f920d85654c72ce9b41c45e9ee762f0161c567da"
-  integrity sha512-WTH390S8kD3h8j+GjvyAYRYVNp6WSnZb3/yi1bFPW3DSWy15AhD1fnb4yZxmzQPniJICKGpexGBNOGUEjXqMlQ==
+"@typedefs/parser@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@typedefs/parser/-/parser-1.3.1.tgz#1c20fd3852c3553b50d7000c6261e8824e91d3b6"
+  integrity sha512-pTOxV2yeLQZz+SaBIJvstSFlkeyGu+52gBh71hKvvQZ3yp/dKNnhjJ936e7q1dsEulCr5c3mRGiTtEaVTI+KzQ==
 
 "@wrote/clone@^1.1.1", "@wrote/clone@^1.2.1":
   version "1.2.1"
@@ -256,12 +256,12 @@ temp-context@^2.1.3:
     makepromise "^3.0.3"
     pedantry "^2.3.1"
 
-typal@^1.15.2:
-  version "1.15.2"
-  resolved "https://registry.yarnpkg.com/typal/-/typal-1.15.2.tgz#c605fe9540403b003f72200f3326a28eb824b3db"
-  integrity sha512-1h0m0Hr08jtUawTaEOuwF0C4PRLfUOgJLZwZSLlTCs1Sfrx86Or4sMoBZ9twEhAcFX+ji+AoXRYZJyy/8bmMgg==
+typal@^1.15.3:
+  version "1.15.3"
+  resolved "https://registry.yarnpkg.com/typal/-/typal-1.15.3.tgz#cb8b7a95e7e30c7ca75a584dbf481d46706ff12d"
+  integrity sha512-VZlt21qxQcmVjCUMstz0UauZw8pG4Mk1EJKNPwehWknx3afKpCEXsQ/jyj26opejiF5sTfqN14ug7gyKW/i1xw==
   dependencies:
-    "@typedefs/parser" "^1.3.0"
+    "@typedefs/parser" "^1.3.1"
     mismatch "^1.2.0"
     rexml "^2.0.2"
 

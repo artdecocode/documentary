@@ -99,6 +99,20 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch For accepts-wiki",
+      "program": "${workspaceFolder}/src/bin/index.js",
+      "env": { "NODE_DEBUG": "doc" },
+      "args": ["../accepts/wiki/Accepts.md", "-o", "Accepts.md"],
+      "cwd": "${workspaceFolder}/../../idiocc/accepts.wiki",
+      "console": "integratedTerminal",
+      "sourceMaps": false,
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch For Depack/Doc",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },

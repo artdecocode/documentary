@@ -3,13 +3,18 @@ const { h } = require('preact');
 const Md2Html = ({ children, documentary }) => {
   /** @type {import('restream').Rule} */
   const insertInnerCode = documentary.insertInnerCode
+  /** @type {import('restream').Rule} */
   const [c] = children
   return replace(c, insertInnerCode)
 }
 
 const replace = (c, insertInnerCode) => {
   const codes = {}
-  const d = c.trim()
+  const s = c.trim()
+  const d = s
+    .replace(/%%_RESTREAM_(\w+)_REPLACEMENT_(\d+)_%%/g, (m, type, index) => {
+      return `%%-RESTREAM-${type}-REPLACEMENT-${index}-%%`
+    })
     .replace(insertInnerCode.re, insertInnerCode.replacement)
     .replace(/`(.+?)`/g, (m, code, i) => {
       codes[i] = code
@@ -21,6 +26,9 @@ const replace = (c, insertInnerCode) => {
     .replace(/\*(.+?)\*/g, (m, t) => `<em>${t}</em>`)
     .replace(/%%RESTREAM-REPLACE-(\d+)%%/g, (m, i) => {
       return '<code>' + codes[i] + '</code>'
+    })
+    .replace(/%%-RESTREAM-(\w+)-REPLACEMENT-(\d+)-%%/g, (m, type, index) => {
+      return `%%_RESTREAM_${type}_REPLACEMENT_${index}_%%`
     })
   return d
 }

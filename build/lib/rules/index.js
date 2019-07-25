@@ -7,7 +7,7 @@ const createTocRule = (toc) => {
 
 const commentRe = /<!--[\s\S]*?-->\n*/g
 
-const codeRe = /^```(`)?(?!table$)(\w+)?\n[\s\S]*?\n```\1/gm
+const codeRe = /^( *)```(`)?(?!table$)(\w+)?\n[\s\S]*?\n\1```\2/gm
 
 const innerCodeRe = /`[^`\n]+?`/gm
 

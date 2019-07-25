@@ -88,7 +88,7 @@
   },
   "dependencies": {
     "@depack/cache": "^1.0.0",
-    "@depack/render": "^1.2.0",
+    "@depack/render": "^1.2.1",
     "@wrote/clone": "^1.2.1",
     "@wrote/ensure-path": "^1.1.0",
     "@wrote/write": "^1.0.4",
@@ -107,7 +107,7 @@
     "rexml": "^2.0.2",
     "spawncommand": "^2.2.0",
     "static-analysis": "^1.7.1",
-    "typal": "^1.15.2",
+    "typal": "^1.15.3",
     "usually": "^1.2.0",
     "which-stream": "^1.1.0"
   }

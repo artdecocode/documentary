@@ -140,7 +140,7 @@ __[`Return`](t-type)__
   [
     "__statusMessage*__",
     "<em>string</em>",
-    "The status message set by the server.\n      &lt;e&gt;OK&lt;/e>"
+    "The status message set by the server.\n&lt;e&gt;OK&lt;/e>"
   ]
 ]
 ```

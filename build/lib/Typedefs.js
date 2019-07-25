@@ -121,8 +121,8 @@ const getTypedefs = async (stream, namespace) => {
 
   await collect(typedefs)
 
-  const { types, locations } = typedefs
-  return { types, locations }
+  // const { types, locations } = typedefs
+  return typedefs
 }
 
 module.exports = Typedefs
