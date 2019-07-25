@@ -1,4 +1,6 @@
 const { h } = require('preact');
+const { SyncReplaceable, makeCutRule, makePasteRule, makeMarkers } = require('restream');
+
 /** The component to replace markdown with html. */
 const Md2Html = ({ children, documentary }) => {
   /** @type {import('restream').Rule} */
@@ -10,8 +12,13 @@ const Md2Html = ({ children, documentary }) => {
 
 const replace = (c, insertInnerCode) => {
   const codes = {}
-  const s = c.trim()
-  const d = s
+  let s = c.trim()
+  const { links } = makeMarkers({ links: /<a .+?>.+?<\/a>/g })
+  const cutLinks = makeCutRule(links)
+  const pasteLinks = makePasteRule(links)
+
+  s = SyncReplaceable(s, [cutLinks])
+  let d = s
     .replace(/%%_RESTREAM_(\w+)_REPLACEMENT_(\d+)_%%/g, (m, type, index) => {
       return `%%-RESTREAM-${type}-REPLACEMENT-${index}-%%`
     })
@@ -30,6 +37,7 @@ const replace = (c, insertInnerCode) => {
     .replace(/%%-RESTREAM-(\w+)-REPLACEMENT-(\d+)-%%/g, (m, type, index) => {
       return `%%_RESTREAM_${type}_REPLACEMENT_${index}_%%`
     })
+  d = SyncReplaceable(d, [pasteLinks])
   return d
 }
 

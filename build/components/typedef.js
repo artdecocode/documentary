@@ -66,7 +66,7 @@ const Narrow = ({ props, anyHaveDefault, documentary }) => {
       anyHaveDefault && '\n ',
     )),'\n',
     props.reduce((acc, { name, typeName, de, d, prop }) => {
-      const hasCodes = codeRe.test(prop.description)
+      const hasCodes = new RegExp(codeRe.source, codeRe.flags).test(prop.description)
       de = de + '\n  '
       if (hasCodes) de = '\n\n' + de
       // let n = md(name)
