@@ -35,9 +35,9 @@
   integrity sha512-PNJPl01VFMKtyN7qBZ2cds4N/lO2KvzLrR7JamODFiuuL2X8mGoTKp1SI8fxlT2MwLV8mScCUKn55QPwsUX7iA==
 
 "@typedefs/parser@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@typedefs/parser/-/parser-1.3.1.tgz#1c20fd3852c3553b50d7000c6261e8824e91d3b6"
-  integrity sha512-pTOxV2yeLQZz+SaBIJvstSFlkeyGu+52gBh71hKvvQZ3yp/dKNnhjJ936e7q1dsEulCr5c3mRGiTtEaVTI+KzQ==
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@typedefs/parser/-/parser-1.3.2.tgz#38f25cc0d2f01c1c5306c9ae7db00a4ba8affef2"
+  integrity sha512-gb6kBAl6qbrUPGJyEDfU7v87WjVfanfRaACRhccbs4JuIYNWl5fugovy3ftMnenXHuIuGu/dOHt+s+XIhdC2KA==
 
 "@wrote/clone@^1.1.1", "@wrote/clone@^1.2.1":
   version "1.2.1"
@@ -204,6 +204,14 @@ restream@^3.7.1:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/restream/-/restream-3.7.1.tgz#4ffefbd2a008965413e90d50fa7f0898889b3a61"
   integrity sha512-OZLcbqwcZ1VMW3MziEjE4xaeqXvl8r367pBmgviRNl3dywyzdi+ueKFW5p1qPaYaZwIRvaR/TqAlB0XKJVX90g==
+  dependencies:
+    "@artdeco/clean-stack" "^1.1.1"
+    catchment "^3.3.0"
+
+restream@^3.7.2:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/restream/-/restream-3.7.2.tgz#657e06c1944161c190dcede2d688af0be207b859"
+  integrity sha512-nVffinRmO+TEdS6YlkyVeBKHTF2Qv1BU7ML02y3IlosDx0n7zsGUBMNydkVFMgJs/RHl4a4u/X1wNduh1dD1SQ==
   dependencies:
     "@artdeco/clean-stack" "^1.1.1"
     catchment "^3.3.0"

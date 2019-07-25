@@ -103,7 +103,7 @@
     "pedantry": "^2.4.0",
     "preact": "8.4.2",
     "resolve-dependency": "^1.0.3",
-    "restream": "^3.7.1",
+    "restream": "^3.7.2",
     "rexml": "^2.0.2",
     "spawncommand": "^2.2.0",
     "static-analysis": "^1.7.1",

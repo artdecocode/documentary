@@ -53,3 +53,34 @@ abc
 ```
 
 /**/
+
+// processes md2html component
+<md2html>
+  The _sign_, _verify_ and _index_ methods. The _Keygrip_ instances provide mechanisms to rotate credentials by modifying the **keys** array. The rotation can be performed with `keylist.unshift("SEKRIT4"); keylist.pop()` without having to restart the server.
+</md2html>
+
+/* expected */
+The <em>sign</em>, <em>verify</em> and <em>index</em> methods. The <em>Keygrip</em> instances provide mechanisms to rotate credentials by modifying the <strong>keys</strong> array. The rotation can be performed with <code>keylist.unshift("SEKRIT4"); keylist.pop()</code> without having to restart the server.
+/**/
+
+// processes md2html component with li
+<md2html>
+  - hello
+  - world
+</md2html>
+
+/* expected */
+<li>hello</li>
+  <li>world</li>
+/**/
+
+// processes md2html component with li switched off
+<md2html li="false">
+  - hello
+  - world
+</md2html>
+
+/* expected */
+- hello
+  - world
+/**/
