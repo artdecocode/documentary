@@ -12,6 +12,9 @@
   <arg boolean name="toc" short="t">
     Just print the table of contents.
   </arg>
+  <arg name="types" short="T">
+    The location of types' files which are not referenced in the documentation (e.g., for printing links to external docs).
+  </arg>
   <arg boolean name="reverse" short="r">
     Print files in reverse order. Useful for blogs.
   </arg>

@@ -20,6 +20,10 @@ export const argsConfig = {
     boolean: true,
     short: 't',
   },
+  'types': {
+    description: 'The location of types\' files which are not referenced in the documentation (e.g., for printing links to external docs).',
+    short: 'T',
+  },
   'reverse': {
     description: 'Print files in reverse order. Useful for blogs.',
     boolean: true,
@@ -91,6 +95,11 @@ export const _wiki = /** @type {boolean} */ (args['wiki'])
  * Just print the table of contents.
  */
 export const _toc = /** @type {boolean} */ (args['toc'])
+
+/**
+ * The location of types' files which are not referenced in the documentation (e.g., for printing links to external docs).
+ */
+export const _types = /** @type {string} */ (args['types'])
 
 /**
  * Print files in reverse order. Useful for blogs.
