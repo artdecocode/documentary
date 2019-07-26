@@ -20,6 +20,10 @@ const argsConfig = {
     boolean: true,
     short: 't',
   },
+  'types': {
+    description: 'The location of types\' files which are not referenced in the documentation (e.g., for printing links to external docs).',
+    short: 'T',
+  },
   'reverse': {
     description: 'Print files in reverse order. Useful for blogs.',
     boolean: true,
@@ -93,6 +97,11 @@ const _wiki = /** @type {boolean} */ (args['wiki'])
 const _toc = /** @type {boolean} */ (args['toc'])
 
 /**
+ * The location of types' files which are not referenced in the documentation (e.g., for printing links to external docs).
+ */
+const _types = /** @type {string} */ (args['types'])
+
+/**
  * Print files in reverse order. Useful for blogs.
  */
 const _reverse = /** @type {boolean} */ (args['reverse'])
@@ -159,6 +168,7 @@ module.exports._source = _source
 module.exports._output = _output
 module.exports._wiki = _wiki
 module.exports._toc = _toc
+module.exports._types = _types
 module.exports._reverse = _reverse
 module.exports._h1 = _h1
 module.exports._watch = _watch

@@ -46,14 +46,8 @@
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },
       "args": ["-o", "README.md", "-w"],
-      // "args": ["-n", "_contextTesting"],
-      // "cwd": "${workspaceFolder}/../../contexttesting/mask",
       "cwd": "${workspaceFolder}/../../idiocc/goa",
-      // "cwd": "${workspaceFolder}/../../depack/depack",
-      // "cwd": "${workspaceFolder}/../../a-la/alanode",
-      // "cwd": "${workspaceFolder}/../../idiocc/core",
       "console": "integratedTerminal",
-      "sourceMaps": false,
       "skipFiles": [
         "<node_internals>/**/*.js"
       ]
@@ -64,15 +58,9 @@
       "name": "Launch For cookies",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },
-      "args": ["-o", "README.md", "-w", "-n", "_goa"],
-      // "args": ["-n", "_contextTesting"],
-      // "cwd": "${workspaceFolder}/../../contexttesting/mask",
+      "args": ["-o", "README.md", "-n", "_goa", "-T", "types/attributes.xml"],
       "cwd": "${workspaceFolder}/../../idiocc/cookies",
-      // "cwd": "${workspaceFolder}/../../depack/depack",
-      // "cwd": "${workspaceFolder}/../../a-la/alanode",
-      // "cwd": "${workspaceFolder}/../../idiocc/core",
       "console": "integratedTerminal",
-      "sourceMaps": false,
       "skipFiles": [
         "<node_internals>/**/*.js"
       ]
@@ -84,14 +72,21 @@
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },
       "args": ["../goa/wiki/Request.md", "-o", "Request.md"],
-      // "args": ["-n", "_contextTesting"],
-      // "cwd": "${workspaceFolder}/../../contexttesting/mask",
       "cwd": "${workspaceFolder}/../../idiocc/goa.wiki",
-      // "cwd": "${workspaceFolder}/../../depack/depack",
-      // "cwd": "${workspaceFolder}/../../a-la/alanode",
-      // "cwd": "${workspaceFolder}/../../idiocc/core",
       "console": "integratedTerminal",
-      "sourceMaps": false,
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch For goa-W",
+      "program": "${workspaceFolder}/src/bin/index.js",
+      "env": { "NODE_DEBUG": "doc" },
+      "args": ["../goa/wiki", "-W"],
+      "cwd": "${workspaceFolder}/../../idiocc/goa.wiki",
+      "console": "integratedTerminal",
       "skipFiles": [
         "<node_internals>/**/*.js"
       ]
@@ -121,14 +116,8 @@
         // "-o", "README.md",
         "-w",
       ],
-      // "args": ["-n", "_contextTesting"],
-      // "cwd": "${workspaceFolder}/../../contexttesting/mask",
       "cwd": "${workspaceFolder}/../../depack/depack",
-      // "cwd": "${workspaceFolder}/../../depack/depack",
-      // "cwd": "${workspaceFolder}/../../a-la/alanode",
-      // "cwd": "${workspaceFolder}/../../idiocc/core",
       "console": "integratedTerminal",
-      "sourceMaps": false,
       "skipFiles": [
         "<node_internals>/**/*.js"
       ]

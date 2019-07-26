@@ -54,7 +54,7 @@ export default class Documentary extends Replaceable {
     const {
       locations = {}, types: allTypes = [],
       cwd = '.', cacheLocation = join(cwd, '.documentary/cache'), noCache,
-      disableDtoc, objectMode = true,
+      disableDtoc, objectMode = true, wiki,
     } = options
 
     // console.log('loaded components %s', components)
@@ -86,7 +86,12 @@ export default class Documentary extends Replaceable {
 
     const hm = getComponents(join(homedir(), '.documentary'))
     const cm = getComponents(resolve(cwd, '.documentary'))
-    const dm = loadComponents(Components, { insertInnerCode, locations, allTypes, cutCode })
+    // this is the service property to components
+    const documentary = {
+      insertInnerCode, locations, allTypes, cutCode, wiki,
+      currentFile: () => { return this.currentFile },
+    }
+    const dm = loadComponents(Components,  documentary)
     const components = [...cm, ...hm, ...dm]
 
     super([
@@ -270,6 +275,7 @@ export default class Documentary extends Replaceable {
       await super._transform(chunk, _, next)
     } else if (typeof chunk == 'object') {
       chunk.file != 'separator' && LOG(b(chunk.file, 'cyan'))
+      this.currentFile = chunk.file
       await super._transform(chunk.data, _, next)
     } else {
       throw new Error('what are you')

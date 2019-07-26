@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _generate, _noCache, _namespace, _help, argsConfig, _wiki } = require('./get-args');
+const { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _generate, _noCache, _namespace, _help, argsConfig, _wiki, _types } = require('./get-args');
 const { watch } = require('fs');
 const { debuglog } = require('util');
 const { lstatSync } = require('fs');
@@ -58,7 +58,7 @@ if (_source) {
   const docOptions = {
     source: _source, output: _output, justToc: _toc, h1: _h1,
     reverse: _reverse, noCache: _noCache, rootNamespace: _namespace,
-    wiki: _wiki,
+    wiki: _wiki, types: _types,
   }
   let files
   try {

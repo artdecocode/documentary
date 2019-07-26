@@ -2,13 +2,18 @@ const { h } = require('preact');
 const { SyncReplaceable } = require('restream');
 const md2html = require('./Html');
 const { codeRe } = require('../lib/rules');
+const { relative, dirname } = require('path');
 
 /**
  * @param {Object} doc
  * @param {{ renderAgain: function(), locations, allTypes: Array<Type>}} doc.documentary
  */
 function typedef({ documentary, children, name, narrow, flatten }) {
-  const { setPretty, renderAgain, locations, allTypes, cutCode } = documentary
+  const {
+    setPretty, renderAgain, locations, allTypes, cutCode, currentFile,
+    wiki,
+  } = documentary
+  const file = currentFile()
 
   setPretty(false)
   renderAgain() // because using md2html
@@ -28,6 +33,16 @@ function typedef({ documentary, children, name, narrow, flatten }) {
     }, preprocessDesc(d) {
       const r = SyncReplaceable(d, [cutCode])
       return r
+    }, link({ link, type: refType }) {
+      // when splitting wiki over multiple pages, allows
+      // to create links to the exact page.
+      const l = `#${link}`
+      // semi-hack
+      if (refType.appearsIn.includes(file)) return l
+      const ai = refType.appearsIn[0]
+      let rel = relative(dirname(file), ai)
+      if (wiki) rel = rel.replace(/\.(md|html)$/, '')
+      return `${rel}${l}`
     } }
     )})
   // found those imports that will be flattened
@@ -42,12 +57,12 @@ function typedef({ documentary, children, name, narrow, flatten }) {
     const { LINE, table: type } = s
     if (typeof type == 'object') return [LINE,
          h(Narrow,{...type,key:i, documentary:documentary })]
-    return type
+    return [LINE, type]
   })
 
-  const res = [...j, ...ttt].reduce((acc, c, i) => {
+  const res = [...j, ...ttt].reduce((acc, c, i, ar) => {
     acc.push(...(Array.isArray(c) ? c : [c]))
-    if (i) acc.push('\n\n')
+    if (i < ar.length - 1) acc.push('\n')
     return acc
   }, [])
 

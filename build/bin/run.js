@@ -1,10 +1,12 @@
 let whichStream = require('which-stream'); if (whichStream && whichStream.__esModule) whichStream = whichStream.default;
 let Catchment = require('catchment'); if (Catchment && Catchment.__esModule) Catchment = Catchment.default;
 let write = require('@wrote/write'); if (write && write.__esModule) write = write.default;
+let readDirStructure = require('@wrote/read-dir-structure'); if (readDirStructure && readDirStructure.__esModule) readDirStructure = readDirStructure.default;
 const { getToc } = require('../lib/Toc');
 const Documentary = require('../lib/Documentary');
 const { getStream } = require('../lib');
 const { getTypedefs } = require('../lib/Typedefs');
+const { join } = require('path');
 
 /**
  * Run the documentary and save the results.
@@ -17,16 +19,64 @@ const { getTypedefs } = require('../lib/Typedefs');
  */
 async function run(options) {
   const {
-    source, output = '-', reverse, justToc, h1, noCache, rootNamespace, wiki,
+    source, output, reverse, justToc, h1, noCache, rootNamespace, wiki,
   } = options
-  const stream = getStream(source, reverse, false)
-  // todo: figure out why can't create a pass-through, pipe into it and pause it
+  let { types: typesLocations } = options
 
-  const { types, locations } = await getTypedefs(stream, rootNamespace)
+  const stream = getStream(source, reverse, true)
 
-  const stream3 = getStream(source, reverse, true)
-  const doc = new Documentary({ locations, types, noCache, objectMode: true })
-  stream3.pipe(doc)
+  if (typesLocations) typesLocations = typesLocations.split(',')
+  // todo (expired):
+  // figure out why can't create a pass-through, pipe into it, pause it then reuse it
+  // this is because of highwatermark in the pass-through
+
+  const { types, locations } = await getTypedefs(stream, rootNamespace, typesLocations)
+
+  let assets = []
+  if (wiki) {
+    const { type, content } = await readDirStructure(source)
+    if (type != 'Directory') throw new Error('Please point to the wiki directory.')
+    const entries = Object.keys(content).filter((key) => {
+      return /\.(md|html)$/.test(key)
+    })
+    const wo = output || '.'
+    const docs = await Promise.all(entries.map(async (s) => {
+      const o = join(wo, s)
+      const so = join(source, s)
+      const doc = await runPage({
+        ...options,
+        locations,
+        types,
+        wiki,
+        output: o,
+        source: so,
+      })
+      return doc
+    }))
+    assets = [...assets, docs.map(d => d.assets)]
+    console.log('Saved %s wiki page%s to %s', docs.length, docs.length > 1 ? 's' : '', wo)
+  } else {
+    const doc = await runPage({ source, reverse, locations, types, noCache, h1, justToc, output })
+    assets = doc.assets
+    if (output != '-') {
+      console.log('Saved documentation to %s', output)
+    }
+  }
+
+  return [...Object.keys(locations), ...assets]
+}
+
+const runPage = async (opts) => {
+  const {
+    source, reverse, locations, types, noCache, h1, justToc,
+    output = '-', wiki,
+  } = opts
+
+  const stream = getStream(source, reverse, true)
+  const doc = new Documentary({
+    locations, types, noCache, objectMode: true, wiki,
+  })
+  stream.pipe(doc)
   const tocPromise = getToc(doc, h1, locations)
 
   const c = new Catchment()
@@ -44,12 +94,11 @@ async function run(options) {
     process.exit()
   }
   if (output != '-') {
-    console.log('Saved documentation to %s', output)
     await write(output, result)
   } else {
     console.log(result)
   }
-  return [...Object.keys(locations), ...doc.assets]
+  return doc
 }
 
 /* documentary types/run.xml */
