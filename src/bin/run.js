@@ -58,7 +58,7 @@ export default async function run(options) {
   } else {
     const doc = await runPage({ source, reverse, locations, types, noCache, h1, justToc, output })
     assets = doc.assets
-    if (output != '-') {
+    if (output) {
       console.log('Saved documentation to %s', output)
     }
   }

@@ -7,7 +7,7 @@ import Typedefs from '../../src/lib/Typedefs'
 
 const ts = makeTestSuite('test/result/Typedefs-dir.md', {
   async getResults() {
-    const s = getStream(this.input, false, false)
+    const s = getStream(this.input, false)
     const typedefs = new Typedefs()
     s.pipe(typedefs)
     await collect(typedefs)

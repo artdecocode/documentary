@@ -128,6 +128,7 @@ test/fixtures/README-source.md -t
 test/fixture/typedef/documentary
 
 /* stdout */
+Could not parse (res: ServerResponse) => any
 ## The Server Config
 
 __<a name="type-serverconfig">`ServerConfig`</a>__: Options to setup the server.
@@ -139,7 +140,7 @@ __<a name="type-serverconfig">`ServerConfig`</a>__: Options to setup the server.
 
 ## The Static Config
 
-`import('http').ServerResponse` __<a name="type-httpserverresponse">`http.ServerResponse`</a>__
+[`import('http').ServerResponse`](https://nodejs.org/api/http.html#http_class_http_serverresponse) __<a name="type-httpserverresponse">`http.ServerResponse`</a>__: A writable stream that communicates data to the client. The second argument of the http.Server.on("request") event.
 
 `(res: ServerResponse) => any` __<a name="type-setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 

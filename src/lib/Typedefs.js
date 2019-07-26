@@ -15,12 +15,12 @@ const LOG = debuglog('doc')
 const nodeAPI = {
   'http.IncomingMessage': {
     link: 'https://nodejs.org/api/http.html#http_class_http_incomingmessage',
-    desc: 'The first argument to the "request" event.',
+    desc: 'A readable stream that receives data from the client in chunks. The first argument of the http.Server.on("request") event.',
   },
   'http.ServerResponse': {
     // link: 'https://nodejs.org/api/http.html#http_response_socket',
     link: 'https://nodejs.org/api/http.html#http_class_http_serverresponse',
-    desc: 'The second parameter to the "request" event.',
+    desc: 'A writable stream that communicates data to the client. The second argument of the http.Server.on("request") event.',
   },
   'url.URL': {
     link: 'https://nodejs.org/api/url.html#url_class_url',
