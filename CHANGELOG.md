@@ -1,3 +1,9 @@
+## 26 July 2019
+
+### [1.28.0](https://github.com/artdecocode/documentary/compare/v1.27.7...v1.28.0)
+
+- [feature] Process wikis.
+
 ## 21 July 2019
 
 ### [1.27.7](https://github.com/artdecocode/documentary/compare/v1.27.6...v1.27.7)

@@ -32,3 +32,21 @@ export const components = makeTestSuite('test/result/bin/components', {
     },
   },
 })
+
+export const wiki = makeTestSuite('test/result/wiki/test', {
+  context: TempContext,
+  fork: {
+    module: Context.DOC,
+    /**
+     * @param {TempContext} t
+     */
+    getOptions({ TEMP }) {
+      return {
+        cwd: TEMP,
+      }
+    },
+  },
+  getResults({ snapshot }) {
+    return snapshot()
+  },
+})
