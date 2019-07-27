@@ -10,18 +10,20 @@ import { join } from 'path'
 
 /**
  * Run the documentary and save the results.
- * @param {RunOptions} options Options for the run command.
- * @param {string} options.source The path to the source directory or file.
+ * @param {Object} options Options for the run command.
  * @param {string} [options.output="-"] The path where to save the output. When `-` is passed, prints to `stdout`. Default `-`.
  * @param {boolean} [options.reverse=false] Read files in directories in reverse order, such that `30.md` comes before `1.md`. Useful for blogs. Default `false`.
  * @param {boolean} [options.justToc=false] Only print the table of contents and exit. Default `false`.
  * @param {boolean} [options.h1=false] Include `H1` headers in the table of contents. Default `false`.
+ * @param {string} [options.focus] Which pages to process for wiki.
  */
 export default async function run(options) {
   const {
     source, output, reverse, justToc, h1, noCache, rootNamespace, wiki,
   } = options
-  let { types: typesLocations } = options
+
+  let { types: typesLocations, focus } = options
+  if (focus) focus = focus.split(',')
 
   const stream = getStream(source, reverse, true)
 
@@ -38,6 +40,9 @@ export default async function run(options) {
     if (type != 'Directory') throw new Error('Please point to the wiki directory.')
     const keys = Object.keys(content).filter((key) => {
       const val = content[key]
+      if (focus) {
+        return focus.includes(key)
+      }
       if (val.type == 'Directory' && !key.startsWith('_')) return true
       return /\.(md|html)$/.test(key)
     })

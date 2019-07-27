@@ -14,6 +14,10 @@ const argsConfig = {
     description: 'Generate documentation in Wiki mode.',
     short: 'W',
   },
+  'focus': {
+    description: 'When generating _Wiki_, this is a list of comma-separated values used to specify which pages to process in current compilation, e.g., `Address` or `Address,DNS`.',
+    short: 'f',
+  },
   'toc': {
     description: 'Just print the table of contents.',
     boolean: true,
@@ -91,6 +95,11 @@ const _output = /** @type {string} */ (args['output'])
 const _wiki = /** @type {string} */ (args['wiki'])
 
 /**
+ * When generating _Wiki_, this is a list of comma-separated values used to specify which pages to process in current compilation, e.g., `Address` or `Address,DNS`.
+ */
+const _focus = /** @type {string} */ (args['focus'])
+
+/**
  * Just print the table of contents.
  */
 const _toc = /** @type {boolean} */ (args['toc'])
@@ -166,6 +175,7 @@ module.exports.argsConfig = argsConfig
 module.exports._source = _source
 module.exports._output = _output
 module.exports._wiki = _wiki
+module.exports._focus = _focus
 module.exports._toc = _toc
 module.exports._types = _types
 module.exports._reverse = _reverse

@@ -7,7 +7,10 @@
     If not passed, prints to `stdout`.
   </arg>
   <arg name="wiki" short="W">
-    Generate documentation in Wiki mode.
+    Generate documentation in Wiki mode. The value of the argument must be the location of wiki, e.g., `../documentary.wiki`. The `--output` option in this case has no effect.
+  </arg>
+  <arg name="focus" short="f">
+    When generating _Wiki_, this is a list of comma-separated values used to specify which pages to process in current compilation, e.g., `Address` or `Address,DNS`.
   </arg>
   <arg boolean name="toc" short="t">
     Just print the table of contents.

@@ -1340,7 +1340,20 @@ The arguments it accepts are:
           If not passed, prints to <code>stdout</code>.
     </td>
   </tr>
-  <tr><td>--wiki</td><td>-W</td><td>Generate documentation in Wiki mode.</td></tr>
+  <tr>
+    <td>--wiki</td>
+    <td>-W</td>
+    <td>
+      Generate documentation in Wiki mode. The value of the argument must be the location of wiki, e.g., <code>../documentary.wiki</code>. The <code>--output</code> option in this case has no effect.
+    </td>
+  </tr>
+  <tr>
+    <td>--focus</td>
+    <td>-f</td>
+    <td>
+      When generating <em>Wiki</em>, this is a list of comma-separated values used to specify which pages to process in current compilation, e.g., <code>Address</code> or <code>Address,DNS</code>.
+    </td>
+  </tr>
   <tr><td>--toc</td><td>-t</td><td>Just print the table of contents.</td></tr>
   <tr>
     <td>--types</td>

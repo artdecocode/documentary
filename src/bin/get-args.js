@@ -11,8 +11,12 @@ export const argsConfig = {
     short: 'o',
   },
   'wiki': {
-    description: 'Generate documentation in Wiki mode.',
+    description: 'Generate documentation in Wiki mode. The value of the argument must be the location of wiki, e.g., `../documentary.wiki`. The `--output` option in this case has no effect.',
     short: 'W',
+  },
+  'focus': {
+    description: 'When generating _Wiki_, this is a list of comma-separated values used to specify which pages to process in current compilation, e.g., `Address` or `Address,DNS`.',
+    short: 'f',
   },
   'toc': {
     description: 'Just print the table of contents.',
@@ -86,9 +90,14 @@ export const _source = /** @type {string} */ (args['source'] || 'documentary')
 export const _output = /** @type {string} */ (args['output'])
 
 /**
- * Generate documentation in Wiki mode.
+ * Generate documentation in Wiki mode. The value of the argument must be the location of wiki, e.g., `../documentary.wiki`. The `--output` option in this case has no effect.
  */
 export const _wiki = /** @type {string} */ (args['wiki'])
+
+/**
+ * When generating _Wiki_, this is a list of comma-separated values used to specify which pages to process in current compilation, e.g., `Address` or `Address,DNS`.
+ */
+export const _focus = /** @type {string} */ (args['focus'])
 
 /**
  * Just print the table of contents.
