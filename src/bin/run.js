@@ -36,12 +36,16 @@ export default async function run(options) {
   if (wiki) {
     const { type, content } = await readDirStructure(source)
     if (type != 'Directory') throw new Error('Please point to the wiki directory.')
-    const entries = Object.keys(content).filter((key) => {
+    const keys = Object.keys(content).filter((key) => {
+      const val = content[key]
+      if (val.type == 'Directory' && !key.startsWith('_')) return true
       return /\.(md|html)$/.test(key)
     })
     const wo = output || '.'
-    const docs = await Promise.all(entries.map(async (s) => {
-      const o = join(wo, s)
+    const docs = await Promise.all(keys.map(async (s) => {
+      const val = content[s]
+      let o = join(wo, s)
+      if (val.type == 'Directory') o += '.md'
       const so = join(source, s)
       const doc = await runPage({
         ...options,
