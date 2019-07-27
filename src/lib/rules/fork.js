@@ -27,6 +27,8 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false)
       printed = true
       console.log(...a)
     })
+
+  let addModulesCacheLater
   if (noCache || !result) {
     printed = true
     if (noCache) { // saving cache for next time
@@ -39,7 +41,9 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false)
     const cacheToWrite = { [mmod]: {
       'mtime': mtime, 'hash': hash, 'md5': md5,
     } }
-    await this.addCache('modules', cacheToWrite)
+    // post-pone setting the module cache until the fork results are got
+    // it case of cancelling the process with SIGINT
+    addModulesCacheLater = () => this.addCache('modules', cacheToWrite)
   } else {
     const cache = this.getCache('fork')
     const record = cache[`[${md5}] ${m}`]
@@ -61,7 +65,10 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false)
   const cacheToWrite = { [`[${md5}] ${m}`]: {
     'stdout': stdout, 'stderr': stderr,
   } }
-  await this.addCache('fork', cacheToWrite)
+  await Promise.all([
+    this.addCache('fork', cacheToWrite),
+    addModulesCacheLater ? addModulesCacheLater() : null,
+  ])
 
   this.addAsset(mmod)
   return getOutput(err, stderr, stdout, lang)
