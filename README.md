@@ -33,8 +33,6 @@ This section has a quick look at the best features available in _Documentary_ an
 
 ## Table Of Contents
 
-<a name="table-of-contents"></a>
-
 - [Key Features](#key-features)
 - [Table Of Contents](#table-of-contents)
 - [Installation & Usage](#installation--usage)

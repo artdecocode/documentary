@@ -182,6 +182,7 @@ class Toc extends Transform {
     this.titles.push({
       title, link, position, level, parentLevel,
     })
+    if (!this.hasToc && link == 'table-of-contents') this.hasToc = true
   }
 
   getTocLine({ title, link, level }) {
@@ -241,11 +242,15 @@ class Toc extends Transform {
  * @returns {string} The table of contents.
  */
 const getToc = async (stream, h1, locations) => {
-  const toc = new Toc({ skipLevelOne: !h1, locations, documentary: stream })
+  const toc = new Toc({
+    skipLevelOne: !h1, locations, documentary: stream,
+  })
   stream.pipe(toc)
   const res = await collect(toc)
-  return '<a name="table-of-contents"></a>\n\n' + res.trimRight()
+  return (toc.hasToc ? '' : tocA) + res.trimRight()
 }
+
+const tocA = '<a name="table-of-contents"></a>\n\n'
 
 /**
  * @typedef {import('./typedef/Type').default} Type
