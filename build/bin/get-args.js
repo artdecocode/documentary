@@ -12,7 +12,6 @@ const argsConfig = {
   },
   'wiki': {
     description: 'Generate documentation in Wiki mode.',
-    boolean: true,
     short: 'W',
   },
   'toc': {
@@ -89,7 +88,7 @@ const _output = /** @type {string} */ (args['output'])
 /**
  * Generate documentation in Wiki mode.
  */
-const _wiki = /** @type {boolean} */ (args['wiki'])
+const _wiki = /** @type {string} */ (args['wiki'])
 
 /**
  * Just print the table of contents.

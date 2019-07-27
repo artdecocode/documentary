@@ -54,7 +54,7 @@ class Documentary extends Replaceable {
     const {
       locations = {}, types: allTypes = [],
       cwd = '.', cacheLocation = join(cwd, '.documentary/cache'), noCache,
-      disableDtoc, objectMode = true, wiki,
+      disableDtoc, objectMode = true, wiki, output,
     } = options
 
     // console.log('loaded components %s', components)
@@ -194,6 +194,12 @@ class Documentary extends Replaceable {
      * @type {!Array<string>}
      */
     this.assets = []
+    /**
+     * The args passed to the program.
+     */
+    this._args = {
+      output, wiki,
+    }
   }
   /**
    * Adds some information for generating TOC later.

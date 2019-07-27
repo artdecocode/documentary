@@ -41,10 +41,9 @@ export default async function run(options) {
       if (val.type == 'Directory' && !key.startsWith('_')) return true
       return /\.(md|html)$/.test(key)
     })
-    const wo = output || '.'
     const docs = await Promise.all(keys.map(async (s) => {
       const val = content[s]
-      let o = join(wo, s)
+      let o = join(wiki, s)
       if (val.type == 'Directory') o += '.md'
       const so = join(source, s)
       const doc = await runPage({
@@ -58,7 +57,7 @@ export default async function run(options) {
       return doc
     }))
     assets = [...assets, docs.map(d => d.assets)]
-    console.log('Saved %s wiki page%s to %s', docs.length, docs.length > 1 ? 's' : '', wo)
+    console.log('Saved %s wiki page%s to %s', docs.length, docs.length > 1 ? 's' : '', wiki)
   } else {
     const doc = await runPage({ source, reverse, locations, types, noCache, h1, justToc, output })
     assets = doc.assets
@@ -78,7 +77,7 @@ const runPage = async (opts) => {
 
   const stream = getStream(source, reverse, true)
   const doc = new Documentary({
-    locations, types, noCache, objectMode: true, wiki,
+    locations, types, noCache, objectMode: true, wiki, output,
   })
   stream.pipe(doc)
   const tocPromise = getToc(doc, h1, locations)

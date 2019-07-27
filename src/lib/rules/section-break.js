@@ -21,15 +21,23 @@ const rule = {
       if (isEnd) this.sectionBrakeNumber = n
       const name = `${n}.svg`
       const imgPath = join(__dirname, '../../section-breaks', name)
-      const { to, ...a } = mismatch(/(.+)="(.+)"/gm, attrs, ['key', 'val'])
+      // debugger
+      let defaultTo = '.documentary/section-breaks'
+      const { wiki } = this._args
+      if (wiki) defaultTo = join(wiki, defaultTo)
+
+      const { to, ...a } = mismatch(/(\S+)="(.+?)"/gm, attrs, ['key', 'val'])
         .reduce((acc, { key, val }) => ({ ...acc, [key]: val }), {
-          to: '.documentary/section-breaks',
+          to: defaultTo, // allow override by attributes
+          href: '#table-of-contents',
         })
 
-      const nn = `${name}?sanitize=true`
+      const nn = `${name}${wiki ? '' : '?sanitize=true'}`
       await clone(imgPath, to)
+      let fileName = join(to, nn)
+      if (fileName.startsWith(wiki)) fileName = fileName.slice(wiki.length + 1)
 
-      const tags = getTags({ src: '/' + join(to, nn), ...a })
+      const tags = getTags({ wiki, src: '/' + fileName, ...a })
       return tags
     } catch (err) {
       const h = c(err.message, 'red')
@@ -42,12 +50,20 @@ const rule = {
   },
 }
 
-const getTags = ({
-  href = '#table-of-contents',
-  ...attrs
-}) => {
-  const a = Object.keys(attrs).map(k => `${k}="${attrs[k]}"`).join(' ')
-  const s = `<p align="center"><a href="${href}"><img ${a}></a></p>`
+const getTags = ({ wiki, src, href, ...attrs }) => {
+  let a = Object.keys(attrs).map(k => {
+    const val = attrs[k]
+    if (wiki) return `${k}=${val}`
+    return `${k}="${val}"`
+  }).join(wiki ? ' ' : '|')
+  if (a) {
+    a = wiki ? `|${a}` : ` ${a}`
+  }
+
+  const img = wiki ? `
+[[${src}${a}]]
+` : `<img src="${src}"${a}>`
+  const s = `<p align="center"><a href="${href}">${img}</a></p>`
   return s
 }
 

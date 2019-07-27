@@ -4,6 +4,8 @@ test/result/bin/h1.md -h1
 /* stdout */
 # test
 
+<a name="table-of-contents"></a>
+
 - [test](#test)
 - [test2](#test2)
 - [test3](#test3)
@@ -19,6 +21,8 @@ test/result/bin/toc-underline.md -h1
 /* stdout */
 Test
 ====
+
+<a name="table-of-contents"></a>
 
 - [Test](#test)
   * [`test`<br/>test2](#testtest2)
@@ -40,6 +44,8 @@ test/result/bin/toc-underline.md
 /* stdout */
 Test
 ====
+
+<a name="table-of-contents"></a>
 
 - [`test`<br/>test2](#testtest2)
 - [#test3](#test3)
@@ -68,6 +74,8 @@ test/fixtures/order -r
 
 /* stdout */
 ## index
+
+<a name="table-of-contents"></a>
 
 - [index](#index)
 - [30-file](#30-file)
@@ -115,6 +123,8 @@ Debugging with VS Code is made possible with `launch.json` configuration file.
 test/fixtures/README-source.md -t
 
 /* stdout */
+<a name="table-of-contents"></a>
+
 - [Table Of Contents](#table-of-contents)
 - [CLI](#cli)
   * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)

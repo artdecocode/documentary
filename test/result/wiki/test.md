@@ -1,5 +1,5 @@
-## !processes wiki
-../result/wiki/data -W
+## processes wiki
+../result/wiki/data -W .
 
 /* expected */
 # index.md

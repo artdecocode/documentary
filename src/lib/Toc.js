@@ -244,7 +244,7 @@ export const getToc = async (stream, h1, locations) => {
   const toc = new Toc({ skipLevelOne: !h1, locations, documentary: stream })
   stream.pipe(toc)
   const res = await collect(toc)
-  return res.trimRight()
+  return '<a name="table-of-contents"></a>\n\n' + res.trimRight()
 }
 
 /**

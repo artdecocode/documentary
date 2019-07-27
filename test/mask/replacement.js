@@ -9,23 +9,27 @@ import tableMacroRule from '../../src/lib/rules/macro'
 import { macroRule, useMacroRule } from '../../src/lib/rules/macros'
 
 const ts = [
-  [sectionBrakeRule, 'section break', 'section-break.md'],
+  [sectionBrakeRule, 'section break', 'section-break'],
   [badgeRule, 'badge', 'badge.md'],
   [exampleRule, 'example', 'example/default.md'],
   [forkRule, 'fork', 'fork/stderr.md'],
   [[tableMacroRule, tableRule], 'table', 'table'],
   [[macroRule, useMacroRule], 'macro', 'macro'],
 ].reduce((acc, [rule, name, path]) => {
-  const p = `test/result/replacement/${path}`
+  const focus = path.startsWith('!')
+  if (focus) path = path.slice(1)
+  let p = `${focus?'!':''}test/result/replacement/${path}`
   const t = makeTestSuite(p, {
     getTransform() {
       const replaceable = new Replaceable(rule)
       replaceable.getCache = () => {}
       replaceable.addCache = () => {}
+      replaceable._args = this.preamble || {}
       replaceable.log = () => {}
       replaceable.addAsset = () => {}
       return replaceable
     },
+    jsProps: ['preamble'],
   })
   return {
     ...acc,
