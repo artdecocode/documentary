@@ -33,6 +33,8 @@ This section has a quick look at the best features available in _Documentary_ an
 
 ## Table Of Contents
 
+<a name="table-of-contents"></a>
+
 - [Key Features](#key-features)
 - [Table Of Contents](#table-of-contents)
 - [Installation & Usage](#installation--usage)
@@ -159,7 +161,7 @@ For example:
 <p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/0.svg?sanitize=true"></a></p>
 <p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/15.svg?sanitize=true"></a></p>
 <p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/-1.svg?sanitize=true"></a></p>
-<p align="center"><a href="#table-of-contents"><img src="/.documentary/section-breaks/16.svg?sanitize=true" href="https://hello.world" width="200"></a></p>
+<p align="center"><a href="https://hello.world"><img src="/.documentary/section-breaks/16.svg?sanitize=true" width="200"></a></p>
 ```
 
 There are 23 available section breaks which will be inserted in incremental order in the document. When the end of the list is reached, the count restarts. There are also 3 ending breaks which can be inserted at the end and do not participate in the rotation, so that they must be inserted manually. To select a specific image, its number can be given.
@@ -1057,11 +1059,11 @@ or a single marker to include all types in order in which they appear in the `xm
 
 and embed resulting type definitions (with the imported type linked to the _Node.JS_ documentation due to its `link` attribute):
 
-[`import('http').ServerResponse`](https://nodejs.org/api/http.html#http_class_http_serverresponse) __<a name="type-httpserverresponse">`http.ServerResponse`</a>__
+[`import('http').ServerResponse`](https://nodejs.org/api/http.html#http_class_http_serverresponse) __<a name="type-httpserverresponse">`http.ServerResponse`</a>__: A writable stream that communicates data to the client. The second argument of the http.Server.on("request") event.
 
 `(res: ServerResponse) => any` __<a name="type-setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 
-`{ location: string, rights: number }[]` __<a name="type-rightsconfig">`RightsConfig`</a>__: Configuration of read and write access rights.
+<code>{ location: string, rights: number }</code> __<a name="type-rightsconfig">`RightsConfig`</a>__: Configuration of read and write access rights.
 
 __<a name="type-staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
 
@@ -1340,7 +1342,15 @@ The arguments it accepts are:
           If not passed, prints to <code>stdout</code>.
     </td>
   </tr>
+  <tr><td>--wiki</td><td>-W</td><td>Generate documentation in Wiki mode.</td></tr>
   <tr><td>--toc</td><td>-t</td><td>Just print the table of contents.</td></tr>
+  <tr>
+    <td>--types</td>
+    <td>-T</td>
+    <td>
+      The location of types' files which are not referenced in the documentation (e.g., for printing links to external docs).
+    </td>
+  </tr>
   <tr><td>--reverse</td><td>-r</td><td>
     Print files in reverse order. Useful for blogs.
   </td>
