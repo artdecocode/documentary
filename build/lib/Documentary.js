@@ -1,6 +1,6 @@
 const { Replaceable, makeMarkers, makeCutRule, makePasteRule } = require('restream');
 const { debuglog, isBuffer } = require('util');
-const { join, resolve } = require('path');
+const { join, resolve, basename } = require('path');
 const { homedir } = require('os');
 let write = require('@wrote/write'); if (write && write.__esModule) write = write.default;
 const { b } = require('erte');
@@ -280,6 +280,7 @@ class Documentary extends Replaceable {
     if (isBuffer(chunk) || typeof chunk == 'string') {
       await super._transform(chunk, _, next)
     } else if (typeof chunk == 'object') {
+      if (basename(chunk.file) == '.DS_Store') return next()
       chunk.file != 'separator' && LOG(b(chunk.file, 'cyan'))
       this.currentFile = chunk.file
       await super._transform(chunk.data, _, next)

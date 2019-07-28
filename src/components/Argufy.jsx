@@ -41,23 +41,34 @@ const Argufy = async (props) => {
   const xml = await read(child)
   const args = parse(xml)
   const hasShort = args.some(({ short }) => short)
-  const trs = args.map(({ command, description, name, short, toc, def }, i) => {
+  const trs = args.reduce((acc, { command, description, name, short, toc, def }, i) => {
     const n = command ? name : `--${name}`
     const nn = toc ? `[${n}](t)` : n
     if (def) description += ` Default \`${def}\`.`
     const d = Md2Html({ children: [description], documentary })
-    return (<tr key={i}>
-      <td>{nn}</td>
+
+    const r = (<tr key={i}>{'\n   '}
+      <td>{nn}</td>{'\n   '}
       {hasShort && <td>{short ? `-${short}` : ''}</td>}
-      <td dangerouslySetInnerHTML={{ __html: d }}></td>
+      {hasShort && '\n   '}
+      <td dangerouslySetInnerHTML={{ __html: d }}/>{'\n  '}
     </tr>)
-  })
-  return (<table>
-    <tr>
-      <th>Argument</th>
-      { hasShort && <th>Short</th>}
-      <th>Description</th>
-    </tr>
+
+    acc.push('  ')
+    acc.push(r)
+    acc.push('\n')
+    return acc
+  }, [])
+  documentary.setPretty(false)
+  return (<table>{'\n '}
+    <thead>{'\n  '}
+      <tr>{'\n   '}
+        <th>Argument</th> {'\n   '}
+        { hasShort && <th>Short</th>}
+        { hasShort && '\n   '}
+        <th>Description</th>{'\n  '}
+      </tr>{'\n '}
+    </thead>{'\n'}
     {trs}
   </table>)
 }

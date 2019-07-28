@@ -11,7 +11,7 @@ const argsConfig = {
     short: 'o',
   },
   'wiki': {
-    description: 'Generate documentation in Wiki mode.',
+    description: 'Generate documentation in Wiki mode. The value of the argument must be the location of wiki, e.g., `../documentary.wiki`. The `--output` option in this case has no effect.',
     short: 'W',
   },
   'focus': {
@@ -90,7 +90,7 @@ const _source = /** @type {string} */ (args['source'] || 'documentary')
 const _output = /** @type {string} */ (args['output'])
 
 /**
- * Generate documentation in Wiki mode.
+ * Generate documentation in Wiki mode. The value of the argument must be the location of wiki, e.g., `../documentary.wiki`. The `--output` option in this case has no effect.
  */
 const _wiki = /** @type {string} */ (args['wiki'])
 

@@ -42,23 +42,34 @@ const Argufy = async (props) => {
   const xml = await read(child)
   const args = parse(xml)
   const hasShort = args.some(({ short }) => short)
-  const trs = args.map(({ command, description, name, short, toc, def }, i) => {
+  const trs = args.reduce((acc, { command, description, name, short, toc, def }, i) => {
     const n = command ? name : `--${name}`
     const nn = toc ? `[${n}](t)` : n
     if (def) description += ` Default \`${def}\`.`
     const d = Md2Html({ children: [description], documentary })
-    return (h('tr',{'key':i},
-      h('td',{},nn),
+
+    const r = (h('tr',{'key':i},'\n   ',
+      h('td',{},nn),'\n   ',
       hasShort && h('td',{},short ? `-${short}` : ''),
-      h('td',{'dangerouslySetInnerHTML':{ __html: d }}),
+      hasShort && '\n   ',
+      h('td',{'dangerouslySetInnerHTML':{ __html: d }}),'\n  ',
     ))
-  })
-  return (h('table',{},
-    h('tr',{},
-      h('th',{},`Argument`),
-       hasShort && h('th',{},`Short`),
-      h('th',{},`Description`),
-    ),
+
+    acc.push('  ')
+    acc.push(r)
+    acc.push('\n')
+    return acc
+  }, [])
+  documentary.setPretty(false)
+  return (h('table',{},'\n ',
+    h('thead',{},'\n  ',
+      h('tr',{},'\n   ',
+        h('th',{},`Argument`),` `,'\n   ',
+         hasShort && h('th',{},`Short`),
+         hasShort && '\n   ',
+        h('th',{},`Description`),'\n  ',
+      ),'\n ',
+    ),'\n',
     trs,
   ))
 }

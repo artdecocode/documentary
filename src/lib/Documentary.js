@@ -1,6 +1,6 @@
 import { Replaceable, makeMarkers, makeCutRule, makePasteRule } from 'restream'
 import { debuglog, isBuffer } from 'util'
-import { join, resolve } from 'path'
+import { join, resolve, basename } from 'path'
 import { homedir } from 'os'
 import write from '@wrote/write'
 import { b } from 'erte'
@@ -280,6 +280,7 @@ export default class Documentary extends Replaceable {
     if (isBuffer(chunk) || typeof chunk == 'string') {
       await super._transform(chunk, _, next)
     } else if (typeof chunk == 'object') {
+      if (basename(chunk.file) == '.DS_Store') return next()
       chunk.file != 'separator' && LOG(b(chunk.file, 'cyan'))
       this.currentFile = chunk.file
       await super._transform(chunk.data, _, next)
