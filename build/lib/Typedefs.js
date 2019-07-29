@@ -22,6 +22,14 @@ const nodeAPI = {
     link: 'https://nodejs.org/api/http.html#http_class_http_serverresponse',
     desc: 'A writable stream that communicates data to the client. The second argument of the http.Server.on("request") event.',
   },
+  'http.OutgoingHttpHeaders': {
+    link: 'https://nodejs.org/api/http.html',
+    desc: 'The headers hash map for making requests, including such properties as Content-Encoding, Content-Type, etc.',
+  },
+  'http.IncomingHttpHeaders': {
+    link: 'https://nodejs.org/api/http.html',
+    desc: 'The hash map of headers that are set by the server (e.g., when accessed via IncomingMessage.headers)',
+  },
   'url.URL': {
     link: 'https://nodejs.org/api/url.html#url_class_url',
     desc: 'Browser-compatible URL class, implemented by following the `WHATWG` URL Standard.',
