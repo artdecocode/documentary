@@ -16,7 +16,7 @@ const Md2Html = ({ children, documentary, li = true }) => {
 export const replace = (c, insertInnerCode, { li }) => {
   const codes = {}
   let s = c.trim()
-  const { links } = makeMarkers({ links: /<a .+?>.+?<\/a>/g })
+  const { links } = makeMarkers({ links: /<a .+?>/g })
   const cutLinks = makeCutRule(links)
   const pasteLinks = makePasteRule(links)
 
