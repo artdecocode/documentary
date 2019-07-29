@@ -1,3 +1,9 @@
+## 30 July 2019
+
+### [1.28.2](https://github.com/artdecocode/documentary/compare/v1.28.1...v1.28.2)
+
+- [fix] Escape _innerHtml_ of `a` elements in `md2html`.
+
 ## 29 July 2019
 
 ### [1.28.1](https://github.com/artdecocode/documentary/compare/v1.28.0...v1.28.1)
