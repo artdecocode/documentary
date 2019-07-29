@@ -123,8 +123,6 @@ Debugging with VS Code is made possible with `launch.json` configuration file.
 test/fixtures/README-source.md -t
 
 /* stdout */
-<a name="table-of-contents"></a>
-
 - [Table Of Contents](#table-of-contents)
 - [CLI](#cli)
   * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)

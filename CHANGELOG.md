@@ -1,3 +1,12 @@
+## 29 July 2019
+
+### [1.28.1](https://github.com/artdecocode/documentary/compare/v1.28.0...v1.28.1)
+
+- [fix] Correctly parse multiple arguments in section breaks.
+- [fix] Section breaks in Wikis.
+- [feature] Focus on wiki pages.
+- [feature] Add `#table-of-contents` anchor for Toc, if no title present.
+
 ## 26 July 2019
 
 ### [1.28.0](https://github.com/artdecocode/documentary/compare/v1.27.7...v1.28.0)

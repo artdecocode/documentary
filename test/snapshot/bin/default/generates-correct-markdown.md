@@ -6,8 +6,6 @@ A package to manage documentation of Node.js packages.
 
 ## Table Of Contents
 
-<a name="table-of-contents"></a>
-
 - [Table Of Contents](#table-of-contents)
 - [CLI](#cli)
   * [`-j`, `--jsdoc`: Add JSDoc](#-j---jsdoc-add-jsdoc)
