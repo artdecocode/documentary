@@ -2,5 +2,6 @@
   <type name="TypeB" desc="A type for page B.">
   </type>
   <type name="TypeBSans">
+    <prop name="test-prop"/>
   </type>
 </types>

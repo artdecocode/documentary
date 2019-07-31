@@ -30,6 +30,8 @@ export default function typedef({ documentary, children, name, narrow, flatten }
     return type.toMarkdown(allTypes, { narrow, flatten(n) {
       flattened[n] = true
     }, preprocessDesc(d) {
+      if (!d) return d
+      // cut ``` from properties, inserted by doc at the end
       const r = SyncReplaceable(d, [cutCode])
       return r
     }, link({ link, type: refType }) {

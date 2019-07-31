@@ -41,5 +41,18 @@ Hello World Page B
 
 
 <strong><a name="type-_nstypebsans">`_ns.TypeBSans`</a></strong>
-
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><strong>test-prop*</strong></td>
+  <td><em>*</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td></td>
+ </tr>
+</table>
 /**/
