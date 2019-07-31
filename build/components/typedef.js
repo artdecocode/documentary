@@ -11,7 +11,7 @@ const { relative, dirname } = require('path');
 function typedef({ documentary, children, name, narrow, flatten, details }) {
   details = details ? details.split(',') : []
   const {
-    setPretty, renderAgain, locations, allTypes, cutCode, currentFile,
+    setPretty, locations, allTypes, cutCode, currentFile,
     wiki, source,
   } = documentary
   const file = wiki ? source : currentFile()

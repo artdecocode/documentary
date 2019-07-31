@@ -60,10 +60,10 @@ const getTags = ({ wiki, src, href, ...attrs }) => {
     a = wiki ? `|${a}` : ` ${a}`
   }
 
-  const img = wiki ? `
-[[${src}${a}]]
-` : `<img src="${src}"${a}>`
-  const s = `<p align="center"><a href="${href}">${img}</a></p>`
+  const img = wiki ? `[[${src}${a}]]` : `<img src="${src}"${a}>`
+  const s = `<p align="center"><a href="${href}">
+  ${img}
+</a></p>`
   return s
 }
 

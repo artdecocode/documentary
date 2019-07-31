@@ -64,9 +64,9 @@ test/result/bin/macro.md
 
 /* stdout */
 
-|                             Company                             |                     Tag Line                      | Evaluation & Exit |
-| --------------------------------------------------------------- | ------------------------------------------------- | ----------------- |
-| <a href="https://vwo.com">![VWO Logo](images/logos/vwo.png)</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018        |
+|                               Company                                |                     Tag Line                      | Evaluation & Exit |
+| -------------------------------------------------------------------- | ------------------------------------------------- | ----------------- |
+| <a href="https://vwo.com">[[images/logos/vwo.png\|alt=VWO Logo]]</a> | A/B Testing and Conversion Optimization Platform™ | $10m, 2018        |
 /**/
 
 // prints in reverse order

@@ -5,7 +5,7 @@
 
 /* expected */
 <p align="center"><a href="#table-of-contents">
-[[/.documentary/section-breaks/0.svg]]
+  [[/.documentary/section-breaks/0.svg]]
 </a></p>
 /**/
 
@@ -16,11 +16,11 @@
 
 /* expected */
 <p align="center"><a href="#table-of-contents">
-[[/.documentary/section-breaks/0.svg]]
+  [[/.documentary/section-breaks/0.svg]]
 </a></p>
 
 <p align="center"><a href="#table-of-contents">
-[[/.documentary/section-breaks/1.svg]]
+  [[/.documentary/section-breaks/1.svg]]
 </a></p>
 /**/
 
@@ -31,11 +31,11 @@
 
 /* expected */
 <p align="center"><a href="#table-of-contents">
-[[/.documentary/section-breaks/22.svg]]
+  [[/.documentary/section-breaks/22.svg]]
 </a></p>
 
 <p align="center"><a href="#table-of-contents">
-[[/.documentary/section-breaks/0.svg]]
+  [[/.documentary/section-breaks/0.svg]]
 </a></p>
 /**/
 
@@ -44,7 +44,7 @@
 
 /* expected */
 <p align="center"><a href="#test">
-[[/.documentary/section-breaks/0.svg]]
+  [[/.documentary/section-breaks/0.svg]]
 </a></p>
 /**/
 
@@ -53,7 +53,7 @@
 
 /* expected */
 <p align="center"><a href="#table-of-contents">
-[[/.documentary/section-breaks/0.svg|width=200]]
+  [[/.documentary/section-breaks/0.svg|width=200]]
 </a></p>
 /**/
 
@@ -62,7 +62,7 @@
 
 /* expected */
 <p align="center"><a href="#table-of-contents">
-[[/.documentary/section-breaks/-1.svg]]
+  [[/.documentary/section-breaks/-1.svg]]
 </a></p>
 /**/
 
@@ -73,13 +73,13 @@
 
 /* expected */
 <p align="center"><a href="#table-of-contents">
-[[/.documentary/section-breaks/0.svg]]
+  [[/.documentary/section-breaks/0.svg]]
 </a></p>
 <p align="center"><a href="#table-of-contents">
-[[/.documentary/section-breaks/-1.svg]]
+  [[/.documentary/section-breaks/-1.svg]]
 </a></p>
 <p align="center"><a href="#table-of-contents">
-[[/.documentary/section-breaks/1.svg]]
+  [[/.documentary/section-breaks/1.svg]]
 </a></p>
 /**/
 
@@ -88,7 +88,7 @@
 
 /* expected */
 <p align="center"><a href="#table-of-contents">
-[[/.docs/breaks/0.svg]]
+  [[/.docs/breaks/0.svg]]
 </a></p>
 /**/
 
@@ -97,6 +97,6 @@
 
 /* expected */
 <p align="center"><a href="#top">
-[[/.documentary/section-breaks/0.svg|width=25]]
+  [[/.documentary/section-breaks/0.svg|width=25]]
 </a></p>
 /**/
