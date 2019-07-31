@@ -1,3 +1,12 @@
+## 31 July 2019
+
+### [1.29.0](https://github.com/artdecocode/documentary/compare/v1.28.2...v1.29.0)
+
+- [fix] Convert `[link](#link)` into HTML in `md2html`, while preserving toc-links.
+- [fix] Correct wiki-linking of types across pages behaviour.
+- [fix] Don't add `<a name="table-of-contents"></a>` in _justToc_ mode.
+- [doc] Move documentation to _Wiki_.
+
 ## 30 July 2019
 
 ### [1.28.2](https://github.com/artdecocode/documentary/compare/v1.28.1...v1.28.2)
