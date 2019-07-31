@@ -15,29 +15,8 @@ yarn add -D documentary
   <img src="/.documentary/section-breaks/0.svg?sanitize=true">
 </a></p>
 
-## Key Features
-
-This section has a quick look at the best features available in _Documentary_ and how they help the documentation process.
-
-|                 Feature                 |                                                                                                   Description                                                                                                   |                                                                                                                                                                                                                                                                                                                                                        Advantages                                                                                                                                                                                                                                                                                                                                                         |
-| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| *[Tables Of Contents](#toc-generation)* | Compiles an accurate table of contents for the content.                                                                                                                                                         | 1. Makes the structure of the document immediately visible to the reader.<br/>2. Allows to navigate across the page easily.<br/>3. Shows problems with incorrect levels structure which otherwise might not be visible.<br/>4. Allows to place anchor links available from the TOC at any level in any place of the README.<br/>5. Can insert section breaks which visually divide the content and allow to navigate back to the top.                                                                                                                                                                                                                                                                                     |
-| *[Examples](#examples-placement)*       | Allows to embed the source code into documentation.                                                                                                                                                             | 1. Increases productivity by eliminating the need to copy and paste the source code manually.<br/>2. Developers can run examples as Node.js scripts to check that they are working correctly and debug them.<br/>3. Examples can also be forked (see below).<br/> 4. It is possible to imports and requires such as `../src` to be displayed as the name of the package.                                                                                                                                                                                                                                                                                                                    |
-| *[Forks](#embedding-output)*            | Makes it possible to run an example and embed its `stdout` and `stderr` output directly into documentation. Supports `import` and `export` statements without _Babel_. Allows to save cache for faster re-runs. | 1. Enhances productivity by eliminating the need to copy and paste the output by hand.<br/>2. Makes sure the output is always up-to-date with the documented one.<br/>3. Will make it visible if a change to the code base lead to a different output (implicit regression testing).<br/>4. Supports optional caching, so that programs don't have to be re-run each time a change to documentation in a different place is made.<br/>5. Forked modules can use **import** and **export** statements natively, making it very easy to document the output of examples written in modern syntax.<br/>6. Ensures that examples are actually working.<br/>7. Can print usage of CLI tools by forking them with `-h` command. |
-| *[JSX Components](#jsx-components)*     | Performs the compilation of custom-defined JSX components into markdown code.                                                                                                                                   | 1. Lets to define custom components and reuse them across documentation where needed. <br/>2. Provides a modern syntax to combine markdown and JavaScript. <br/>3. When documentation written in HTML files, the components are documented with `web-components.json` file for the VSCode which will provide autosuggestions for the arguments of the component.                                                                                                                                                                                                                                                                                                                                         |
-| *[Tables](#simple-tables)*              | Compiles tables from arrays without having to write html or markdown.                                                                                                                                           | 1. Removes the need to manually build tables either by hand, online or using other tools.<br/>2. Provides table macros to reduce repetitive information and substitute only the core data into templates.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| *[Macros](#macros)*                     | Reuses a defined template to place the data into placeholders.                                                                                                                                                  | 1. Removes the need to copy-paste patterns to different places and change data manually.<br/>2. Maintains an up-to-date version of the template without having to change it everywhere.<br/>3. Reduces the cluttering of the source documentation by noise and helps to focus on important information.                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| *[Live Push](#automatic-push)*          | Detects changes to the source documentation files, re-compiles the output README.md and pushes to the remote repository.                                                                                        | 1. The preview is available on-line almost immediately after a change is made. <br/>2. Allows to skip writing a commit message and the push command every time a change is made.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| *[Typedefs](#typedef-organisation)*     | Maintains a types.xml file to place types definition in it, available both for source code and documentation.                                                                                                   | 1. Keeps the types declarations in one place, allowing to quickly update it both in JavaScript JSDoc, and in markdown README.<br/>2. Automatically constructs type tables for documentation.<br/>3. Expands the JSDoc config (options) argument for other developers to have a quick glance at possible options when calling a function.<br/>4. Links all types across the whole documentation for quick navigation.<br/>5. If the `types.xml` file or directory is published, other packages can embed it into documentation also, by using _Documentary_.                                                                                                                                    |
-| *[API Method Titles](#method-titles)*   | Creates good-looking headers for methods.                                                                                                                                                                       | 1. By writing each argument on new line, makes it easier to understand the signature of a function.<br/>2. Can maintain a separate title for the table of contents to keep things simple there.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/1.svg?sanitize=true">
-</a></p>
-
 ## Table Of Contents
 
-- [Key Features](#key-features)
 - [Table Of Contents](#table-of-contents)
 - [Installation & Usage](#installation--usage)
 - [Wiki](#wiki)
@@ -54,7 +33,7 @@ This section has a quick look at the best features available in _Documentary_ an
 - [Copyright](#copyright)
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/2.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/1.svg?sanitize=true">
 </a></p>
 
 ## Installation & Usage
@@ -80,28 +59,29 @@ yarn doc
 When actively working on documentation, it is possible to use the `watch` mode with `-w` flag, or `-p` flag to also automatically push changes to a remote git repository, merging them into a single commit every time.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/3.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/2.svg?sanitize=true">
 </a></p>
 
 ## Wiki
 
 Each feature of _Documentary_ is described on its relevant Wiki page.
 
+- <kbd>⭐️[Key Features](../../wiki/Key-Features)</kbd>: A quick overview of the solutions provided by _Documentary_ for developers to make writing documentation a breeze.
 - <kbd>📖[Tables Of Content](../../wiki/Tables-Of-Content)</kbd>: Creating a navigation menu for the README page.
 - <kbd>⚜️[Section Breaks](../../wiki/Section-Breaks)</kbd>: Placing visual separators of sections.
 - <kbd>📐[JSON Tables](../../wiki/JSON-Tables)</kbd>: Writing _JSON_ array data to be converted into a Markdown table.
 - <kbd>📜[Embed Examples](../../wiki/Embed-Examples)</kbd>: Decoupling examples from documentation by maintaining separate runnable example file.
 - <kbd>🍴[Forks (Embed Output)](../../wiki/Forks)</kbd>: Executing examples to show their output, and validating that program works correctly.
 - <kbd>🎩[Method Titles](../../wiki/Method-Titles)</kbd>: Documenting methods in a standard way.
-- <kbd>💍[JSX Components](../../wiki/JSX-Components)</kbd>: Implementing custom system-wide and project-scoped components.
+- <kbd>🎇[JSX Components](../../wiki/JSX-Components)</kbd>: Implementing custom system-wide and project-scoped components.
 - <kbd>🤖[Macros](../../wiki/Macros)</kbd>: Constructing patterns to be reused in formation of READMEs.
 - <kbd>☀️[Typedefs](../../wiki/Typedefs)</kbd>: Display `@typedef` information in _README_ files by maintaining types externally to _JS_ source.
-- <kbd>🎼[Type (Deprecated)](../../wiki/Type-Deprecated)</kbd>: An older version of typedefs which works as a macro for types.
+- <kbd>🎼[Type (Deprecated)](../../wiki/Type-(Deprecated))</kbd>: An older version of typedefs which works as a macro for types.
 - <kbd>🥠[Gif Detail](../../wiki/Gif-Detail)</kbd>: Hiding images inside of the `<details>` block.
 - <kbd>🖱[API](../../wiki/API)</kbd>: Using _Documentary_'s features from other packages.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/4.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/3.svg?sanitize=true">
 </a></p>
 
 ## Misc
@@ -113,7 +93,7 @@ These are some essential feature of _Documentary_.
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/4.svg?sanitize=true">
 </a></p>
 
 ### File Splitting
@@ -138,7 +118,7 @@ documentary
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
 </a></p>
 
 ### Replacement Rules
@@ -152,7 +132,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/7.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
 </a></p>
 
 
@@ -273,7 +253,7 @@ DOC 80734: could not parse the table
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/8.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/7.svg?sanitize=true">
 </a></p>
 
 ♫ PRO
@@ -293,7 +273,7 @@ Titles written as blocks and underlined with any number of either `===` (for H1)
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/9.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/8.svg?sanitize=true">
 </a></p>
 
 ## Glossary
