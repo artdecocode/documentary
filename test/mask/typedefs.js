@@ -19,7 +19,8 @@ const ts = makeTestSuite('test/result/Typedefs-dir.md', {
    */
   mapActual({ types }) {
     const res = types.map(type => {
-      return type.toMarkdown(types)
+      const { LINE, table } = type.toMarkdown(types)
+      return `${LINE}${table}`
     }).join('\n')
     return res
   },
@@ -42,7 +43,8 @@ export const main = makeTestSuite('test/result/Typedefs', {
    */
   mapActual({ types }) {
     const res = types.map(type => {
-      return type.toMarkdown(types)
+      const { LINE, table } = type.toMarkdown(types)
+      return `${LINE}${table}`
     }).join('\n')
     return res
   },
@@ -70,7 +72,8 @@ const rest2 = makeTestSuite('test/result/Typedefs2', {
    */
   mapActual({ types }) {
     const res = types.map(type => {
-      return type.toMarkdown(types)
+      const { LINE, table } = type.toMarkdown(types)
+      return `${LINE}${table}`
     }).join('\n')
     return res
   },

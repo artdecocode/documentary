@@ -1,3 +1,3 @@
 Hello World Page B
 
-<typedef narrow>test/result/wiki/types/typesB.xml</typedef>
+<typedef narrow details="TypeBSans">test/result/wiki/types/typesB.xml</typedef>

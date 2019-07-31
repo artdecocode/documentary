@@ -1,5 +1,22 @@
 <!-- Mask file: test/mask/run.js -->
 
+## non-narrow details
+test/result/wiki/data-details
+
+/* expected */
+# index.md
+
+Hello World
+
+<details>
+ <summary><strong><a name="type-_nstypebsans"><code>_ns.TypeBSans</code></a></strong></summary>
+
+|      Name      |    Type    | Description |
+| -------------- | ---------- | ----------- |
+| __test-prop*__ | <em>*</em> |             |
+</details>
+/**/
+
 ## processes wiki with directories
 test/result/wiki/data-dir
 
@@ -40,7 +57,8 @@ Hello World Page B
 
 
 
-<strong><a name="type-_nstypebsans">`_ns.TypeBSans`</a></strong>
+<details>
+ <summary><strong><a name="type-_nstypebsans"><code>_ns.TypeBSans</code></a></strong></summary>
 <table>
  <thead><tr>
   <th>Name</th>
@@ -55,4 +73,5 @@ Hello World Page B
   <td></td>
  </tr>
 </table>
+</details>
 /**/

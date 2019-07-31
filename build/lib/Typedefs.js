@@ -188,7 +188,9 @@ const getTypedefs = async (stream, namespace, typesLocations = [], options = {})
   })
   const c = competent({
     'typedef'({ name, children }) {
-      const r = `%TYPEDEF ${children[0]}${name ? ` ${name}` : ''}%`
+      let [loc] = children
+      loc = loc.trim()
+      const r = `%TYPEDEF ${loc}${name ? ` ${name}` : ''}%`
       return r
     },
   })

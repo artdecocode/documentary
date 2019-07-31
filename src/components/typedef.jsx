@@ -7,16 +7,17 @@ import { relative, dirname } from 'path'
  * @param {Object} doc
  * @param {{ renderAgain: function(), locations, allTypes: Array<Type>}} doc.documentary
  */
-export default function typedef({ documentary, children, name, narrow, flatten }) {
+export default function typedef({ documentary, children, name, narrow, flatten, details }) {
+  details = details ? details.split(',') : []
   const {
-    setPretty, renderAgain, locations, allTypes, cutCode, currentFile,
+    setPretty, locations, allTypes, cutCode, currentFile,
     wiki, source,
   } = documentary
   const file = wiki ? source : currentFile()
 
   setPretty(false)
-  renderAgain() // because using md2html
-  const [location] = children
+  let [location] = children
+  location = location.trim()
   /** @type {!Array<!Type>} */
   const types = locations[location]
   if (!types) {
@@ -27,7 +28,7 @@ export default function typedef({ documentary, children, name, narrow, flatten }
   const typesToMd = t.filter(({ import: i }) => !i)
   let flattened = {}
   const tt = typesToMd.map(type => {
-    return type.toMarkdown(allTypes, { narrow, flatten(n) {
+    return type.toMarkdown(allTypes, { details, narrow, flatten(n) {
       flattened[n] = true
     }, preprocessDesc(d) {
       if (!d) return d
@@ -54,11 +55,23 @@ export default function typedef({ documentary, children, name, narrow, flatten }
   const j = importsToMd.map(i => i.toMarkdown(allTypes, { flatten }))
 
   const ttt = tt.map((s, i) => {
-    if (typeof s == 'string') return s
-    const { LINE, table: type } = s
-    if (typeof type == 'object') return [LINE,
-      <Narrow key={i} {...type} documentary={documentary} />]
-    return [LINE, type]
+    const { LINE, table: type, displayInDetails } = s
+    const isObject = typeof type == 'object' // table can be empty string, e.g., ''
+
+    const ch = isObject ? <Narrow key={i} {...type} documentary={documentary} /> : type
+    if (displayInDetails) {
+      const line = md2html({ documentary, children: [LINE] })
+
+      if (isObject) return (<details>{'\n '}
+        <summary dangerouslySetInnerHTML={{ __html: line }} />{'\n'}
+        {ch}{'\n'}
+      </details>)
+
+      return `<details>
+ <summary>${line}</summary>${ch}
+</details>`
+    }
+    return [LINE, ch]
   })
 
   const res = [...j, ...ttt].reduce((acc, c, i, ar) => {

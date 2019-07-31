@@ -139,7 +139,8 @@ export default class Documentary extends Replaceable {
           }
           const t = typeName ? types.filter(a => a.name == typeName) : types
           const res = t.map((type) => {
-            return type.toMarkdown(allTypes)
+            const { LINE, table: tb } = type.toMarkdown(allTypes)
+            return `${LINE}${tb}`
           }).join('\n\n')
           return res
         },
