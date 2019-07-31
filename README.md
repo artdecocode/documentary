@@ -45,10 +45,6 @@ This section has a quick look at the best features available in _Documentary_ an
   * [Comments Stripping](#comments-stripping)
   * [File Splitting](#file-splitting)
   * [Replacement Rules](#replacement-rules)
-  * [Gif Detail](#gif-detail)
-    * [<code>yarn doc</code>](#yarn-doc)
-  * [`Type` Definition](#type-definition)
-  * [Dedicated Example Row](#dedicated-example-row)
 - [CLI](#cli)
   * [`NODE_DEBUG=doc`](#node_debugdoc)
 - [♫ PRO<br/>♪ Underlined<br/>♯ `Titles`](#-pro-underlined-titles)
@@ -100,6 +96,8 @@ Each feature of _Documentary_ is described on its relevant Wiki page.
 - <kbd>💍[JSX Components](../../wiki/JSX-Components)</kbd>: Implementing custom system-wide and project-scoped components.
 - <kbd>🤖[Macros](../../wiki/Macros)</kbd>: Constructing patterns to be reused in formation of READMEs.
 - <kbd>☀️[Typedefs](../../wiki/Typedefs)</kbd>: Display `@typedef` information in _README_ files by maintaining types externally to _JS_ source.
+- <kbd>🎼[Type (Deprecated)](../../wiki/Type-Deprecated)</kbd>: An older version of typedefs which works as a macro for types.
+- <kbd>🥠[Gif Detail](../../wiki/Gif-Detail)</kbd>: Hiding images inside of the `<details>` block.
 - <kbd>🖱[API](../../wiki/API)</kbd>: Using _Documentary_'s features from other packages.
 
 <p align="center"><a href="#table-of-contents">
@@ -129,11 +127,9 @@ documentary
 ├── 1-installation-and-usage
 │   └── index.md
 ├── 2-features
-│   ├── 10-type.md
 │   ├── 4-comment-stripping.md
 │   ├── 5-file-splitting.md
 │   ├── 6-rules.md
-│   ├── 8-gif.md
 │   ├── footer.md
 │   └── index.md
 ├── 3-cli.md
@@ -157,280 +153,6 @@ There are some other built-in rules for replacements which are listed in this ta
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/7.svg?sanitize=true">
-</a></p>
-
-### Gif Detail
-
-The `GIF` rule will inserts a gif animation inside of a `<detail>` block. To highlight the summary with background color, `<code>` should be used instead of back-ticks. [TOC title link](##toc-titles) also work inside the summary.
-
-```
-%GIF doc/doc.gif
-Alt: Generating documentation.
-Click to View: [<code>yarn doc</code>](t)
-%
-```
-
-<details>
-  <summary>Click to View: <a name="yarn-doc"><code>yarn doc</code></a></summary>
-  <table>
-  <tr><td>
-    <img alt="Alt: Generating documentation." src="doc/doc.gif" />
-  </td></tr>
-  </table>
-</details>
-<br>
-
-The actual html placed in the `README` looks like the one below:
-
-```html
-<details>
-  <summary>Summary of the detail: <code>yarn doc</code></summary>
-  <table>
-  <tr><td>
-    <img alt="Alt: Generating documentation." src="doc/doc.gif" />
-  </td></tr>
-  </table>
-</details>
-```
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/8.svg?sanitize=true">
-</a></p>
-
-### `Type` Definition
-
-Often, it is required to document a type of an object, which methods can use. To display the information about type's properties in a table, the `TYPE` macro can be used. It allows to show all possible properties that an object can contain, show which ones are required, give examples and link them in the table of contents (disabled by default).
-
-Its signature is as follows:
-
-```xml
-%TYPE addToToc(true|false)
-<p name="propertyName" type="propertyType" required>
-  <d>Property Description.</d>
-  <d>Property Example.</d>
-</p>
-%
-```
-
-For example,
-
-````xml
-%TYPE
-<p name="text" type="string" required>
-  <d>Display text. Required.</d>
-  <e>
-
-```js
-const q = {
-  text: 'What is your name',
-}
-```
-  </e>
-</p>
-<p name="validation" type="(async) function">
-  <d>A function which needs to throw an error if validation does not pass.</d>
-  <e>
-
-```js
-const q = {
-  text: 'What is your name',
-  validate(v) {
-    if (!v.length) throw new Error('Name is required.')
-  },
-}
-```
-  </e>
-</p>
-%
-````
-
-will display the following table:
-
-<table>
- <thead>
-  <tr>
-   <th>Property</th>
-   <th>Type</th>
-   <th>Description</th>
-   <th>Example</th>
-  </tr>
- </thead>
- <tbody>
-  <tr>
-   <td><strong><code>text*</code></strong></td>
-   <td><em>string</em></td>
-   <td>Display text. Required.</td>
-   <td>
-
-```js
-const q = {
-  text: 'What is your name',
-}
-```
-  </td>
-  </tr>
-  <tr>
-   <td><code>validation</code></td>
-   <td><em>(async) function</em></td>
-   <td>A function which needs to throw an error if validation does not pass.</td>
-   <td>
-
-```js
-const q = {
-  text: 'What is your name',
-  validate(v) {
-    if (!v.length) throw new Error('Name is required.')
-  },
-}
-```
-  </td>
-  </tr>
- </tbody>
-</table>
-
-
-When required to use the markdown syntax in tables (such as `__`, links, _etc_), an extra space should be left after the `d` or `e` tags like so:
-
-```xml
-%TYPE true
-<p name="skipLevelOne" type="boolean">
-  <d>
-
-Start the table of contents from level 2, i.e., excluding the `#` title.</d>
-</p>
-%
-```
-
-Otherwise, the content will not be processed by `GitHub`. However, it will add an extra margin to the content of the cell as it will be transformed into a paragraph.
-
-### Dedicated Example Row
-
-Because examples occupy a lot of space which causes table squeezing on GitHub and scrolling on NPM, _Documentary_ allows to dedicate a special row to an example. It can be achieved by adding a `row` attribute to the `e` element, like so:
-
-````xml
-%TYPE
-<p name="headers" type="object">
-  <d>Incoming headers returned by the server.</d>
-  <e row>
-
-```json
-{
-  "server": "GitHub.com",
-  "content-type": "application/json",
-  "content-length": "2",
-  "connection": "close",
-  "status": "200 OK"
-}
-```
-  </e>
-</p>
-%
-````
-
-In addition, any properties which do not contain examples will not have an example column at all.
-
-<table>
- <thead>
-  <tr>
-   <th>Property</th>
-   <th>Type</th>
-   <th>Description</th>
-   <th>Example</th>
-  </tr>
- </thead>
- <tbody>
-  <tr>
-   <td><code>body</code></td>
-   <td><em>string|object|Buffer</em></td>
-   <td colspan="2">The return from the server.</td>
-  </tr>
-  <tr>
-   <td><code>headers</code></td>
-   <td><em>object</em></td>
-   <td colspan="2">Incoming headers returned by the server.</td>
-  </tr>
-  <tr></tr>
-  <tr>
-   <td colspan="4">
-
-```json
-{
-  "server": "GitHub.com",
-  "content-type": "application/json",
-  "content-length": "2",
-  "connection": "close",
-  "status": "200 OK"
-}
-```
-  </td>
-  </tr>
-  <tr>
-   <td><code>statusCode</code></td>
-   <td><em>number</em></td>
-   <td>The status code returned by the server.</td>
-   <td><code>200</code></td>
-  </tr>
- </tbody>
-</table>
-
-
-Finally, when no examples which are not rows are given, there will be no `Example` heading.
-
-````xml
-%TYPE
-<p name="data" type="object">
-  <d>Optional data to send to the server with the request.</d>
-  <e row>
-
-```js
-{
-  name: 'test',
-}
-```
-  </e>
-</p>
-<p name="method" type="string">
-  <d>What HTTP method to use to send data (only works when <code>data</code> is set).</d>
-</p>
-%
-````
-
-<table>
- <thead>
-  <tr>
-   <th>Property</th>
-   <th>Type</th>
-   <th>Description</th>
-  </tr>
- </thead>
- <tbody>
-  <tr>
-   <td><code>data</code></td>
-   <td><em>object</em></td>
-   <td>Optional data to send to the server with the request.</td>
-  </tr>
-  <tr></tr>
-  <tr>
-   <td colspan="3">
-
-```js
-{
-  name: 'test',
-}
-```
-  </td>
-  </tr>
-  <tr>
-   <td><code>method</code></td>
-   <td><em>string</em></td>
-   <td>What HTTP method to use to send data (only works when <code>data</code> is set).</td>
-  </tr>
- </tbody>
-</table>
-
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/9.svg?sanitize=true">
 </a></p>
 
 
@@ -551,7 +273,7 @@ DOC 80734: could not parse the table
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/10.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/8.svg?sanitize=true">
 </a></p>
 
 ♫ PRO
@@ -571,7 +293,7 @@ Titles written as blocks and underlined with any number of either `===` (for H1)
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/11.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/9.svg?sanitize=true">
 </a></p>
 
 ## Glossary
