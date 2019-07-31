@@ -15,6 +15,7 @@
     "d1": "typal src",
     "d": "yarn-s d1",
     "doc": "yarn dev -o README.md",
+    "wiki": "yarn dev wiki -W ../documentary.wiki",
     "start": "node build/bin",
     "example/": "yarn e example/example.js",
     "old-typal": "doc doc/10-typedef -o doc/typal.md",

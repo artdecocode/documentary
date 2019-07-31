@@ -1,6 +1,4 @@
-### Section Breaks
-
-A section break is a small image in the center of the page which indicates the end of a section. With larger sections which also include sub-sections, this feature can help to differentiate when the topic finishes and another one starts. They can also be used to navigate back to the table of contents, or a specified location.
+A section break is a small image in the center of the page which indicates the end of a section. With larger sections which also include sub-sections, this feature can help to differentiate when the topic finishes and another one starts. They can also be used to navigate back to [[table of contents|Table Of Contents]], or a location specified with the `href` attribute.
 
 At the moment, there is support for pre-installed section breaks. In future, more support of custom images will be included.
 
@@ -14,7 +12,7 @@ For example:
 
 %EXAMPLE: example/section-breaks/index.md%
 
-%FORK src/bin/doc example/section-breaks/index.md%
+%FORK-html src/bin/doc example/section-breaks/index.md%
 
 There are 23 available section breaks which will be inserted in incremental order in the document. When the end of the list is reached, the count restarts. There are also 3 ending breaks which can be inserted at the end and do not participate in the rotation, so that they must be inserted manually. To select a specific image, its number can be given.
 

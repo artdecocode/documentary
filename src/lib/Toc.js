@@ -241,13 +241,13 @@ export default class Toc extends Transform {
  * Gather all titles from the stream and return the table of contents as a string.
  * @returns {string} The table of contents.
  */
-export const getToc = async (stream, h1, locations) => {
+export const getToc = async (stream, h1, locations, justToc = false) => {
   const toc = new Toc({
     skipLevelOne: !h1, locations, documentary: stream,
   })
   stream.pipe(toc)
   const res = await collect(toc)
-  return (toc.hasToc ? '' : tocA) + res.trimRight()
+  return (justToc || toc.hasToc ? '' : tocA) + res.trimRight()
 }
 
 const tocA = '<a name="table-of-contents"></a>\n\n'

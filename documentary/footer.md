@@ -1,3 +1,9 @@
+## Wiki
+
+- <kbd>🖱[API](../../wiki/API)</kbd>
+
+%~%
+
 ♫ PRO
 ♪ Underlined
 ♯ `Titles`

@@ -91,7 +91,7 @@ const runPage = async (opts) => {
     locations, types, noCache, objectMode: true, wiki, output, source,
   })
   stream.pipe(doc)
-  const tocPromise = getToc(doc, h1, locations)
+  const tocPromise = getToc(doc, h1, locations, justToc)
 
   const c = new Catchment()
   await whichStream({
