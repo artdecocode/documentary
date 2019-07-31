@@ -47,11 +47,6 @@ This section has a quick look at the best features available in _Documentary_ an
   * [Replacement Rules](#replacement-rules)
   * [Gif Detail](#gif-detail)
     * [<code>yarn doc</code>](#yarn-doc)
-  * [_Typal_: Smart Typedefs](#typal-smart-typedefs)
-  * [README placement](#readme-placement)
-    * [`SetHeaders`](#type-setheaders)
-    * [`RightsConfig`](#type-rightsconfig)
-    * [`StaticConfig`](#type-staticconfig)
   * [`Type` Definition](#type-definition)
   * [Dedicated Example Row](#dedicated-example-row)
 - [CLI](#cli)
@@ -104,6 +99,7 @@ Each feature of _Documentary_ is described on its relevant Wiki page.
 - <kbd>🎩[Method Titles](../../wiki/Method-Titles)</kbd>: Documenting methods in a standard way.
 - <kbd>💍[JSX Components](../../wiki/JSX-Components)</kbd>: Implementing custom system-wide and project-scoped components.
 - <kbd>🤖[Macros](../../wiki/Macros)</kbd>: Constructing patterns to be reused in formation of READMEs.
+- <kbd>☀️[Typedefs](../../wiki/Typedefs)</kbd>: Display `@typedef` information in _README_ files by maintaining types externally to _JS_ source.
 - <kbd>🖱[API](../../wiki/API)</kbd>: Using _Documentary_'s features from other packages.
 
 <p align="center"><a href="#table-of-contents">
@@ -138,7 +134,6 @@ documentary
 │   ├── 5-file-splitting.md
 │   ├── 6-rules.md
 │   ├── 8-gif.md
-│   ├── 9-typal.md
 │   ├── footer.md
 │   └── index.md
 ├── 3-cli.md
@@ -200,105 +195,6 @@ The actual html placed in the `README` looks like the one below:
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/8.svg?sanitize=true">
-</a></p>
-
-### _Typal_: Smart Typedefs
-
-[_Typal_](https://artdecocode.com/typal/) is a package to manage JSDoc typedefs from a separate `types.xml` file (or files). They can then be placed into JavaScript, used to generate _Google Closure Compiler_ externs and embedded into documentation with _Documentary_. When placed in JS, one of the advantages is that it allows to expand function parameters' properties, so that they are better visible from the IDE:
-
-![Preview Of The Configure Function](doc/typedef-config.gif)
-
-The main use of _Typal_ is together with _Documentary_ to insert tables with types' descriptions.
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/9.svg?sanitize=true" width="20">
-</a></p>
-
-### README placement
-
-To place a type definition as a table into a `README` file, the `TYPEDEF` marker can be used, where the first argument is the path to the `xml` file containing definitions, and the second one is the name of the type to embed. Moreover, links to the type descriptions will be created in the table of contents using the [__TOC Titles__](#toc-titles), but to prevent this, the `noToc` attribute should be set for a type.
-
-<details>
-<summary>Show Types.Xml</summary>
-
-```xml
-<types>
-  <import name="ServerResponse" from="http"
-    link="https://nodejs.org/api/http.html#http_class_http_serverresponse"
-  />
-  <type name="SetHeaders"
-    type="(res: ServerResponse) => any"
-    desc="Function to set custom headers on response." />
-  <type name="RightsConfig"
-    type="{ location: string, rights: number }[]"
-    desc="Configuration of read and write access rights." />
-  <type name="StaticConfig" desc="Options to setup `koa-static`.">
-    <prop string name="root">
-      Root directory string.
-    </prop>
-    <prop number name="maxage" default="0">
-      Browser cache max-age in milliseconds.
-    </prop>
-    <prop boolean name="hidden" default="false">
-      Allow transfer of hidden files.
-    </prop>
-    <prop string name="index" default="index.html">
-      Default file name.
-    </prop>
-    <prop opt type="SetHeaders" name="setHeaders">
-      Function to set custom headers on response.
-    </prop>
-    <prop opt type="Promise.<RightsConfig>" name="rightsPromise">
-      The promise which will be resolved with access rights to files.
-    </prop>
-  </type>
-</types>
-```
-</details>
-
-```
-%TYPEDEF path/definitions.xml [TypeName]%
-```
-
-For example, using the previously defined `StaticConfig` type from `types/static.xml` file, _Documentary_ will process the following markers:
-
-```
-%TYPEDEF types/static.xml ServerResponse%
-%TYPEDEF types/static.xml SetHeaders%
-%TYPEDEF types/static.xml StaticConfig%
-```
-
-or a single marker to include all types in order in which they appear in the `xml` file:
-
-```
-%TYPEDEF types/static.xml%
-```
-
-and embed resulting type definitions (with the imported type linked to the _Node.JS_ documentation due to its `link` attribute):
-
-[`import('http').ServerResponse`](https://nodejs.org/api/http.html#http_class_http_serverresponse) __<a name="type-httpserverresponse">`http.ServerResponse`</a>__: A writable stream that communicates data to the client. The second argument of the http.Server.on("request") event.
-
-`(res: ServerResponse) => any` __<a name="type-setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
-
-<code>{ location: string, rights: number }</code> __<a name="type-rightsconfig">`RightsConfig`</a>__: Configuration of read and write access rights.
-
-__<a name="type-staticconfig">`StaticConfig`</a>__: Options to setup `koa-static`.
-
-|     Name      |                                                             Type                                                             |                           Description                           |   Default    |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------ |
-| __root*__     | <em>string</em>                                                                                                              | Root directory string.                                          | -            |
-| maxage        | <em>number</em>                                                                                                              | Browser cache max-age in milliseconds.                          | `0`          |
-| hidden        | <em>boolean</em>                                                                                                             | Allow transfer of hidden files.                                 | `false`      |
-| index         | <em>string</em>                                                                                                              | Default file name.                                              | `index.html` |
-| setHeaders    | <em><a href="#type-setheaders" title="Function to set custom headers on response.">SetHeaders</a></em>                       | Function to set custom headers on response.                     | -            |
-| rightsPromise | <em>Promise&lt;<a href="#type-rightsconfig" title="Configuration of read and write access rights.">RightsConfig</a>&gt;</em> | The promise which will be resolved with access rights to files. | -            |
-
-_Documentary_ wil scan each source file of the documentation first to build a map of all types. Whenever a property appears to be of a known type, it will be automatically linked to the location where it was defined. It is also true for properties described as generic types, such as `Promise<Type>`. This makes it possible to define all types in one place, and then reference them in the API documentation. For the full list of supported types for linking, see [_Typal_'s documentation](https://github.com/artdecocode/typal/#markdown-documentation).
-
-[Read More](doc/typal.md) about types in _Documentary_ including advanced usage with the spread option.
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/10.svg?sanitize=true">
 </a></p>
 
 ### `Type` Definition
@@ -534,7 +430,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/11.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/9.svg?sanitize=true">
 </a></p>
 
 
@@ -655,7 +551,7 @@ DOC 80734: could not parse the table
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/12.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/10.svg?sanitize=true">
 </a></p>
 
 ♫ PRO
@@ -675,7 +571,7 @@ Titles written as blocks and underlined with any number of either `===` (for H1)
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/13.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/11.svg?sanitize=true">
 </a></p>
 
 ## Glossary
