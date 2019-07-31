@@ -1,4 +1,4 @@
-> This a pre-Typdef rule. It's better to use [[Typedefs]].
+> This a pre-Typdef rule. It's better to use [[Typedefs]] for type definitions, however this rule can be used for simple use cases. It also allows to embed examples on a separate row.
 
 Often, it is required to document a type of an object, which methods can use. To display the information about type's properties in a table, the `TYPE` macro can be used. It allows to show all possible properties that an object can contain, show which ones are required, give examples and link them in the table of contents (disabled by default).
 

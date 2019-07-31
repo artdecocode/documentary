@@ -11,7 +11,7 @@ Each feature of _Documentary_ is described on its relevant Wiki page.
 - <kbd>💍[JSX Components](../../wiki/JSX-Components)</kbd>: Implementing custom system-wide and project-scoped components.
 - <kbd>🤖[Macros](../../wiki/Macros)</kbd>: Constructing patterns to be reused in formation of READMEs.
 - <kbd>☀️[Typedefs](../../wiki/Typedefs)</kbd>: Display `@typedef` information in _README_ files by maintaining types externally to _JS_ source.
-- <kbd>🎼[Type (Deprecated)](../../wiki/Type-Deprecated)</kbd>: An older version of typedefs which works as a macro for types.
+- <kbd>🎼[Type (Deprecated)](../../wiki/Type-(Deprecated))</kbd>: An older version of typedefs which works as a macro for types.
 - <kbd>🥠[Gif Detail](../../wiki/Gif-Detail)</kbd>: Hiding images inside of the `<details>` block.
 - <kbd>🖱[API](../../wiki/API)</kbd>: Using _Documentary_'s features from other packages.
 
