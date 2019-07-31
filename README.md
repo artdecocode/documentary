@@ -41,18 +41,18 @@ This section has a quick look at the best features available in _Documentary_ an
 - [Table Of Contents](#table-of-contents)
 - [Installation & Usage](#installation--usage)
 - [Wiki](#wiki)
-- [**Comments Stripping**](#comments-stripping)
-- [**Macros**](#macros)
-- [**File Splitting**](#file-splitting)
-- [**Replacement Rules**](#replacement-rules)
-- [**Gif Detail**](#gif-detail)
-  * [<code>yarn doc</code>](#yarn-doc)
-- [**_Typal_: Smart Typedefs**](#typal-smart-typedefs)
+- [Misc](#misc)
+  * [Comments Stripping](#comments-stripping)
+  * [File Splitting](#file-splitting)
+  * [Replacement Rules](#replacement-rules)
+  * [Gif Detail](#gif-detail)
+    * [<code>yarn doc</code>](#yarn-doc)
+  * [_Typal_: Smart Typedefs](#typal-smart-typedefs)
   * [README placement](#readme-placement)
     * [`SetHeaders`](#type-setheaders)
     * [`RightsConfig`](#type-rightsconfig)
     * [`StaticConfig`](#type-staticconfig)
-- [**`Type` Definition**](#type-definition)
+  * [`Type` Definition](#type-definition)
   * [Dedicated Example Row](#dedicated-example-row)
 - [CLI](#cli)
   * [`NODE_DEBUG=doc`](#node_debugdoc)
@@ -103,13 +103,18 @@ Each feature of _Documentary_ is described on its relevant Wiki page.
 - <kbd>🍴[Forks (Embed Output)](../../wiki/Forks)</kbd>: Executing examples to show their output, and validating that program works correctly.
 - <kbd>🎩[Method Titles](../../wiki/Method-Titles)</kbd>: Documenting methods in a standard way.
 - <kbd>💍[JSX Components](../../wiki/JSX-Components)</kbd>: Implementing custom system-wide and project-scoped components.
+- <kbd>🤖[Macros](../../wiki/Macros)</kbd>: Constructing patterns to be reused in formation of READMEs.
 - <kbd>🖱[API](../../wiki/API)</kbd>: Using _Documentary_'s features from other packages.
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/4.svg?sanitize=true">
 </a></p>
 
-## **Comments Stripping**
+## Misc
+
+These are some essential feature of _Documentary_.
+
+### Comments Stripping
 
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
 
@@ -117,66 +122,7 @@ Since comments found in `<!-- comment -->` sections are not visible to users, th
   <img src="/.documentary/section-breaks/5.svg?sanitize=true">
 </a></p>
 
-## **Macros**
-
-When there this a need to present some data in a repeatable format, macros can be used. First, a macro needs to be defined with the `MACRO` rule, and then referenced by the `USE-MACRO` rule.
-
-```html
-%MACRO example
-<details>
-<summary>$1</summary>
-
-NPM: _[$1](https://nodejs.tools/$2)_
-GitHub: _[$1](https://github.com/artdecocode/$2)_
-</details>
-%
-%USE-MACRO example
-<data>Documentary</data>
-<data>documentary</data>
-%
-%USE-MACRO example
-<data>Zoroaster</data>
-<data>zoroaster</data>
-%
-```
-```html
-<details>
-<summary>Documentary</summary>
-
-NPM: _[Documentary](https://nodejs.tools/documentary)_
-GitHub: _[Documentary](https://github.com/artdecocode/documentary)_
-</details>
-<details>
-<summary>Zoroaster</summary>
-
-NPM: _[Zoroaster](https://nodejs.tools/zoroaster)_
-GitHub: _[Zoroaster](https://github.com/artdecocode/zoroaster)_
-</details>
-```
-
-The data will be substituted with into `$N` placeholders using the `<data>` elements found.
-
-<details>
-<summary>Documentary</summary>
-
-NPM: _[Documentary](https://nodejs.tools/documentary)_
-GitHub: _[Documentary](https://github.com/artdecocode/documentary)_
-</details>
-<details>
-<summary>Zoroaster</summary>
-
-NPM: _[Zoroaster](https://nodejs.tools/zoroaster)_
-GitHub: _[Zoroaster](https://github.com/artdecocode/zoroaster)_
-</details>
-<br/>
-
-> Currently, a macro can only be defined in the same file as its usage. Also, in future, macros will improve my allowing to use named placeholders.
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
-</a></p>
-
-## **File Splitting**
+### File Splitting
 
 _Documentary_ can read a directory and put files together into a single `README` file. The files will be sorted in alphabetical order, and their content merged into a single stream. The `index.md` and `footer.md` are special in this respect, such that the `index.md` of a directory will always go first, and the `footer.md` will go last. To print in reverse order, for example when writing a blog and name files by their dates, the [`--reverse` flag](#reverse-order) can be passed to the CLI.
 
@@ -189,7 +135,6 @@ documentary
 ├── 2-features
 │   ├── 10-type.md
 │   ├── 4-comment-stripping.md
-│   ├── 4-macros.md
 │   ├── 5-file-splitting.md
 │   ├── 6-rules.md
 │   ├── 8-gif.md
@@ -202,10 +147,10 @@ documentary
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/7.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
 </a></p>
 
-## **Replacement Rules**
+### Replacement Rules
 
 There are some other built-in rules for replacements which are listed in this table.
 
@@ -216,10 +161,10 @@ There are some other built-in rules for replacements which are listed in this ta
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/8.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/7.svg?sanitize=true">
 </a></p>
 
-## **Gif Detail**
+### Gif Detail
 
 The `GIF` rule will inserts a gif animation inside of a `<detail>` block. To highlight the summary with background color, `<code>` should be used instead of back-ticks. [TOC title link](##toc-titles) also work inside the summary.
 
@@ -254,10 +199,10 @@ The actual html placed in the `README` looks like the one below:
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/9.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/8.svg?sanitize=true">
 </a></p>
 
-## **_Typal_: Smart Typedefs**
+### _Typal_: Smart Typedefs
 
 [_Typal_](https://artdecocode.com/typal/) is a package to manage JSDoc typedefs from a separate `types.xml` file (or files). They can then be placed into JavaScript, used to generate _Google Closure Compiler_ externs and embedded into documentation with _Documentary_. When placed in JS, one of the advantages is that it allows to expand function parameters' properties, so that they are better visible from the IDE:
 
@@ -266,7 +211,7 @@ The actual html placed in the `README` looks like the one below:
 The main use of _Typal_ is together with _Documentary_ to insert tables with types' descriptions.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/10.svg?sanitize=true" width="20">
+  <img src="/.documentary/section-breaks/9.svg?sanitize=true" width="20">
 </a></p>
 
 ### README placement
@@ -353,10 +298,10 @@ _Documentary_ wil scan each source file of the documentation first to build a ma
 [Read More](doc/typal.md) about types in _Documentary_ including advanced usage with the spread option.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/11.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/10.svg?sanitize=true">
 </a></p>
 
-## **`Type` Definition**
+### `Type` Definition
 
 Often, it is required to document a type of an object, which methods can use. To display the information about type's properties in a table, the `TYPE` macro can be used. It allows to show all possible properties that an object can contain, show which ones are required, give examples and link them in the table of contents (disabled by default).
 
@@ -589,7 +534,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/12.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/11.svg?sanitize=true">
 </a></p>
 
 
@@ -710,7 +655,7 @@ DOC 80734: could not parse the table
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/13.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/12.svg?sanitize=true">
 </a></p>
 
 ♫ PRO
@@ -730,7 +675,7 @@ Titles written as blocks and underlined with any number of either `===` (for H1)
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/14.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/13.svg?sanitize=true">
 </a></p>
 
 ## Glossary

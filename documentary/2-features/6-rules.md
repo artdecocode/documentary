@@ -1,4 +1,4 @@
-## **Replacement Rules**
+### Replacement Rules
 
 There are some other built-in rules for replacements which are listed in this table.
 

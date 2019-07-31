@@ -1,4 +1,4 @@
-## **_Typal_: Smart Typedefs**
+### _Typal_: Smart Typedefs
 
 [_Typal_](https://artdecocode.com/typal/) is a package to manage JSDoc typedefs from a separate `types.xml` file (or files). They can then be placed into JavaScript, used to generate _Google Closure Compiler_ externs and embedded into documentation with _Documentary_. When placed in JS, one of the advantages is that it allows to expand function parameters' properties, so that they are better visible from the IDE:
 
