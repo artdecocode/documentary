@@ -1,5 +1,3 @@
-## **Method Titles**
-
 _Documentary_ can generate neat titles useful for API documentation. The method signature should be specified in a `JSON` array, where every member is an argument written as an array containing its name and type. The type can be either a string, or an object.
 
 For object types, each value is an array which contains the property type and its default value. To mark a property as optional, the `?` symbol can be used at the end of the key.
@@ -70,5 +68,3 @@ Generated from
 ```### runSoftware
 ```
 ````
-
-%~%

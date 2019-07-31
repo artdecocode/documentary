@@ -1,8 +1,8 @@
-### Built-In Components
+## Built-In Components
 
 There are a number of built-in components at the moment.
 
-#### `<`shell command?=""`>`
+### `<`shell command?=""`>`
 
 Either uses `spawn` to spawn a command and pass arguments to it, or `exec` to get the result of a more complex operations such as piping to other commands reachable from shell.
 
@@ -61,15 +61,16 @@ The _shell_ component can be used to print output of a complex unix expression. 
 
 %~ width="20"%
 
-#### `<`argufy`>`
+### `<`argufy`>`
 
 This component is used together with _Argufy_ package which keeps arguments to command-line programs in an XML file, and allows to generate JS to extract them from `process.argv` easily and in _Google Closure Compiler_-compatible way. _Documentary_ allows to place the table with all arguments defined in the `arguments.xml` file by using `<argufy>types/arguments.xml</argufy>` marker. It's child is the location of the arguments file, and if not given, it will default to `types/arguments.xml`. If an `arg` element had `toc` property, it will also be liked to the ToC using a toc-title. [See the table](#cli) generated for _Documentary_ for an example of how the documentation of CLI arguments will look like.
 
 %~ width="20"%
 
-#### `<`md2html`>`
+### `<`md2html`>`
 
-Converts the markdown with `_`/`__`/`*`/`**`/<code>`</code> into html. The main use of this widget is to be able to write tables with markdown and avoid having a whitespace at the bottom of the table row:
+Converts the markdown with `_`/`__`/`*`/`**`/<code>`</code>/
+`[link](#link)` into HTML. The main use of this widget is to be able to write tables with markdown and avoid having a whitespace at the bottom of the table row:
 
 ```html
 <table>
@@ -98,5 +99,3 @@ Converts the markdown with `_`/`__`/`*`/`**`/<code>`</code> into html. The main 
 </md2html>
 </td></tr>
 </table>
-
-%~%

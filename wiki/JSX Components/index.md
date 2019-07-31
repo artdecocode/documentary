@@ -1,6 +1,10 @@
-## **JSX Components**
+_Documentary_ lets users define their custom components in the `.documentary` folder both in the project directory and the user's home directory (`{project}/.documentary/index.jsx` and `~/.documentary/index.jsx` will be imported). The components are written using _JSX_ syntax and exported as named functions from `jsx` files. The properties the component receives are extracted from the markdown syntax and passed to the hyperscript constructor (from _Preact_).
 
-_Documentary_ lets users define their custom components in the `.documentary` folder both in the project directory and the user's home directory. The components are written using JSX syntax and exported as named functions from `jsx` files. The properties the component receives are extracted from the markdown syntax and passed to the hyperscript constructor (from `preact`).
+## On This Page
+
+%TOC%
+
+%~%
 
 For example, the user can define their own component in the following way:
 
@@ -24,4 +28,4 @@ The result will be rendered HTML:
 Get In Touch To Support Documentary
 </Sponsor>
 
-%~ width="15"%
+%~%

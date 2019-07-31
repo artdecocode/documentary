@@ -41,17 +41,6 @@ This section has a quick look at the best features available in _Documentary_ an
 - [Table Of Contents](#table-of-contents)
 - [Installation & Usage](#installation--usage)
 - [Wiki](#wiki)
-- [**Method Titles**](#method-titles)
-  * [`async runSoftware(path: string, config: Config): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
-  * [`async runSoftware(path: string)`](#async-runsoftwarepath-string-void)
-  * [`runSoftware(): string`](#runsoftware-string)
-  * [`runSoftware()`](#runsoftware-void)
-- [**JSX Components**](#jsx-components)
-  * [Async Components](#async-components)
-  * [Built-In Components](#built-in-components)
-    * [`<`shell command?=""`>`](#shell-command)
-    * [`<`argufy`>`](#argufy)
-    * [`<`md2html`>`](#md2html)
 - [**Comments Stripping**](#comments-stripping)
 - [**Macros**](#macros)
 - [**File Splitting**](#file-splitting)
@@ -112,340 +101,20 @@ Each feature of _Documentary_ is described on its relevant Wiki page.
 - <kbd>📐[JSON Tables](../../wiki/JSON-Tables)</kbd>: Writing _JSON_ array data to be converted into a Markdown table.
 - <kbd>📜[Embed Examples](../../wiki/Embed-Examples)</kbd>: Decoupling examples from documentation by maintaining separate runnable example file.
 - <kbd>🍴[Forks (Embed Output)](../../wiki/Forks)</kbd>: Executing examples to show their output, and validating that program works correctly.
+- <kbd>🎩[Method Titles](../../wiki/Method-Titles)</kbd>: Documenting methods in a standard way.
+- <kbd>💍[JSX Components](../../wiki/JSX-Components)</kbd>: Implementing custom system-wide and project-scoped components.
 - <kbd>🖱[API](../../wiki/API)</kbd>: Using _Documentary_'s features from other packages.
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/4.svg?sanitize=true">
 </a></p>
 
-## **Method Titles**
-
-_Documentary_ can generate neat titles useful for API documentation. The method signature should be specified in a `JSON` array, where every member is an argument written as an array containing its name and type. The type can be either a string, or an object.
-
-For object types, each value is an array which contains the property type and its default value. To mark a property as optional, the `?` symbol can be used at the end of the key.
-
-The last item in the argument array is used when the argument is an object and is a short name to be place in the table of contents (so that a complex object can be referenced to its type).
-
-### `async runSoftware(`<br/>&nbsp;&nbsp;`path: string,`<br/>&nbsp;&nbsp;`config: {`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`View: Container,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`actions: object,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`static?: boolean = true,`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`render?: function,`<br/>&nbsp;&nbsp;`},`<br/>`): string`
-
-Generated from
-
-````m
-```### async runSoftware => string
-[
-  ["path", "string"],
-  ["config", {
-    "View": ["Container"],
-    "actions": ["object"],
-    "static?": ["boolean", true],
-    "render?": ["function"]
-  }, "Config"]
-]
-```
-````
-
-### `async runSoftware(`<br/>&nbsp;&nbsp;`path: string,`<br/>`): void`
-
-Generated from
-
-````m
-```### async runSoftware
-[
-  ["path", "string"]
-]
-```
-````
-
-### `runSoftware(): string`
-
-Generated from
-
-````m
-```### runSoftware => string
-```
-````
-
-
-### `runSoftware(): void`
-
-Generated from
-
-````m
-```### runSoftware
-```
-````
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
-</a></p>
-
-## **JSX Components**
-
-_Documentary_ lets users define their custom components in the `.documentary` folder both in the project directory and the user's home directory. The components are written using JSX syntax and exported as named functions from `jsx` files. The properties the component receives are extracted from the markdown syntax and passed to the hyperscript constructor (from `preact`).
-
-For example, the user can define their own component in the following way:
-
-```jsx
-import read from '@wrote/read'
-
-/**
- * Display the sponsor information.
- */
-export const Sponsor = ({
-  name, link, image, children,
-}) => {
-  return <table>
-  <tr/>
-  <tr>
-    <td align="center">
-      <a href={link}>
-        <img src={image} alt={name}/>
-      </a><br/>
-      Sponsored by <a href={link}>{name}</a>.
-    </td>
-  </tr>
-  {children && <tr><td>{children}</td></tr>}
-</table>
-}
-
-/**
- * The async component to print the source of the document.
- */
-export const Source = async ({ src }) => {
-  const res = await read(src)
-  const e = src.split('.')
-  const ext = e[e.length - 1]
-  return `\`\`\`${ext}
-${res}
-\`\`\``
-}
-```
-
-And then invoke it in the documentation:
-
-```html
-<Sponsor name="Tech Nation Visa Sucks"
-         link="https://www.technation.sucks"
-         image="sponsor.gif">
-Get In Touch To Support Documentary
-</Sponsor>
-```
-
-The result will be rendered HTML:
-
-<table>
-  <tr></tr>
-  <tr>
-    <td align="center">
-      <a href="https://www.technation.sucks">
-        <img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif"
-          alt="Tech Nation Visa Sucks">
-      </a>
-      <br>
-      Sponsored by 
-      <a href="https://www.technation.sucks">Tech Nation Visa Sucks</a>
-      .
-    </td>
-  </tr>
-  <tr><td>
-  Get In Touch To Support Documentary
-
-  </td>
-  </tr>
-</table>
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/6.svg?sanitize=true" width="15">
-</a></p>
-
-### Async Components
-
-The components can be rendered asynchronously when the component returns a promise. _Documentary_ will wait for the promise to resolve before attempting to render JSX into HTML. Only the root component can be asynchronous, and if it uses other components in its JSX, they must be synchronous.
-
-```js
-<Source src="src/index.js" />
-```
-
-If a component returns just a string without actually using JSX, then it is pasted into the code as is, see the `Source` example.
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/7.svg?sanitize=true" width="15">
-</a></p>
-
-<h3>Web Components</h3>
-
-To receive access to the autosuggestions powered by _VSCode's_ `customData` implementation of web-components.json standard, documentation files need to be written in HTML file format, and the `.vscode/settings.json` has to be updated to include the `html.experimental.customData` property as shown below:
-
-```json5
-{
-  "html.experimental.customData": [
-    "./node_modules/documentary/web-components.json"
-  ]
-}
-```
-
-Then, _Documentary_'s components will be available when pressing CMD + SPACE in the editor.
-
-```html
-<shell command="echo" language="fs">
-  HELLO WORLD!
-  EXAMPLE !@£
-</shell>
-```
-
-
-```sh
-$ echo "HELLO WORLD!" "EXAMPLE !@£"
-```
-
-```fs
-HELLO WORLD! EXAMPLE !@£
-```
-
-
-
-<a href="doc/shell.gif" title="Open GIF"><img src="doc/language.png" alt="The Shell Component Autosuggestions In Documentary" width="400">
-<br>Open Gif
-</a>
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/8.svg?sanitize=true" width="15">
-</a></p>
-
-### Built-In Components
-
-There are a number of built-in components at the moment.
-
-#### `<`shell command?=""`>`
-
-Either uses `spawn` to spawn a command and pass arguments to it, or `exec` to get the result of a more complex operations such as piping to other commands reachable from shell.
-
-Usage:
-
-```jsx
-<shell command="echo"/>
-<shell command="echo">ABC</shell>
-<shell command="echo">
-  Hello World
-  example123
-</shell>
-
-<shell>
-  (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node consume2.js
-</shell>
-<shell noTrim>
-  (echo abc;) | node consume2.js
-</shell>
-```
-
-Executes a command as if by the user from the terminal, i.e., `$ echo example` and shows its output after printing the command like
-
-````sh
-```{language}
-$ {command}
-```
-```{language = sh}
-{output}
-```
-````
-
-__<a name="type-shellprops">`ShellProps`</a>__: Options for the Shell component. TODO: pass options.
-
-|   Name   |       Type       |                                                                                                Description                                                                                                | Default |
-| -------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| command  | <em>string</em>  | The command to execute using the `child_process`. If the command is not passed, the children will be used to pass to `exec`, e.g., `(echo abc; sleep 1; echo def; sleep 1; echo ghi) \| node consume.js`. | -       |
-| language | <em>string</em>  | The markdown language of the output.                                                                                                                                                                      | `sh`    |
-| err      | <em>boolean</em> | Whether to print STDERR instead of STDOUT (todo: make print both).                                                                                                                                        | `false` |
-| children | <em>string</em>  | The arguments to the program each on new line.                                                                                                                                                            | -       |
-| noTrim   | <em>boolean</em> | Whether to disable trim before printing the output.                                                                                                                                                       | `false` |
-
-If the command is not passed, the children will be read and executed by the `child_process`._exec_ method. For example, with the following simple receiver:
-
-```js
-process.stdin.on('data', d => console.log(`${d}`))
-```
-
-The _shell_ component can be used to print output of a complex unix expression. The output will be trimmed before inserting in the documentation. This can be disabled with the `noTrim` option.
-
-```html
-<shell>
-  (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node
-</shell>
-```
-
-<table>
-<tr><th>Result Embedded Into README</th></tr>
-<tr/>
-<tr><td>
-
-```sh
-$ (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node
-```
-
-```sh
-abc
-
-def
-
-ghi
-```
-
-</th></td>
-</table>
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/9.svg?sanitize=true" width="20">
-</a></p>
-
-#### `<`argufy`>`
-
-This component is used together with _Argufy_ package which keeps arguments to command-line programs in an XML file, and allows to generate JS to extract them from `process.argv` easily and in _Google Closure Compiler_-compatible way. _Documentary_ allows to place the table with all arguments defined in the `arguments.xml` file by using `<argufy>types/arguments.xml</argufy>` marker. It's child is the location of the arguments file, and if not given, it will default to `types/arguments.xml`. If an `arg` element had `toc` property, it will also be liked to the ToC using a toc-title. [See the table](#cli) generated for _Documentary_ for an example of how the documentation of CLI arguments will look like.
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/10.svg?sanitize=true" width="20">
-</a></p>
-
-#### `<`md2html`>`
-
-Converts the markdown with `_`/`__`/`*`/`**`/<code>`</code> into html. The main use of this widget is to be able to write tables with markdown and avoid having a whitespace at the bottom of the table row:
-
-```html
-<table>
-<tr><td>
-
-  `Hello World`: _notice_ the padding at the **bottom** of this row.
-</td></tr>
-<tr><td>
-<md2html>
-
-  `Markdown 2 HTML`: _the text_ has been updated with the **md2html** component.
-</md2html>
-</td></tr>
-</table>
-```
-
-<table>
-<tr><td>
-
-  `Hello World`: _notice_ the padding at the **bottom** of this row.
-</td></tr>
-<tr><td>
-<code>Markdown 2 HTML</code>: <em>the text</em> has been updated with the <strong>md2html</strong> component.
-</td></tr>
-</table>
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/11.svg?sanitize=true">
-</a></p>
-
-
-
 ## **Comments Stripping**
 
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/12.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
 </a></p>
 
 ## **Macros**
@@ -504,7 +173,7 @@ GitHub: _[Zoroaster](https://github.com/artdecocode/zoroaster)_
 > Currently, a macro can only be defined in the same file as its usage. Also, in future, macros will improve my allowing to use named placeholders.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/13.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
 </a></p>
 
 ## **File Splitting**
@@ -519,13 +188,6 @@ documentary
 │   └── index.md
 ├── 2-features
 │   ├── 10-type.md
-│   ├── 3-method-title.md
-│   ├── 3.5-components
-│   │   ├── 1-jsx-components.md
-│   │   ├── 1.5async.md
-│   │   ├── 2-web-components.html
-│   │   ├── 3-components.md
-│   │   └── footer.md
 │   ├── 4-comment-stripping.md
 │   ├── 4-macros.md
 │   ├── 5-file-splitting.md
@@ -540,7 +202,7 @@ documentary
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/14.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/7.svg?sanitize=true">
 </a></p>
 
 ## **Replacement Rules**
@@ -554,7 +216,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/15.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/8.svg?sanitize=true">
 </a></p>
 
 ## **Gif Detail**
@@ -592,7 +254,7 @@ The actual html placed in the `README` looks like the one below:
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/16.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/9.svg?sanitize=true">
 </a></p>
 
 ## **_Typal_: Smart Typedefs**
@@ -604,7 +266,7 @@ The actual html placed in the `README` looks like the one below:
 The main use of _Typal_ is together with _Documentary_ to insert tables with types' descriptions.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/17.svg?sanitize=true" width="20">
+  <img src="/.documentary/section-breaks/10.svg?sanitize=true" width="20">
 </a></p>
 
 ### README placement
@@ -691,7 +353,7 @@ _Documentary_ wil scan each source file of the documentation first to build a ma
 [Read More](doc/typal.md) about types in _Documentary_ including advanced usage with the spread option.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/18.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/11.svg?sanitize=true">
 </a></p>
 
 ## **`Type` Definition**
@@ -927,7 +589,7 @@ Finally, when no examples which are not rows are given, there will be no `Exampl
 
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/19.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/12.svg?sanitize=true">
 </a></p>
 
 
@@ -1048,11 +710,7 @@ DOC 80734: could not parse the table
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/20.svg?sanitize=true">
-</a></p>
-
-<p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/21.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/13.svg?sanitize=true">
 </a></p>
 
 ♫ PRO
@@ -1072,7 +730,7 @@ Titles written as blocks and underlined with any number of either `===` (for H1)
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/22.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/14.svg?sanitize=true">
 </a></p>
 
 ## Glossary
