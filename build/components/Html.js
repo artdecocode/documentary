@@ -17,11 +17,19 @@ const Md2Html = ({ children, documentary, li = true }) => {
 const replace = (c, insertInnerCode, { li }) => {
   const codes = {}
   let s = c.trim()
-  const { links } = makeMarkers({ links: /<a .+?>/g })
-  const cutLinks = makeCutRule(links)
-  const pasteLinks = makePasteRule(links)
+  const { links } = makeMarkers({
+    links: /<a .+?>/g,
+  })
+  const [cutLinks] = [links].map(r => makeCutRule(r))
+  const [pasteLinks] = [links].map(r => makePasteRule(r))
 
   let d = SyncReplaceable(s, [
+    {
+      re: /\[(.+?)\]\((.+?)\)/,
+      replacement(m, title, href) {
+        return `<a href="${encodeURI(href)}">${title}</a>`
+      },
+    },
     cutLinks,
     insertInnerCode,
     {

@@ -54,7 +54,8 @@ class Documentary extends Replaceable {
     const {
       locations = {}, types: allTypes = [],
       cwd = '.', cacheLocation = join(cwd, '.documentary/cache'), noCache,
-      disableDtoc, objectMode = true, wiki, output,
+      disableDtoc, objectMode = true /* deprec */,
+      wiki, output, source, // options to remember
     } = options
 
     // console.log('loaded components %s', components)
@@ -88,7 +89,7 @@ class Documentary extends Replaceable {
     const cm = getComponents(resolve(cwd, '.documentary'))
     // this is the service property to components
     const documentary = {
-      insertInnerCode, locations, allTypes, cutCode, wiki,
+      insertInnerCode, locations, allTypes, cutCode, wiki, source,
       currentFile: () => { return this.currentFile },
     }
     const dm = loadComponents(Components,  documentary)
@@ -198,7 +199,7 @@ class Documentary extends Replaceable {
      * The args passed to the program.
      */
     this._args = {
-      output, wiki,
+      output, wiki, source,
     }
   }
   /**

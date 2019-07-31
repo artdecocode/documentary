@@ -1,8 +1,9 @@
 const { debuglog } = require('util');
 const { Replaceable } = require('restream');
 const { collect } = require('catchment');
+const { relative, sep, join } = require('path');
 const { typedefMdRe } = require('./rules/typedef-md');
-const { read } = require('.');
+const { read } = require('./');
 const { parseFile } = require('typal');
 const { codeRe, commentRule } = require('./rules');
 const { methodTitleRe } = require('./rules/method-title');
@@ -52,7 +53,7 @@ const nodeAPI = {
  * A Typedefs class will detect and store in a map all type definitions embedded into the documentation.
  */
 class Typedefs extends Replaceable {
-  constructor(rootNamespace) {
+  constructor(rootNamespace, { wiki, source } = {}) {
     super([
       {
         re: methodTitleRe,
@@ -98,6 +99,11 @@ class Typedefs extends Replaceable {
     this.types = []
     this.locations = {}
     this.on('types', ({ location, types, typeName, file }) => {
+      if (wiki) {
+        const rf = relative(source, file)
+        const [page] = rf.split(sep, 1)
+        file = join(source, page)
+      }
       // here don't just push on type name, always push all types
       // const t = typeName ? types.filter(tt => tt.name == typeName) : types
 
@@ -168,9 +174,15 @@ class Typedefs extends Replaceable {
 
 /**
  * Returns a complete instance of typedefs, which has types and locations properties.
+ * @param {Stream} stream
+ * @param {string} [namespace]
+ * @param {Array<string>} [typesLocations]
+ * @param {Object} [options]
+ * @param {boolean} [options.wiki] To know if to update refs from PageA/index.md to PageA.
+ * @param {boolean} [options.source] The documentation source.
  */
-const getTypedefs = async (stream, namespace, typesLocations = []) => {
-  const typedefs = new Typedefs(namespace)
+const getTypedefs = async (stream, namespace, typesLocations = [], options = {}) => {
+  const typedefs = new Typedefs(namespace, options)
   typesLocations.forEach((location) => {
     typedefs.write(`%TYPEDEF ${location}%\n`)
   })
