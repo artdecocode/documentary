@@ -16,7 +16,7 @@ yarn add -D documentary
 </a></p>
 
 <table>
-<tr><td>
+<tr><td rowspan="2">
 
 ## Table Of Contents
 
@@ -36,7 +36,8 @@ yarn add -D documentary
 - [Copyright](#copyright)
 
 </td>
-<td>
+</tr><tr>
+<td rowspan="2">
 
 ## Wiki
 

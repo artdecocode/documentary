@@ -14,14 +14,15 @@ yarn add -D documentary
 %~%
 
 <table>
-<tr><td>
+<tr><td rowspan="2">
 
 ## Table Of Contents
 
 %TOC%
 
 </td>
-<td>
+</tr><tr>
+<td rowspan="2">
 
 ## Wiki
 
