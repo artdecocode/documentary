@@ -40,6 +40,7 @@ This section has a quick look at the best features available in _Documentary_ an
 - [Key Features](#key-features)
 - [Table Of Contents](#table-of-contents)
 - [Installation & Usage](#installation--usage)
+- [Wiki](#wiki)
 - [**Method Titles**](#method-titles)
   * [`async runSoftware(path: string, config: Config): string`](#async-runsoftwarepath-stringconfig-view-containeractions-objectstatic-boolean--truerender-function-string)
   * [`async runSoftware(path: string)`](#async-runsoftwarepath-string-void)
@@ -66,7 +67,6 @@ This section has a quick look at the best features available in _Documentary_ an
   * [Dedicated Example Row](#dedicated-example-row)
 - [CLI](#cli)
   * [`NODE_DEBUG=doc`](#node_debugdoc)
-- [Wiki](#wiki)
 - [♫ PRO<br/>♪ Underlined<br/>♯ `Titles`](#-pro-underlined-titles)
 - [Glossary](#glossary)
   * [Online Documentation](#online-documentation)
@@ -103,11 +103,16 @@ When actively working on documentation, it is possible to use the `watch` mode w
   <img src="/.documentary/section-breaks/3.svg?sanitize=true">
 </a></p>
 
-- <kbd>🖱[API](../../wiki/Tables-Of-Content)</kbd>
-- <kbd>⚜️[Section Breaks](../../wiki/Section-Breaks)</kbd>
-- <kbd>📐[JSON Tables](../../wiki/JSON-Tables)</kbd>
-- <kbd>📜[Embed Examples](../../wiki/Embed-Examples)</kbd>
-- <kbd>🍴[Forks (Embed Output)](../../wiki/Forks)</kbd>
+## Wiki
+
+Each feature of _Documentary_ is described on its relevant Wiki page.
+
+- <kbd>📖[Tables Of Content](../../wiki/Tables-Of-Content)</kbd>: Creating a navigation menu for the README page.
+- <kbd>⚜️[Section Breaks](../../wiki/Section-Breaks)</kbd>: Placing visual separators of sections.
+- <kbd>📐[JSON Tables](../../wiki/JSON-Tables)</kbd>: Writing _JSON_ array data to be converted into a Markdown table.
+- <kbd>📜[Embed Examples](../../wiki/Embed-Examples)</kbd>: Decoupling examples from documentation by maintaining separate runnable example file.
+- <kbd>🍴[Forks (Embed Output)](../../wiki/Forks)</kbd>: Executing examples to show their output, and validating that program works correctly.
+- <kbd>🖱[API](../../wiki/API)</kbd>: Using _Documentary_'s features from other packages.
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/4.svg?sanitize=true">
@@ -1045,10 +1050,6 @@ DOC 80734: could not parse the table
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/20.svg?sanitize=true">
 </a></p>
-
-## Wiki
-
-- <kbd>🖱[API](../../wiki/API)</kbd>
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/21.svg?sanitize=true">

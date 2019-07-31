@@ -1,6 +1,6 @@
-## Wiki
+<!-- ## Wiki
 
-- <kbd>🖱[API](../../wiki/API)</kbd>
+- <kbd>🖱[API](../../wiki/API)</kbd> -->
 
 %~%
 
