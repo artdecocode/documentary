@@ -35,8 +35,8 @@ yarn add -D documentary
   * [Editor Documentation](#editor-documentation)
 - [Copyright](#copyright)
 
-</td></tr>
-<tr><td>
+</td>
+<td>
 
 ## Wiki
 

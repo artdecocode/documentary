@@ -20,8 +20,8 @@ yarn add -D documentary
 
 %TOC%
 
-</td></tr>
-<tr><td>
+</td>
+<td>
 
 ## Wiki
 
