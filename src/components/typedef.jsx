@@ -10,9 +10,9 @@ import { relative, dirname } from 'path'
 export default function typedef({ documentary, children, name, narrow, flatten }) {
   const {
     setPretty, renderAgain, locations, allTypes, cutCode, currentFile,
-    wiki,
+    wiki, source,
   } = documentary
-  const file = currentFile()
+  const file = wiki ? source : currentFile()
 
   setPretty(false)
   renderAgain() // because using md2html

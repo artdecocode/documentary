@@ -15,5 +15,14 @@
     <prop boolean name="h1" default="false">
       Include `H1` headers in the table of contents.
     </prop>
+    <prop boolean name="noCache" default="false">
+      Disable caching.
+    </prop>
+    <prop boolean name="rootNamespace" default="false">
+      Forces dropping of this namespace for types.
+    </prop>
+    <prop string name="wiki" opt>
+      Generates multiple wiki pages in this directory.
+    </prop>
   </type>
 </types>

@@ -1,8 +1,9 @@
 import { debuglog } from 'util'
 import { Replaceable } from 'restream'
 import { collect } from 'catchment'
+import { relative, sep, join } from 'path'
 import { typedefMdRe } from './rules/typedef-md'
-import { read } from '.'
+import { read } from './'
 import { parseFile } from 'typal'
 import { codeRe, commentRule } from './rules'
 import { methodTitleRe } from './rules/method-title'
@@ -52,7 +53,7 @@ const nodeAPI = {
  * A Typedefs class will detect and store in a map all type definitions embedded into the documentation.
  */
 export default class Typedefs extends Replaceable {
-  constructor(rootNamespace) {
+  constructor(rootNamespace, { wiki, source } = {}) {
     super([
       {
         re: methodTitleRe,
@@ -98,6 +99,11 @@ export default class Typedefs extends Replaceable {
     this.types = []
     this.locations = {}
     this.on('types', ({ location, types, typeName, file }) => {
+      if (wiki) {
+        const rf = relative(source, file)
+        const [page] = rf.split(sep, 1)
+        file = join(source, page)
+      }
       // here don't just push on type name, always push all types
       // const t = typeName ? types.filter(tt => tt.name == typeName) : types
 
@@ -168,9 +174,15 @@ export default class Typedefs extends Replaceable {
 
 /**
  * Returns a complete instance of typedefs, which has types and locations properties.
+ * @param {Stream} stream
+ * @param {string} [namespace]
+ * @param {Array<string>} [typesLocations]
+ * @param {Object} [options]
+ * @param {boolean} [options.wiki] To know if to update refs from PageA/index.md to PageA.
+ * @param {boolean} [options.source] The documentation source.
  */
-export const getTypedefs = async (stream, namespace, typesLocations = []) => {
-  const typedefs = new Typedefs(namespace)
+export const getTypedefs = async (stream, namespace, typesLocations = [], options = {}) => {
+  const typedefs = new Typedefs(namespace, options)
   typesLocations.forEach((location) => {
     typedefs.write(`%TYPEDEF ${location}%\n`)
   })

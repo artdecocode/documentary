@@ -7,15 +7,19 @@ import Documentary from '../lib/Documentary'
 import { getStream } from '../lib'
 import { getTypedefs } from '../lib/Typedefs'
 import { join } from 'path'
+import Stream from 'stream'
 
 /**
  * Run the documentary and save the results.
- * @param {Object} options Options for the run command.
+ * @param {RunOptions} options Options for the run command.
+ * @param {string} options.source The path to the source directory or file.
  * @param {string} [options.output="-"] The path where to save the output. When `-` is passed, prints to `stdout`. Default `-`.
  * @param {boolean} [options.reverse=false] Read files in directories in reverse order, such that `30.md` comes before `1.md`. Useful for blogs. Default `false`.
  * @param {boolean} [options.justToc=false] Only print the table of contents and exit. Default `false`.
  * @param {boolean} [options.h1=false] Include `H1` headers in the table of contents. Default `false`.
- * @param {string} [options.focus] Which pages to process for wiki.
+ * @param {boolean} [options.noCache=false] Disable caching. Default `false`.
+ * @param {boolean} [options.rootNamespace=false] Forces dropping of this namespace for types. Default `false`.
+ * @param {string} [options.wiki] Generates multiple wiki pages in this directory.
  */
 export default async function run(options) {
   const {
@@ -32,7 +36,9 @@ export default async function run(options) {
   // figure out why can't create a pass-through, pipe into it, pause it then reuse it
   // this is because of highwatermark in the pass-through
 
-  const { types, locations } = await getTypedefs(stream, rootNamespace, typesLocations)
+  const { types, locations } = await getTypedefs(stream, rootNamespace, typesLocations, {
+    wiki, source,
+  })
 
   let assets = []
   if (wiki) {
@@ -82,7 +88,7 @@ const runPage = async (opts) => {
 
   const stream = getStream(source, reverse, true)
   const doc = new Documentary({
-    locations, types, noCache, objectMode: true, wiki, output,
+    locations, types, noCache, objectMode: true, wiki, output, source,
   })
   stream.pipe(doc)
   const tocPromise = getToc(doc, h1, locations)
@@ -93,15 +99,20 @@ const runPage = async (opts) => {
     writable: c,
   })
   const toc = await tocPromise
+  if (justToc) { // can also write toc to the output
+    console.log(toc)
+    return
+  }
   const result = (await c.promise)
     .replace('%%_DOCUMENTARY_TOC_CHANGE_LATER_%%', toc)
     .replace(/%%DTOC_(.+?)_(\d+)%%/g, '')
 
-  if (justToc) {
-    console.log(toc)
-    process.exit()
-  }
-  if (output != '-') {
+  if (output instanceof Stream) {
+    await new Promise((r, j) => {
+      output.on('error', j)
+      output.end(result, r)
+    })
+  } else if (output != '-') {
     await write(output, result)
   } else {
     console.log(result)
@@ -117,4 +128,7 @@ const runPage = async (opts) => {
  * @prop {boolean} [reverse=false] Read files in directories in reverse order, such that `30.md` comes before `1.md`. Useful for blogs. Default `false`.
  * @prop {boolean} [justToc=false] Only print the table of contents and exit. Default `false`.
  * @prop {boolean} [h1=false] Include `H1` headers in the table of contents. Default `false`.
+ * @prop {boolean} [noCache=false] Disable caching. Default `false`.
+ * @prop {boolean} [rootNamespace=false] Forces dropping of this namespace for types. Default `false`.
+ * @prop {string} [wiki] Generates multiple wiki pages in this directory.
  */

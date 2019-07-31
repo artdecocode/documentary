@@ -1,0 +1,6 @@
+<types ns="_ns">
+  <type name="TypeB" desc="A type for page B.">
+  </type>
+  <type name="TypeBSans">
+  </type>
+</types>

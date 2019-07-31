@@ -1,0 +1,10 @@
+<types ns="_ns">
+  <type name="TypeA" desc="A new type.">
+    <prop type="_ns.TypeB" name="prop1">
+      A property.
+    </prop>
+    <prop type="_ns.TypeBSans" name="prop2">
+      Linking to the type without description.
+    </prop>
+  </type>
+</types>
