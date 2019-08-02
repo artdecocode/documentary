@@ -21,7 +21,7 @@
     "old-typal": "doc doc/10-typedef -o doc/typal.md",
     "b": "ALAMODE_ENV=build yarn-s src jsx b2",
     "stdlib": "depack-dev src/stdlib -o stdlib.js -a -c -p -s -O 2018 --source_map_include_content",
-    "src": "alamode src -o build -i bin/index.js -s",
+    "src": "alamode src -o build -i bin/index.js,stdlib.js -s",
     "jsx": "alamode build/components -o build/components -s -j -p",
     "b2": "alamode build/components -o build/components -s",
     "build": "yarn-s b doc",
@@ -97,6 +97,10 @@
     "rexml": "^2.1.0",
     "temp-context": "^2.1.3",
     "yarn-s": "1.1.0",
+    "resolve-dependency": "^1.0.3",
+    "restream": "^3.7.2",
+    "spawncommand": "^2.2.0",
+    "usually": "^1.2.0",
     "zoroaster": "^4.1.1-alpha"
   },
   "dependencies": {
@@ -107,12 +111,7 @@
     "alamode": "^2.3.6",
     "pedantry": "^2.4.0",
     "preact": "8.5.0",
-    "resolve-dependency": "^1.0.3",
-    "restream": "^3.7.2",
-    "spawncommand": "^2.2.0",
-    "static-analysis": "^1.7.1",
     "typal": "^1.19.1",
-    "usually": "^1.2.0",
     "which-stream": "^1.1.0"
   }
 }

@@ -12,7 +12,11 @@
       "import": {
         "stdlib": {
           "path": "stdlib.js",
-          "packages": ["@wrote/write", "argufy", "catchment", "clearr", "erte", "forkfeed", "makepromise", "mismatch", "rexml", "@wrote/read"]
+          "packages": [
+            "@wrote/write", "argufy", "catchment", "clearr", "erte", 
+            "forkfeed", "makepromise", "mismatch", "rexml", "@wrote/read", 
+            "usually", "resolve-dependency", "spawncommand", "restream"
+          ]
         },
         "alamodeModules": ["alamode", "usually", "spawncommand", "rexml", "@wrote/read", "clearr", "@depack/cache"]
       }

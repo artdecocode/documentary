@@ -1,7 +1,7 @@
-const { fork } = require('spawncommand');
+const { fork } = require('../../../stdlib');
 const { c } = require('../../../stdlib');
 const { resolve } = require('path');
-let resolveDependency = require('resolve-dependency'); if (resolveDependency && resolveDependency.__esModule) resolveDependency = resolveDependency.default;
+const { resolveDependency } = require('../../../stdlib');
 const { clearr } = require('../../../stdlib');
 const compare = require('@depack/cache');
 const { forkfeed } = require('../../../stdlib');

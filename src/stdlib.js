@@ -9,11 +9,26 @@ import erte, { c, b } from 'erte'
 import forkfeed from 'forkfeed'
 import makepromise from 'makepromise'
 import mismatch from 'mismatch'
+import usually from 'usually'
+import resolveDependency from 'resolve-dependency'
+import spawn, { fork } from 'spawncommand'
+import {
+  SyncReplaceable, Replaceable, makeMarkers, makeCutRule, makePasteRule,
+} from 'restream'
 
 module.exports = {
   'c': c,
   'b': b,
   'read': read,
+  'usually': usually,
+  'spawn': spawn,
+  'fork': fork,
+  'SyncReplaceable': SyncReplaceable, 
+  'Replaceable': Replaceable, 
+  'makeMarkers': makeMarkers, 
+  'makeCutRule': makeCutRule, 
+  'makePasteRule': makePasteRule,
+  'resolveDependency': resolveDependency,
   'rexml': rexml,
   'reduceUsage': reduceUsage,
   'write': write,

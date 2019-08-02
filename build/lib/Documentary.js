@@ -1,4 +1,4 @@
-const { Replaceable, makeMarkers, makeCutRule, makePasteRule } = require('restream');
+const { Replaceable, makeMarkers, makeCutRule, makePasteRule } = require('../../stdlib');
 const { debuglog, isBuffer } = require('util');
 const { join, resolve, basename } = require('path');
 const { homedir } = require('os');

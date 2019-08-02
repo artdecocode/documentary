@@ -1,5 +1,5 @@
 const { parse } = require('path');
-let resolveDependency = require('resolve-dependency'); if (resolveDependency && resolveDependency.__esModule) resolveDependency = resolveDependency.default;
+const { resolveDependency } = require('../../../stdlib');
 const { read, codeSurround } = require('../');
 
 const getExt = (type, source) => {

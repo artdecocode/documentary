@@ -1,5 +1,5 @@
 const { debuglog } = require('util');
-const { Replaceable } = require('restream');
+const { Replaceable } = require('../../stdlib');
 const { collect } = require('../../stdlib');
 const { relative, sep, join } = require('path');
 const { typedefMdRe } = require('./rules/typedef-md');

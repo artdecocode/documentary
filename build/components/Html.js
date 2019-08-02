@@ -1,5 +1,5 @@
 const { h } = require('preact');
-const { SyncReplaceable, makeCutRule, makePasteRule, makeMarkers } = require('restream');
+const { SyncReplaceable, makeCutRule, makePasteRule, makeMarkers } = require('../../stdlib');
 
 const strongReplacer = '<strong>$1</strong>'
 const emReplacer = '<em>$1</em>'

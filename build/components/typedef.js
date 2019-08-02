@@ -1,5 +1,5 @@
 const { h } = require('preact');
-const { SyncReplaceable } = require('restream');
+const { SyncReplaceable } = require('../../stdlib');
 const md2html = require('./Html');
 const { codeRe } = require('../lib/rules');
 const { relative, dirname } = require('path');

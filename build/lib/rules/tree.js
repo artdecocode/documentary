@@ -1,4 +1,4 @@
-const spawn = require('spawncommand');
+const { spawn } = require('../../../stdlib');
 const { debuglog } = require('util');
 
 const LOG = debuglog('doc')

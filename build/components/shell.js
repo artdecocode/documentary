@@ -1,5 +1,5 @@
 const { h } = require('preact');
-const spawn = require('spawncommand');
+const { spawn } = require('../../stdlib');
 const { exec } = require('child_process');
 const { codeSurround } = require('../lib');
 

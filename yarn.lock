@@ -253,7 +253,7 @@ spawncommand@^2.2.0:
   dependencies:
     catchment "^3.3.0"
 
-static-analysis@^1.3.3, static-analysis@^1.7.1:
+static-analysis@^1.3.3:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/static-analysis/-/static-analysis-1.7.1.tgz#d5c58e0fd318a8db981616cdb7726003c93db999"
   integrity sha512-QTZGNqXoeEOFFTZmyeR10ai9sT8Hi/Xi7zDwr6LrFcZ9l4GEBT7qeWLyesaLf+2rAnpMDWkgLJ/ovRquJX01HA==
