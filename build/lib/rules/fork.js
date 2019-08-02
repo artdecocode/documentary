@@ -4,11 +4,14 @@ const { resolve } = require('path');
 let resolveDependency = require('resolve-dependency'); if (resolveDependency && resolveDependency.__esModule) resolveDependency = resolveDependency.default;
 const clearR = require('clearr');
 const compare = require('@depack/cache');
-const { codeSurround } = require('..');
+let forkFeed = require('forkfeed'); if (forkFeed && forkFeed.__esModule) forkFeed = forkFeed.default;
+const { codeSurround } = require('../');
+const { PassThrough } = require('stream');
+let Catchment = require('catchment'); if (Catchment && Catchment.__esModule) Catchment = Catchment.default;
 
 const queue = {}
 
-const replacement = async function (noCache, old, err, lang, m, awaited = false) {
+const replacement = async function (noCache, old, err, lang, m, awaited = false, answers = null) {
   if (awaited) noCache = false
   const [mod, ...args] = m.split(' ')
 
@@ -60,7 +63,7 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false)
 
   !printed && this.log(s)
 
-  const { stdout, stderr } = await doFork(old, mod, args)
+  const { stdout, stderr } = await doFork(old, mod, args, answers)
 
   const cacheToWrite = { [`[${md5}] ${m}`]: {
     'stdout': stdout, 'stderr': stderr,
@@ -74,9 +77,12 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false)
   return getOutput(err, stderr, stdout, lang)
 }
 
-const doFork = async (old, mod, args) => {
+/**
+ * Answers are allowed in <fork> component.
+ */
+const doFork = async (old, mod, args, answers = {}) => {
   const documentaryFork = resolve(__dirname, '../../fork')
-  const { promise } = fork(old ? mod : documentaryFork, args, {
+  const cp = fork(old ? mod : documentaryFork, args, {
     execArgv: [],
     stdio: 'pipe',
     ...(old ? {} : {
@@ -86,13 +92,31 @@ const doFork = async (old, mod, args) => {
       },
     }),
   })
-  const { stdout, stderr } = await promise
+  let stdout, stderr, stdoutLog, stderrLog
+  if (answers.stdout) {
+    stdoutLog = new Catchment()
+    forkFeed(cp.stdout, cp.stdin, answers.stdout, stdoutLog)
+    // stdoutLog.pipe(process.stdout)
+  }
+  if (answers.stderr) {
+    stderrLog = new Catchment()
+    forkFeed(cp.stderr, cp.stdin, answers.stderr, stderrLog)
+    // stderrLog.pipe(process.stderr)
+  }
+  const res = await cp.promise
+  if (stdoutLog) stdoutLog.end()
+  if (stderrLog) stderrLog.end()
+  if (stdoutLog) stdout = await stdoutLog.promise
+  else ({ stdout } = res)
+  if (stderrLog) stderr = await stderrLog.promise
+  else ({ stderr } = res)
+
   return { stdout, stderr }
 }
 
 const forkRule = {
   re: /( *)%([/!_]+)?FORK(ERR)?(?:-(\w+))? (.+)%/mg,
-  async replacement(match, ws, service, err, lang, m) {
+  async replacement(match, ws, service, err, lang, m, answers) {
     const noCache = /!/.test(service) || this.noCache
     const old = /_/.test(service)
     const relative = /\//.test(service)
@@ -104,7 +128,7 @@ const forkRule = {
         await q.promise
         awaited = true
       }
-      const promise = replacement.call(this, noCache, old, err, lang, m, awaited)
+      const promise = replacement.call(this, noCache, old, err, lang, m, awaited, answers)
       queue[m] = { promise, err }
       let res = await promise
       if (ws) res = res.replace(/^/gm, ws)

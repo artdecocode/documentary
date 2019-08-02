@@ -177,6 +177,7 @@ class Documentary extends Replaceable {
       insertMethodTitle,
     ], { objectMode })
 
+    documentary.documentary = this
     this._types = {}
 
     this._innerCode = innerCode

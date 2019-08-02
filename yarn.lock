@@ -155,6 +155,11 @@ eslint-config-artdeco@1.0.1:
   resolved "https://registry.yarnpkg.com/eslint-config-artdeco/-/eslint-config-artdeco-1.0.1.tgz#4451c9d0ed1ce4d33dfd43a6315f12c8bfb04274"
   integrity sha1-RFHJ0O0c5NM9/UOmMV8SyL+wQnQ=
 
+forkfeed@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/forkfeed/-/forkfeed-1.1.1.tgz#4f7ead1264d8adf5fa9450a4db70940ad782a532"
+  integrity sha512-IfMY73d7Ezyyfo6IfE1+gcWUf9d+z+QJ6LmMIRrtl6N5PGI7DLP1oPLaF5RnsoCTCa7VwIk/0KSlahU/m3w8pA==
+
 fpj@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/fpj/-/fpj-1.3.0.tgz#c01dd7d72e69fa5f82d339f5e6fbc3b3256d286a"
@@ -192,6 +197,18 @@ preact@8.4.2:
   version "8.4.2"
   resolved "https://registry.yarnpkg.com/preact/-/preact-8.4.2.tgz#1263b974a17d1ea80b66590e41ef786ced5d6a23"
   integrity sha512-TsINETWiisfB6RTk0wh3/mvxbGRvx+ljeBccZ4Z6MPFKgu/KFGyf2Bmw3Z/jlXhL5JlNKY6QAbA9PVyzIy9//A==
+
+promto@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/promto/-/promto-1.1.2.tgz#cf45f80c3140004069060bb709c8130175eed387"
+  integrity sha512-wOQSkmPvLo+KZOTmTQQISN95ylbzkU754FtWuNcf86tUN5vDuU6i3zXCF+YVIsPzrMN9ClCWpEksDqrvBm34/A==
+
+reloquent@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/reloquent/-/reloquent-1.3.2.tgz#66996e8c65acf5e427490fa5f68eaf7948943a62"
+  integrity sha512-l0upTSJW73CriMZXAMvg1ZCGNSj7WXh0+EgBIsNmv50dEzBt7AfzbIafgCC7d37YHXbYhFuSEByvM0Hr5I8yxQ==
+  dependencies:
+    promto "^1.1.2"
 
 resolve-dependency@^1.0.2, resolve-dependency@^1.0.3:
   version "1.0.3"

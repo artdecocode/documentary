@@ -116,3 +116,40 @@ With the <kbd>/</kbd> prefix in the FORK command, all absolute paths that contai
 This can help with documenting errors or other code that prints absolute paths in a nimble way.
 
 %/_FORKERR-js example/fork/absolute%
+
+%~%
+
+## `<fork>`
+
+The `<fork>` component is the same as the `%FORK%` marker, but it offers extended functionality. The optional properties described above on this page are specified in the arguments, and the location of the fork module is passed as a child.
+
+```jsx
+<fork nocache plain relative stderr lang="js">
+  module/location/run.js
+</fork>
+```
+
+%~%
+
+## CLI Answers
+
+If the fork interacts with the _CLI_ via the `stdin` interface, it is possible to write answers which will be entered when the fork's output (either `stdout` or `stderr`) is matched against the regular expression given in the answer.
+
+_For example, the following README can be written:_
+%EXAMPLE: example/fork/answers.md, html%
+
+_And this is the source code of the fork:_
+%EXAMPLE: test/fixture/fork-comp%
+
+The output:
+
+<fork lang="js">
+  <answer regex="Are you sure">yes</answer>
+  <answer regex="Please confirm">no</answer>
+  <answer stderr regex="STDERR">documentary 123</answer>
+  test/fixture/fork-comp.js
+</fork>
+
+Above, both answers to stdout are printed, and the answer to stderr, however because it is the fork of STDOUT only, stderr questions and user-supplied answer to it is not shown.
+
+> At the moment, the answers are not cached, so if they change, documentation must be compiled again with `-c` (or `plain` argument).
