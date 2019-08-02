@@ -18,11 +18,13 @@ import {
   SyncReplaceable, Replaceable, makeMarkers, makeCutRule, makePasteRule,
   replace,
 } from 'restream'
+import Pedantry from 'pedantry'
 
 module.exports = {
   'c': c,
   'b': b,
   'clone': clone,
+  'Pedantry': Pedantry,
   'ensurePath': ensurePath,
   'read': read,
   'replace': replace,
