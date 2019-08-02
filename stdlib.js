@@ -253,7 +253,7 @@ function W(b, a) {
 }, rexml:(b, a) => H(new RegExp(`<${b}${J.source}?(?:${/\s*\/>/.source}|${(new RegExp(`>([\\s\\S]+?)?</${b}>`)).source})`, "g"), a, ["a", "v", "v1", "v2", "c"]).map(({a:c = "", c:e = ""}) => {
   c = c.replace(/\/$/, "").trim();
   c = K(c);
-  return {content:e, u:c};
+  return {content:e, props:c};
 }), reduceUsage:b => Object.keys(b).reduce((a, c) => {
   const e = b[c];
   if ("string" == typeof e) {
