@@ -1,4 +1,4 @@
-let argufy = require('argufy'); if (argufy && argufy.__esModule) argufy = argufy.default;
+const { argufy } = require('../../stdlib');
 
 const argsConfig = {
   'source': {

@@ -3,10 +3,10 @@ const { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse
 const { watch } = require('fs');
 const { debuglog } = require('util');
 const { lstatSync } = require('fs');
-let alamode = require('alamode'); if (alamode && alamode.__esModule) alamode = alamode.default;
+const alamode = require('alamode');
 const { dirname } = require('path');
-let usually = require('usually'); if (usually && usually.__esModule) usually = usually.default;
-const { reduceUsage } = require('argufy');
+const usually = require('usually');
+const { reduceUsage } = require('../../stdlib');
 const doc = require('./run/doc');
 const catcher = require('./catcher');
 const { gitPush } = require('../lib');

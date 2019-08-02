@@ -2,12 +2,12 @@ import whichStream from 'which-stream'
 import Catchment from 'catchment'
 import write from '@wrote/write'
 import readDirStructure from '@wrote/read-dir-structure'
+import { join } from 'path'
+import Stream from 'stream'
 import { getToc } from '../lib/Toc'
 import Documentary from '../lib/Documentary'
 import { getStream } from '../lib'
 import { getTypedefs } from '../lib/Typedefs'
-import { join } from 'path'
-import Stream from 'stream'
 
 /**
  * Run the documentary and save the results.

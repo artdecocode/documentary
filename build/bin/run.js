@@ -1,13 +1,13 @@
 let whichStream = require('which-stream'); if (whichStream && whichStream.__esModule) whichStream = whichStream.default;
-let Catchment = require('catchment'); if (Catchment && Catchment.__esModule) Catchment = Catchment.default;
-let write = require('@wrote/write'); if (write && write.__esModule) write = write.default;
+const { Catchment } = require('../../stdlib');
+const { write } = require('../../stdlib');
 let readDirStructure = require('@wrote/read-dir-structure'); if (readDirStructure && readDirStructure.__esModule) readDirStructure = readDirStructure.default;
+const { join } = require('path');
+const Stream = require('stream');
 const { getToc } = require('../lib/Toc');
 const Documentary = require('../lib/Documentary');
 const { getStream } = require('../lib');
 const { getTypedefs } = require('../lib/Typedefs');
-const { join } = require('path');
-const Stream = require('stream');
 
 /**
  * Run the documentary and save the results.

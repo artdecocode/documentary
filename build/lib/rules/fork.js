@@ -1,13 +1,12 @@
 const { fork } = require('spawncommand');
-const { c } = require('erte');
+const { c } = require('../../../stdlib');
 const { resolve } = require('path');
 let resolveDependency = require('resolve-dependency'); if (resolveDependency && resolveDependency.__esModule) resolveDependency = resolveDependency.default;
-const clearR = require('clearr');
+const { clearr } = require('../../../stdlib');
 const compare = require('@depack/cache');
-let forkFeed = require('forkfeed'); if (forkFeed && forkFeed.__esModule) forkFeed = forkFeed.default;
+const { forkfeed } = require('../../../stdlib');
 const { codeSurround } = require('../');
-const { PassThrough } = require('stream');
-let Catchment = require('catchment'); if (Catchment && Catchment.__esModule) Catchment = Catchment.default;
+const { Catchment } = require('../../../stdlib');
 
 const queue = {}
 
@@ -95,12 +94,12 @@ const doFork = async (old, mod, args, answers = {}) => {
   let stdout, stderr, stdoutLog, stderrLog
   if (answers.stdout) {
     stdoutLog = new Catchment()
-    forkFeed(cp.stdout, cp.stdin, answers.stdout, stdoutLog)
+    forkfeed(cp.stdout, cp.stdin, answers.stdout, stdoutLog)
     // stdoutLog.pipe(process.stdout)
   }
   if (answers.stderr) {
     stderrLog = new Catchment()
-    forkFeed(cp.stderr, cp.stdin, answers.stderr, stderrLog)
+    forkfeed(cp.stderr, cp.stdin, answers.stderr, stderrLog)
     // stderrLog.pipe(process.stderr)
   }
   const res = await cp.promise
@@ -145,7 +144,7 @@ const forkRule = {
 const getOutput = (err, stderr, stdout, lang) => {
   const res = err ? stderr : stdout
   const r = res.trim().replace(/\033\[.*?m/g, '')
-  return codeSurround(clearR(r), lang)
+  return codeSurround(clearr(r), lang)
 }
 
 module.exports=forkRule

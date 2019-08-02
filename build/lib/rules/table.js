@@ -1,5 +1,5 @@
 const { debuglog } = require('util');
-const { c: color } = require('erte');
+const { c: color } = require('../../../stdlib');
 
 const LOG = debuglog('doc')
 

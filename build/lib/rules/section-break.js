@@ -1,8 +1,8 @@
 const { join } = require('path');
-let mismatch = require('mismatch'); if (mismatch && mismatch.__esModule) mismatch = mismatch.default;
+const { mismatch } = require('../../../stdlib');
 let clone = require('@wrote/clone'); if (clone && clone.__esModule) clone = clone.default;
 const { debuglog } = require('util');
-const { c, b } = require('erte');
+const { c, b } = require('../../../stdlib');
 
 const LOG = debuglog('doc')
 

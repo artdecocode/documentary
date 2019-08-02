@@ -69,3 +69,4 @@ test/temp
 build/components/*.jsx
 build/lib/rules/*.jsx
 TODO.md
+t

@@ -2,8 +2,8 @@ const { Replaceable, makeMarkers, makeCutRule, makePasteRule } = require('restre
 const { debuglog, isBuffer } = require('util');
 const { join, resolve, basename } = require('path');
 const { homedir } = require('os');
-let write = require('@wrote/write'); if (write && write.__esModule) write = write.default;
-const { b } = require('erte');
+const { write } = require('../../stdlib');
+const { b } = require('../../stdlib');
 let ensurePath = require('@wrote/ensure-path'); if (ensurePath && ensurePath.__esModule) ensurePath = ensurePath.default;
 const { commentRule: stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe } = require('./rules');
 const tableRule = require('./rules/table'); const { tableRe } = tableRule;

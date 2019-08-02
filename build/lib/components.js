@@ -1,4 +1,4 @@
-const { c, b } = require('erte');
+const { c, b } = require('../../stdlib');
 let competent = require('competent'); if (competent && competent.__esModule) competent = competent.default;
 
 function loadComponents(components, options = {}) {

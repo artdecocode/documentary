@@ -1,5 +1,5 @@
 const { Transform } = require('stream');
-const { collect } = require('catchment');
+const { collect } = require('../../stdlib');
 const { getLink } = require('.');
 const { codeRe, innerCodeRe } = require('./rules');
 const { Replaceable, makeCutRule, makeMarkers } = require('restream');

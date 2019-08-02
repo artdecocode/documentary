@@ -1,6 +1,6 @@
 const { createReadStream, lstatSync } = require('fs');
 const spawn = require('spawncommand');
-const { collect } = require('catchment');
+const { collect } = require('../../stdlib');
 let Pedantry = require('pedantry'); if (Pedantry && Pedantry.__esModule) Pedantry = Pedantry.default;
 const tableRule = require('./rules/table');
 const titleRule = require('./rules/method-title');

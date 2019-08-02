@@ -7,9 +7,15 @@
           "to": "$1build"
         }
       }
+    },
+    "build": {
+      "import": {
+        "stdlib": {
+          "path": "stdlib.js",
+          "packages": ["@wrote/write", "argufy", "catchment", "clearr", "erte", "forkfeed", "makepromise", "mismatch"]
+        },
+        "alamodeModules": ["alamode", "usually", "spawncommand", "rexml", "@wrote/read", "clearr", "@depack/cache"]
+      }
     }
-  },
-  "import": {
-    "alamodeModules": ["spawncommand", "rexml", "@wrote/read", "clearr", "@depack/cache"]
   }
 }

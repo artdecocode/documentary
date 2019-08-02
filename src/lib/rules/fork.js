@@ -2,11 +2,10 @@ import { fork } from 'spawncommand'
 import { c } from 'erte'
 import { resolve } from 'path'
 import resolveDependency from 'resolve-dependency'
-import clearR from 'clearr'
+import clearr from 'clearr'
 import compare from '@depack/cache'
-import forkFeed from 'forkfeed'
+import forkfeed from 'forkfeed'
 import { codeSurround } from '../'
-import { PassThrough } from 'stream'
 import Catchment from 'catchment'
 
 const queue = {}
@@ -95,12 +94,12 @@ const doFork = async (old, mod, args, answers = {}) => {
   let stdout, stderr, stdoutLog, stderrLog
   if (answers.stdout) {
     stdoutLog = new Catchment()
-    forkFeed(cp.stdout, cp.stdin, answers.stdout, stdoutLog)
+    forkfeed(cp.stdout, cp.stdin, answers.stdout, stdoutLog)
     // stdoutLog.pipe(process.stdout)
   }
   if (answers.stderr) {
     stderrLog = new Catchment()
-    forkFeed(cp.stderr, cp.stdin, answers.stderr, stderrLog)
+    forkfeed(cp.stderr, cp.stdin, answers.stderr, stderrLog)
     // stderrLog.pipe(process.stderr)
   }
   const res = await cp.promise
@@ -145,7 +144,7 @@ const forkRule = {
 const getOutput = (err, stderr, stdout, lang) => {
   const res = err ? stderr : stdout
   const r = res.trim().replace(/\033\[.*?m/g, '')
-  return codeSurround(clearR(r), lang)
+  return codeSurround(clearr(r), lang)
 }
 
 export default forkRule
