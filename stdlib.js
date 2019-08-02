@@ -5,75 +5,75 @@ const os = require('os');
 const stream = require('stream');
 const path = require('path');
 const child_process = require('child_process');             
-const {createReadStream:r, createWriteStream:t, lstat:u} = fs;
-const w = (a, b = 0, c = !1) => {
+const {createReadStream:q, createWriteStream:r, lstat:u, mkdir:aa, readdir:ba, readlink:ca, symlink:da} = fs;
+const v = (a, b = 0, c = !1) => {
   if (0 === b && !c) {
     return a;
   }
   a = a.split("\n", c ? b + 1 : void 0);
   return c ? a[a.length - 1] : a.slice(b).join("\n");
-}, x = (a, b = !1) => w(a, 2 + (b ? 1 : 0)), y = a => {
+}, ea = (a, b = !1) => v(a, 2 + (b ? 1 : 0)), w = a => {
   ({callee:{caller:a}} = a);
   return a;
 };
-const {homedir:z} = os;
-const A = /\s+at.*(?:\(|\s)(.*)\)?/, B = /^(?:(?:(?:node|(?:internal\/[\w/]*|.*node_modules\/(?:IGNORED_MODULES)\/.*)?\w+)\.js:\d+:\d+)|native)/, C = z(), D = a => {
-  const {pretty:b = !1, ignoredModules:c = ["pirates"]} = {}, d = c.join("|"), e = new RegExp(B.source.replace("IGNORED_MODULES", d));
+const {homedir:fa} = os;
+const x = /\s+at.*(?:\(|\s)(.*)\)?/, ha = /^(?:(?:(?:node|(?:internal\/[\w/]*|.*node_modules\/(?:IGNORED_MODULES)\/.*)?\w+)\.js:\d+:\d+)|native)/, ia = fa(), z = a => {
+  const {pretty:b = !1, ignoredModules:c = ["pirates"]} = {}, d = c.join("|"), e = new RegExp(ha.source.replace("IGNORED_MODULES", d));
   return a.replace(/\\/g, "/").split("\n").filter(f => {
-    f = f.match(A);
+    f = f.match(x);
     if (null === f || !f[1]) {
       return !0;
     }
     f = f[1];
     return f.includes(".app/Contents/Resources/electron.asar") || f.includes(".app/Contents/Resources/default_app.asar") ? !1 : !e.test(f);
-  }).filter(f => f.trim()).map(f => b ? f.replace(A, (k, h) => k.replace(h, h.replace(C, "~"))) : f).join("\n");
+  }).filter(f => f.trim()).map(f => b ? f.replace(x, (g, k) => g.replace(k, k.replace(ia, "~"))) : f).join("\n");
 };
-function aa(a, b, c = !1) {
+function ja(a, b, c = !1) {
   return function(d) {
-    var e = y(arguments), {stack:f} = Error();
-    const k = w(f, 2, !0), h = (f = d instanceof Error) ? d.message : d;
-    e = [`Error: ${h}`, ...null !== e && a === e || c ? [b] : [k, b]].join("\n");
-    e = D(e);
-    return Object.assign(f ? d : Error(), {message:h, stack:e});
+    var e = w(arguments), {stack:f} = Error();
+    const g = v(f, 2, !0), k = (f = d instanceof Error) ? d.message : d;
+    e = [`Error: ${k}`, ...null !== e && a === e || c ? [b] : [g, b]].join("\n");
+    e = z(e);
+    return Object.assign(f ? d : Error(), {message:k, stack:e});
   };
 }
-;function E(a) {
+;function A(a) {
   var {stack:b} = Error();
-  const c = y(arguments);
-  b = x(b, a);
-  return aa(c, b, a);
+  const c = w(arguments);
+  b = ea(b, a);
+  return ja(c, b, a);
 }
-;var ba = stream;
-const {Transform:ca, Writable:da} = stream;
-const ea = (a, b) => {
+;var ka = stream;
+const {Transform:la, Writable:ma} = stream;
+const na = (a, b) => {
   b.once("error", c => {
     a.emit("error", c);
   });
   return b;
 };
-class F extends da {
+class B extends ma {
   constructor(a) {
-    const {binary:b = !1, rs:c = null, ...d} = a || {}, {s:e = E(!0), proxyError:f} = a || {}, k = (h, l) => e(l);
+    const {binary:b = !1, rs:c = null, ...d} = a || {}, {s:e = A(!0), proxyError:f} = a || {}, g = (k, l) => e(l);
     super(d);
     this.g = [];
-    this.o = new Promise((h, l) => {
+    this.o = new Promise((k, l) => {
       this.on("finish", () => {
-        let g;
-        b ? g = Buffer.concat(this.g) : g = this.g.join("");
-        h(g);
+        let h;
+        b ? h = Buffer.concat(this.g) : h = this.g.join("");
+        k(h);
         this.g = [];
       });
-      this.once("error", g => {
-        if (-1 == g.stack.indexOf("\n")) {
-          k`${g}`;
+      this.once("error", h => {
+        if (-1 == h.stack.indexOf("\n")) {
+          g`${h}`;
         } else {
-          const m = D(g.stack);
-          g.stack = m;
-          f && k`${g}`;
+          const m = z(h.stack);
+          h.stack = m;
+          f && g`${h}`;
         }
-        l(g);
+        l(h);
       });
-      c && ea(this, c).pipe(this);
+      c && na(this, c).pipe(this);
     });
   }
   _write(a, b, c) {
@@ -84,38 +84,137 @@ class F extends da {
     return this.o;
   }
 }
-const G = async(a, b = {}) => {
-  ({promise:a} = new F({rs:a, ...b, s:E(!0)}));
+const C = async(a, b = {}) => {
+  ({promise:a} = new B({rs:a, ...b, s:A(!0)}));
   return await a;
 };
-function H(a, b, c, d = !1) {
-  const e = [];
-  b.replace(a, (f, ...k) => {
-    f = k[k.length - 2];
-    f = d ? {position:f} : {};
-    k = k.slice(0, k.length - 2).reduce((h, l, g) => {
-      g = c[g];
-      if (!g || void 0 === l) {
-        return h;
+function D(a, b) {
+  if (b > a - 2) {
+    throw Error("Function does not accept that many arguments.");
+  }
+}
+async function E(a, b, c) {
+  const d = A(!0);
+  if ("function" !== typeof a) {
+    throw Error("Function must be passed.");
+  }
+  const {length:e} = a;
+  if (!e) {
+    throw Error("Function does not accept any arguments.");
+  }
+  return await new Promise((f, g) => {
+    const k = (h, m) => h ? (h = d(h), g(h)) : f(c || m);
+    let l = [k];
+    Array.isArray(b) ? (b.forEach((h, m) => {
+      D(e, m);
+    }), l = [...b, k]) : 1 < Array.from(arguments).length && (D(e, 0), l = [b, k]);
+    a(...l);
+  });
+}
+;const {basename:oa, dirname:F, join:G, relative:pa} = path;
+async function H(a) {
+  const b = F(a);
+  try {
+    return await I(b), a;
+  } catch (c) {
+    if (/EEXIST/.test(c.message) && -1 != c.message.indexOf(b)) {
+      return a;
+    }
+    throw c;
+  }
+}
+async function I(a) {
+  try {
+    await E(aa, a);
+  } catch (b) {
+    if ("ENOENT" == b.code) {
+      const c = F(a);
+      await I(c);
+      await I(a);
+    } else {
+      if ("EEXIST" != b.code) {
+        throw b;
       }
-      h[g] = l;
-      return h;
+    }
+  }
+}
+;async function qa(a, b) {
+  b = b.map(async c => {
+    const d = G(a, c);
+    return {lstat:await E(u, d), path:d, relativePath:c};
+  });
+  return await Promise.all(b);
+}
+const ra = a => a.lstat.isDirectory(), sa = a => !a.lstat.isDirectory();
+async function J(a) {
+  if (!a) {
+    throw Error("Please specify a path to the directory");
+  }
+  if (!(await E(u, a)).isDirectory()) {
+    throw a = Error("Path is not a directory"), a.code = "ENOTDIR", a;
+  }
+  var b = await E(ba, a);
+  b = await qa(a, b);
+  a = b.filter(ra);
+  b = b.filter(sa).reduce((c, d) => {
+    var e = d.lstat.isDirectory() ? "Directory" : d.lstat.isFile() ? "File" : d.lstat.isSymbolicLink() ? "SymbolicLink" : void 0;
+    return {...c, [d.relativePath]:{type:e}};
+  }, {});
+  a = await a.reduce(async(c, {path:d, relativePath:e}) => {
+    c = await c;
+    d = await J(d);
+    return {...c, [e]:d};
+  }, {});
+  return {content:{...b, ...a}, type:"Directory"};
+}
+;const K = async(a, b) => {
+  const c = q(a), d = r(b);
+  c.pipe(d);
+  await Promise.all([new Promise((e, f) => {
+    c.on("close", e).on("error", f);
+  }), new Promise((e, f) => {
+    d.on("close", e).on("error", f);
+  })]);
+}, L = async(a, b) => {
+  a = await E(ca, a);
+  await E(da, [a, b]);
+}, M = async(a, b) => {
+  await H(G(b, "path.file"));
+  const {content:c} = await J(a), d = Object.keys(c).map(async e => {
+    const {type:f} = c[e], g = G(a, e);
+    e = G(b, e);
+    "Directory" == f ? await M(g, e) : "File" == f ? await K(g, e) : "SymbolicLink" == f && await L(g, e);
+  });
+  await Promise.all(d);
+};
+function N(a, b, c, d = !1) {
+  const e = [];
+  b.replace(a, (f, ...g) => {
+    f = g[g.length - 2];
+    f = d ? {position:f} : {};
+    g = g.slice(0, g.length - 2).reduce((k, l, h) => {
+      h = c[h];
+      if (!h || void 0 === l) {
+        return k;
+      }
+      k[h] = l;
+      return k;
     }, f);
-    e.push(k);
+    e.push(g);
   });
   return e;
 }
-;const I = new RegExp(`${/([^\s>=/]+)/.source}(?:\\s*=\\s*${/(?:"([\s\S]*?)"|'([\s\S]*?)')/.source})?`, "g"), fa = new RegExp(`\\s*((?:${I.source}\\s*)*)`);
-const ha = a => H(I, a, ["key", "val", "def", "f"]).reduce((b, {key:c, val:d}) => {
+;const O = new RegExp(`${/([^\s>=/]+)/.source}(?:\\s*=\\s*${/(?:"([\s\S]*?)"|'([\s\S]*?)')/.source})?`, "g"), ta = new RegExp(`\\s*((?:${O.source}\\s*)*)`);
+const ua = a => N(O, a, ["key", "val", "def", "f"]).reduce((b, {key:c, val:d}) => {
   if (void 0 === d) {
     return b[c] = !0, b;
   }
   b[c] = "true" == d ? !0 : "false" == d ? !1 : /^\d+$/.test(d) ? parseInt(d, 10) : d;
   return b;
 }, {});
-const J = (a, b, c, d = !1, e = !1) => {
+const P = (a, b, c, d = !1, e = !1) => {
   const f = c ? new RegExp(`^-(${c}|-${b})`) : new RegExp(`^--${b}`);
-  b = a.findIndex(k => f.test(k));
+  b = a.findIndex(g => f.test(g));
   if (-1 == b) {
     return {argv:a};
   }
@@ -129,7 +228,7 @@ const J = (a, b, c, d = !1, e = !1) => {
   }
   e && (c = parseInt(c, 10));
   return {value:c, argv:[...a.slice(0, b), ...a.slice(d + 1)]};
-}, ia = a => {
+}, va = a => {
   const b = [];
   for (let c = 0; c < a.length; c++) {
     const d = a[c];
@@ -145,56 +244,56 @@ const J = (a, b, c, d = !1, e = !1) => {
  BSD License
  Copyright (c) 2009-2015, Kevin Decker <kpdecker@gmail.com>
 */
-function K(a, b, c) {
+function Q(a, b, c) {
   let d = a[a.length - 1];
   d && d.i === b && d.m === c ? a[a.length - 1] = {count:d.count + 1, i:b, m:c} : a.push({count:1, i:b, m:c});
 }
-function L(a, b, c, d, e) {
-  let f = c.length, k = d.length, h = b.f;
-  e = h - e;
+function R(a, b, c, d, e) {
+  let f = c.length, g = d.length, k = b.f;
+  e = k - e;
   let l = 0;
-  for (; h + 1 < f && e + 1 < k && a.equals(c[h + 1], d[e + 1]);) {
-    h++, e++, l++;
+  for (; k + 1 < f && e + 1 < g && a.equals(c[k + 1], d[e + 1]);) {
+    k++, e++, l++;
   }
   l && b.j.push({count:l});
-  b.f = h;
+  b.f = k;
   return e;
 }
-function M(a) {
+function S(a) {
   let b = [];
   for (let c = 0; c < a.length; c++) {
     a[c] && b.push(a[c]);
   }
   return b;
 }
-function ja(a, b) {
-  var c = new ka;
-  a = M(a.split(""));
-  b = M(b.split(""));
-  let d = b.length, e = a.length, f = 1, k = d + e, h = [{f:-1, j:[]}];
-  var l = L(c, h[0], b, a, 0);
-  if (h[0].f + 1 >= d && l + 1 >= e) {
+function wa(a, b) {
+  var c = new xa;
+  a = S(a.split(""));
+  b = S(b.split(""));
+  let d = b.length, e = a.length, f = 1, g = d + e, k = [{f:-1, j:[]}];
+  var l = R(c, k[0], b, a, 0);
+  if (k[0].f + 1 >= d && l + 1 >= e) {
     return [{value:c.join(b), count:b.length}];
   }
-  for (; f <= k;) {
+  for (; f <= g;) {
     a: {
       for (l = -1 * f; l <= f; l += 2) {
-        var g = h[l - 1];
-        let n = h[l + 1];
+        var h = k[l - 1];
+        let n = k[l + 1];
         var m = (n ? n.f : 0) - l;
-        g && (h[l - 1] = void 0);
-        let p = g && g.f + 1 < d;
+        h && (k[l - 1] = void 0);
+        let p = h && h.f + 1 < d;
         m = n && 0 <= m && m < e;
         if (p || m) {
-          !p || m && g.f < n.f ? (g = {f:n.f, j:n.j.slice(0)}, K(g.j, void 0, !0)) : (g.f++, K(g.j, !0, void 0));
-          m = L(c, g, b, a, l);
-          if (g.f + 1 >= d && m + 1 >= e) {
-            l = la(c, g.j, b, a);
+          !p || m && h.f < n.f ? (h = {f:n.f, j:n.j.slice(0)}, Q(h.j, void 0, !0)) : (h.f++, Q(h.j, !0, void 0));
+          m = R(c, h, b, a, l);
+          if (h.f + 1 >= d && m + 1 >= e) {
+            l = ya(c, h.j, b, a);
             break a;
           }
-          h[l] = g;
+          k[l] = h;
         } else {
-          h[l] = void 0;
+          k[l] = void 0;
         }
       }
       f++;
@@ -205,7 +304,7 @@ function ja(a, b) {
     }
   }
 }
-class ka {
+class xa {
   equals(a, b) {
     return a === b;
   }
@@ -213,87 +312,63 @@ class ka {
     return a.join("");
   }
 }
-function la(a, b, c, d) {
-  let e = 0, f = b.length, k = 0, h = 0;
+function ya(a, b, c, d) {
+  let e = 0, f = b.length, g = 0, k = 0;
   for (; e < f; e++) {
     var l = b[e];
     if (l.m) {
-      l.value = a.join(d.slice(h, h + l.count)), h += l.count, e && b[e - 1].i && (l = b[e - 1], b[e - 1] = b[e], b[e] = l);
+      l.value = a.join(d.slice(k, k + l.count)), k += l.count, e && b[e - 1].i && (l = b[e - 1], b[e - 1] = b[e], b[e] = l);
     } else {
       if (l.i) {
-        l.value = a.join(c.slice(k, k + l.count));
+        l.value = a.join(c.slice(g, g + l.count));
       } else {
-        let g = c.slice(k, k + l.count);
-        g = g.map(function(m, n) {
-          n = d[h + n];
+        let h = c.slice(g, g + l.count);
+        h = h.map(function(m, n) {
+          n = d[k + n];
           return n.length > m.length ? n : m;
         });
-        l.value = a.join(g);
+        l.value = a.join(h);
       }
-      k += l.count;
-      l.i || (h += l.count);
+      g += l.count;
+      l.i || (k += l.count);
     }
   }
   c = b[f - 1];
   1 < f && "string" === typeof c.value && (c.i || c.m) && a.equals("", c.value) && (b[f - 2].value += c.value, b.pop());
   return b;
 }
-;const ma = {black:30, red:31, green:32, yellow:33, blue:34, magenta:35, cyan:36, white:37, grey:90}, na = {black:40, red:41, green:42, yellow:43, blue:44, magenta:45, cyan:46, white:47};
-function N(a, b) {
-  return (b = ma[b]) ? `\x1b[${b}m${a}\x1b[0m` : a;
+;const za = {black:30, red:31, green:32, yellow:33, blue:34, magenta:35, cyan:36, white:37, grey:90}, Aa = {black:40, red:41, green:42, yellow:43, blue:44, magenta:45, cyan:46, white:47};
+function T(a, b) {
+  return (b = za[b]) ? `\x1b[${b}m${a}\x1b[0m` : a;
 }
-function O(a, b) {
-  return (b = na[b]) ? `\x1b[${b}m${a}\x1b[0m` : a;
+function U(a, b) {
+  return (b = Aa[b]) ? `\x1b[${b}m${a}\x1b[0m` : a;
 }
-;function P(a, b) {
-  if (b > a - 2) {
-    throw Error("Function does not accept that many arguments.");
-  }
-}
-async function Q(a, b, c) {
-  const d = E(!0);
-  if ("function" !== typeof a) {
-    throw Error("Function must be passed.");
-  }
-  const {length:e} = a;
-  if (!e) {
-    throw Error("Function does not accept any arguments.");
-  }
-  return await new Promise((f, k) => {
-    const h = (g, m) => g ? (g = d(g), k(g)) : f(c || m);
-    let l = [h];
-    Array.isArray(b) ? (b.forEach((g, m) => {
-      P(e, m);
-    }), l = [...b, h]) : 1 < Array.from(arguments).length && (P(e, 0), l = [b, h]);
-    a(...l);
-  });
-}
-;const R = async a => {
+;const V = async a => {
   try {
-    return await Q(u, a);
+    return await E(u, a);
   } catch (b) {
     return null;
   }
 };
-const {dirname:oa, join:S, relative:pa} = path;
-const T = async a => {
+const W = async a => {
   a = `${a}.js`;
-  let b = await R(a);
+  let b = await V(a);
   b || (a = `${a}x`);
-  if (b = await R(a)) {
+  if (b = await V(a)) {
     return a;
   }
 };
-const {fork:qa, spawn:ra} = child_process;
-const U = async a => {
+const {fork:Ba, spawn:Ca} = child_process;
+const X = async a => {
   const [b, c, d] = await Promise.all([new Promise((e, f) => {
-    a.on("error", f).on("exit", k => {
-      e(k);
+    a.on("error", f).on("exit", g => {
+      e(g);
     });
-  }), a.stdout ? G(a.stdout) : void 0, a.stderr ? G(a.stderr) : void 0]);
+  }), a.stdout ? C(a.stdout) : void 0, a.stderr ? C(a.stderr) : void 0]);
   return {code:b, stdout:c, stderr:d};
 };
-function V(a) {
+function Y(a) {
   if ("object" != typeof a) {
     return !1;
   }
@@ -302,7 +377,7 @@ function V(a) {
   const d = -1 != ["string", "function"].indexOf(typeof c);
   return a && d;
 }
-const W = (a, b) => {
+const Z = (a, b) => {
   if (!(b instanceof Error)) {
     throw b;
   }
@@ -316,9 +391,9 @@ const W = (a, b) => {
   b.stack = a.substr(0, c);
   throw b;
 };
-function X(a, b) {
+function Da(a, b) {
   function c() {
-    return b.filter(V).reduce((d, {re:e, replacement:f}) => {
+    return b.filter(Y).reduce((d, {re:e, replacement:f}) => {
       if (this.h) {
         return d;
       }
@@ -326,13 +401,13 @@ function X(a, b) {
         return d = d.replace(e, f);
       }
       {
-        let k;
-        return d.replace(e, (h, ...l) => {
-          k = Error();
+        let g;
+        return d.replace(e, (k, ...l) => {
+          g = Error();
           try {
-            return this.h ? h : f.call(this, h, ...l);
-          } catch (g) {
-            W(k, g);
+            return this.h ? k : f.call(this, k, ...l);
+          } catch (h) {
+            Z(g, h);
           }
         });
       }
@@ -343,21 +418,21 @@ function X(a, b) {
   };
   return c.call(c);
 }
-;const sa = a => new RegExp(`%%_RESTREAM_${a.toUpperCase()}_REPLACEMENT_(\\d+)_%%`, "g"), ta = (a, b) => `%%_RESTREAM_${a.toUpperCase()}_REPLACEMENT_${b}_%%`;
-async function ua(a, b) {
-  return Y(a, b);
+;const Ea = a => new RegExp(`%%_RESTREAM_${a.toUpperCase()}_REPLACEMENT_(\\d+)_%%`, "g"), Fa = (a, b) => `%%_RESTREAM_${a.toUpperCase()}_REPLACEMENT_${b}_%%`;
+async function Ga(a, b) {
+  return Ha(a, b);
 }
-class Z extends ca {
+class Ia extends la {
   constructor(a, b) {
     super(b);
-    this.g = (Array.isArray(a) ? a : [a]).filter(V);
+    this.g = (Array.isArray(a) ? a : [a]).filter(Y);
     this.h = !1;
     this.u = b;
   }
   async replace(a, b) {
-    const c = new Z(this.g, this.u);
+    const c = new Ia(this.g, this.u);
     b && Object.assign(c, b);
-    a = await ua(c, a);
+    a = await Ga(c, a);
     c.h && (this.h = !0);
     b && Object.keys(b).forEach(d => {
       b[d] = c[d];
@@ -375,28 +450,28 @@ class Z extends ca {
       } else {
         const e = [];
         let f;
-        const k = b.replace(c, (h, ...l) => {
+        const g = b.replace(c, (k, ...l) => {
           f = Error();
           try {
             if (this.h) {
-              return e.length ? e.push(Promise.resolve(h)) : h;
+              return e.length ? e.push(Promise.resolve(k)) : k;
             }
-            const g = d.call(this, h, ...l);
-            g instanceof Promise && e.push(g);
-            return g;
-          } catch (g) {
-            W(f, g);
+            const h = d.call(this, k, ...l);
+            h instanceof Promise && e.push(h);
+            return h;
+          } catch (h) {
+            Z(f, h);
           }
         });
         if (e.length) {
           try {
-            const h = await Promise.all(e);
-            b = b.replace(c, () => h.shift());
-          } catch (h) {
-            W(f, h);
+            const k = await Promise.all(e);
+            b = b.replace(c, () => k.shift());
+          } catch (k) {
+            Z(f, k);
           }
         } else {
-          b = k;
+          b = g;
         }
       }
       return b;
@@ -408,39 +483,43 @@ class Z extends ca {
       this.push(d);
       c();
     } catch (d) {
-      a = D(d.stack), d.stack = a, c(d);
+      a = z(d.stack), d.stack = a, c(d);
     }
   }
 }
-async function Y(a, b) {
-  b instanceof ba ? b.pipe(a) : a.end(b);
-  return await G(a);
+async function Ha(a, b) {
+  b instanceof ka ? b.pipe(a) : a.end(b);
+  return await C(a);
 }
-;module.exports = {c:N, b:O, read:async function(a) {
-  a = r(a);
-  return await G(a);
-}, replace:Y, usually:function(a = {usage:{}}) {
+;module.exports = {c:T, b:U, clone:async(a, b) => {
+  const c = await E(u, a), d = oa(a);
+  b = G(b, d);
+  c.isDirectory() ? await M(a, b) : c.isSymbolicLink() ? await L(a, b) : (await H(b), await K(a, b));
+}, ensurePath:H, read:async function(a) {
+  a = q(a);
+  return await C(a);
+}, replace:Ha, usually:function(a = {usage:{}}) {
   const {usage:b = {}, description:c, line:d, example:e} = a;
   a = Object.keys(b);
-  const f = Object.values(b), [k] = a.reduce(([g = 0, m = 0], n) => {
-    const p = b[n].split("\n").reduce((q, v) => v.length > q ? v.length : q, 0);
+  const f = Object.values(b), [g] = a.reduce(([h = 0, m = 0], n) => {
+    const p = b[n].split("\n").reduce((t, y) => y.length > t ? y.length : t, 0);
     p > m && (m = p);
-    n.length > g && (g = n.length);
-    return [g, m];
-  }, []), h = (g, m) => {
-    m = " ".repeat(m - g.length);
-    return `${g}${m}`;
+    n.length > h && (h = n.length);
+    return [h, m];
+  }, []), k = (h, m) => {
+    m = " ".repeat(m - h.length);
+    return `${h}${m}`;
   };
-  a = a.reduce((g, m, n) => {
+  a = a.reduce((h, m, n) => {
     n = f[n].split("\n");
-    m = h(m, k);
-    const [p, ...q] = n;
+    m = k(m, g);
+    const [p, ...t] = n;
     m = `${m}\t${p}`;
-    const v = h("", k);
-    n = q.map(va => `${v}\t${va}`);
-    return [...g, m, ...n];
-  }, []).map(g => `\t${g}`);
-  const l = [c, `  ${d || ""}`].filter(g => g ? g.trim() : g).join("\n\n");
+    const y = k("", g);
+    n = t.map(Ja => `${y}\t${Ja}`);
+    return [...h, m, ...n];
+  }, []).map(h => `\t${h}`);
+  const l = [c, `  ${d || ""}`].filter(h => h ? h.trim() : h).join("\n\n");
   a = `${l ? `${l}\n` : ""}
 ${a.join("\n")}
 `;
@@ -453,8 +532,8 @@ ${a.join("\n")}
   if (!a) {
     throw Error("Please specify a command to spawn.");
   }
-  a = ra(a, b, c);
-  b = U(a);
+  a = Ca(a, b, c);
+  b = X(a);
   a.promise = b;
   a.spawnCommand = a.spawnargs.join(" ");
   return a;
@@ -462,49 +541,49 @@ ${a.join("\n")}
   if (!a) {
     throw Error("Please specify a module to fork");
   }
-  a = qa(a, b, c);
-  b = U(a);
+  a = Ba(a, b, c);
+  b = X(a);
   a.promise = b;
   a.spawnCommand = a.spawnargs.join(" ");
   return a;
-}, SyncReplaceable:X, Replaceable:Z, makeMarkers:(a, b) => Object.keys(a).reduce((c, d) => {
+}, SyncReplaceable:Da, Replaceable:Ia, makeMarkers:(a, b) => Object.keys(a).reduce((c, d) => {
   {
     var e = a[d];
-    const {getReplacement:f = ta, getRegex:k = sa} = b || {}, h = k(d);
-    e = {name:d, re:e, regExp:h, getReplacement:f, map:{}, lastIndex:0};
+    const {getReplacement:f = Fa, getRegex:g = Ea} = b || {}, k = g(d);
+    e = {name:d, re:e, regExp:k, getReplacement:f, map:{}, lastIndex:0};
   }
   return {...c, [d]:e};
 }, {}), makeCutRule:a => {
   const {re:b, map:c, getReplacement:d, name:e} = a;
   return {re:b, replacement(f) {
-    const {lastIndex:k} = a;
-    c[k] = f;
+    const {lastIndex:g} = a;
+    c[g] = f;
     a.lastIndex += 1;
-    return d(e, k);
+    return d(e, g);
   }};
 }, makePasteRule:(a, b = []) => {
   const {regExp:c, map:d} = a;
   return {re:c, replacement(e, f) {
     e = d[f];
     delete d[f];
-    return X(e, Array.isArray(b) ? b : [b]);
+    return Da(e, Array.isArray(b) ? b : [b]);
   }};
 }, resolveDependency:async(a, b) => {
-  b && (b = oa(b), a = S(b, a));
-  var c = await R(a);
+  b && (b = F(b), a = G(b, a));
+  var c = await V(a);
   b = a;
   let d = !1;
   if (!c) {
-    if (b = await T(a), !b) {
+    if (b = await W(a), !b) {
       throw Error(`${a}.js or ${a}.jsx is not found.`);
     }
   } else {
     if (c.isDirectory()) {
       c = !1;
       let e;
-      a.endsWith("/") || (e = b = await T(a), c = !0);
+      a.endsWith("/") || (e = b = await W(a), c = !0);
       if (!e) {
-        b = await T(S(a, "index"));
+        b = await W(G(a, "index"));
         if (!b) {
           throw Error(`${c ? `${a}.jsx? does not exist, and ` : ""}index.jsx? file is not found in ${a}`);
         }
@@ -513,9 +592,9 @@ ${a.join("\n")}
     }
   }
   return {path:a.startsWith(".") ? pa("", b) : b, v:d};
-}, rexml:(a, b) => H(new RegExp(`<${a}${fa.source}?(?:${/\s*\/>/.source}|${(new RegExp(`>([\\s\\S]+?)?</${a}>`)).source})`, "g"), b, ["a", "v", "v1", "v2", "c"]).map(({a:c = "", c:d = ""}) => {
+}, rexml:(a, b) => N(new RegExp(`<${a}${ta.source}?(?:${/\s*\/>/.source}|${(new RegExp(`>([\\s\\S]+?)?</${a}>`)).source})`, "g"), b, ["a", "v", "v1", "v2", "c"]).map(({a:c = "", c:d = ""}) => {
   c = c.replace(/\/$/, "").trim();
-  c = ha(c);
+  c = ua(c);
   return {content:d, props:c};
 }), reduceUsage:a => Object.keys(a).reduce((b, c) => {
   const d = a[c];
@@ -532,37 +611,37 @@ ${a.join("\n")}
   if (!a) {
     throw Error("No path is given.");
   }
-  const c = E(!0), d = t(a);
+  const c = A(!0), d = r(a);
   await new Promise((e, f) => {
-    d.on("error", k => {
-      k = c(k);
-      f(k);
+    d.on("error", g => {
+      g = c(g);
+      f(g);
     }).on("close", e).end(b);
   });
 }, argufy:function(a = {}, b = process.argv) {
   [, , ...b] = b;
-  const c = ia(b);
+  const c = va(b);
   b = b.slice(c.length);
   let d = !c.length;
-  return Object.keys(a).reduce(({l:e, ...f}, k) => {
+  return Object.keys(a).reduce(({l:e, ...f}, g) => {
     if (0 == e.length && d) {
       return {l:e, ...f};
     }
-    const h = a[k];
+    const k = a[g];
     let l;
-    if ("string" == typeof h) {
-      ({value:l, argv:e} = J(e, k, h));
+    if ("string" == typeof k) {
+      ({value:l, argv:e} = P(e, g, k));
     } else {
       try {
-        const {short:g, boolean:m, number:n, command:p, multiple:q} = h;
-        p && q && c.length ? (l = c, d = !0) : p && c.length ? (l = c[0], d = !0) : {value:l, argv:e} = J(e, k, g, m, n);
-      } catch (g) {
+        const {short:h, boolean:m, number:n, command:p, multiple:t} = k;
+        p && t && c.length ? (l = c, d = !0) : p && c.length ? (l = c[0], d = !0) : {value:l, argv:e} = P(e, g, h, m, n);
+      } catch (h) {
         return {l:e, ...f};
       }
     }
-    return void 0 === l ? {l:e, ...f} : {l:e, ...f, [k]:l};
+    return void 0 === l ? {l:e, ...f} : {l:e, ...f, [g]:l};
   }, {l:b});
-}, Catchment:F, collect:G, clearr:a => a.split("\n").map(b => {
+}, Catchment:B, collect:C, clearr:a => a.split("\n").map(b => {
   b = b.split("\r");
   return b.reduce((c, d, e) => {
     if (!e) {
@@ -573,23 +652,23 @@ ${a.join("\n")}
     return `${d}${c}`;
   }, b[0]);
 }).join("\n"), erte:function(a, b) {
-  return ja(a, b).map(({i:c, m:d, value:e}) => {
+  return wa(a, b).map(({i:c, m:d, value:e}) => {
     const f = e.split(" ");
-    return c ? f.map(k => k.replace(/\n$/mg, "\u23ce\n")).map(k => N(k, "green")).join(O(" ", "green")) : d ? f.map(k => k.replace(/\n$/mg, "\u23ce\n")).map(k => N(k, "red")).join(O(" ", "red")) : N(e, "grey");
+    return c ? f.map(g => g.replace(/\n$/mg, "\u23ce\n")).map(g => T(g, "green")).join(U(" ", "green")) : d ? f.map(g => g.replace(/\n$/mg, "\u23ce\n")).map(g => T(g, "red")).join(U(" ", "red")) : T(e, "grey");
   }).join("");
 }, forkfeed:(a, b, c = [], d = null) => {
   if (d) {
-    a.on("data", h => d.write(h));
+    a.on("data", k => d.write(k));
   }
   let [e, ...f] = c;
   if (e) {
-    var k = h => {
-      const [l, g] = e;
-      l.test(h) && (h = `${g}\n`, d && d.write(h), b.write(h), [e, ...f] = f, e || a.removeListener("data", k));
+    var g = k => {
+      const [l, h] = e;
+      l.test(k) && (k = `${h}\n`, d && d.write(k), b.write(k), [e, ...f] = f, e || a.removeListener("data", g));
     };
-    a.on("data", k);
+    a.on("data", g);
   }
-}, makepromise:Q, mismatch:H};
+}, makepromise:E, mismatch:N};
 
 
 //# sourceMappingURL=stdlib.js.map

@@ -1,5 +1,7 @@
 import write from '@wrote/write'
 import read from '@wrote/read'
+import clone from '@wrote/clone'
+import ensurePath from '@wrote/ensure-path'
 import rexml from 'rexml'
 import argufy, { reduceUsage } from 'argufy'
 import Catchment, { collect } from 'catchment'
@@ -20,6 +22,8 @@ import {
 module.exports = {
   'c': c,
   'b': b,
+  'clone': clone,
+  'ensurePath': ensurePath,
   'read': read,
   'replace': replace,
   'usually': usually,

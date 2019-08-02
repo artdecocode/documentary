@@ -1,6 +1,6 @@
 const { join } = require('path');
 const { mismatch } = require('../../../stdlib');
-let clone = require('@wrote/clone'); if (clone && clone.__esModule) clone = clone.default;
+const { clone } = require('../../../stdlib');
 const { debuglog } = require('util');
 const { c, b } = require('../../../stdlib');
 
