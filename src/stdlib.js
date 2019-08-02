@@ -19,12 +19,14 @@ import {
   replace,
 } from 'restream'
 import Pedantry from 'pedantry'
+import compare from '@depack/cache'
 
 module.exports = {
   'c': c,
   'b': b,
   'clone': clone,
   'Pedantry': Pedantry,
+  'compare': compare,
   'ensurePath': ensurePath,
   'read': read,
   'replace': replace,

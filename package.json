@@ -81,6 +81,7 @@
   },
   "homepage": "https://github.com/artdecocode/documentary#readme",
   "devDependencies": {
+    "@depack/cache": "^1.1.0",
     "@wrote/clone": "^1.2.1",
     "@wrote/ensure-path": "^1.1.0",
     "@wrote/read": "^1.0.4",
@@ -101,13 +102,13 @@
     "restream": "^3.7.3",
     "rexml": "^2.1.0",
     "spawncommand": "^2.2.0",
+    "static-analysis": "^1.7.1",
     "temp-context": "^2.1.3",
     "usually": "^1.2.0",
     "yarn-s": "1.1.0",
     "zoroaster": "^4.1.1-alpha"
   },
   "dependencies": {
-    "@depack/cache": "^1.0.0",
     "@depack/render": "^1.2.1",
     "alamode": "^2.3.6",
     "preact": "8.5.0",

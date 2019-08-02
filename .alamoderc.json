@@ -16,7 +16,7 @@
             "@wrote/write", "argufy", "catchment", "clearr", "erte", 
             "forkfeed", "makepromise", "mismatch", "rexml", "@wrote/read", 
             "usually", "resolve-dependency", "spawncommand", "restream",
-            "@wrote/clone", "@wrote/ensure-path", "pedantry"
+            "@wrote/clone", "@wrote/ensure-path", "pedantry", "@depack/cache"
           ]
         },
         "alamodeModules": ["alamode", "usually", "spawncommand", "rexml", "@wrote/read", "clearr", "@depack/cache"]
