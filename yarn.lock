@@ -217,10 +217,18 @@ resolve-dependency@^1.0.2, resolve-dependency@^1.0.3:
   dependencies:
     "@wrote/exists" "^1.0.3"
 
-restream@^3.7.1, restream@^3.7.2:
+restream@^3.7.1:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/restream/-/restream-3.7.2.tgz#657e06c1944161c190dcede2d688af0be207b859"
   integrity sha512-nVffinRmO+TEdS6YlkyVeBKHTF2Qv1BU7ML02y3IlosDx0n7zsGUBMNydkVFMgJs/RHl4a4u/X1wNduh1dD1SQ==
+  dependencies:
+    "@artdeco/clean-stack" "^1.1.1"
+    catchment "^3.3.0"
+
+restream@^3.7.3:
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/restream/-/restream-3.7.3.tgz#3ec32dd9485a3230b731de29dff766ec9c0c606d"
+  integrity sha512-CPWz8ud+cQF36xmjgEIYlD6R5c7dsf39iQojFQMR9QkVdFDr7UvlP/eGAs//LYfbl4B5tF9CR4sdwr8IcOBQXA==
   dependencies:
     "@artdeco/clean-stack" "^1.1.1"
     catchment "^3.3.0"

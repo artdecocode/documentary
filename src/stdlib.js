@@ -14,12 +14,14 @@ import resolveDependency from 'resolve-dependency'
 import spawn, { fork } from 'spawncommand'
 import {
   SyncReplaceable, Replaceable, makeMarkers, makeCutRule, makePasteRule,
+  replace,
 } from 'restream'
 
 module.exports = {
   'c': c,
   'b': b,
   'read': read,
+  'replace': replace,
   'usually': usually,
   'spawn': spawn,
   'fork': fork,

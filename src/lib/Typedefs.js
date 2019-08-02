@@ -1,5 +1,5 @@
 import { debuglog } from 'util'
-import { Replaceable } from 'restream'
+import { Replaceable, replace } from 'restream'
 import { collect } from 'catchment'
 import { relative, sep, join } from 'path'
 import { typedefMdRe } from './rules/typedef-md'
@@ -201,7 +201,7 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
       if (data == 'separator' || !data.trim()) return next()
       if (!/\.(md|html)$/.test(file)) return next()
 
-      const d = await Replaceable.replace(new Replaceable(c), data)
+      const d = await replace(new Replaceable(c), data)
       this.push({ data: d, file })
       next()
     },

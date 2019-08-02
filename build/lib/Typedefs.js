@@ -1,5 +1,5 @@
 const { debuglog } = require('util');
-const { Replaceable } = require('../../stdlib');
+const { Replaceable, replace } = require('../../stdlib');
 const { collect } = require('../../stdlib');
 const { relative, sep, join } = require('path');
 const { typedefMdRe } = require('./rules/typedef-md');
@@ -201,7 +201,7 @@ const getTypedefs = async (stream, namespace, typesLocations = [], options = {})
       if (data == 'separator' || !data.trim()) return next()
       if (!/\.(md|html)$/.test(file)) return next()
 
-      const d = await Replaceable.replace(new Replaceable(c), data)
+      const d = await replace(new Replaceable(c), data)
       this.push({ data: d, file })
       next()
     },

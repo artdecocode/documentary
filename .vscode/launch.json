@@ -11,6 +11,7 @@
       "program": "${workspaceFolder}/node_modules/.bin/zoroaster",
       "env": {
         "NODE_DEBUG": "doc",
+        "ALAMODE_ENV": "test-build",
         "DEBUG": "1",
       },
       "console": "integratedTerminal",
