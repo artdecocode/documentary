@@ -1,4 +1,4 @@
-const extractTags = require('rexml');
+const { rexml } = require('../../../stdlib');
 const macroRe = /^(%+)MACRO (.+)\n([\s\S]+?)\n\1(\n|$)/gm
 const useMacroRe = /^%USE-MACRO (.+)\n([\s\S]+?)\n%$/gm
 
@@ -28,7 +28,7 @@ function useMacroReplacement(match, macro, body) {
   const macroFn = macros[macro]
   if (!macroFn) return match
   try {
-    const res = extractTags('data', body)
+    const res = rexml('data', body)
     const r = res.map(({ content }) => content)
     const rr = macroFn(r)
     return rr

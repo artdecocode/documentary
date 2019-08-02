@@ -1,7 +1,7 @@
 const { h } = require('preact');
-const read = require('@wrote/read');
+const { read } = require('../../stdlib');
 const Md2Html = require('./Html');
-const rexml = require('rexml');
+const { rexml } = require('../../stdlib');
 
 const parse = (xml) => {
   const root = rexml('arguments', xml)

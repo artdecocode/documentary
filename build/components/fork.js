@@ -1,6 +1,6 @@
 const { h } = require('preact');
 const forkRule = require('../lib/rules/fork');
-const rexml = require('rexml');
+const { rexml } = require('../../stdlib');
 
 const { replacement } = forkRule
 

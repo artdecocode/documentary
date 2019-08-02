@@ -1,5 +1,5 @@
 import { debuglog } from 'util'
-import extractTags from 'rexml'
+import rexml from 'rexml'
 
 const LOG = debuglog('doc')
 
@@ -58,10 +58,10 @@ const typeRule = {
   re: typeRe,
   replacement(match, tocTitles, body) {
     try {
-      const tags = extractTags('p', body)
+      const tags = rexml('p', body)
         .map(({ content, props }) => {
-          const [{ content: description } = {}] = extractTags('d', content)
-          const [{ content: example, props: { row: isExampleRow = false } = {} } = {}] = extractTags('e', content)
+          const [{ content: description } = {}] = rexml('d', content)
+          const [{ content: example, props: { row: isExampleRow = false } = {} } = {}] = rexml('e', content)
           return {
             description,
             example,

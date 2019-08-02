@@ -1,4 +1,6 @@
 const { write } = require('../stdlib');
+const { read } = require('../stdlib');
+const { rexml } = require('../stdlib');
 const         { argufy, reduceUsage } = require('../stdlib');
 const            { Catchment, collect } = require('../stdlib');
 const { clearr } = require('../stdlib');
@@ -11,6 +13,8 @@ const { mismatch } = require('../stdlib');
 module.exports = {
   'c': c,
   'b': b,
+  'read': read,
+  'rexml': rexml,
   'reduceUsage': reduceUsage,
   'write': write,
   'argufy': argufy,
