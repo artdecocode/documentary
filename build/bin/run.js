@@ -1,4 +1,4 @@
-let whichStream = require('which-stream'); if (whichStream && whichStream.__esModule) whichStream = whichStream.default;
+const { whichStream } = require('../../stdlib');
 const { Catchment } = require('../../stdlib');
 const { write } = require('../../stdlib');
 let readDirStructure = require('@wrote/read-dir-structure'); if (readDirStructure && readDirStructure.__esModule) readDirStructure = readDirStructure.default;

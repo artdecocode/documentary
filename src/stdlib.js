@@ -20,12 +20,14 @@ import {
 } from 'restream'
 import Pedantry from 'pedantry'
 import compare from '@depack/cache'
+import whichStream from 'which-stream'
 
 module.exports = {
   'c': c,
   'b': b,
   'clone': clone,
   'Pedantry': Pedantry,
+  'whichStream': whichStream,
   'compare': compare,
   'ensurePath': ensurePath,
   'read': read,

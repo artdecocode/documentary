@@ -280,12 +280,10 @@ usually@^1.2.0:
   resolved "https://registry.yarnpkg.com/usually/-/usually-1.2.0.tgz#ce4d8ea87875599bbfb3af48692595a3114f618f"
   integrity sha512-/PIDu3pkZNqYdzOr0Cyq2q8FP3ziBISOvVJtZcypg3BygIW/W618oF4dtK4mhCxbk3bUzrfTbCxDWCCr85bq/g==
 
-which-stream@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/which-stream/-/which-stream-1.1.0.tgz#7a57ddf20b8b33d27df7e1706760294aa931ea8a"
-  integrity sha512-ksadtFR6JduhGSkLsbAwsNNLi4nHZGIKti1AXA1VhuzgFx7ktLLcZmauytscJpbHbm9Dv4jFIcLxpEWz41dFQQ==
-  dependencies:
-    catchment "^3.3.0"
+which-stream@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/which-stream/-/which-stream-1.2.1.tgz#5c33c86102453634e11f336c1d32dcaee391d906"
+  integrity sha512-+wnOZBHeuZpRT3t+GE/NwHTTCpgzF4auKTCNpD3s3s9oiGlX+O5Wum2UrbkfRKaWJ9iWMX0vMKuKkkyTv8xY0w==
 
 yarn-s@1.1.0:
   version "1.1.0"

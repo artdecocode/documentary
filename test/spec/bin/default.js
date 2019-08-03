@@ -19,7 +19,7 @@ const T = {
     snapshotSource('generates correct markdown', 'md')
     return s.trim()
   },
-  async '!caches module'({ docWithEnv }, _, { write, resolve }) {
+  async 'caches module'({ docWithEnv }, _, { write, resolve }) {
     const DOCUMENTARY_CACHE_LOCATION = resolve('.cache')
     const env = {
       DOCUMENTARY_CACHE_LOCATION,
