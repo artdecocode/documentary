@@ -110,7 +110,7 @@
   },
   "dependencies": {
     "@depack/render": "^1.2.1",
-    "alamode": "^2.3.6",
+    "alamode": "^2.4.0",
     "competent": "^1.7.0",
     "preact": "8.5.0",
     "typal": "^1.19.1"
