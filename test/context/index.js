@@ -142,6 +142,23 @@ import Catchment from 'catchment'
     }
   }
   /**
+   * Run the binary.
+   * @param {string} input Path to the source readme file
+   * @param {!NodeJS.ProcessEnv} env Path to the source readme file
+   */
+  async docWithEnv(input, env = {}, ...args) {
+    const proc = fork(DOC, [input, ...args], {
+      stdio: 'pipe',
+      execArgv: [],
+      env,
+    })
+    const { stdout, stderr } = await proc.promise
+    return {
+      stdout,
+      stderr,
+    }
+  }
+  /**
    * A markdown document headers structure, e.g.,
    * `{ hello: [] }
    */

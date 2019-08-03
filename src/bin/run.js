@@ -89,6 +89,7 @@ const runPage = async (opts) => {
   const stream = getStream(source, reverse, true)
   const doc = new Documentary({
     locations, types, noCache, objectMode: true, wiki, output, source,
+    cacheLocation: process.env.DOCUMENTARY_CACHE_LOCATION,
   })
   stream.pipe(doc)
   const tocPromise = getToc(doc, h1, locations, justToc)
