@@ -124,10 +124,17 @@ This can help with documenting errors or other code that prints absolute paths i
 The `<fork>` component is the same as the `%FORK%` marker, but it offers extended functionality. The optional properties described above on this page are specified in the arguments, and the location of the fork module is passed as a child.
 
 ```jsx
-<fork nocache plain relative stderr lang="js">
+<fork nocache plain relative stderr lang="js" 
+  env="ENV_VAR=testing SECRET_KEY=hello-world">
   module/location/run.js
 </fork>
 ```
+
+%~%
+
+## Env Variables
+
+All environment variables will be inherited from the _Documentary_ process. Additional variables can be passed in the `env` argument, which is only available for the `<fork>` component and not the `%FORK%` marker. The variables will be split by whitespace, and the key-value pairs will be split by `=`. It's not possible to specify values with `=` in them at the moment.
 
 %~%
 

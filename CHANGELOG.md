@@ -1,3 +1,10 @@
+## 3 August 2019
+
+### [1.30.0](https://github.com/artdecocode/documentary/compare/v1.29.0...v1.30.0)
+
+- [package] Move most of dependencies to the standard lib.
+- [feature] `<fork>` component with answers and env variables.
+
 ## 31 July 2019
 
 ### [1.29.0](https://github.com/artdecocode/documentary/compare/v1.28.2...v1.29.0)
