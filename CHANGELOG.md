@@ -1,5 +1,9 @@
 ## 3 August 2019
 
+### [1.30.2](https://github.com/artdecocode/documentary/compare/v1.30.1...v1.30.2)
+
+- [deps] Update _Typal_ to include missing `@wrote/read` dependency.
+
 ### [1.30.1](https://github.com/artdecocode/documentary/compare/v1.30.0...v1.30.1)
 
 - [deps] Add `@wrote/read-dir-structure` to _stdlib_.
