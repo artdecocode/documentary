@@ -85,6 +85,7 @@
     "@wrote/clone": "^1.2.1",
     "@wrote/ensure-path": "^1.1.0",
     "@wrote/read": "^1.0.4",
+    "@wrote/read-dir-structure": "^1.2.0",
     "@wrote/write": "^1.0.4",
     "argufy": "^1.7.1",
     "catchment": "^3.3.0",

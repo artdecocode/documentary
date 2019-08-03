@@ -100,7 +100,7 @@ async function E(a) {
     throw Error("Function does not accept that many arguments.");
   }
 }
-async function H(a, b, c) {
+async function G(a, b, c) {
   const d = A(!0);
   if ("function" !== typeof a) {
     throw Error("Function must be passed.");
@@ -132,7 +132,7 @@ async function L(a) {
 }
 async function M(a) {
   try {
-    await H(aa, a);
+    await G(aa, a);
   } catch (b) {
     if ("ENOENT" == b.code) {
       const c = I(a);
@@ -148,7 +148,7 @@ async function M(a) {
 ;async function qa(a, b) {
   b = b.map(async c => {
     const d = J(a, c);
-    return {lstat:await H(v, d), path:d, relativePath:c};
+    return {lstat:await G(v, d), path:d, relativePath:c};
   });
   return await Promise.all(b);
 }
@@ -157,10 +157,10 @@ async function N(a) {
   if (!a) {
     throw Error("Please specify a path to the directory");
   }
-  if (!(await H(v, a)).isDirectory()) {
+  if (!(await G(v, a)).isDirectory()) {
     throw a = Error("Path is not a directory"), a.code = "ENOTDIR", a;
   }
-  var b = await H(ba, a);
+  var b = await G(ba, a);
   b = await qa(a, b);
   a = b.filter(ra);
   b = b.filter(sa).reduce((c, d) => {
@@ -183,8 +183,8 @@ async function N(a) {
     d.on("close", e).on("error", f);
   })]);
 }, P = async(a, b) => {
-  a = await H(ca, a);
-  await H(da, [a, b]);
+  a = await G(ca, a);
+  await G(da, [a, b]);
 }, Q = async(a, b) => {
   await L(J(b, "path.file"));
   const {content:c} = await N(a), d = Object.keys(c).map(async e => {
@@ -353,7 +353,7 @@ function U(a, b) {
 }
 ;const V = async a => {
   try {
-    return await H(v, a);
+    return await G(v, a);
   } catch (b) {
     return null;
   }
@@ -707,7 +707,7 @@ const eb = a => /^[./]/.test(a), fb = async(a, b, c, d, e = null) => {
       return m;
     }
     m = await m;
-    t = (await hb(n, b, {nodeModules:c, shallow:d, soft:e, fields:f, package:t || R})).map(G => ({...G, from:G.from ? G.from : n, ...!G.packageJson && p ? {hasMain:p} : {}}));
+    t = (await hb(n, b, {nodeModules:c, shallow:d, soft:e, fields:f, package:t || R})).map(H => ({...H, from:H.from ? H.from : n, ...!H.packageJson && p ? {hasMain:p} : {}}));
     return [...m, ...t];
   }, h);
 }, gb = a => S(/(?:^|[^\w\d_])require\(\s*(['"])(.+?)\1\s*\)/gm, a, ["q", "from"]).map(b => b.from);
@@ -758,7 +758,7 @@ const kb = (a, b, c = console.log) => {
   a = "";
   c && (a = /^\d+$/.test(c) ? (new Date(parseInt(c, 10))).toLocaleString() : c);
   return {entry:b, s:a};
-}, lb = async a => (await H(v, a)).mtime.getTime(), mb = async a => await Promise.all(a.map(async({entry:b, name:c, internal:d, version:e}) => {
+}, lb = async a => (await G(v, a)).mtime.getTime(), mb = async a => await Promise.all(a.map(async({entry:b, name:c, internal:d, version:e}) => {
   if (c) {
     return `${c} ${e}`;
   }
@@ -787,8 +787,8 @@ const ob = async(a, b, c) => {
     });
   }
 };
-module.exports = {c:T, b:U, clone:async(a, b) => {
-  const c = await H(v, a), d = oa(a);
+module.exports = {c:T, b:U, readDirStructure:N, clone:async(a, b) => {
+  const c = await G(v, a), d = oa(a);
   b = J(b, d);
   c.isDirectory() ? await Q(a, b) : c.isSymbolicLink() ? await P(a, b) : (await L(b), await O(a, b));
 }, Pedantry:Wa, whichStream:async function(a) {
@@ -961,7 +961,7 @@ ${a.join("\n")}
     };
     a.on("data", h);
   }
-}, makepromise:H, mismatch:S};
+}, makepromise:G, mismatch:S};
 
 
 //# sourceMappingURL=stdlib.js.map

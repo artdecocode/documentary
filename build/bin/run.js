@@ -1,7 +1,7 @@
 const { whichStream } = require('../../stdlib');
 const { Catchment } = require('../../stdlib');
 const { write } = require('../../stdlib');
-let readDirStructure = require('@wrote/read-dir-structure'); if (readDirStructure && readDirStructure.__esModule) readDirStructure = readDirStructure.default;
+const { readDirStructure } = require('../../stdlib');
 const { join } = require('path');
 const Stream = require('stream');
 const { getToc } = require('../lib/Toc');

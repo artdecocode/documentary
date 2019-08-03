@@ -2,6 +2,7 @@ import write from '@wrote/write'
 import read from '@wrote/read'
 import clone from '@wrote/clone'
 import ensurePath from '@wrote/ensure-path'
+import readDirStructure from '@wrote/read-dir-structure'
 import rexml from 'rexml'
 import argufy, { reduceUsage } from 'argufy'
 import Catchment, { collect } from 'catchment'
@@ -25,6 +26,7 @@ import whichStream from 'which-stream'
 module.exports = {
   'c': c,
   'b': b,
+  'readDirStructure': readDirStructure,
   'clone': clone,
   'Pedantry': Pedantry,
   'whichStream': whichStream,
