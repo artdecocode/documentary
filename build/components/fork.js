@@ -5,7 +5,13 @@ const { rexml } = require('../../stdlib');
 const { replacement } = forkRule
 
 function Fork({ documentary, children,
-  nocache, plain, relative, stderr, lang }) {
+  nocache, plain, relative, stderr, lang, env = '',
+}) {
+  env = env.split(' ').reduce((acc, c) => {
+    const [name, val] = c.split('=')
+    acc[name] = val
+    return acc
+  }, {})
   let service = ''
   if (nocache) service += '!'
   if (plain) service += '_'
@@ -34,7 +40,7 @@ function Fork({ documentary, children,
   const res = fn(null, '', service, stderr, lang, child, {
     stdout: stdoutAnswers,
     stderr: stderrAnswers,
-  })
+  }, env)
   if (res === null) throw new Error('The component didn\'t work.')
   return res
 }

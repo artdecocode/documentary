@@ -89,7 +89,6 @@
     "argufy": "^1.7.1",
     "catchment": "^3.3.0",
     "clearr": "^1.0.0",
-    "competent": "^1.7.0",
     "erte": "^1.2.0",
     "eslint-config-artdeco": "1.0.1",
     "forkfeed": "^1.1.1",
@@ -112,6 +111,7 @@
   "dependencies": {
     "@depack/render": "^1.2.1",
     "alamode": "^2.3.6",
+    "competent": "^1.7.0",
     "preact": "8.5.0",
     "typal": "^1.19.1"
   }

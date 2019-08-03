@@ -10,7 +10,7 @@ const { Catchment } = require('../../../stdlib');
 
 const queue = {}
 
-const replacement = async function (noCache, old, err, lang, m, awaited = false, answers = null) {
+const replacement = async function (noCache, old, err, lang, m, awaited = false, answers, env) {
   if (awaited) noCache = false
   const [mod, ...args] = m.split(' ')
 
@@ -62,7 +62,7 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false,
 
   !printed && this.log(s)
 
-  const { stdout, stderr } = await doFork(old, mod, args, answers)
+  const { stdout, stderr } = await doFork(old, mod, args, answers, env)
 
   const cacheToWrite = { [`[${md5}] ${m}`]: {
     'stdout': stdout, 'stderr': stderr,
@@ -79,7 +79,7 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false,
 /**
  * Answers are allowed in <fork> component.
  */
-const doFork = async (old, mod, args, answers = {}) => {
+const doFork = async (old, mod, args, answers = {}, env = {}) => {
   const documentaryFork = resolve(__dirname, '../../fork')
   const cp = fork(old ? mod : documentaryFork, args, {
     execArgv: [],
@@ -88,6 +88,7 @@ const doFork = async (old, mod, args, answers = {}) => {
       env: {
         DOCUMENTARY_REQUIRE: resolve(mod),
         ...process.env,
+        ...env,
       },
     }),
   })
@@ -115,7 +116,7 @@ const doFork = async (old, mod, args, answers = {}) => {
 
 const forkRule = {
   re: /( *)%([/!_]+)?FORK(ERR)?(?:-(\w+))? (.+)%/mg,
-  async replacement(match, ws, service, err, lang, m, answers) {
+  async replacement(match, ws, service, err, lang, m, /* <fork api> */ answers, env) {
     const noCache = /!/.test(service) || this.noCache
     const old = /_/.test(service)
     const relative = /\//.test(service)
@@ -127,7 +128,7 @@ const forkRule = {
         await q.promise
         awaited = true
       }
-      const promise = replacement.call(this, noCache, old, err, lang, m, awaited, answers)
+      const promise = replacement.call(this, noCache, old, err, lang, m, awaited, answers, env)
       queue[m] = { promise, err }
       let res = await promise
       if (ws) res = res.replace(/^/gm, ws)
