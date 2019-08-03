@@ -2,7 +2,7 @@
 
 ### [1.30.1](https://github.com/artdecocode/documentary/compare/v1.30.0...v1.30.1)
 
-- [deps] Add `@wrote/read-dir-structure` to _stdlib_.c
+- [deps] Add `@wrote/read-dir-structure` to _stdlib_.
 
 ### [1.30.0](https://github.com/artdecocode/documentary/compare/v1.29.0...v1.30.0)
 
