@@ -1,4 +1,4 @@
-A section break is a small image in the center of the page which indicates the end of a section. With larger sections which also include sub-sections, this feature can help to differentiate when the topic finishes and another one starts. They can also be used to navigate back to [[table of contents|Table Of Contents]], or a location specified with the `href` attribute.
+A section break is a small image in the center of the page which indicates the end of a section. With larger sections which also include sub-sections, this feature can help to differentiate when the topic finishes and another one starts. They can also be used to navigate back to [[table of contents|Tables Of Contents]], or a location specified with the `href` attribute.
 
 At the moment, there is support for pre-installed section breaks. In future, more support of custom images will be included.
 

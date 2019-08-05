@@ -5,7 +5,7 @@ const { rexml } = require('../../stdlib');
 const { replacement } = forkRule
 
 function Fork({ documentary, children,
-  nocache, plain, relative, stderr, lang, env = '',
+  nocache, plain, relative, stderr, lang, env = '', noprint,
 }) {
   env = env.split(' ').reduce((acc, c) => {
     const [name, val] = c.split('=')
@@ -42,6 +42,10 @@ function Fork({ documentary, children,
     stderr: stderrAnswers,
   }, env)
   if (res === null) throw new Error('The component didn\'t work.')
+  if (noprint) {
+    documentary.log(`Not printing output of ${child}`)
+    return null
+  }
   return res
 }
 

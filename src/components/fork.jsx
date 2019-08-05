@@ -4,7 +4,7 @@ import rexml from 'rexml'
 const { replacement } = forkRule
 
 export default function Fork({ documentary, children,
-  nocache, plain, relative, stderr, lang, env = '',
+  nocache, plain, relative, stderr, lang, env = '', noprint,
 }) {
   env = env.split(' ').reduce((acc, c) => {
     const [name, val] = c.split('=')
@@ -41,5 +41,9 @@ export default function Fork({ documentary, children,
     stderr: stderrAnswers,
   }, env)
   if (res === null) throw new Error('The component didn\'t work.')
+  if (noprint) {
+    documentary.log(`Not printing output of ${child}`)
+    return null
+  }
   return res
 }
