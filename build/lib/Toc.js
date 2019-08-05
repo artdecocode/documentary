@@ -103,6 +103,7 @@ class ChunkReplaceable extends Replaceable {
         replacement(match, int, position) {
           const {
             hash, isAsync, name, returnType, args, replacedTitle,
+            noArgTypesInToc,
           } = getDtoc('MT', int)
           try {
             const { length: level } = hash
@@ -112,6 +113,7 @@ class ChunkReplaceable extends Replaceable {
               .filter(a => a)
               .join(' ').trim()
             const s = args.map(([argName, type, shortType]) => {
+              if (noArgTypesInToc) return argName
               let tt
               if (shortType) tt = shortType
               else if (typeof type == 'string') tt = type

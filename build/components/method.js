@@ -7,7 +7,7 @@ const { h } = require('preact');
  * @param {Object} opts.documentary
  * @param {import('../lib/Documentary').default} opts.documentary.documentary
  */
-function Method({ documentary: { documentary }, method, level = 2 }) {
+function Method({ documentary: { documentary }, method, level = 2, noArgTypesInToc }) {
   const hash = '#'.repeat(level)
   const sig = `${hash} ${method._async ? '`async ' : '`'}${method.name}(`
   const endSig = `): ${method.return || 'void'}\``
@@ -43,14 +43,16 @@ function Method({ documentary: { documentary }, method, level = 2 }) {
   }
 
   const dtoc = documentary.addDtoc('MT', {
-    args: method._args.map(({ name, type, shortType }) => {
-      return [name, type, shortType]
+    args: method._args.map(({ name, type, shortType, optional }) => {
+      const N = `${name}${optional ? '=' : ''}`
+      return [N, type, shortType]
     }),
     hash,
     isAsync: method._async,
     name: method.name,
     returnType: method.return,
     replacedTitle: done,
+    noArgTypesInToc,
   })
 
   return `${dtoc}${done}`

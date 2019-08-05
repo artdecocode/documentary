@@ -10,10 +10,10 @@ export const makeMethodTable = (method, allTypes = [], opts) => {
     const N = optional ? name : `<strong>${name}*</strong>`
 
     let typeWithLink = type
-    // , useCode = false
+      , useCode = false
     typeWithLink = getLinks(allTypes, type, opts)
-    // useCode = typeWithLink != type
-    // typeWithLink = wrapCode(typeWithLink, useCode)
+    useCode = typeWithLink != type
+    typeWithLink = wrapCode(typeWithLink, useCode)
 
     let n = ` - <kbd>${N}</kbd> <em>${typeWithLink}</em> ${optional ? '(optional)' : ''}`
     if (description) n += `: ${description}`
@@ -21,4 +21,8 @@ export const makeMethodTable = (method, allTypes = [], opts) => {
   }).join('\n')
   table += lis ? ('\n\n' + lis) : ''
   return table
+}
+
+const wrapCode = (s, useCode = false) => {
+  return `${useCode ? '<code>' : '`'}${s}${useCode ? '</code>' : '`'}`
 }

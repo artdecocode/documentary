@@ -214,6 +214,7 @@ class Documentary extends Replaceable {
    * @param {string} [value.returnType]
    * @param {Array} [value.args]
    * @param {string} [value.replacedTitle]
+   * @param {boolean} [value.noArgTypesInToc]
    */
   addDtoc(name, value) {
     if (this._disableDtoc) return ''

@@ -59,7 +59,7 @@ function Typedef({ documentary, children, name, narrow,
       const res = type.toMarkdown(allTypes, opts)
       return res
     }
-    const LINE = Method({ documentary, level, method: type })
+    const LINE = Method({ documentary, level, method: type, noArgTypesInToc })
     const table = makeMethodTable(type, allTypes, opts)
     return { LINE, table }
   })
