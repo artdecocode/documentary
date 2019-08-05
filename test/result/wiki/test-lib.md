@@ -56,7 +56,6 @@ Hello World Page B
 <strong><a name="type-_nstypeb">`_ns.TypeB`</a></strong>: A type for page B.
 
 
-
 <details>
  <summary><strong><a name="type-_nstypebsans"><code>_ns.TypeBSans</code></a></strong></summary>
 <table>

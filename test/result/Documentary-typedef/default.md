@@ -35,7 +35,7 @@ __<a name="type-sessionconfig">`SessionConfig`</a>__: Options to setup `koa-sess
 %TYPEDEF test/fixture/typedef/types.xml%
 
 /* expected */
-`import('http').ServerResponse` __<a name="type-httpserverresponse">`http.ServerResponse`</a>__
+[`import('http').ServerResponse`](https://nodejs.org/api/http.html#http_class_http_serverresponse) __<a name="type-httpserverresponse">`http.ServerResponse`</a>__: A writable stream that communicates data to the client. The second argument of the http.Server.on("request") event.
 
 `(res: ServerResponse) => any` __<a name="type-setheaders">`SetHeaders`</a>__: Function to set custom headers on response.
 

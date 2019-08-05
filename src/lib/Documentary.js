@@ -207,6 +207,13 @@ export default class Documentary extends Replaceable {
   /**
    * Adds some information for generating TOC later.
    * @param {string} name
+   * @param {Object} value
+   * @param {string} [value.hash]
+   * @param {boolean} [value.isAsync]
+   * @param {string} [value.name]
+   * @param {string} [value.returnType]
+   * @param {Array} [value.args]
+   * @param {string} [value.replacedTitle]
    */
   addDtoc(name, value) {
     if (this._disableDtoc) return ''

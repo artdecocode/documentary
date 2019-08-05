@@ -1,13 +1,17 @@
 import { SyncReplaceable } from 'restream'
-import md2html from './Html'
-import { codeRe } from '../lib/rules'
 import { relative, dirname } from 'path'
+import md2html from '../Html'
+import { codeRe } from '../../lib/rules'
+import Method from '../method'
+import { makeMethodTable } from './lib'
 
 /**
  * @param {Object} doc
  * @param {{ renderAgain: function(), locations, allTypes: Array<Type>}} doc.documentary
  */
-export default function typedef({ documentary, children, name, narrow, flatten, details }) {
+export default function Typedef({ documentary, children, name, narrow, 
+  flatten, details, level, noArgTypesInToc = false,
+}) {
   details = details ? details.split(',') : []
   const {
     setPretty, locations, allTypes, cutCode, currentFile,
@@ -27,26 +31,38 @@ export default function typedef({ documentary, children, name, narrow, flatten, 
 
   const typesToMd = t.filter(({ import: i }) => !i)
   let flattened = {}
-  const tt = typesToMd.map(type => {
-    return type.toMarkdown(allTypes, { details, narrow, flatten(n) {
+  
+  const linking = ({ link, type: refType }) => {
+    // when splitting wiki over multiple pages, allows
+    // to create links to the exact page.
+    const l = `#${link}`
+    // semi-hack
+    if (refType.appearsIn.includes(file)) return l
+    const ai = refType.appearsIn[0]
+    let rel = relative(dirname(file), ai)
+    if (wiki) rel = rel.replace(/\.(md|html)$/, '')
+    return `${rel}${l}`
+  }
+  const preprocessDesc = (d) => {
+    if (!d) return d
+    // cut ``` from properties, inserted by doc at the end
+    const r = SyncReplaceable(d, [cutCode])
+    return r
+  }
+
+  const tt = typesToMd.map(type => { 
+    const opts = { details, narrow, flatten(n) {
       flattened[n] = true
-    }, preprocessDesc(d) {
-      if (!d) return d
-      // cut ``` from properties, inserted by doc at the end
-      const r = SyncReplaceable(d, [cutCode])
-      return r
-    }, link({ link, type: refType }) {
-      // when splitting wiki over multiple pages, allows
-      // to create links to the exact page.
-      const l = `#${link}`
-      // semi-hack
-      if (refType.appearsIn.includes(file)) return l
-      const ai = refType.appearsIn[0]
-      let rel = relative(dirname(file), ai)
-      if (wiki) rel = rel.replace(/\.(md|html)$/, '')
-      return `${rel}${l}`
-    } }
-    )})
+    }, preprocessDesc, link: linking, level }
+    
+    if (!type.isMethod) {
+      const res = type.toMarkdown(allTypes, opts)
+      return res
+    }
+    const LINE = Method({ documentary, level, method: type })
+    const table = makeMethodTable(type, allTypes, opts)
+    return { LINE, table }
+  })
   // found those imports that will be flattened
   const importsToMd = t
     .filter(({ import: i }) => i)
@@ -71,7 +87,9 @@ export default function typedef({ documentary, children, name, narrow, flatten, 
  <summary>${line}</summary>${ch}
 </details>`
     }
-    return [LINE, ch]
+    const r = [LINE]
+    if (ch) r.push(ch)
+    return r
   })
 
   const res = [...j, ...ttt].reduce((acc, c, i, ar) => {

@@ -1,16 +1,17 @@
 const { h } = require('preact');
-const { SyncReplaceable } = require('../../stdlib');
-const md2html = require('./Html');
-const { codeRe } = require('../lib/rules');
+const { SyncReplaceable } = require('../../../stdlib');
 const { relative, dirname } = require('path');
-const methodTitle = require('../lib/rules/method-title');
+const md2html = require('../Html');
+const { codeRe } = require('../../lib/rules');
+const Method = require('../method');
+const { makeMethodTable } = require('./lib');
 
 /**
  * @param {Object} doc
  * @param {{ renderAgain: function(), locations, allTypes: Array<Type>}} doc.documentary
  */
-function typedef({ documentary, children, name, narrow, 
-  flatten, details, level,
+function Typedef({ documentary, children, name, narrow, 
+  flatten, details, level, noArgTypesInToc = false,
 }) {
   details = details ? details.split(',') : []
   const {
@@ -50,15 +51,18 @@ function typedef({ documentary, children, name, narrow,
     return r
   }
 
-  const tt = typesToMd.map(type => {
-    const res = type.toMarkdown(allTypes, { details, narrow, flatten(n) {
+  const tt = typesToMd.map(type => { 
+    const opts = { details, narrow, flatten(n) {
       flattened[n] = true
-    }, preprocessDesc, link: linking, level })
-    if (!type._isMethod) return res
-    let { re, replacement } = methodTitle
-    replacement = replacement.bind(documentary.documentary)
-    res.LINE = SyncReplaceable(res.LINE, [{ re, replacement }])
-    return res
+    }, preprocessDesc, link: linking, level }
+    
+    if (!type.isMethod) {
+      const res = type.toMarkdown(allTypes, opts)
+      return res
+    }
+    const LINE = Method({ documentary, level, method: type })
+    const table = makeMethodTable(type, allTypes, opts)
+    return { LINE, table }
   })
   // found those imports that will be flattened
   const importsToMd = t
@@ -153,4 +157,4 @@ const Narrow = ({ props, anyHaveDefault, documentary }) => {
  * @typedef {import('typal/src/lib/Type').default} Type
  */
 
-module.exports = typedef
+module.exports = Typedef

@@ -1,58 +1,38 @@
-const { debuglog } = require('util');
+const Method = require('../../components/method');
 
-const LOG = debuglog('doc')
+const re = /```(#+)( async)? (.+?)(?: => (.+))?(\n[\s\S]*?)?```/g
 
-const replaceTitle = function (level, isAsync, method, returnType, args) {
-  const sig = `${level} ${isAsync ? '`async ' : '`'}${method}(`
-  const endSig = `): ${returnType ? returnType : 'void'}\``
-  const nl = '<br/>'
-  const i = '&nbsp;&nbsp;'
-  const single = `${sig}${endSig}`
-  if (!args.length) return single
-
-  const lines = args.map(([name, type]) => {
-    if (typeof type == 'string') {
-      return `\`${name}: ${type},\``
-    }
-    const l = Object.keys(type)
-      .map((key) => {
-        // const isRequired = key.endsWith('?')
-        const [propType, defaultValue] = type[key]
-        // static?: boolean = true,
-        return `${key}: ${propType}${defaultValue ? ` = ${defaultValue}` : ''}`
-      })
-      .map(line => `\`${line},\``)
-      .join(`${nl}${i.repeat(2)}`)
-    const n = `\`${name}: {\`${nl}${i.repeat(2)}${l}${nl}${i.repeat(1)}\`},\``
-    return n
-  })
-
-
-  const nls = `${nl}${i.repeat(1)}`
-  const s = lines.join(nls)
-
-  const res = `${sig}\`${nls}${s}${nl}\`${endSig}`
-  return res
-}
-
-const re = /```(#+)( async)? (\w+)(?: => (.+)\n)?([\s\S]*?)```/g
-
-const replacer = function (match, level, isAsync, method, returnType, jsonArgs) {
+/**
+ * @this {import('../Documentary')}
+ */
+const replacer = function (match, level, isAsync, name, returnType, jsonArgs) {
+  let args
   try {
     jsonArgs = jsonArgs.trim()
     /** @type {Array} */
-    const args = JSON.parse(jsonArgs || '[]')
-
-    const val = {
-      hash: level, isAsync, name: method, returnType, args,
-    }
-    const dtoc = this.addDtoc ? this.addDtoc('MT', val) : ''
-    const res = replaceTitle.call(this, level, isAsync, method, returnType, args)
-    val.replacedTitle = res
-    return `${dtoc}${res}`
+    args = JSON.parse(jsonArgs || '[]')
   } catch (err) {
-    LOG('Could not parse the method title')
+    this.log('Could not parse the method title')
     return match
+  }
+
+  const method = {
+    name,
+    _async: !!isAsync,
+    return: returnType,
+    _args: args.map(([n, type, shortType]) => {
+      return { name: n, type, shortType }
+    }),
+  }
+  try {
+    const m = Method({
+      method,
+      documentary: { documentary: this },
+      level: level.length,
+    })
+    return m
+  } catch (err) {
+    this.log('Could not create method: %s', err.message)
   }
 }
 
@@ -63,6 +43,5 @@ const methodTitleRule = {
 
 module.exports=methodTitleRule
 
-module.exports.replaceTitle = replaceTitle
 module.exports.replacer = replacer
 module.exports.methodTitleRe = re

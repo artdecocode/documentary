@@ -82,7 +82,11 @@ export default class Context {
   }
   mockDoc(rules) {
     const rs = new Replaceable(rules)
-    rs.log = () => {}
+    rs.addDtoc = () => ''
+    rs.log = (...args) => {
+      // console.log(args)
+      // debugger
+    }
     rs.addAsset = () => {}
     return rs
   }

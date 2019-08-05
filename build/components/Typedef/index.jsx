@@ -1,16 +1,16 @@
-const { h } = require('preact');
-const { SyncReplaceable } = require('../../stdlib');
-const md2html = require('./Html');
-const { codeRe } = require('../lib/rules');
+const { SyncReplaceable } = require('../../../stdlib');
 const { relative, dirname } = require('path');
-const methodTitle = require('../lib/rules/method-title');
+const md2html = require('../Html');
+const { codeRe } = require('../../lib/rules');
+const Method = require('../method');
+const { makeMethodTable } = require('./lib');
 
 /**
  * @param {Object} doc
  * @param {{ renderAgain: function(), locations, allTypes: Array<Type>}} doc.documentary
  */
-function typedef({ documentary, children, name, narrow, 
-  flatten, details, level,
+function Typedef({ documentary, children, name, narrow, 
+  flatten, details, level, noArgTypesInToc = false,
 }) {
   details = details ? details.split(',') : []
   const {
@@ -50,15 +50,18 @@ function typedef({ documentary, children, name, narrow,
     return r
   }
 
-  const tt = typesToMd.map(type => {
-    const res = type.toMarkdown(allTypes, { details, narrow, flatten(n) {
+  const tt = typesToMd.map(type => { 
+    const opts = { details, narrow, flatten(n) {
       flattened[n] = true
-    }, preprocessDesc, link: linking, level })
-    if (!type._isMethod) return res
-    let { re, replacement } = methodTitle
-    replacement = replacement.bind(documentary.documentary)
-    res.LINE = SyncReplaceable(res.LINE, [{ re, replacement }])
-    return res
+    }, preprocessDesc, link: linking, level }
+    
+    if (!type.isMethod) {
+      const res = type.toMarkdown(allTypes, opts)
+      return res
+    }
+    const LINE = Method({ documentary, level, method: type })
+    const table = makeMethodTable(type, allTypes, opts)
+    return { LINE, table }
   })
   // found those imports that will be flattened
   const importsToMd = t
@@ -71,14 +74,14 @@ function typedef({ documentary, children, name, narrow,
     const { LINE, table: type, displayInDetails } = s
     const isObject = typeof type == 'object' // table can be empty string, e.g., ''
 
-    const ch = isObject ?    h(Narrow,{...type,key:i, documentary:documentary }) : type
+    const ch = isObject ? <Narrow key={i} {...type} documentary={documentary} /> : type
     if (displayInDetails) {
       const line = md2html({ documentary, children: [LINE] })
 
-      if (isObject) return (   h('details',{},'\n ',
-        h('summary',{'dangerouslySetInnerHTML':{ __html: line }}),'\n',
-        ch,'\n',
-      ))
+      if (isObject) return (<details>{'\n '}
+        <summary dangerouslySetInnerHTML={{ __html: line }} />{'\n'}
+        {ch}{'\n'}
+      </details>)
 
       return `<details>
  <summary>${line}</summary>${ch}
@@ -102,14 +105,14 @@ const Narrow = ({ props, anyHaveDefault, documentary }) => {
   const md = (name) => {
     return md2html({ documentary, children: [name] })
   }
-  return (h('table',{},'\n ',
-    h('thead',{},h('tr',{},'\n  ',
-      h('th',{},`Name`),'\n  ',
-      h('th',{},`Type & Description`),anyHaveDefault ? '\n  ' : '\n ' ,
-      anyHaveDefault && h('th',{},`Default`),
-      anyHaveDefault && '\n ',
-    )),'\n',
-    props.reduce((acc, { name, typeName, de, d, prop }) => {
+  return (<table>{'\n '}
+    <thead><tr>{'\n  '}
+      <th>Name</th>{'\n  '}
+      <th>Type & Description</th>{anyHaveDefault ? '\n  ' : '\n ' }
+      {anyHaveDefault && <th>Default</th>}
+      {anyHaveDefault && '\n '}
+    </tr></thead>{'\n'}
+    {props.reduce((acc, { name, typeName, de, d, prop }) => {
       const hasCodes = new RegExp(codeRe.source, codeRe.flags).test(prop.description)
       de = de + '\n  '
       if (hasCodes) de = '\n\n' + de
@@ -117,35 +120,36 @@ const Narrow = ({ props, anyHaveDefault, documentary }) => {
       const { optional, aliases } = prop
       const a = optional ? aliases : aliases.map(al => `${al}*`)
       const n = [name, ...a]
-      const r = (h('tr',{'key':name},'\n  ',
-        h('td',{'rowSpan':"3",'align':"center"},
-          n.reduce((ac, c, i, ar) => {
-            ac.push(optional ? c : h('strong',{},c))
-            if (i < ar.length - 1) ac.push(h('br'))
+      const r = (<tr key={name}>{'\n  '}
+        <td rowSpan="3" align="center">
+          {n.reduce((ac, c, i, ar) => {
+            ac.push(optional ? c : <strong>{c}</strong>)
+            if (i < ar.length - 1) ac.push(<br/>)
             return ac
-          }, []),
-        ),'\n  ',
-        h('td',{},
-          h('em',{'dangerouslySetInnerHTML':{ __html: md(typeName) }}),
-        ),
-        anyHaveDefault ? '\n  ' : '\n ',
-        anyHaveDefault && h('td',{'dangerouslySetInnerHTML':{ __html: md(d) },'rowSpan':"3"}),
-        anyHaveDefault && '\n ',
-      ))
-      const rr = h('tr',{},'\n  ',
-        h('td',{'dangerouslySetInnerHTML':{ __html: hasCodes ? de : md(de) }}),'\n ',
-      )
+          }, [])}
+        </td>{'\n  '}
+        <td>
+          <em dangerouslySetInnerHTML={{ __html: md(typeName) }}/>
+        </td>
+        {anyHaveDefault ? '\n  ' : '\n '}
+        {anyHaveDefault && <td rowSpan="3"
+          dangerouslySetInnerHTML={{ __html: md(d) }}/>}
+        {anyHaveDefault && '\n '}
+      </tr>)
+      const rr = <tr>{'\n  '}
+        <td dangerouslySetInnerHTML={{ __html: hasCodes ? de : md(de) }} />{'\n '}
+      </tr>
 
       acc.push(' ')
       acc.push(r)
       acc.push('\n ')
-      acc.push(h('tr'))
+      acc.push(<tr />)
       acc.push('\n ')
       acc.push(rr)
       acc.push('\n')
       return acc
-    }, []),
-  ))
+    }, [])}
+  </table>)
 }
 
 /**
@@ -153,4 +157,4 @@ const Narrow = ({ props, anyHaveDefault, documentary }) => {
  * @typedef {import('typal/src/lib/Type').default} Type
  */
 
-module.exports = typedef
+module.exports = Typedef

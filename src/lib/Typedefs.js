@@ -198,6 +198,8 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
   // const r = new Replaceable(c)
   stream.pipe(new Transform({
     async transform({ data, file }, enc, next) {
+      if (!data && !file) 
+        return next(new Error('No data or file, make sure to pipe in stream in Object mode.'))
       if (data == 'separator' || !data.trim()) return next()
       if (!/\.(md|html)$/.test(file)) return next()
 

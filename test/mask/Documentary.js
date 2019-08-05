@@ -1,11 +1,11 @@
 import makeTestSuite from '@zoroaster/mask'
-import { collect } from 'catchment'
 import TempContext from 'temp-context'
 import { dirname } from 'path'
 import alamode from 'alamode'
 import Documentary from '../../src/lib/Documentary'
-import Typedefs from '../../src/lib/Typedefs'
+import { getTypedefs } from '../../src/lib/Typedefs'
 import { getStream } from '../../src/lib'
+import { Readable } from 'stream'
 
 const preact = dirname(require.resolve('preact/package.json'))
 alamode({
@@ -31,12 +31,16 @@ export const components2 = makeTestSuite('test/result/Documentary-components.md'
   },
 })
 
-export const typedefs = makeTestSuite('test/result/Documentary-types.md', {
+export const typedefs = makeTestSuite('test/result/Documentary-typedef', {
   async getReadable() {
-    const t = new Typedefs()
-    t.end(this.input)
-    await collect(t)
-    const { types, locations } = t
+    const p = new Readable({
+      objectMode: true,
+      read: () => {
+        p.push({ data: this.input, file: 'test.md' })
+        p.push(null)
+      },
+    })
+    const { types, locations } = await getTypedefs(p)
     const doc = new Documentary({ locations, types, disableDtoc: true })
     doc.end(this.input)
     return doc

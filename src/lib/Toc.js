@@ -108,7 +108,7 @@ class ChunkReplaceable extends Replaceable {
             const { length: level } = hash
 
             if (this.skipLine(level)) return match
-            const bb = [isAsync, name]
+            const bb = [isAsync ? 'async' : '', name]
               .filter(a => a)
               .join(' ').trim()
             const s = args.map(([argName, type, shortType]) => {
