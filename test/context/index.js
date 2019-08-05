@@ -154,7 +154,10 @@ import Catchment from 'catchment'
     const proc = fork(DOC, [input, ...args], {
       stdio: 'pipe',
       execArgv: [],
-      env,
+      env: {
+        ...process.env, // pass DOCUMENTARY_SKIP_USER_COMPONENTS
+        ...env,
+      },
     })
     const { stdout, stderr } = await proc.promise
     return {

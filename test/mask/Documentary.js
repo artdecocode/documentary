@@ -26,7 +26,7 @@ export const components2 = makeTestSuite('test/result/Documentary-components.md'
    */
   async getTransform({ TEMP, add }) {
     await add('test/fixture/.documentary')
-    const doc = new Documentary({ cwd: TEMP, disableDtoc: true })
+    const doc = new Documentary({ cwd: TEMP, disableDtoc: true, skipUserComponents: false })
     return doc
   },
 })

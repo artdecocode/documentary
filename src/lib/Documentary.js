@@ -24,18 +24,28 @@ import * as Components from '../components/'
 
 const LOG = debuglog('doc')
 
-const getComponents = (path) => {
-  try {
-    const transforms = require(path)
-    const components = loadComponents(transforms)
-    return components
-  } catch (err) {
-    if (!/^Cannot find module/.test(err.message)) {
-      console.log(err.stack)
+const getComponents = (paths, documentary) => {
+  const transforms = paths.reduce((acc, path) => {
+    try {
+      const required = require(path) // an object
+      Object.entries(required).forEach(([key, e]) => {
+        if (acc[key] && acc[key] !== e) console.error('Overriding component <%s> by new one from %s', key, path)
+        acc[key] = e
+      })
+      return acc
+    } catch (err) {
+      if (!/^Cannot find module/.test(err.message)) {
+        console.log(err.stack)
+      }
+      return acc
     }
-    return []
-  }
+  }, Components)
+  const components = loadComponents(transforms, documentary)
+  return components
 }
+
+const SKIP_USER_COMPONENTS = process.env.DOCUMENTARY_SKIP_USER_COMPONENTS 
+  && process.env.DOCUMENTARY_SKIP_USER_COMPONENTS != 'false'
 
 /**
  * Documentary is a _Replaceable_ stream with transform rules for documentation.
@@ -56,6 +66,7 @@ export default class Documentary extends Replaceable {
       cwd = '.', cacheLocation = join(cwd, '.documentary/cache'), noCache,
       disableDtoc, objectMode = true /* deprec */,
       wiki, output, source, // options to remember
+      skipUserComponents = SKIP_USER_COMPONENTS,
     } = options
 
     // console.log('loaded components %s', components)
@@ -84,16 +95,16 @@ export default class Documentary extends Replaceable {
         const rule = makePasteRule(marker)
         return rule
       })
-
-    const hm = getComponents(join(homedir(), '.documentary'))
-    const cm = getComponents(resolve(cwd, '.documentary'))
+    
+    const compPaths = [
+      join(homedir(), '.documentary'),
+      resolve(cwd, '.documentary'),
+    ]
     // this is the service property to components
     const documentary = {
       insertInnerCode, locations, allTypes, cutCode, wiki, source,
-      currentFile: () => { return this.currentFile },
     }
-    const dm = loadComponents(Components,  documentary)
-    const components = [...cm, ...hm, ...dm]
+    const components = getComponents(skipUserComponents ? [] : compPaths, documentary)
 
     super([
       cutInnerCode, // don't want other rules being detected inside of inner code, including toc-titles
@@ -293,6 +304,7 @@ export default class Documentary extends Replaceable {
     } else if (typeof chunk == 'object') {
       if (basename(chunk.file) == '.DS_Store') return next()
       chunk.file != 'separator' && LOG(b(chunk.file, 'cyan'))
+      /** @type {string} */
       this.currentFile = chunk.file
       await super._transform(chunk.data, _, next)
     } else {

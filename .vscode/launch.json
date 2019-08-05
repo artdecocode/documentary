@@ -11,6 +11,7 @@
       "program": "${workspaceFolder}/node_modules/.bin/zoroaster",
       "env": {
         "NODE_DEBUG": "doc",
+        "DOCUMENTARY_SKIP_USER_COMPONENTS": "1",
         // "ALAMODE_ENV": "test-build",
         "DEBUG": "1",
       },

@@ -4,7 +4,7 @@
   "description": "A Documentation Pre-processor To Generate The Table Of Contents, Embed Examples With Their Output, Make Markdown Tables, Maintain Typedefs For JavaScript And README, Watch Changes To Push, Use Macros And Prettify API Titles.",
   "main": "build",
   "scripts": {
-    "t": "NODE_DEBUG=doc zoroaster -a -t 15000",
+    "t": "DOCUMENTARY_SKIP_USER_COMPONENTS=1 NODE_DEBUG=doc zoroaster -a -t 15000",
     "spec": "yarn t test/spec",
     "mask": "yarn t test/mask",
     "test": "yarn t test/spec test/mask",
