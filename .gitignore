@@ -67,6 +67,7 @@ shell.gif1
 .documentary/cache
 test/temp
 build/components/*.jsx
+build/components/**/*.jsx
 build/lib/rules/*.jsx
 TODO.md
 t
