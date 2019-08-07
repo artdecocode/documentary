@@ -16,7 +16,7 @@ const makeMethodTable = (method, allTypes = [], opts) => {
     useCode = typeWithLink != type
     typeWithLink = wrapCode(typeWithLink, useCode)
 
-    let n = ` - <kbd>${N}</kbd> <em>${typeWithLink}</em> ${optional ? '(optional)' : ''}`
+    let n = ` - <kbd>${N}</kbd> <em>${typeWithLink}</em>${optional ? ' (optional)' : ''}`
     if (description) n += `: ${description}`
     return n
   }).join('\n')

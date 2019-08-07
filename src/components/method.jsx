@@ -8,11 +8,11 @@
  */
 export default function Method({ documentary: { documentary }, method, level = 2, noArgTypesInToc }) {
   const hash = '#'.repeat(level)
-  const sig = `${hash} ${method._async ? '`async ' : '`'}${method.name}(`
-  const endSig = `): ${method.return || 'void'}\``
+  const sig = `${hash} <code>${method._async ? 'async ' : ''}<ins>${method.name}</ins>(</code>`
+  const endSig = `<code>): <i>${method.return || 'void'}</i></code></sub>`
   const nl = '<br/>'
   const i = '&nbsp;&nbsp;'
-  
+
   let done = `${sig}${endSig}`
 
   const lines = method._args.map(({ name, type, optional }) => {
@@ -30,15 +30,15 @@ export default function Method({ documentary: { documentary }, method, level = 2
       })
       .map(line => `\`${line},\``)
       .join(`${nl}${i.repeat(2)}`)
-    const n = `\`${name}: {\`${nl}${i.repeat(2)}${l}${nl}${i.repeat(1)}\`},\``
+    const n = `\`${N}: {\`${nl}${i.repeat(2)}${l}${nl}${i.repeat(1)}\`},\``
     return n
   })
 
   if (lines.length) {
     const nls = `${nl}${i.repeat(1)}`
     const s = lines.join(nls)
-  
-    done = `${sig}\`${nls}${s}${nl}\`${endSig}`
+
+    done = `${sig}<sub>${nls}${s}${nl}${endSig}`
   }
 
   const dtoc = documentary.addDtoc('MT', {
