@@ -1,7 +1,5 @@
 import { equal } from '@zoroaster/assert'
-import mismatch from 'mismatch'
 import { getLink } from '../../src/lib'
-import { makeComponentRe } from '../../src/lib/components'
 
 /** @type {Object.<string, (c: Context)>} */
 export const GetLink = {
@@ -13,5 +11,9 @@ export const GetLink = {
   async 'keeps special characters'() {
     const link = getLink('ÀLaNode')
     equal(link, 'àlanode')
+  },
+  async 'keeps text in codes but not tags'() {
+    const link = getLink('`<fork>`')
+    equal(link, 'fork')
   },
 }

@@ -7,10 +7,18 @@ const titleRule = require('./rules/method-title');
 const { PassThrough } = require('stream');
 
 const getLink = (title, prefix = '') => {
+  const codes = {}
   const l = title
+    .replace(/`(.+?)`/g, (m, code, i) => {
+      codes[i] = code
+      return `%%RESTREAM-REPLACE-${i}%%`
+    })
     .replace(/<\/?\w+>/g, '')
     .replace(/<br\/>/g, '')
-    .replace(/&nbsp;/g, '')
+    .replace(/&nbsp;/g, '') // should replace all entities...
+    .replace(/%%RESTREAM-REPLACE-(\d+)%%/g, (m, i) => {
+      return `\`${codes[i]}\``
+    })
     .replace(/[^\u00C0-\u1FFF\u2C00-\uD7FF\w\-\d ]/gu, '')
     .toLowerCase()
     .replace(/[, ]/g, '-')
