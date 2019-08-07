@@ -44,7 +44,7 @@ yarn add -D documentary
 Each feature of _Documentary_ is described on its relevant Wiki page.
 
 - <kbd>⭐️[Key Features](../../wiki/Key-Features)</kbd>: A quick overview of the solutions provided by _Documentary_ for developers to make writing documentation a breeze.
-- <kbd>📖[Tables Of Content](../../wiki/Tables-Of-Content)</kbd>: Creating a navigation menu for the README page.
+- <kbd>📖[Tables Of Content](../../wiki/Tables-Of-Contents)</kbd>: Creating a navigation menu for the README page.
 - <kbd>⚜️[Section Breaks](../../wiki/Section-Breaks)</kbd>: Placing visual separators of sections.
 - <kbd>📐[JSON Tables](../../wiki/JSON-Tables)</kbd>: Writing _JSON_ array data to be converted into a Markdown table.
 - <kbd>📜[Embed Examples](../../wiki/Embed-Examples)</kbd>: Decoupling examples from documentation by maintaining separate runnable example file.
