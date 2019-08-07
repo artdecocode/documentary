@@ -1,3 +1,3 @@
 ## API
 
-### <code><ins>runSoftware</ins>(</code><code>): <i>string</i></code></sub>
+### <code><ins>runSoftware</ins>(): <i>string</i></code>
