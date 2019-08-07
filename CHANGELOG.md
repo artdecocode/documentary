@@ -1,3 +1,9 @@
+## 7 August 2019
+
+### [1.30.3](https://github.com/artdecocode/documentary/compare/v1.30.2...v1.30.3)
+
+- [feature] Print `static` tag in typedef tables.
+
 ## 3 August 2019
 
 ### [1.30.2](https://github.com/artdecocode/documentary/compare/v1.30.1...v1.30.2)

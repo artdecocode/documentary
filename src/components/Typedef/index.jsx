@@ -104,6 +104,10 @@ export default function Typedef({ documentary, children, name, narrow,
   return res
 }
 
+/**
+ * @param {Object} opts
+ * @param {!Array<{ prop: Property }>} opts.props
+ */
 const Narrow = ({ props, anyHaveDefault, documentary }) => {
   const md = (name) => {
     return md2html({ documentary, children: [name] })
@@ -120,12 +124,13 @@ const Narrow = ({ props, anyHaveDefault, documentary }) => {
       de = de + '\n  '
       if (hasCodes) de = '\n\n' + de
       // let n = md(name)
-      const { optional, aliases } = prop
+      const { optional, aliases, static: isStatic } = prop
       const a = optional ? aliases : aliases.map(al => `${al}*`)
       const n = [name, ...a]
       const r = (<tr key={name}>{'\n  '}
         <td rowSpan="3" align="center">
           {n.reduce((ac, c, i, ar) => {
+            if (isStatic) ac.push(<kbd>static</kbd>, ' ')
             ac.push(optional ? c : <strong>{c}</strong>)
             if (i < ar.length - 1) ac.push(<br/>)
             return ac
@@ -158,4 +163,8 @@ const Narrow = ({ props, anyHaveDefault, documentary }) => {
 /**
  * @suppress {nonStandardJsDocs}
  * @typedef {import('typal/src/lib/Type').default} Type
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('typal/src/lib/Property').default} Property
  */

@@ -69,12 +69,14 @@ export default class Context {
   }
   /**
    * Create a readable stream which will push the passed string.
-   * @param {string} s The string to push.
+   * Emulates _Pedantry_.
+   * @param {string} data The string to push.
    */
-  createReadable(s) {
+  createReadable(data, objectMode = true) {
     const rs = new Readable({
+      objectMode,
       read() {
-        this.push(s)
+        this.push(objectMode ? { data, file: 'test.md' } : data)
         this.push(null)
       },
     })

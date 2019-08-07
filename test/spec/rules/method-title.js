@@ -15,22 +15,22 @@ const T = {
   },
   async 'replaces async function'({ getTitle, createReadable, mockDoc }) {
     const t = getTitle()
-    const r = createReadable(t)
+    const r = createReadable(t, false)
     return r.pipe(mockDoc(titleRule))
   },
   async 'replaces function without return'({ getTitle, createReadable, mockDoc }) {
     const t = getTitle(true, true, false)
-    const r = createReadable(t)
+    const r = createReadable(t, false)
     return r.pipe(mockDoc(titleRule))
   },
   async 'replaces non-async function'({ getTitle, createReadable, mockDoc }) {
     const t = getTitle(false)
-    const r = createReadable(t)
+    const r = createReadable(t, false)
     return r.pipe(mockDoc(titleRule))
   },
   async 'replaces single line function'({ getTitle, createReadable, mockDoc }) {
     const t = getTitle(false, false)
-    const r = createReadable(t)
+    const r = createReadable(t, false)
     return r.pipe(mockDoc(titleRule))
   },
   async 'returns match when cannot parse the table'({ DocumentaryNoDToc }) {
