@@ -1,5 +1,5 @@
 const { c, b } = require('../../stdlib');
-let competent = require('competent'); if (competent && competent.__esModule) competent = competent.default;
+const { competent } = require('../../stdlib');
 
 function loadComponents(components, options = {}) {
   const rule = competent(components, {

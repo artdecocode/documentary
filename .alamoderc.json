@@ -13,11 +13,11 @@
         "stdlib": {
           "path": "stdlib.js",
           "packages": [
-            "@wrote/write", "argufy", "catchment", "clearr", "erte", 
-            "forkfeed", "makepromise", "mismatch", "rexml", "@wrote/read", 
+            "@wrote/write", "argufy", "catchment", "clearr", "erte",
+            "forkfeed", "makepromise", "mismatch", "rexml", "@wrote/read",
             "usually", "resolve-dependency", "spawncommand", "restream",
             "@wrote/clone", "@wrote/ensure-path", "pedantry", "@depack/cache",
-            "which-stream", "@wrote/read-dir-structure"
+            "which-stream", "@wrote/read-dir-structure", "competent"
           ]
         },
         "alamodeModules": ["alamode", "usually", "spawncommand", "rexml", "@wrote/read", "clearr", "@depack/cache"]

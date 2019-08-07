@@ -1,3 +1,4 @@
+import '@externs/preact'
 import write from '@wrote/write'
 import read from '@wrote/read'
 import clone from '@wrote/clone'
@@ -7,7 +8,7 @@ import rexml from 'rexml'
 import argufy, { reduceUsage } from 'argufy'
 import Catchment, { collect } from 'catchment'
 import clearr from 'clearr'
-// import competent from 'competent'
+import competent from 'competent'
 import erte, { c, b } from 'erte'
 import forkfeed from 'forkfeed'
 import makepromise from 'makepromise'
@@ -24,6 +25,7 @@ import compare from '@depack/cache'
 import whichStream from 'which-stream'
 
 module.exports = {
+  'competent': competent,
   'c': c,
   'b': b,
   'readDirStructure': readDirStructure,
@@ -37,10 +39,10 @@ module.exports = {
   'usually': usually,
   'spawn': spawn,
   'fork': fork,
-  'SyncReplaceable': SyncReplaceable, 
-  'Replaceable': Replaceable, 
-  'makeMarkers': makeMarkers, 
-  'makeCutRule': makeCutRule, 
+  'SyncReplaceable': SyncReplaceable,
+  'Replaceable': Replaceable,
+  'makeMarkers': makeMarkers,
+  'makeCutRule': makeCutRule,
   'makePasteRule': makePasteRule,
   'resolveDependency': resolveDependency,
   'rexml': rexml,

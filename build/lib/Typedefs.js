@@ -8,7 +8,7 @@ const { parseFile } = require('typal');
 const { codeRe, commentRule } = require('./rules');
 const { methodTitleRe } = require('./rules/method-title');
 const { macroRule, useMacroRule } = require('./rules/macros');
-let competent = require('competent'); if (competent && competent.__esModule) competent = competent.default;
+const { competent } = require('../../stdlib');
 const { Transform } = require('stream');
 
 const LOG = debuglog('doc')
