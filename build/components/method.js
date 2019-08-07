@@ -1,4 +1,7 @@
 const { h } = require('preact');
+const NL = '<br/>'
+const I = '&nbsp;&nbsp;' // indent
+
 /**
  * Writes method title.
  * @param {Object} opts
@@ -9,12 +12,7 @@ const { h } = require('preact');
  */
 function Method({ documentary: { documentary }, method, level = 2, noArgTypesInToc }) {
   const hash = '#'.repeat(level)
-  const sig = `${hash} <code>${method._async ? 'async ' : ''}<ins>${method.name}</ins>(</code>`
-  const endSig = `<code>): <i>${method.return || 'void'}</i></code></sub>`
-  const nl = '<br/>'
-  const i = '&nbsp;&nbsp;'
-
-  let done = `${sig}${endSig}`
+  let sig = `${hash} <code>${method._async ? 'async ' : ''}<ins>${method.name}</ins>(`
 
   const lines = method._args.map(({ name, type, optional }) => {
     const N = `${name}${optional ? '=' : ''}`
@@ -30,16 +28,20 @@ function Method({ documentary: { documentary }, method, level = 2, noArgTypesInT
         return `${key}: ${propType}${defaultValue ? ` = ${defaultValue}` : ''}`
       })
       .map(line => `\`${line},\``)
-      .join(`${nl}${i.repeat(2)}`)
-    const n = `\`${N}: {\`${nl}${i.repeat(2)}${l}${nl}${i.repeat(1)}\`},\``
+      .join(`${NL}${I.repeat(2)}`)
+    const n = `\`${N}: {\`${NL}${I.repeat(2)}${l}${NL}${I.repeat(1)}\`},\``
     return n
   })
 
+  // let done
   if (lines.length) {
-    const nls = `${nl}${i.repeat(1)}`
+    const nls = `${NL}${I.repeat(1)}`
     const s = lines.join(nls)
-
-    done = `${sig}<sub>${nls}${s}${nl}${endSig}`
+    sig += '</code>'
+    sig += `<sub>${nls}${s}${NL}`
+    sig += `</sub><code>): <i>${method.return || 'void'}</i></code>`
+  } else {
+    sig += `): <i>${method.return || 'void'}</i></code>`
   }
 
   const dtoc = documentary.addDtoc('MT', {
@@ -51,11 +53,11 @@ function Method({ documentary: { documentary }, method, level = 2, noArgTypesInT
     isAsync: method._async,
     name: method.name,
     returnType: method.return,
-    replacedTitle: done,
+    replacedTitle: sig,
     noArgTypesInToc,
   })
 
-  return `${dtoc}${done}`
+  return `${dtoc}${sig}`
 }
 
 module.exports = Method

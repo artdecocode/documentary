@@ -2,7 +2,7 @@
 <typedef level="3">test/fixture/typedef/methods.xml</typedef>
 
 /* expected */
-### <code><ins>h</ins>(</code><sup><br/>&nbsp;&nbsp;`nodeName: string|!Function,`<br/>&nbsp;&nbsp;`attributes=: Object,`<br/>&nbsp;&nbsp;`...args: !(preact.VNode|Array<!preact.VNode>),`<br/></sup><code>): <i>!preact.VNode</i></code>
+### <code><ins>h</ins>(</code><sub><br/>&nbsp;&nbsp;`nodeName: string|!Function,`<br/>&nbsp;&nbsp;`attributes=: Object,`<br/>&nbsp;&nbsp;`...args: !(preact.VNode|Array<!preact.VNode>),`<br/></sub><code>): <i>!preact.VNode</i></code>
 The pragma (rendering) function.
 
  - <kbd><strong>nodeName*</strong></kbd> <em><code>(string \| !Function)</code></em>: An element name. Ex: `div`, `a`, `span`, etc.
@@ -10,7 +10,7 @@ The pragma (rendering) function.
  - <kbd>...args</kbd> <em><code>!(preact.VNode \| Array&lt;!preact.VNode&gt;)</code></em> (optional): Additional arguments are taken to be children to append. Can be infinitely nested Arrays.
 
 
-### <code><ins>createElement</ins>(</code><sup><br/>&nbsp;&nbsp;`nodeName: string|!Function,`<br/>&nbsp;&nbsp;`attributes=: Object,`<br/>&nbsp;&nbsp;`...args: !(preact.VNode|Array<!preact.VNode>),`<br/></sup><code>): <i>!preact.VNode</i></code>
+### <code><ins>createElement</ins>(</code><sub><br/>&nbsp;&nbsp;`nodeName: string|!Function,`<br/>&nbsp;&nbsp;`attributes=: Object,`<br/>&nbsp;&nbsp;`...args: !(preact.VNode|Array<!preact.VNode>),`<br/></sub><code>): <i>!preact.VNode</i></code>
 The pragma (rendering) function. Alias of `h`.
 
  - <kbd><strong>nodeName*</strong></kbd> <em><code>(string \| !Function)</code></em>: An element name. Ex: `div`, `a`, `span`, etc.

@@ -37,8 +37,8 @@ export default function Method({ documentary: { documentary }, method, level = 2
     const nls = `${NL}${I.repeat(1)}`
     const s = lines.join(nls)
     sig += '</code>'
-    sig += `<sup>${nls}${s}${NL}`
-    sig += `</sup><code>): <i>${method.return || 'void'}</i></code>`
+    sig += `<sub>${nls}${s}${NL}`
+    sig += `</sub><code>): <i>${method.return || 'void'}</i></code>`
   } else {
     sig += `): <i>${method.return || 'void'}</i></code>`
   }
