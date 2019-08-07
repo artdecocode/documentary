@@ -44,7 +44,7 @@ const getComponents = (paths, documentary) => {
   return components
 }
 
-const SKIP_USER_COMPONENTS = process.env.DOCUMENTARY_SKIP_USER_COMPONENTS 
+const SKIP_USER_COMPONENTS = process.env.DOCUMENTARY_SKIP_USER_COMPONENTS
   && process.env.DOCUMENTARY_SKIP_USER_COMPONENTS != 'false'
 
 /**
@@ -95,7 +95,7 @@ export default class Documentary extends Replaceable {
         const rule = makePasteRule(marker)
         return rule
       })
-    
+
     const compPaths = [
       join(homedir(), '.documentary'),
       resolve(cwd, '.documentary'),
@@ -303,6 +303,7 @@ export default class Documentary extends Replaceable {
       await super._transform(chunk, _, next)
     } else if (typeof chunk == 'object') {
       if (basename(chunk.file) == '.DS_Store') return next()
+      else if (/\.(js|xml)$/.test(chunk.file)) return next()
       chunk.file != 'separator' && LOG(b(chunk.file, 'cyan'))
       /** @type {string} */
       this.currentFile = chunk.file

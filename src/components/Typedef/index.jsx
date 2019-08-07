@@ -12,7 +12,7 @@ import { makeMethodTable } from './lib'
  * @param {Object} opts.documentary
  * @param {import('../../lib/Documentary').default} opts.documentary.documentary
  */
-export default function Typedef({ documentary, children, name, narrow, 
+export default function Typedef({ documentary, children, name, narrow,
   flatten, details, level, noArgTypesInToc = false,
 }) {
   details = details ? details.split(',') : []
@@ -34,7 +34,7 @@ export default function Typedef({ documentary, children, name, narrow,
 
   const typesToMd = t.filter(({ import: i }) => !i)
   let flattened = {}
-  
+
   const linking = ({ link, type: refType }) => {
     // when splitting wiki over multiple pages, allows
     // to create links to the exact page.
@@ -53,11 +53,11 @@ export default function Typedef({ documentary, children, name, narrow,
     return r
   }
 
-  const tt = typesToMd.map(type => { 
+  const tt = typesToMd.map(type => {
     const opts = { details, narrow, flatten(n) {
       flattened[n] = true
     }, preprocessDesc, link: linking, level }
-    
+
     if (!type.isMethod) {
       const res = type.toMarkdown(allTypes, opts)
       return res
@@ -77,7 +77,8 @@ export default function Typedef({ documentary, children, name, narrow,
     const { LINE, table: type, displayInDetails } = s
     const isObject = typeof type == 'object' // table can be empty string, e.g., ''
 
-    const ch = isObject ? <Narrow key={i} {...type} documentary={documentary} /> : type
+    const ch = isObject ? <Narrow key={i} {...type}
+      documentary={documentary} /> : type
     if (displayInDetails) {
       const line = md2html({ documentary, children: [LINE] })
 
@@ -107,8 +108,9 @@ export default function Typedef({ documentary, children, name, narrow,
 /**
  * @param {Object} opts
  * @param {!Array<{ prop: Property }>} opts.props
+ * @param {boolean} opts.const Whether the type is a constructor or interface.
  */
-const Narrow = ({ props, anyHaveDefault, documentary }) => {
+const Narrow = ({ props, anyHaveDefault, documentary, constr }) => {
   const md = (name) => {
     return md2html({ documentary, children: [name] })
   }
@@ -116,7 +118,7 @@ const Narrow = ({ props, anyHaveDefault, documentary }) => {
     <thead><tr>{'\n  '}
       <th>Name</th>{'\n  '}
       <th>Type & Description</th>{anyHaveDefault ? '\n  ' : '\n ' }
-      {anyHaveDefault && <th>Default</th>}
+      {anyHaveDefault && <th>{constr ? 'Initial' : 'Default' }</th>}
       {anyHaveDefault && '\n '}
     </tr></thead>{'\n'}
     {props.reduce((acc, { name, typeName, de, d, prop }) => {
@@ -131,7 +133,8 @@ const Narrow = ({ props, anyHaveDefault, documentary }) => {
         <td rowSpan="3" align="center">
           {n.reduce((ac, c, i, ar) => {
             if (isStatic) ac.push(<kbd>static</kbd>, ' ')
-            ac.push(optional ? c : <strong>{c}</strong>)
+            const u = <ins>{c}</ins>
+            ac.push(constr || optional ? u : <strong>{u}</strong>)
             if (i < ar.length - 1) ac.push(<br/>)
             return ac
           }, [])}
