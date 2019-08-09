@@ -47,7 +47,7 @@ export const replace = (c, insertInnerCode, { li, afterCutLinks = [] }) => {
     ...afterCutLinks,
     insertInnerCode,
     {
-      re: /`(.+?)`/g,
+      re: /`(.*?)`/g,
       replacement(m, code, i) {
         codes[i] = code
         return `%%RESTREAM-REPLACE-${i}%%`

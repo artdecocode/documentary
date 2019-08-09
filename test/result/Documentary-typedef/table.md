@@ -169,9 +169,6 @@ _typal
 /**/
 
 /* expected */
-__<a name="type-tomarkdownoptions">`ToMarkdownOptions`</a>__
-
-
 __<a name="type-test">`Test`</a>__
 <table>
  <thead><tr>
@@ -187,6 +184,9 @@ __<a name="type-test">`Test`</a>__
   <td>Converts a type to a markdown string.</td>
  </tr>
 </table>
+
+
+__<a name="type-tomarkdownoptions">`ToMarkdownOptions`</a>__
 /**/
 
 ## keeps _ in args
@@ -213,6 +213,64 @@ __<a name="type-test">`Test`</a>__
  <tr>
   <td rowSpan="3" align="center"><ins>toMarkdown</ins></td>
   <td><em>(allTypes: !Array&lt;!_typal.Type&gt;, opts: !_typal.ToMarkdownOptions) => void</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td></td>
+ </tr>
+</table>
+/**/
+
+## displays application return
+<typedef narrow flatten>test/temp/types.xml</typedef>
+
+/* types */
+<types>
+  <interface name="Test">
+    <fn async name="toMarkdown" return="!Array<{ record: string }>" />
+  </interface>
+</types>
+/**/
+
+/* expected */
+__<a name="type-test">`Test`</a>__
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><ins>toMarkdown</ins></td>
+  <td><em>() => !Promise&lt;!Array&lt;{ record: string }&gt;&gt;</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td></td>
+ </tr>
+</table>
+/**/
+
+## displays optional argument from args correctly
+<typedef narrow flatten>test/temp/types.xml</typedef>
+
+/* types */
+<types>
+  <interface name="Test">
+    <fn args="optional=" name="fn" />
+  </interface>
+</types>
+/**/
+
+/* expected */
+__<a name="type-test">`Test`</a>__
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><ins>fn</ins></td>
+  <td><em>(arg0?: optional) => void</em></td>
  </tr>
  <tr></tr>
  <tr>
