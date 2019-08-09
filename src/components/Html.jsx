@@ -1,27 +1,35 @@
 import { SyncReplaceable, makeCutRule, makePasteRule, makeMarkers } from 'restream'
 
 const strongReplacer = '<strong>$1</strong>'
-const emReplacer = '<em>$1</em>'
+const emReplacer = '$1<em>$2</em>'
 
 /** The component to replace markdown with html. */
-const Md2Html = ({ children, documentary, li = true }) => {
+const Md2Html =
+({ children, documentary, li = true, afterCutLinks }) => {
   if (li == 'false') li = false
   /** @type {import('restream').Rule} */
   const insertInnerCode = documentary.insertInnerCode
   /** @type {import('restream').Rule} */
   const [c] = children
-  return replace(c, insertInnerCode, { li })
+  return replace(c, insertInnerCode, { li, afterCutLinks })
 }
 
-export const replace = (c, insertInnerCode, { li }) => {
+export const replace = (c, insertInnerCode, { li, afterCutLinks = [] }) => {
   const codes = {}
   const tocLinks = {} // keep toc-links for toc-links regex
   let s = c.trim()
-  const { links } = makeMarkers({
-    links: /<a .+?>/g,
+  const { tags } = makeMarkers({
+    tags: /<\w+ .+?>/g,
+  }, {
+    getRegex(name) {
+      return new RegExp(`%%-HTML-${name.toUpperCase()}-REPLACEMENT-(\\d+)-%%`, 'g')
+    },
+    getReplacement(name, index) {
+      return `%%-HTML-${name.toUpperCase()}-REPLACEMENT-${index}-%%`
+    },
   })
-  const [cutLinks] = [links].map(r => makeCutRule(r))
-  const [pasteLinks] = [links].map(r => makePasteRule(r))
+  const [cutTags] = [tags].map(r => makeCutRule(r))
+  const [pasteTags] = [tags].map(r => makePasteRule(r))
 
   let d = SyncReplaceable(s, [
     {
@@ -35,7 +43,8 @@ export const replace = (c, insertInnerCode, { li }) => {
         return `<a href="${encodeURI(href)}">${title}</a>`
       },
     },
-    cutLinks,
+    cutTags,
+    ...afterCutLinks,
     insertInnerCode,
     {
       re: /`(.+?)`/g,
@@ -59,12 +68,16 @@ export const replace = (c, insertInnerCode, { li }) => {
       replacement: strongReplacer,
     },
     {
-      re: /_(.+?)_/g,
+      re: /(^|[^\\])_(.+?)_/g,
       replacement: emReplacer,
     },
     {
-      re: /\*(.+?)\*/g,
+      re: /(^|[^\\])\*(.+?)\*/g,
       replacement: emReplacer,
+    },
+    {
+      re: /(^|[^\\])\\([_*])/g,
+      replacement: '$1$2',
     },
     (li ? {
       re: /(^ *)- (.+)$/mg,
@@ -90,7 +103,7 @@ export const replace = (c, insertInnerCode, { li }) => {
       re: /%%-RESTREAM-(\w+)-REPLACEMENT-(\d+)-%%/g,
       replacement: '%%_RESTREAM_$1_REPLACEMENT_$2_%%',
     },
-    pasteLinks,
+    pasteTags,
   ])
 
   return d

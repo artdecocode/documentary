@@ -6,7 +6,6 @@ import alamode from 'alamode'
 import Documentary from '../../src/lib/Documentary'
 import { getTypedefs } from '../../src/lib/Typedefs'
 import { getStream } from '../../src/lib'
-import { Readable } from 'stream'
 
 const preact = dirname(require.resolve('preact/package.json'))
 alamode({

@@ -88,5 +88,19 @@ The <em>sign</em>, <em>verify</em> and <em>index</em> methods. The <em>Keygrip</
 // processes md2html with links
 <md2html><a href="hello world">_Test_</a></md2html>
 
-/* expected */<a href="hello world"><em>Test</em></a>
+/* expected */
+<a href="hello world"><em>Test</em></a>
+/**/
+
+// allows to escape special chars
+<md2html>
+  <a href="hello world">\_Test\_</a>
+  keeps escaped backslash \\_Test\\_
+  keeps specials in attrs <span id="_abc_" _hidden _var />
+</md2html>
+
+/* expected */
+<a href="hello world">_Test_</a>
+  keeps escaped backslash \\_Test\\_
+  keeps specials in attrs <span id="_abc_" _hidden _var />
 /**/

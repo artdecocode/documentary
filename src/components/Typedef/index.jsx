@@ -111,8 +111,8 @@ export default function Typedef({ documentary, children, name, narrow,
  * @param {boolean} opts.const Whether the type is a constructor or interface.
  */
 const Narrow = ({ props, anyHaveDefault, documentary, constr }) => {
-  const md = (name) => {
-    return md2html({ documentary, children: [name] })
+  const md = (name, afterCutLinks) => {
+    return md2html({ documentary, children: [name], afterCutLinks })
   }
   return (<table>{'\n '}
     <thead><tr>{'\n  '}
@@ -133,14 +133,16 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr }) => {
         <td rowSpan="3" align="center">
           {n.reduce((ac, c, i, ar) => {
             if (isStatic) ac.push(<kbd>static</kbd>, ' ')
-            const u = <ins>{c}</ins>
+            const u = constr ? <ins>{c}</ins> : c
             ac.push(constr || optional ? u : <strong>{u}</strong>)
             if (i < ar.length - 1) ac.push(<br/>)
             return ac
           }, [])}
         </td>{'\n  '}
         <td>
-          <em dangerouslySetInnerHTML={{ __html: md(typeName) }}/>
+          <em dangerouslySetInnerHTML={{ __html: md(typeName, [
+            { re: /_/g, replacement: '\\_' },
+          ]) }}/>
         </td>
         {anyHaveDefault ? '\n  ' : '\n '}
         {anyHaveDefault && <td rowSpan="3"

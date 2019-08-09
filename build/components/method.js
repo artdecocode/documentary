@@ -5,16 +5,16 @@ const I = '&nbsp;&nbsp;' // indent
 /**
  * Writes method title.
  * @param {Object} opts
- * @param {import('typal/src/lib/Type').default} opts.method
+ * @param {import('typal/src/lib/Method').default} opts.method
  * @param {number} opts.level
  * @param {Object} opts.documentary
  * @param {import('../lib/Documentary').default} opts.documentary.documentary
  */
 function Method({ documentary: { documentary }, method, level = 2, noArgTypesInToc }) {
   const hash = '#'.repeat(level)
-  let sig = `${hash} <code>${method._async ? 'async ' : ''}<ins>${method.name}</ins>(`
+  let sig = `${hash} <code>${method.async ? 'async ' : ''}<ins>${method.name}</ins>(`
 
-  const lines = method._args.map(({ name, type, optional }) => {
+  const lines = method.args.map(({ name, type, optional }) => {
     const N = `${name}${optional ? '=' : ''}`
     if (typeof type == 'string') {
       return `\`${N}: ${type},\``
@@ -45,12 +45,12 @@ function Method({ documentary: { documentary }, method, level = 2, noArgTypesInT
   }
 
   const dtoc = documentary.addDtoc('MT', {
-    args: method._args.map(({ name, type, shortType, optional }) => {
+    args: method.args.map(({ name, type, shortType, optional }) => {
       const N = `${name}${optional ? '=' : ''}`
       return [N, type, shortType]
     }),
     hash,
-    isAsync: method._async,
+    isAsync: method.async,
     name: method.name,
     returnType: method.return,
     replacedTitle: sig,

@@ -18,9 +18,9 @@ const replacer = function (match, level, isAsync, name, returnType, jsonArgs) {
 
   const method = {
     name,
-    _async: !!isAsync,
+    async: !!isAsync,
     return: returnType,
-    _args: args.map(([n, type, shortType]) => {
+    args: args.map(([n, type, shortType]) => {
       return { name: n, type, shortType }
     }),
   }

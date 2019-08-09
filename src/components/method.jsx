@@ -49,7 +49,7 @@ export default function Method({ documentary: { documentary }, method, level = 2
       return [N, type, shortType]
     }),
     hash,
-    isAsync: method._async,
+    isAsync: method.async,
     name: method.name,
     returnType: method.return,
     replacedTitle: sig,

@@ -6,7 +6,7 @@ const { getLinks } = require('typal');
  */
 const makeMethodTable = (method, allTypes = [], opts) => {
   let table = method.description || ''
-  const lis = method._args.map(({ optional, name, type, description }) => {
+  const lis = method.args.map(({ optional, name, type, description }) => {
     optional = optional || name.startsWith('...')
     const N = optional ? name : `<strong>${name}*</strong>`
 
