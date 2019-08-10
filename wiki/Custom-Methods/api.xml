@@ -1,0 +1,6 @@
+<types>
+  <method async name="runSoftware" return="string">
+    <arg string name="path">The path to the file.</arg>
+    <arg type="Config" name="config">The configuration object.</arg>
+  </method>
+</types>
