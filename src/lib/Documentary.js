@@ -350,6 +350,21 @@ export default class Documentary extends Replaceable {
   addAsset(asset) {
     if (!this.assets.includes(asset)) this.assets.push(asset)
   }
+  /**
+   * Render the result of the component again.
+   * This is needed when a component might contain other components when rendered.
+   */
+  renderAgain() {
+    // overridden by src/lib/components.js for each component
+  }
+  /**
+   * The function which controls whether to enable pretty printing, and the line width.
+   * @param {boolean} [isPretty=true] Whether to enable pretty printing. Default `true`.
+   * @param {number} [lineLength] When to break the line. Default `100`.
+   */
+  setPretty(isPretty, lineLength) {
+    // overridden by src/lib/components.js for each component
+  }
 }
 
 /* typal types/Documentary.xml namespace */

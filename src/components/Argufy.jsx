@@ -33,7 +33,7 @@ const parse = (xml) => {
  * @param {Object} props Options for the Shell component. TODO: pass options.
  * @param {import('../lib/Documentary').default} props.documentary
  */
-const Argufy = async ({ children, documentary, setPretty }) => {
+const Argufy = async ({ children, documentary }) => {
   const [child] = children
   const xml = await read(child)
   const args = parse(xml)
@@ -56,7 +56,7 @@ const Argufy = async ({ children, documentary, setPretty }) => {
     acc.push('\n')
     return acc
   }, [])
-  setPretty(false)
+  documentary.setPretty(false)
   return (<table>{'\n '}
     <thead>{'\n  '}
       <tr>{'\n   '}

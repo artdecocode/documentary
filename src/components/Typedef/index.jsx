@@ -11,7 +11,6 @@ import { makeMethodTable } from './lib'
  */
 export default function Typedef({ documentary, children, name, narrow,
   flatten, details, level, noArgTypesInToc = false, slimFunctions = false,
-  setPretty,
 }) {
   details = details ? details.split(',') : []
   const {
@@ -20,7 +19,7 @@ export default function Typedef({ documentary, children, name, narrow,
   } = documentary
   const file = wiki ? source : currentFile
 
-  setPretty(false)
+  documentary.setPretty(false)
   let [location] = children
   location = location.trim()
   /** @type {!Array<!Type>} */

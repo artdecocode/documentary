@@ -20,10 +20,11 @@ function loadComponents(components, getDocumentary) {
     getProps(htmlProps, meta) {
       meta.setPretty(true, 100)
       const documentary = getDocumentary()
+      documentary.renderAgain = meta.renderAgain
+      documentary.setPretty = meta.setPretty
       return {
         ...htmlProps,
         documentary,
-        ...meta,
       }
     },
   })
