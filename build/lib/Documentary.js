@@ -303,7 +303,7 @@ class Documentary extends Replaceable {
       await super._transform(chunk, _, next)
     } else if (typeof chunk == 'object') {
       if (basename(chunk.file) == '.DS_Store') return next()
-      else if (/\.(js|xml)$/.test(chunk.file)) return next()
+      else if (/\.(js|xml|png|jpe?g|gif|svg)$/i.test(chunk.file)) return next()
       chunk.file != 'separator' && LOG(b(chunk.file, 'cyan'))
       /** @type {string} */
       this.currentFile = chunk.file

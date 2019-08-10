@@ -2,9 +2,13 @@ const { h } = require('preact');
 const { getLinks } = require('typal');
 
 /**
- * @param {import('typal/src/lib/Type').default} method
+ * @param {import('typal/types').Method} method
+ * @param {Array<import('typal/types').Type>} allTypes
+ * @param {import('typal/types').LinkingOptions} linkingOpts
  */
-const makeMethodTable = (method, allTypes = [], opts) => {
+const makeMethodTable = (method, allTypes = [], linkingOpts, {
+  indent = ' - ', join = '\n', preargs = '\n\n',
+} = {}) => {
   let table = method.description || ''
   const lis = method.args.map(({ optional, name, type, description }) => {
     optional = optional || name.startsWith('...')
@@ -12,15 +16,17 @@ const makeMethodTable = (method, allTypes = [], opts) => {
 
     let typeWithLink = type
       , useCode = false
-    typeWithLink = getLinks(allTypes, type, opts)
+    typeWithLink = getLinks(allTypes, type, linkingOpts)
     useCode = typeWithLink != type
     typeWithLink = wrapCode(typeWithLink, useCode)
 
-    let n = ` - <kbd>${N}</kbd> <em>${typeWithLink}</em>${optional ? ' (optional)' : ''}`
+    let n = `${indent}<kbd>${N}</kbd> <em>${
+      typeWithLink
+    }</em>${optional ? ' (optional)' : ''}`
     if (description) n += `: ${description}`
     return n
-  }).join('\n')
-  table += lis ? ('\n\n' + lis) : ''
+  }).join(join)
+  table += lis ? ((table ? preargs : '') + lis) : ''
   return table
 }
 

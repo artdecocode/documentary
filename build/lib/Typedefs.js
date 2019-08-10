@@ -80,11 +80,11 @@ class Typedefs extends Replaceable {
           this.addCache(location, typeName)
           try {
             const xml = await read(location)
-            const { types, Imports } = parseFile(xml, rootNamespace)
+            const { types, imports } = parseFile(xml, rootNamespace)
 
             this.emit('types', {
               location,
-              types: [...Imports, ...types],
+              types: [...imports, ...types],
               typeName,
               file,
             })
@@ -134,7 +134,7 @@ class Typedefs extends Replaceable {
         } else if (typeName) {
           return
         }
-        LOG('Adding type %s', fullName)
+        LOG('Adding type %s at %s', fullName, this.file)
         this.types.push(b)
         return b
       }).filter(Boolean)
