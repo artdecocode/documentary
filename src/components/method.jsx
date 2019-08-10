@@ -2,9 +2,9 @@ const NL = '<br/>'
 const I = '&nbsp;&nbsp;' // indent
 
 /**
- * Writes method title.
+ * Writes method title. Not exported, has to be invoked manually.
  * @param {Object} opts
- * @param {import('typal/src/lib/Method').default} opts.method
+ * @param {import('typal/types').Method} opts.method
  * @param {number} opts.level
  * @param {Object} opts.documentary
  * @param {import('../lib/Documentary').default} opts.documentary.documentary

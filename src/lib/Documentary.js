@@ -21,14 +21,20 @@ import sectionBrakeRule from './rules/section-break'
 import { macroRule, useMacroRule } from './rules/macros'
 import loadComponents from './components'
 import * as Components from '../components/'
+import Method from '../components/method'
 
 const LOG = debuglog('doc')
 
 const getComponents = (paths, documentary) => {
+  let method = Method
   const transforms = paths.reduce((acc, path) => {
     try {
       const required = require(path) // an object
       Object.entries(required).forEach(([key, e]) => {
+        if (key == 'method') {
+          method = e
+          return
+        }
         if (acc[key] && acc[key] !== e) console.error('Overriding component <%s> by new one from %s', key, path)
         acc[key] = e
       })
@@ -41,7 +47,7 @@ const getComponents = (paths, documentary) => {
     }
   }, Components)
   const components = loadComponents(transforms, documentary)
-  return components
+  return { method, components }
 }
 
 const SKIP_USER_COMPONENTS = process.env.DOCUMENTARY_SKIP_USER_COMPONENTS
@@ -67,6 +73,7 @@ export default class Documentary extends Replaceable {
       disableDtoc, objectMode = true /* deprec */,
       wiki, output, source, // options to remember
       skipUserComponents = SKIP_USER_COMPONENTS,
+      skipHomedirComponents = false,
     } = options
 
     // console.log('loaded components %s', components)
@@ -97,14 +104,14 @@ export default class Documentary extends Replaceable {
       })
 
     const compPaths = [
-      join(homedir(), '.documentary'),
+      ...(skipHomedirComponents ? [] : [join(homedir(), '.documentary')]),
       resolve(cwd, '.documentary'),
     ]
     // this is the service property to components
     const documentary = {
       insertInnerCode, locations, allTypes, cutCode, wiki, source,
     }
-    const components = getComponents(skipUserComponents ? [] : compPaths, documentary)
+    const { method, components } = getComponents(skipUserComponents ? [] : compPaths, documentary)
 
     super([
       cutInnerCode, // don't want other rules being detected inside of inner code, including toc-titles
@@ -189,6 +196,8 @@ export default class Documentary extends Replaceable {
     ], { objectMode })
 
     documentary.documentary = this
+    this.Method = method // the method component can be overridden by users.
+
     this._types = {}
 
     this._innerCode = innerCode

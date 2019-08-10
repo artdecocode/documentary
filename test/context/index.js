@@ -7,6 +7,7 @@ import { Readable } from 'stream'
 import mismatch from 'mismatch'
 import { Replaceable } from 'restream'
 import Zoroaster from 'zoroaster'
+import Method from '../../src/components/method'
 import createReplaceStream  from '../../src/lib/replace-stream'
 import Documentary from '../../src/lib/Documentary'
 
@@ -84,6 +85,7 @@ export default class Context {
   }
   mockDoc(rules) {
     const rs = new Replaceable(rules)
+    rs.Method = Method
     rs.addDtoc = () => ''
     rs.log = (...args) => {
       // console.log(args)

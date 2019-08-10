@@ -1,9 +1,7 @@
-import Method from '../../components/method'
-
 const re = /```(#+)( async)? (.+?)(?: => (.+))?(\n[\s\S]*?)?```/g
 
 /**
- * @this {import('../Documentary')}
+ * @this {Documentary}
  */
 export const replacer = function (match, level, isAsync, name, returnType, jsonArgs) {
   let args
@@ -21,11 +19,13 @@ export const replacer = function (match, level, isAsync, name, returnType, jsonA
     async: !!isAsync,
     return: returnType,
     args: args.map(([n, type, shortType]) => {
-      return { name: n, type, shortType }
+      const optional = n.endsWith('=')
+      if (optional) n = n.replace(/=$/, '')
+      return { name: n, type, shortType, optional }
     }),
   }
   try {
-    const m = Method({
+    const m = this.Method({
       method,
       documentary: { documentary: this },
       level: level.length,
@@ -43,3 +43,8 @@ const methodTitleRule = {
 
 export { re as methodTitleRe }
 export default methodTitleRule
+
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('../Documentary').default} Documentary
+ */
