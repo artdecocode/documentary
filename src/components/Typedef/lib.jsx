@@ -2,8 +2,10 @@ import { getLinks } from 'typal'
 
 /**
  * @param {import('typal/types').Method} method
+ * @param {Array<import('typal/types').Type>} allTypes
+ * @param {import('typal/types').LinkingOptions} linkingOpts
  */
-export const makeMethodTable = (method, allTypes = [], opts, {
+export const makeMethodTable = (method, allTypes = [], linkingOpts, {
   indent = ' - ', join = '\n', preargs = '\n\n',
 } = {}) => {
   let table = method.description || ''
@@ -13,7 +15,7 @@ export const makeMethodTable = (method, allTypes = [], opts, {
 
     let typeWithLink = type
       , useCode = false
-    typeWithLink = getLinks(allTypes, type, opts)
+    typeWithLink = getLinks(allTypes, type, linkingOpts)
     useCode = typeWithLink != type
     typeWithLink = wrapCode(typeWithLink, useCode)
 
