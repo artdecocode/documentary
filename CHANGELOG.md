@@ -1,3 +1,13 @@
+## 8 August 2019
+
+### [1.31.1](https://github.com/artdecocode/documentary/compare/v1.31.0...v1.31.1)
+
+- [fix] Allow to escape `_*` in _md2html_ component, cut out all `<tags att="...">` before processing, and accept zero-char codes, e.g., ``.
+- [fix] Display wide methods (2 cols) and their descriptions in the table, underline properties of constructors/interfaces.
+- [deps] Upgrade _Typal_ to the lib-compiled one, with typedefs.
+- [feature] Skip some file extensions from being processed, so that assets can be placed in documentary/wiki folder.
+- [fix] Allow for indented typedefs (e.g., in `li` blocks).
+
 ## 7 August 2019
 
 ### [1.31.0](https://github.com/artdecocode/documentary/compare/v1.30.3...v1.31.0)
