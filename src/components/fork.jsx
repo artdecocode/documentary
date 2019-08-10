@@ -3,6 +3,10 @@ import rexml from 'rexml'
 
 const { replacement } = forkRule
 
+/** The component to create forks.
+ * @param {Object} opts
+ * @param {import('../lib/Documentary').default} opts.documentary
+ */
 export default function Fork({ documentary, children,
   nocache, plain, relative, stderr, lang, env = '', noprint,
 }) {
@@ -35,7 +39,7 @@ export default function Fork({ documentary, children,
     child = child.slice(i)
   }
   child = child.trim()
-  const fn = replacement.bind(documentary.documentary)
+  const fn = replacement.bind(documentary)
   const res = fn(null, '', service, stderr, lang, child, {
     stdout: stdoutAnswers,
     stderr: stderrAnswers,

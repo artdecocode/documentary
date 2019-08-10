@@ -6,10 +6,9 @@ const I = '&nbsp;&nbsp;' // indent
  * @param {Object} opts
  * @param {import('typal/types').Method} opts.method
  * @param {number} opts.level
- * @param {Object} opts.documentary
- * @param {import('../lib/Documentary').default} opts.documentary.documentary
+ * @param {import('../lib/Documentary').default} opts.documentary
  */
-export default function Method({ documentary: { documentary }, method, level = 2, noArgTypesInToc }) {
+export default function Method({ documentary, method, level = 2, noArgTypesInToc }) {
   const hash = '#'.repeat(level)
   let sig = `${hash} <code>${method.async ? 'async ' : ''}<ins>${method.name}</ins>(`
 

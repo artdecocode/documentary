@@ -1,7 +1,7 @@
 import { c, b } from 'erte'
 import competent from 'competent'
 
-function loadComponents(components, options = {}) {
+function loadComponents(components, getDocumentary) {
   const rule = competent(components, {
     onFail(key, err) {
       console.error(`Could not process component ${b(`<${key}>`, 'magenta')}:`)
@@ -19,12 +19,11 @@ function loadComponents(components, options = {}) {
      */
     getProps(htmlProps, meta) {
       meta.setPretty(true, 100)
+      const documentary = getDocumentary()
       return {
         ...htmlProps,
-        documentary: {
-          ...options,
-          ...meta,
-        },
+        documentary,
+        ...meta,
       }
     },
   })

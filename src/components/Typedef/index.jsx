@@ -5,22 +5,20 @@ import { codeRe } from '../../lib/rules'
 import Method from '../method'
 import { makeMethodTable } from './lib'
 
-// { renderAgain: function(), locations, allTypes: Array<Type>}
-
 /**
  * @param {Object} opts
- * @param {Object} opts.documentary
- * @param {import('../../lib/Documentary').default} opts.documentary.documentary
+ * @param {import('../../lib/Documentary').default} opts.documentary
  */
 export default function Typedef({ documentary, children, name, narrow,
   flatten, details, level, noArgTypesInToc = false, slimFunctions = false,
+  setPretty,
 }) {
   details = details ? details.split(',') : []
   const {
-    setPretty, locations, allTypes, cutCode,
-    wiki, source, documentary: doc,
+    locations, allTypes, cut: { code: cutCode },
+    _args: { wiki, source }, currentFile,
   } = documentary
-  const file = wiki ? source : doc.currentFile
+  const file = wiki ? source : currentFile
 
   setPretty(false)
   let [location] = children

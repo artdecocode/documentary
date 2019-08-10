@@ -1,10 +1,21 @@
 <types>
+  <import name="Type" from="typal/types" ns="_typal" />
+
   <type name="DocumentaryOptions" desc="Options for the Documentary constructor.">
-    <prop opt name="locations">
-
+    <prop type="!Object<string, !Array<_typal.Type>" opt name="locations">
+      The source locations of types, e.g., types/index.xml.
     </prop>
-    <prop opt type="Array" name="types">
-
+    <prop type="!Array<_typal.Type>" name="types" opt>
+      All extracted types across every processed file.
+    </prop>
+    <prop string name="wiki" opt>
+      If processing Wiki, specifies the output location.
+    </prop>
+    <prop string name="source" opt>
+      The location of the source file or directory from which the documentation is compiled.
+    </prop>
+    <prop string name="output" opt>
+      The location where to save the `README.md` file.
     </prop>
     <prop string name="cwd" default=".">
       The `cwd` that is used to resolve `.documentary` folder.

@@ -25,7 +25,7 @@ import Method from '../components/method'
 
 const LOG = debuglog('doc')
 
-const getComponents = (paths, documentary) => {
+const getComponents = (paths, getDocumentary) => {
   let method = Method
   const transforms = paths.reduce((acc, path) => {
     try {
@@ -46,7 +46,7 @@ const getComponents = (paths, documentary) => {
       return acc
     }
   }, Components)
-  const components = loadComponents(transforms, documentary)
+  const components = loadComponents(transforms, getDocumentary)
   return { method, components }
 }
 
@@ -59,8 +59,11 @@ const SKIP_USER_COMPONENTS = process.env.DOCUMENTARY_SKIP_USER_COMPONENTS
 export default class Documentary extends Replaceable {
   /**
    * @param {DocumentaryOptions} options Options for the Documentary constructor.
-   * @param {*} [options.locations]
-   * @param {Array} [options.types]
+   * @param {!Object<string, !Array<_typal.Type>} [options.locations] The source locations of types, e.g., types/index.xml.
+   * @param {!Array<_typal.Type>} [options.types] All extracted types across every processed file.
+   * @param {string} [options.wiki] If processing Wiki, specifies the output location.
+   * @param {string} [options.source] The location of the source file or directory from which the documentation is compiled.
+   * @param {string} [options.output] The location where to save the `README.md` file.
    * @param {string} [options.cwd="."] The `cwd` that is used to resolve `.documentary` folder. Default `.`.
    * @param {string} [options.cacheLocation="${cwd}/.documentary/cache"] The folder where the cache is kept. Default `${cwd}/.documentary/cache`.
    * @param {boolean} [options.noCache=false] Disable caching for forks. Default `false`.
@@ -68,7 +71,7 @@ export default class Documentary extends Replaceable {
    */
   constructor(options = {}) {
     const {
-      locations = {}, types: allTypes = [],
+      locations = {}, types: allTypes = /** @type {!Array<_typal.Type>} */ ([]),
       cwd = '.', cacheLocation = join(cwd, '.documentary/cache'), noCache,
       disableDtoc, objectMode = true /* deprec */,
       wiki, output, source, // options to remember
@@ -107,11 +110,8 @@ export default class Documentary extends Replaceable {
       ...(skipHomedirComponents ? [] : [join(homedir(), '.documentary')]),
       resolve(cwd, '.documentary'),
     ]
-    // this is the service property to components
-    const documentary = {
-      insertInnerCode, locations, allTypes, cutCode, wiki, source,
-    }
-    const { method, components } = getComponents(skipUserComponents ? [] : compPaths, documentary)
+
+    const { method, components } = getComponents(skipUserComponents ? [] : compPaths, () => this)
 
     super([
       cutInnerCode, // don't want other rules being detected inside of inner code, including toc-titles
@@ -195,7 +195,6 @@ export default class Documentary extends Replaceable {
       insertMethodTitle,
     ], { objectMode })
 
-    documentary.documentary = this
     this.Method = method // the method component can be overridden by users.
 
     this._types = {}
@@ -217,13 +216,39 @@ export default class Documentary extends Replaceable {
      * @type {!Array<string>}
      */
     this.assets = []
-    /**
-     * The args passed to the program.
-     */
+
+    /** The args passed to the program. */
     this._args = {
-      output, wiki, source,
+      /** The location of the source file or directory from which the documentation is compiled. */
+      source,
+      /** If processing Wiki, specifies the output location. */
+      wiki,
+      /** The location where to save the `README.md` file. */
+      output,
     }
+
+    this.cut = {
+      code: cutCode,
+      table: cutTable,
+      methodTitle: methodTitle,
+      innerCode: innerCode,
+    }
+    this.insert = {
+      code: insertCode,
+      table: insertTable,
+      methodTitle: insertMethodTitle,
+      innerCode: insertInnerCode,
+    }
+    /**
+     * The source locations of types, e.g., types/index.xml.
+     */
+    this.locations = locations
+    /**
+     * All extracted types across every processed file.
+     */
+    this.allTypes = allTypes
   }
+
   /**
    * Adds some information for generating TOC later.
    * @param {string} name
@@ -327,11 +352,15 @@ export default class Documentary extends Replaceable {
   }
 }
 
-/* documentary types/Documentary.xml */
+/* typal types/Documentary.xml namespace */
 /**
+ * @typedef {import('typal/types').Type} _typal.Type
  * @typedef {Object} DocumentaryOptions Options for the Documentary constructor.
- * @prop {*} [locations]
- * @prop {Array} [types]
+ * @prop {!Object<string, !Array<_typal.Type>} [locations] The source locations of types, e.g., types/index.xml.
+ * @prop {!Array<_typal.Type>} [types] All extracted types across every processed file.
+ * @prop {string} [wiki] If processing Wiki, specifies the output location.
+ * @prop {string} [source] The location of the source file or directory from which the documentation is compiled.
+ * @prop {string} [output] The location where to save the `README.md` file.
  * @prop {string} [cwd="."] The `cwd` that is used to resolve `.documentary` folder. Default `.`.
  * @prop {string} [cacheLocation="${cwd}/.documentary/cache"] The folder where the cache is kept. Default `${cwd}/.documentary/cache`.
  * @prop {boolean} [noCache=false] Disable caching for forks. Default `false`.
