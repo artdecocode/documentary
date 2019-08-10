@@ -13,7 +13,7 @@ import { makeMethodTable } from './lib'
  * @param {import('../../lib/Documentary').default} opts.documentary.documentary
  */
 export default function Typedef({ documentary, children, name, narrow,
-  flatten, details, level, noArgTypesInToc = false,
+  flatten, details, level, noArgTypesInToc = false, slimFunctions = false,
 }) {
   details = details ? details.split(',') : []
   const {
@@ -53,11 +53,11 @@ export default function Typedef({ documentary, children, name, narrow,
     return r
   }
 
-  const tt = typesToMd.map(type => {
-    const opts = { details, narrow, flatten(n) {
-      flattened[n] = true
-    }, preprocessDesc, link: linking, level }
+  const opts = { details, narrow, flatten(n) {
+    flattened[n] = true
+  }, preprocessDesc, link: linking, level }
 
+  const tt = typesToMd.map(type => {
     if (!type.isMethod) {
       const res = type.toMarkdown(allTypes, opts)
       return res
@@ -78,7 +78,9 @@ export default function Typedef({ documentary, children, name, narrow,
     const isObject = typeof type == 'object' // table can be empty string, e.g., ''
 
     const ch = isObject ? <Narrow key={i} {...type}
-      documentary={documentary} /> : type
+      documentary={documentary} allTypes={allTypes} opts={opts}
+      slimFunctions={slimFunctions}
+    /> : type
     if (displayInDetails) {
       const line = md2html({ documentary, children: [LINE] })
 
@@ -110,7 +112,8 @@ export default function Typedef({ documentary, children, name, narrow,
  * @param {!Array<{ prop: Property }>} opts.props
  * @param {boolean} opts.const Whether the type is a constructor or interface.
  */
-const Narrow = ({ props, anyHaveDefault, documentary, constr }) => {
+const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
+  slimFunctions }) => {
   const md = (name, afterCutLinks) => {
     return md2html({ documentary, children: [name], afterCutLinks })
   }
@@ -122,14 +125,18 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr }) => {
       {anyHaveDefault && '\n '}
     </tr></thead>{'\n'}
     {props.reduce((acc, { name, typeName, de, d, prop }) => {
-      const hasCodes = new RegExp(codeRe.source, codeRe.flags).test(prop.description)
-      de = de + '\n  '
-      if (hasCodes) de = '\n\n' + de
+      let desc = (prop.args && !slimFunctions) ? makeMethodTable(prop, allTypes, opts, {
+        indent: '', join: '<br/>\n', preargs: '<br/>\n',
+      }) : de
+      const hasCodes = new RegExp(codeRe.source, codeRe.flags).test(prop.args ? desc : prop.description)
+      desc = desc + '\n  '
+      if (hasCodes) desc = '\n\n' + desc
       // let n = md(name)
       const { optional, aliases, static: isStatic } = prop
       const a = optional ? aliases : aliases.map(al => `${al}*`)
       const n = [name, ...a]
-      const r = (<tr key={name}>{'\n  '}
+      const isMethodCol = anyHaveDefault && prop.args
+      const row = (<tr key={name}>{'\n  '}
         <td rowSpan="3" align="center">
           {n.reduce((ac, c, i, ar) => {
             if (isStatic) ac.push(<kbd>static</kbd>, ' ')
@@ -139,26 +146,34 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr }) => {
             return ac
           }, [])}
         </td>{'\n  '}
-        <td>
+        <td colSpan={isMethodCol ? 2 : undefined}>
           <em dangerouslySetInnerHTML={{ __html: md(typeName, [
-            { re: /_/g, replacement: '\\_' },
+            { re: /([_*])/g, replacement: '\\$1' },
           ]) }}/>
         </td>
-        {anyHaveDefault ? '\n  ' : '\n '}
-        {anyHaveDefault && <td rowSpan="3"
+        {anyHaveDefault && !prop.args && '\n  '}
+        {anyHaveDefault && !prop.args && <td rowSpan="3"
           dangerouslySetInnerHTML={{ __html: md(d) }}/>}
-        {anyHaveDefault && '\n '}
+        {'\n '}
       </tr>)
-      const rr = <tr>{'\n  '}
-        <td dangerouslySetInnerHTML={{ __html: hasCodes ? de : md(de) }} />{'\n '}
+      let D = desc
+      if (!hasCodes) { // if it had codes, don't bother with markdown
+        D = md(desc)
+        if (D) D = D.replace(/^/gm, '   ')
+        if (D) D = `\n${D}\n  `
+      }
+
+      const descRow = <tr>{'\n  '}
+        <td colSpan={isMethodCol ? 2 : undefined}
+          dangerouslySetInnerHTML={{ __html: D }} />{'\n '}
       </tr>
 
       acc.push(' ')
-      acc.push(r)
+      acc.push(row)
       acc.push('\n ')
       acc.push(<tr />)
       acc.push('\n ')
-      acc.push(rr)
+      acc.push(descRow)
       acc.push('\n')
       return acc
     }, [])}
@@ -167,9 +182,9 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr }) => {
 
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {import('typal/src/lib/Type').default} Type
+ * @typedef {import('typal/types').Type} Type
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {import('typal/src/lib/Property').default} Property
+ * @typedef {import('typal/types').Property} Property
  */

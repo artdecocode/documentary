@@ -1,4 +1,4 @@
-## creates typedef for methods
+## creates typedef for functions
 <typedef narrow>test/temp/types.xml</typedef>
 
 /* types */
@@ -27,15 +27,20 @@ __<a name="type-test">`Test`</a>__
  </tr>
  <tr></tr>
  <tr>
-  <td>NodeName</td>
+  <td>
+   NodeName
+  </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center"><strong>fn*</strong></td>
-  <td><em>(test: string, linked: <a href="#type-linked">Linked</a>) => void</em></td>
+  <td><em>(test: string, linked: <a href="#type-linked">Linked</a>) => ?</em></td>
  </tr>
  <tr></tr>
  <tr>
-  <td></td>
+  <td>
+   <kbd><strong>test*</strong></kbd> <em><code>string</code></em>: Testing<br/>
+   <kbd><strong>linked*</strong></kbd> <em><code><a href="#type-linked">Linked</a></code></em>: Linked
+  </td>
  </tr>
 </table>
 
@@ -49,7 +54,7 @@ __<a name="type-linked">`Linked`</a>__
 /* types */
 <types namespace="test">
   <type name="Test">
-    <fn name="fn">
+    <fn name="fn" void>
       <arg name="linked" type="test.Linked">Linked</arg>
     </fn>
   </type>
@@ -74,7 +79,9 @@ __<a name="type-test">`Test`</a>__
  </tr>
  <tr></tr>
  <tr>
-  <td></td>
+  <td>
+   <kbd><strong>linked*</strong></kbd> <em><code><a href="#type-linked">Linked</a></code></em>: Linked
+  </td>
  </tr>
 </table>
 
@@ -88,7 +95,7 @@ __<a name="type-linked">`Linked`</a>__
 /* types */
 <types namespace="test">
   <type name="Test">
-    <static name="fn" />
+    <static name="fn" void />
   </type>
 </types>
 /**/
@@ -145,12 +152,12 @@ __<a name="type-testtest">`test.Test`</a>__
 /**/
 
 ## links args with namespaces in interfaces
-<typedef narrow flatten>test/temp/types.xml</typedef>
+<typedef narrow flatten slimFunctions>test/temp/types.xml</typedef>
 
 /* types */
 <types namespace="_typal">
   <interface name="Test">
-    <fn name="toMarkdown">
+    <fn name="toMarkdown" void>
       <arg name="allTypes" type="!Array<!_typal.Type>">
         The array with all types for linking.
       </arg>
@@ -181,7 +188,9 @@ __<a name="type-test">`Test`</a>__
  </tr>
  <tr></tr>
  <tr>
-  <td>Converts a type to a markdown string.</td>
+  <td>
+   Converts a type to a markdown string.
+  </td>
  </tr>
 </table>
 
@@ -190,12 +199,12 @@ __<a name="type-tomarkdownoptions">`ToMarkdownOptions`</a>__
 /**/
 
 ## keeps _ in args
-<typedef narrow flatten>test/temp/types.xml</typedef>
+<typedef narrow slimFunctions>test/temp/types.xml</typedef>
 
 /* types */
 <types>
   <interface name="Test">
-    <fn name="toMarkdown">
+    <fn name="toMarkdown" void>
       <arg name="allTypes" type="!Array<!_typal.Type>">a</arg>
       <arg name="opts" type="!_typal.ToMarkdownOptions">b</arg>
     </fn>
@@ -222,7 +231,7 @@ __<a name="type-test">`Test`</a>__
 /**/
 
 ## displays application return
-<typedef narrow flatten>test/temp/types.xml</typedef>
+<typedef narrow slimFunctions>test/temp/types.xml</typedef>
 
 /* types */
 <types>
@@ -256,7 +265,7 @@ __<a name="type-test">`Test`</a>__
 /* types */
 <types>
   <interface name="Test">
-    <fn args="optional=" name="fn" />
+    <fn args="optional=" name="fn" return="?" />
   </interface>
 </types>
 /**/
@@ -270,7 +279,7 @@ __<a name="type-test">`Test`</a>__
  </tr></thead>
  <tr>
   <td rowSpan="3" align="center"><ins>fn</ins></td>
-  <td><em>(arg0?: optional) => void</em></td>
+  <td><em>(arg0?: optional) => ?</em></td>
  </tr>
  <tr></tr>
  <tr>

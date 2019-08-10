@@ -1,9 +1,11 @@
 import { getLinks } from 'typal'
 
 /**
- * @param {import('typal/src/lib/Type').default} method
+ * @param {import('typal/types').Method} method
  */
-export const makeMethodTable = (method, allTypes = [], opts) => {
+export const makeMethodTable = (method, allTypes = [], opts, {
+  indent = ' - ', join = '\n', preargs = '\n\n',
+} = {}) => {
   let table = method.description || ''
   const lis = method.args.map(({ optional, name, type, description }) => {
     optional = optional || name.startsWith('...')
@@ -15,11 +17,13 @@ export const makeMethodTable = (method, allTypes = [], opts) => {
     useCode = typeWithLink != type
     typeWithLink = wrapCode(typeWithLink, useCode)
 
-    let n = ` - <kbd>${N}</kbd> <em>${typeWithLink}</em>${optional ? ' (optional)' : ''}`
+    let n = `${indent}<kbd>${N}</kbd> <em>${
+      typeWithLink
+    }</em>${optional ? ' (optional)' : ''}`
     if (description) n += `: ${description}`
     return n
-  }).join('\n')
-  table += lis ? ('\n\n' + lis) : ''
+  }).join(join)
+  table += lis ? ((table ? preargs : '') + lis) : ''
   return table
 }
 

@@ -37,7 +37,9 @@ Hello World Page A
  </tr>
  <tr></tr>
  <tr>
-  <td>A property.</td>
+  <td>
+   A property.
+  </td>
  </tr>
  <tr>
   <td rowSpan="3" align="center"><strong>prop2*</strong></td>
@@ -45,7 +47,9 @@ Hello World Page A
  </tr>
  <tr></tr>
  <tr>
-  <td>Linking to the type without description.</td>
+  <td>
+   Linking to the type without description.
+  </td>
  </tr>
 </table>
 
