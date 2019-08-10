@@ -211,12 +211,15 @@ function V(a, b, c, d = !1) {
   });
   return e;
 }
-;const Fa = new RegExp(`${/([^\s>=/]+)/.source}(?:\\s*=\\s*${/(?:"([\s\S]*?)"|'([\s\S]*?)')/.source})?`, "g"), Ga = new RegExp(`\\s*((?:${Fa.source}\\s*)*)`);
-const Ia = (a, b) => V(new RegExp(`<${a}${Ga.source}?(?:${/\s*\/>/.source}|${(new RegExp(`>([\\s\\S]+?)?</${a}>`)).source})`, "g"), b, ["a", "v", "v1", "v2", "c"]).map(({a:c = "", c:d = ""}) => {
-  c = c.replace(/\/$/, "").trim();
-  c = Ha(c);
-  return {content:d, props:c};
-}), Ha = a => V(Fa, a, ["key", "val", "def", "f"]).reduce((b, {key:c, val:d}) => {
+;const Fa = new RegExp(`${/([^\s>=/]+)/.source}(?:\\s*=\\s*${/(?:"([\s\S]*?)"|'([\s\S]*?)')/.source})?`, "g"), Ga = new RegExp(`(?:\\s+((?:${Fa.source}\\s*)*))`);
+const Ia = (a, b) => {
+  a = (Array.isArray(a) ? a : [a]).join("|");
+  return V(new RegExp(`<(${a})${Ga.source}?(?:${/\s*\/>/.source}|${/>([\s\S]+?)?<\/\1>/.source})`, "g"), b, "t a v v1 v2 c".split(" ")).map(({t:c, a:d = "", c:e = ""}) => {
+    d = d.replace(/\/$/, "").trim();
+    d = Ha(d);
+    return {content:e, props:d, tag:c};
+  });
+}, Ha = a => V(Fa, a, ["key", "val", "def", "f"]).reduce((b, {key:c, val:d}) => {
   if (void 0 === d) {
     return b[c] = !0, b;
   }
