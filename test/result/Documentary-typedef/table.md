@@ -287,3 +287,48 @@ __<a name="type-test">`Test`</a>__
  </tr>
 </table>
 /**/
+
+## displays variable and this args
+<typedef narrow slimFunctions>test/temp/types.xml</typedef>
+
+/* types */
+<types>
+  <interface name="Test">
+    <prop opt type="function(this:Type, ...Type)" name="prop" />
+    <fn name="fn" void>
+      <arg name="this" type="Type">
+        The context.
+      </arg>
+      <arg name="...args" type="Type">
+        Additional arguments.
+      </arg>
+    </fn>
+  </interface>
+</types>
+/**/
+
+/* expected */
+__<a name="type-test">`Test`</a>__
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><ins>prop</ins></td>
+  <td><em>(this: Type, ...args: Type[]) => ?</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td></td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center"><ins>fn</ins></td>
+  <td><em>(this: Type, ...args: Type) => void</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td></td>
+ </tr>
+</table>
+/**/
