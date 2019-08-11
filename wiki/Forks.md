@@ -124,7 +124,7 @@ This can help with documenting errors or other code that prints absolute paths i
 The `<fork>` component is the same as the `%FORK%` marker, but it offers extended functionality. The optional properties described above on this page are specified in the arguments, and the location of the fork module is passed as a child.
 
 ```jsx
-<fork nocache plain relative stderr lang="js" 
+<fork nocache plain relative stderr lang="js"
   env="ENV_VAR=testing SECRET_KEY=hello-world">
   module/location/run.js
 </fork>
@@ -135,6 +135,29 @@ The `<fork>` component is the same as the `%FORK%` marker, but it offers extende
 ## Env Variables
 
 All environment variables will be inherited from the _Documentary_ process. Additional variables can be passed in the `env` argument, which is only available for the `<fork>` component and not the `%FORK%` marker. The variables will be split by whitespace, and the key-value pairs will be split by `=`. It's not possible to specify values with `=` in them at the moment.
+
+Same forks but with different env variables are cached separately.
+
+%~%
+
+## Both Channels
+
+Whenever there are two forks of the same module with the same arguments and env variables, but one prints `stdout` and another one `stderr`, only one fork will be spawn, and its result reused. That saves time when trying to document the total output of the program, possibly in different sections, for example in a 2-column table:
+
+```markdown
+<table>
+<tr><th>STDOUT</th><th>STDERR</th></tr>
+<!-- block-start -->
+<tr><td>
+
+<fork>example</fork>
+</td>
+<td>
+
+<fork>example</fork>
+</td></tr>
+</table>
+```
 
 %~%
 
@@ -159,4 +182,4 @@ The output:
 
 Above, both answers to stdout are printed, and the answer to stderr, however because it is the fork of STDOUT only, stderr questions and user-supplied answer to it is not shown.
 
-> At the moment, the answers are not cached, so if they change, documentation must be compiled again with `-c` (or `plain` argument).
+> At the moment, the answers are not cached, so if they change, documentation must be compiled again with `-c` (or `nocache` argument). Also, if there are two same forks which use different answers that wouldn't work.
