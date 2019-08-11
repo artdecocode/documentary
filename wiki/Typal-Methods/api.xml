@@ -1,0 +1,27 @@
+<types ns="_namespace">
+  <method async name="runSoftware" return="string">
+    <arg string name="path">The path to the file.</arg>
+    <arg opt type="_namespace.Config" name="config">
+      The configuration object.
+    </arg>
+    This function will run the software, and return results.
+  </method>
+
+  <type name="Config" desc="The config for the program.">
+    <prop name="View" type="Container">
+      The view component connected to the store.
+    </prop>
+    <prop name="actions" type="Object">
+      Possible actions for the reducer.
+    </prop>
+    <prop boolean name="static" opt>
+      Whether to render the page as HTML file.
+    </prop>
+    <fn name="render" return="string">
+      <arg name="component" type="Container">
+        The JSX component to render.
+      </arg>
+      The renderning function.
+    </fn>
+  </type>
+</types>
