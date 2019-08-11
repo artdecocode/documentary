@@ -10,7 +10,7 @@ const { replacement } = forkRule
 export default function Fork({ documentary, children,
   nocache, plain, relative, stderr, lang, env = '', noprint,
 }) {
-  env = env.split(' ').reduce((acc, c) => {
+  const parsedEnv = env.split(' ').reduce((acc, c) => {
     const [name, val] = c.split('=')
     acc[name] = val
     return acc
@@ -43,7 +43,7 @@ export default function Fork({ documentary, children,
   const res = fn(null, '', service, stderr, lang, child, {
     stdout: stdoutAnswers,
     stderr: stderrAnswers,
-  }, env)
+  }, { parsedEnv, env })
   if (res === null) throw new Error('The component didn\'t work.')
   if (noprint) {
     documentary.log(`Not printing output of ${child}`)

@@ -53,6 +53,10 @@ const getComponents = (paths, getDocumentary) => {
 const SKIP_USER_COMPONENTS = process.env.DOCUMENTARY_SKIP_USER_COMPONENTS
   && process.env.DOCUMENTARY_SKIP_USER_COMPONENTS != 'false'
 
+const { DOCUMENTARY_CWD: CWD = '.' } = process.env
+let { DOCUMENTARY_IGNORE_HIDDEN: IGNORE_HIDDEN = true } = process.env
+if (IGNORE_HIDDEN) IGNORE_HIDDEN = IGNORE_HIDDEN != 'false'
+
 /**
  * Documentary is a _Replaceable_ stream with transform rules for documentation.
  */
@@ -72,8 +76,8 @@ export default class Documentary extends Replaceable {
   constructor(options = {}) {
     const {
       locations = {}, types: allTypes = /** @type {!Array<_typal.Type>} */ ([]),
-      cwd = '.', cacheLocation = join(cwd, '.documentary/cache'), noCache,
-      disableDtoc, objectMode = true /* deprec */,
+      cwd = CWD, cacheLocation = join(cwd, '.documentary/cache'),
+      noCache, disableDtoc, objectMode = true /* deprec */,
       wiki, output, source, // options to remember
       skipUserComponents = SKIP_USER_COMPONENTS,
       skipHomedirComponents = false,
@@ -253,18 +257,21 @@ export default class Documentary extends Replaceable {
    * Adds some information for generating TOC later.
    * @param {string} name
    * @param {Object} value
-   * @param {string} [value.hash]
+   * @param {string} [value.string] The string to display in TOC. Cancels out other options apart from `level`.
+   * @param {string} [value.level] The level at which to display the title.
+   * @param {string} [value.hash] The hash indicating the level, e.g., `###`.
+   * @param {string} [value.replacedTitle] The actual title that will be display in README.
    * @param {boolean} [value.isAsync]
    * @param {string} [value.name]
    * @param {string} [value.returnType]
    * @param {Array} [value.args]
-   * @param {string} [value.replacedTitle]
    * @param {boolean} [value.noArgTypesInToc]
    */
   addDtoc(name, value) {
     if (this._disableDtoc) return ''
     if (!this._dtoc[name]) this._dtoc[name] = []
     const arr = this._dtoc[name]
+    if (value.level) value.hash = '#'.repeat(value.level)
     arr.push(value)
     return `%%DTOC_${name}_${arr.length - 1}%%`
   }
@@ -337,7 +344,8 @@ export default class Documentary extends Replaceable {
       await super._transform(chunk, _, next)
     } else if (typeof chunk == 'object') {
       if (basename(chunk.file) == '.DS_Store') return next()
-      else if (/\.(js|xml|png|jpe?g|gif|svg)$/i.test(chunk.file)) return next()
+      if (/\.(jsx?|xml|png|jpe?g|gif|svg)$/i.test(chunk.file)) return next()
+      if (IGNORE_HIDDEN && basename(chunk.file).startsWith('.')) return next()
       chunk.file != 'separator' && LOG(b(chunk.file, 'cyan'))
       /** @type {string} */
       this.currentFile = chunk.file

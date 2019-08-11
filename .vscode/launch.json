@@ -130,12 +130,31 @@
       "name": "Launch Doc",
       "program": "${workspaceFolder}/node_modules/.bin/alanode",
       "env": {
-        "NODE_DEBUG": "doc"
+        "NODE_DEBUG": "doc",
+        "DOCUMENTARY_SKIP_USER_COMPONENTS": "1",
       },
       "args": [
         "src/bin/doc",
-        // "test/fixtures/README-source.md"
-        // "src/lib/Documentary.js", "-g"
+        "wiki", "-W", "../documentary.wiki", "-w",
+        "-f", "Custom-Methods",
+        "-p", "Custom-Methods"
+      ],
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Doc WIKI",
+      "program": "${workspaceFolder}/node_modules/.bin/alanode",
+      "env": {
+        "DOCUMENTARY_CWD": "wiki/Custom-Methods/custom",
+        "DOCUMENTARY_IGNORE_HIDDEN": "false",
+      },
+      "args": [
+        "src/bin/doc", "wiki/Custom-Methods/.markdown.md"
       ],
       "console": "integratedTerminal",
       "skipFiles": [

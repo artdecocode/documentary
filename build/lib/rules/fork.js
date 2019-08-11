@@ -10,7 +10,8 @@ const { Catchment } = require('../../../stdlib');
 
 const queue = {}
 
-const replacement = async function (noCache, old, err, lang, m, awaited = false, answers, env) {
+const replacement = async function (noCache, old, err, lang, m, awaited = false, answers, {
+  parsedEnv, env } = {}) {
   if (awaited) noCache = false
   const [mod, ...args] = m.split(' ')
 
@@ -48,7 +49,7 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false,
     addModulesCacheLater = () => this.addCache('modules', cacheToWrite)
   } else {
     const cache = this.getCache('fork')
-    const record = cache[`[${md5}] ${m}`]
+    const record = cache[`[${md5}] ${env ? `${env} ` : ''}${m}`]
     if (record) {
       this.log('%s %s', s, awaited ? 'awaited' : 'cached')
       const { 'stderr': stderr, 'stdout': stdout } = record
@@ -62,9 +63,9 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false,
 
   !printed && this.log(s)
 
-  const { stdout, stderr } = await doFork(old, mod, args, answers, env)
+  const { stdout, stderr } = await doFork(old, mod, args, answers, parsedEnv)
 
-  const cacheToWrite = { [`[${md5}] ${m}`]: {
+  const cacheToWrite = { [`[${md5}] ${m}${env ? `${env} ` : ''}`]: {
     'stdout': stdout, 'stderr': stderr,
   } }
   await Promise.all([
@@ -116,21 +117,23 @@ const doFork = async (old, mod, args, answers = {}, env = {}) => {
 
 const forkRule = {
   re: /( *)%([/!_]+)?FORK(ERR)?(?:-(\w+))? (.+)%/mg,
-  async replacement(match, ws, service, err, lang, m, /* <fork api> */ answers, env) {
+  async replacement(match, ws, service, err, lang, m, /* <fork api> */ answers, { parsedEnv, env } = {}) {
     const noCache = /!/.test(service) || this.noCache
     const old = /_/.test(service)
     const relative = /\//.test(service)
     try {
       let awaited = false
-      const q = queue[m]
+      const mm = `${env ? `${env} ` : ''} ${m}`
+      const q = queue[mm]
       if (q) {
-        this.log(`FORK: ${m} `, c(`awaiting ${q.err ? 'stderr' : 'stdout'}`, 'yellow'))
+        this.log(`FORK: ${mm} `, c(`awaiting ${q.err ? 'stderr' : 'stdout'}`, 'yellow'))
         await q.promise
         awaited = true
       }
-      const promise = replacement.call(this, noCache, old, err, lang, m, awaited, answers, env)
-      queue[m] = { promise, err }
+      const promise = replacement.call(this, noCache, old, err, lang, m, awaited, answers, { parsedEnv, env })
+      queue[mm] = { promise, err }
       let res = await promise
+      delete queue[mm]
       if (ws) res = res.replace(/^/gm, ws)
       if (relative) res = res.replace(new RegExp(`${process.cwd()}/?`, 'g'), '')
       return res

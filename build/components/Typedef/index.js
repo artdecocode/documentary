@@ -6,24 +6,21 @@ const { codeRe } = require('../../lib/rules');
 const Method = require('../method');
 const { makeMethodTable } = require('./lib');
 
-// { renderAgain: function(), locations, allTypes: Array<Type>}
-
 /**
  * @param {Object} opts
- * @param {Object} opts.documentary
- * @param {import('../../lib/Documentary').default} opts.documentary.documentary
+ * @param {import('../../lib/Documentary').default} opts.documentary
  */
 function Typedef({ documentary, children, name, narrow,
   flatten, details, level, noArgTypesInToc = false, slimFunctions = false,
 }) {
   details = details ? details.split(',') : []
   const {
-    setPretty, locations, allTypes, cutCode,
-    wiki, source, documentary: doc,
+    locations, allTypes, cut: { code: cutCode },
+    _args: { wiki, source }, currentFile,
   } = documentary
-  const file = wiki ? source : doc.currentFile
+  const file = wiki ? source : currentFile
 
-  setPretty(false)
+  documentary.setPretty(false)
   let [location] = children
   location = location.trim()
   /** @type {!Array<!Type>} */

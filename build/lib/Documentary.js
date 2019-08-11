@@ -21,14 +21,20 @@ const sectionBrakeRule = require('./rules/section-break');
 const { macroRule, useMacroRule } = require('./rules/macros');
 const loadComponents = require('./components');
 const Components = require('../components/');
+const Method = require('../components/method');
 
 const LOG = debuglog('doc')
 
-const getComponents = (paths, documentary) => {
+const getComponents = (paths, getDocumentary) => {
+  let method = Method
   const transforms = paths.reduce((acc, path) => {
     try {
       const required = require(path) // an object
       Object.entries(required).forEach(([key, e]) => {
+        if (key == 'method') {
+          method = e
+          return
+        }
         if (acc[key] && acc[key] !== e) console.error('Overriding component <%s> by new one from %s', key, path)
         acc[key] = e
       })
@@ -40,12 +46,16 @@ const getComponents = (paths, documentary) => {
       return acc
     }
   }, Components)
-  const components = loadComponents(transforms, documentary)
-  return components
+  const components = loadComponents(transforms, getDocumentary)
+  return { method, components }
 }
 
 const SKIP_USER_COMPONENTS = process.env.DOCUMENTARY_SKIP_USER_COMPONENTS
   && process.env.DOCUMENTARY_SKIP_USER_COMPONENTS != 'false'
+
+const { DOCUMENTARY_CWD: CWD = '.' } = process.env
+let { DOCUMENTARY_IGNORE_HIDDEN: IGNORE_HIDDEN = true } = process.env
+if (IGNORE_HIDDEN) IGNORE_HIDDEN = IGNORE_HIDDEN != 'false'
 
 /**
  * Documentary is a _Replaceable_ stream with transform rules for documentation.
@@ -53,8 +63,11 @@ const SKIP_USER_COMPONENTS = process.env.DOCUMENTARY_SKIP_USER_COMPONENTS
 class Documentary extends Replaceable {
   /**
    * @param {DocumentaryOptions} options Options for the Documentary constructor.
-   * @param {*} [options.locations]
-   * @param {Array} [options.types]
+   * @param {!Object<string, !Array<_typal.Type>} [options.locations] The source locations of types, e.g., types/index.xml.
+   * @param {!Array<_typal.Type>} [options.types] All extracted types across every processed file.
+   * @param {string} [options.wiki] If processing Wiki, specifies the output location.
+   * @param {string} [options.source] The location of the source file or directory from which the documentation is compiled.
+   * @param {string} [options.output] The location where to save the `README.md` file.
    * @param {string} [options.cwd="."] The `cwd` that is used to resolve `.documentary` folder. Default `.`.
    * @param {string} [options.cacheLocation="${cwd}/.documentary/cache"] The folder where the cache is kept. Default `${cwd}/.documentary/cache`.
    * @param {boolean} [options.noCache=false] Disable caching for forks. Default `false`.
@@ -62,11 +75,12 @@ class Documentary extends Replaceable {
    */
   constructor(options = {}) {
     const {
-      locations = {}, types: allTypes = [],
-      cwd = '.', cacheLocation = join(cwd, '.documentary/cache'), noCache,
-      disableDtoc, objectMode = true /* deprec */,
+      locations = {}, types: allTypes = /** @type {!Array<_typal.Type>} */ ([]),
+      cwd = CWD, cacheLocation = join(cwd, '.documentary/cache'),
+      noCache, disableDtoc, objectMode = true /* deprec */,
       wiki, output, source, // options to remember
       skipUserComponents = SKIP_USER_COMPONENTS,
+      skipHomedirComponents = false,
     } = options
 
     // console.log('loaded components %s', components)
@@ -97,14 +111,11 @@ class Documentary extends Replaceable {
       })
 
     const compPaths = [
-      join(homedir(), '.documentary'),
+      ...(skipHomedirComponents ? [] : [join(homedir(), '.documentary')]),
       resolve(cwd, '.documentary'),
     ]
-    // this is the service property to components
-    const documentary = {
-      insertInnerCode, locations, allTypes, cutCode, wiki, source,
-    }
-    const components = getComponents(skipUserComponents ? [] : compPaths, documentary)
+
+    const { method, components } = getComponents(skipUserComponents ? [] : compPaths, () => this)
 
     super([
       cutInnerCode, // don't want other rules being detected inside of inner code, including toc-titles
@@ -188,7 +199,8 @@ class Documentary extends Replaceable {
       insertMethodTitle,
     ], { objectMode })
 
-    documentary.documentary = this
+    this.Method = method // the method component can be overridden by users.
+
     this._types = {}
 
     this._innerCode = innerCode
@@ -208,29 +220,58 @@ class Documentary extends Replaceable {
      * @type {!Array<string>}
      */
     this.assets = []
-    /**
-     * The args passed to the program.
-     */
+
+    /** The args passed to the program. */
     this._args = {
-      output, wiki, source,
+      /** The location of the source file or directory from which the documentation is compiled. */
+      source,
+      /** If processing Wiki, specifies the output location. */
+      wiki,
+      /** The location where to save the `README.md` file. */
+      output,
     }
+
+    this.cut = {
+      code: cutCode,
+      table: cutTable,
+      methodTitle: methodTitle,
+      innerCode: innerCode,
+    }
+    this.insert = {
+      code: insertCode,
+      table: insertTable,
+      methodTitle: insertMethodTitle,
+      innerCode: insertInnerCode,
+    }
+    /**
+     * The source locations of types, e.g., types/index.xml.
+     */
+    this.locations = locations
+    /**
+     * All extracted types across every processed file.
+     */
+    this.allTypes = allTypes
   }
+
   /**
    * Adds some information for generating TOC later.
    * @param {string} name
    * @param {Object} value
-   * @param {string} [value.hash]
+   * @param {string} [value.string] The string to display in TOC. Cancels out other options apart from `level`.
+   * @param {string} [value.level] The level at which to display the title.
+   * @param {string} [value.hash] The hash indicating the level, e.g., `###`.
+   * @param {string} [value.replacedTitle] The actual title that will be display in README.
    * @param {boolean} [value.isAsync]
    * @param {string} [value.name]
    * @param {string} [value.returnType]
    * @param {Array} [value.args]
-   * @param {string} [value.replacedTitle]
    * @param {boolean} [value.noArgTypesInToc]
    */
   addDtoc(name, value) {
     if (this._disableDtoc) return ''
     if (!this._dtoc[name]) this._dtoc[name] = []
     const arr = this._dtoc[name]
+    if (value.level) value.hash = '#'.repeat(value.level)
     arr.push(value)
     return `%%DTOC_${name}_${arr.length - 1}%%`
   }
@@ -303,7 +344,8 @@ class Documentary extends Replaceable {
       await super._transform(chunk, _, next)
     } else if (typeof chunk == 'object') {
       if (basename(chunk.file) == '.DS_Store') return next()
-      else if (/\.(js|xml|png|jpe?g|gif|svg)$/i.test(chunk.file)) return next()
+      if (/\.(jsx?|xml|png|jpe?g|gif|svg)$/i.test(chunk.file)) return next()
+      if (IGNORE_HIDDEN && basename(chunk.file).startsWith('.')) return next()
       chunk.file != 'separator' && LOG(b(chunk.file, 'cyan'))
       /** @type {string} */
       this.currentFile = chunk.file
@@ -316,13 +358,32 @@ class Documentary extends Replaceable {
   addAsset(asset) {
     if (!this.assets.includes(asset)) this.assets.push(asset)
   }
+  /**
+   * Render the result of the component again.
+   * This is needed when a component might contain other components when rendered.
+   */
+  renderAgain() {
+    // overridden by src/lib/components.js for each component
+  }
+  /**
+   * The function which controls whether to enable pretty printing, and the line width.
+   * @param {boolean} [isPretty=true] Whether to enable pretty printing. Default `true`.
+   * @param {number} [lineLength] When to break the line. Default `100`.
+   */
+  setPretty(isPretty, lineLength) {
+    // overridden by src/lib/components.js for each component
+  }
 }
 
-/* documentary types/Documentary.xml */
+/* typal types/Documentary.xml namespace */
 /**
+ * @typedef {import('typal/types').Type} _typal.Type
  * @typedef {Object} DocumentaryOptions Options for the Documentary constructor.
- * @prop {*} [locations]
- * @prop {Array} [types]
+ * @prop {!Object<string, !Array<_typal.Type>} [locations] The source locations of types, e.g., types/index.xml.
+ * @prop {!Array<_typal.Type>} [types] All extracted types across every processed file.
+ * @prop {string} [wiki] If processing Wiki, specifies the output location.
+ * @prop {string} [source] The location of the source file or directory from which the documentation is compiled.
+ * @prop {string} [output] The location where to save the `README.md` file.
  * @prop {string} [cwd="."] The `cwd` that is used to resolve `.documentary` folder. Default `.`.
  * @prop {string} [cacheLocation="${cwd}/.documentary/cache"] The folder where the cache is kept. Default `${cwd}/.documentary/cache`.
  * @prop {boolean} [noCache=false] Disable caching for forks. Default `false`.

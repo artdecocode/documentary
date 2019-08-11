@@ -15,7 +15,7 @@ export const argsConfig = {
     short: 'W',
   },
   'focus': {
-    description: 'When generating _Wiki_, this is a list of comma-separated values used to specify which pages to process in current compilation, e.g., `Address` or `Address,DNS`.',
+    description: 'When generating _Wiki_, this is a list of comma-separated values that will be converted into RegEx\'es used to specify which pages to process in current compilation, e.g., `Address`, `Addr` or `Address,DNS`.',
     short: 'f',
   },
   'toc': {
@@ -95,7 +95,7 @@ export const _output = /** @type {string} */ (args['output'])
 export const _wiki = /** @type {string} */ (args['wiki'])
 
 /**
- * When generating _Wiki_, this is a list of comma-separated values used to specify which pages to process in current compilation, e.g., `Address` or `Address,DNS`.
+ * When generating _Wiki_, this is a list of comma-separated values that will be converted into RegEx'es used to specify which pages to process in current compilation, e.g., `Address`, `Addr` or `Address,DNS`.
  */
 export const _focus = /** @type {string} */ (args['focus'])
 

@@ -17,4 +17,10 @@ DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
 
+This is quite essential to understanding the status of documentation processing, and will be enabled by default in the next version.
+
+### Hidden Files
+
+Hidden files are ignored by default. This can be changed by setting the `DOCUMENTARY_IGNORE_HIDDEN=false` env variable.
+
 %~%

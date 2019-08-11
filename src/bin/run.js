@@ -27,7 +27,7 @@ export default async function run(options) {
   } = options
 
   let { types: typesLocations, focus } = options
-  if (focus) focus = focus.split(',')
+  if (focus) focus = focus.split(',').map(f => new RegExp(f)) //
 
   const stream = getStream(source, reverse, true)
 
@@ -47,7 +47,7 @@ export default async function run(options) {
     const keys = Object.keys(content).filter((key) => {
       const val = content[key]
       if (focus) {
-        return focus.includes(key)
+        return focus.some(f => f.test(key))
       }
       if (val.type == 'Directory' && !key.startsWith('_')) return true
       return /\.(md|html)$/.test(key)
@@ -65,9 +65,9 @@ export default async function run(options) {
         output: o,
         source: so,
       })
+      assets = [...assets, ...doc.assets]
       return doc
     }))
-    assets = [...assets, docs.map(d => d.assets)]
     console.log('Saved %s wiki page%s to %s', docs.length, docs.length > 1 ? 's' : '', wiki)
   } else {
     const doc = await runPage({ source, reverse, locations, types, noCache, h1, justToc, output })

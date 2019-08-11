@@ -31,13 +31,10 @@ const parse = (xml) => {
 
 /**
  * The component to show arguments as the table.
- * @param {!ArgufyProps} props Options for the Shell component. TODO: pass options.
+ * @param {Object} props Options for the Shell component. TODO: pass options.
+ * @param {import('../lib/Documentary').default} props.documentary
  */
-const Argufy = async (props) => {
-  const {
-    children,
-    documentary,
-  } = props
+const Argufy = async ({ children, documentary }) => {
   const [child] = children
   const xml = await read(child)
   const args = parse(xml)

@@ -67,7 +67,9 @@ if (_source) {
     DEBUG ? LOG(stack) : console.log(message)
   }
 
+
   if (_watch || _push) {
+    let firstTime = true
     let debounce = false
     /** @type {!Array<!fs.FSWatcher>} */
     let filesWatching = []
@@ -79,10 +81,19 @@ if (_source) {
         fs.close()
       })
 
-      files = await doc(docOptions)
+      if (!firstTime) {
+        files = await doc(docOptions)
+      } else firstTime = false
+
       if (_push) {
-        console.log('Pushing documentation changes.')
-        await gitPush(_source, _output, _push, files)
+        console.log('Pushing %s changes...', _wiki ? 'wiki' : 'documentation')
+
+        const sourcePromise = gitPush(_source, _output, `${_wiki ? 'Wiki: ' : ''}${_push}`, files)
+
+        await (_wiki ? Promise.all([
+          gitPush('.', _output, _push, [], _wiki),
+          sourcePromise,
+        ]) : sourcePromise)
       }
       filesWatching = files.map((file) => {
         const fs = watch(file, watcher)

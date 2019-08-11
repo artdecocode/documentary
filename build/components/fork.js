@@ -4,10 +4,14 @@ const { rexml } = require('../../stdlib');
 
 const { replacement } = forkRule
 
+/** The component to create forks.
+ * @param {Object} opts
+ * @param {import('../lib/Documentary').default} opts.documentary
+ */
 function Fork({ documentary, children,
   nocache, plain, relative, stderr, lang, env = '', noprint,
 }) {
-  env = env.split(' ').reduce((acc, c) => {
+  const parsedEnv = env.split(' ').reduce((acc, c) => {
     const [name, val] = c.split('=')
     acc[name] = val
     return acc
@@ -36,11 +40,11 @@ function Fork({ documentary, children,
     child = child.slice(i)
   }
   child = child.trim()
-  const fn = replacement.bind(documentary.documentary)
+  const fn = replacement.bind(documentary)
   const res = fn(null, '', service, stderr, lang, child, {
     stdout: stdoutAnswers,
     stderr: stderrAnswers,
-  }, env)
+  }, { parsedEnv, env })
   if (res === null) throw new Error('The component didn\'t work.')
   if (noprint) {
     documentary.log(`Not printing output of ${child}`)

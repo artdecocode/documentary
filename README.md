@@ -29,6 +29,7 @@ yarn add -D documentary
   * [Replacement Rules](#replacement-rules)
 - [CLI](#cli)
   * [`NODE_DEBUG=doc`](#node_debugdoc)
+  * [Hidden Files](#hidden-files)
 - [♫ PRO<br/>♪ Underlined<br/>♯ `Titles`](#-pro-underlined-titles)
 - [Glossary](#glossary)
   * [Online Documentation](#online-documentation)
@@ -177,7 +178,7 @@ The arguments it accepts are:
   <tr>
    <td>--focus</td>
    <td>-f</td>
-   <td>When generating <em>Wiki</em>, this is a list of comma-separated values used to specify which pages to process in current compilation, e.g., <code>Address</code> or <code>Address,DNS</code>.</td>
+   <td>When generating <em>Wiki</em>, this is a list of comma-separated values that will be converted into RegEx'es used to specify which pages to process in current compilation, e.g., <code>Address</code>, <code>Addr</code> or <code>Address,DNS</code>.</td>
   </tr>
   <tr>
    <td>--toc</td>
@@ -254,6 +255,12 @@ When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print
 DOC 80734: stripping comment
 DOC 80734: could not parse the table
 ```
+
+This is quite essential to understanding the status of documentation processing, and will be enabled by default in the next version.
+
+### Hidden Files
+
+Hidden files are ignored by default. This can be changed by setting the `DOCUMENTARY_IGNORE_HIDDEN=false` env variable.
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/6.svg?sanitize=true">

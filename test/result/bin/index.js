@@ -97,9 +97,7 @@ test/fixtures/README
 
 This is a composite documentation split into multiple files.
 
-## a hidden file
 
-is a real treasure
 
 ## Introduction
 

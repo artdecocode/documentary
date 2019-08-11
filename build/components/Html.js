@@ -4,13 +4,13 @@ const { SyncReplaceable, makeCutRule, makePasteRule, makeMarkers } = require('..
 const strongReplacer = '<strong>$1</strong>'
 const emReplacer = '$1<em>$2</em>'
 
-/** The component to replace markdown with html. */
-const Md2Html =
-({ children, documentary, li = true, afterCutLinks }) => {
+/** The component to replace markdown with html.
+ * @param {Object} opts
+ * @param {import('../lib/Documentary').default} opts.documentary
+ */
+const Md2Html = ({ children, documentary, li = true, afterCutLinks }) => {
   if (li == 'false') li = false
-  /** @type {import('restream').Rule} */
-  const insertInnerCode = documentary.insertInnerCode
-  /** @type {import('restream').Rule} */
+  const insertInnerCode = documentary.insert.innerCode
   const [c] = children
   return replace(c, insertInnerCode, { li, afterCutLinks })
 }

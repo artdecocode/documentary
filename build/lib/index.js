@@ -72,21 +72,25 @@ const getStream = (path, reverse, object = true) => {
   return stream
 }
 
-const gitPush = async (source, output, message, files = []) => {
-  const { promise } = spawn('git', ['log', '--format=%B', '-n', '1'])
+/**
+ * Pushes the changes.
+ */
+const gitPush = async (source, output, message, files = [], cwd = null) => {
+  const { promise } = spawn('git', ['log', '--format=%B', '-n', '1'], { cwd })
   const { stdout } = await promise
   const s = stdout.trim()
   if (s == message) {
-    await git('reset', 'HEAD~1')
+    await git(cwd, 'reset', 'HEAD~1')
   }
-  await git('add', source, output, ...files)
-  const res = await git('commit', '-m', message)
+  const { code: addCode } = await git(cwd, 'add', source, ...files, ...(output ? [output] : []))
+  if (addCode) return
+  const res = await git(cwd, 'commit', '-m', message)
   if (res.code != 0) return
-  await git('push', '-f')
+  await git(cwd, 'push', '-f')
 }
 
-const git = async (...args) => {
-  const { promise } = spawn('git', args, { stdio: 'inherit' })
+const git = async (cwd, ...args) => {
+  const { promise } = spawn('git', args, { stdio: 'inherit', cwd })
   return await promise
 }
 

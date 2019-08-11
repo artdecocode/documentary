@@ -103,12 +103,26 @@ class ChunkReplaceable extends Replaceable {
         replacement(match, int, position) {
           const {
             hash, isAsync, name, returnType, args, replacedTitle,
-            noArgTypesInToc,
+            noArgTypesInToc, string,
           } = getDtoc('MT', int)
           try {
             const { length: level } = hash
-
             if (this.skipLine(level)) return match
+
+            const fullTitle = replacedTitle
+              .replace(/^#+ +/, '')
+            const link = getLink(fullTitle)
+
+            if (string) {
+              this.emit('title', {
+                title: string,
+                link,
+                position,
+                level,
+              })
+              return
+            }
+
             const bb = [isAsync ? 'async' : '', name]
               .filter(a => a)
               .join(' ').trim()
@@ -120,9 +134,6 @@ class ChunkReplaceable extends Replaceable {
               else tt = 'object'
               return `${argName}: ${tt}`
             })
-            const fullTitle = replacedTitle
-              .replace(/^#+ +/, '')
-            const link = getLink(fullTitle)
 
             const rt = `${returnType ? `: ${returnType}` : ''}`
             const title = `\`${bb}(${s.join(', ')})${rt}\``

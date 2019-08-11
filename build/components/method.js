@@ -3,14 +3,13 @@ const NL = '<br/>'
 const I = '&nbsp;&nbsp;' // indent
 
 /**
- * Writes method title.
+ * Writes method title. Not exported, has to be invoked manually.
  * @param {Object} opts
- * @param {import('typal/src/lib/Method').default} opts.method
+ * @param {import('typal/types').Method} opts.method
  * @param {number} opts.level
- * @param {Object} opts.documentary
- * @param {import('../lib/Documentary').default} opts.documentary.documentary
+ * @param {import('../lib/Documentary').default} opts.documentary
  */
-function Method({ documentary: { documentary }, method, level = 2, noArgTypesInToc }) {
+function Method({ documentary, method, level = 2, noArgTypesInToc }) {
   const hash = '#'.repeat(level)
   let sig = `${hash} <code>${method.async ? 'async ' : ''}<ins>${method.name}</ins>(`
 
