@@ -1,3 +1,14 @@
+## 11 August 2019
+
+### [1.32.0](https://github.com/artdecocode/documentary/compare/v1.31.1...v1.32.0)
+
+- [feature] Implement and document custom method titles.
+- [feature] Push wiki changes with `-p` option.
+- [fix] Use regex for wiki focus feature.
+- [fix] Cache forks with different env variables separately.
+- [fix] Clear fork queue in watch mode.
+- [api] Ignore hidden files.
+
 ## 8 August 2019
 
 ### [1.31.1](https://github.com/artdecocode/documentary/compare/v1.31.0...v1.31.1)
