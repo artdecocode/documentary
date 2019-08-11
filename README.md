@@ -15,6 +15,40 @@ yarn add -D documentary
   <img src="/.documentary/section-breaks/0.svg?sanitize=true">
 </a></p>
 
+````markdown
+<!-- Tables Of Contents -->
+%TOC%
+
+<!-- Examples -->
+%EXAMPLE: example/index.js, ../src => documentary%
+
+<!-- Forks, native with import/export/jsx -->
+<fork stderr nocache env="HELLO=WORLD">
+  example/index.js
+</fork>
+
+<!-- Typedefs with linking -->
+<typedef narrow flatten>
+  types/index.xml
+</typedef>
+
+<!-- Methods with custom heading designs -->
+```## runSoftware
+[
+  ["program", "string"],
+  ["config=", "Object"]
+]
+```
+
+<!-- Section Breaks -->
+%~ width="25"%
+
+<!-- JSX Components -->
+<my-component package="documentary">
+  Checkout https://readme.page
+</my-component>
+````
+
 <table>
 <tr><td rowspan="2">
 
@@ -50,7 +84,7 @@ Each feature of _Documentary_ is described on its relevant Wiki page.
 - <kbd>📐[JSON Tables](../../wiki/JSON-Tables)</kbd>: Writing _JSON_ array data to be converted into a Markdown table.
 - <kbd>📜[Embed Examples](../../wiki/Embed-Examples)</kbd>: Decoupling examples from documentation by maintaining separate runnable example file.
 - <kbd>🍴[Forks (Embed Output)](../../wiki/Forks)</kbd>: Executing examples to show their output, and validating that program works correctly.
-- <kbd>🎩[Method Titles](../../wiki/Method-Titles)</kbd>: Documenting methods in a standard way.
+- <kbd>🎩[Method Titles](../../wiki/Method-Titles)</kbd>: Documenting methods in a standard way, and provide your own designs.
 - <kbd>🎇[JSX Components](../../wiki/JSX-Components)</kbd>: Implementing custom system-wide and project-scoped components.
 - <kbd>🤖[Macros](../../wiki/Macros)</kbd>: Constructing patterns to be reused in formation of READMEs.
 - <kbd>☀️[Typedefs](../../wiki/Typedefs)</kbd>: Display `@typedef` information in _README_ files by maintaining types externally to _JS_ source.
