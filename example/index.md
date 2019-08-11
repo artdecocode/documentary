@@ -1,7 +1,7 @@
 <!-- Tables Of Contents -->
 %TOC%
 
-<!-- Examples -->
+<!-- Examples with paths renaming -->
 %EXAMPLE: example/index.js, ../src => documentary%
 
 <!-- Forks, native with import/export/jsx -->

@@ -15,11 +15,12 @@ yarn add -D documentary
   <img src="/.documentary/section-breaks/0.svg?sanitize=true">
 </a></p>
 
-````markdown
+For example, these are some pieces of documentation infrastructure made available by _Documentary_:
+````html
 <!-- Tables Of Contents -->
 %TOC%
 
-<!-- Examples -->
+<!-- Examples with paths renaming -->
 %EXAMPLE: example/index.js, ../src => documentary%
 
 <!-- Forks, native with import/export/jsx -->
@@ -48,6 +49,19 @@ yarn add -D documentary
   Checkout https://readme.page
 </my-component>
 ````
+All of these features come with just 3 transient dependencies in your `node_modules`:
+
+```m
+../documentary-test/node_modules
+├── alamode
+├── documentary
+├── preact
+└── typal
+```
+
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/1.svg?sanitize=true">
+</a></p>
 
 <table>
 <tr><td rowspan="2">
@@ -96,7 +110,7 @@ Each feature of _Documentary_ is described on its relevant Wiki page.
 </table>
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/1.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/2.svg?sanitize=true">
 </a></p>
 
 ## Installation & Usage
@@ -122,7 +136,7 @@ yarn doc
 When actively working on documentation, it is possible to use the `watch` mode with `-w` flag, or `-p` flag to also automatically push changes to a remote git repository, merging them into a single commit every time.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/2.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/3.svg?sanitize=true">
 </a></p>
 
 ## Misc
@@ -134,7 +148,7 @@ These are some essential feature of _Documentary_.
 Since comments found in `<!-- comment -->` sections are not visible to users, they will be removed from the compiled output document.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/3.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/4.svg?sanitize=true">
 </a></p>
 
 ### File Splitting
@@ -158,7 +172,7 @@ documentary
 ```
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/4.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
 </a></p>
 
 ### Replacement Rules
@@ -172,7 +186,7 @@ There are some other built-in rules for replacements which are listed in this ta
 | %TREE directory ...args% | Executes the `tree` command with given arguments. If `tree` is not installed, warns and does not replace the match. |
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/5.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
 </a></p>
 
 ## CLI
@@ -297,7 +311,7 @@ This is quite essential to understanding the status of documentation processing,
 Hidden files are ignored by default. This can be changed by setting the `DOCUMENTARY_IGNORE_HIDDEN=false` env variable.
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/6.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/7.svg?sanitize=true">
 </a></p>
 
 ♫ PRO
@@ -317,7 +331,7 @@ Titles written as blocks and underlined with any number of either `===` (for H1)
 As seen in the [_Markdown Cheatsheet_](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
 <p align="center"><a href="#table-of-contents">
-  <img src="/.documentary/section-breaks/7.svg?sanitize=true">
+  <img src="/.documentary/section-breaks/8.svg?sanitize=true">
 </a></p>
 
 ## Glossary

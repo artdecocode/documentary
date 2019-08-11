@@ -13,7 +13,18 @@ yarn add -D documentary
 
 %~%
 
-%EXAMPLE: example/index.md%
+<!-- <details><summary><md2html> -->
+For example, these are some pieces of documentation infrastructure made available by _Documentary_:
+<!-- </md2html></summary> -->
+
+%EXAMPLE: example/index.md, html%
+<!-- </details> -->
+
+All of these features come with just 3 transient dependencies in your `node_modules`:
+
+%TREE ../documentary-test/node_modules -L 1%
+
+%~%
 
 <table>
 <tr><td rowspan="2">
