@@ -1,3 +1,10 @@
+## 17 August 2019
+
+### [1.32.1](https://github.com/artdecocode/documentary/compare/v1.32.0...v1.32.1)
+
+- [fix] Fix argufy component by calling `setPretty` before async kicks in.
+- [deps] Upd competent and render.
+
 ## 11 August 2019
 
 ### [1.32.0](https://github.com/artdecocode/documentary/compare/v1.31.1...v1.32.0)
