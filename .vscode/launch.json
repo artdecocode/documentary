@@ -48,7 +48,7 @@
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },
       "args": ["-o", "README.md", "-w"],
-      "cwd": "${workspaceFolder}/../../idiocc/goa",
+      "cwd": "${workspaceFolder}/../../adc/dokku",
       "console": "integratedTerminal",
       "skipFiles": [
         "<node_internals>/**/*.js"

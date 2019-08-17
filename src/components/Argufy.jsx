@@ -34,6 +34,7 @@ const parse = (xml) => {
  * @param {import('../lib/Documentary').default} props.documentary
  */
 const Argufy = async ({ children, documentary }) => {
+  documentary.setPretty(false)
   const [child] = children
   const xml = await read(child)
   const args = parse(xml)
@@ -56,7 +57,6 @@ const Argufy = async ({ children, documentary }) => {
     acc.push('\n')
     return acc
   }, [])
-  documentary.setPretty(false)
   return (<table>{'\n '}
     <thead>{'\n  '}
       <tr>{'\n   '}
