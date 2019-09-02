@@ -1,3 +1,10 @@
+## 2 September 2019
+
+### [1.32.2](https://github.com/artdecocode/documentary/compare/v1.32.1...v1.32.2)
+
+- [fix] Fix escaping in **md2html**.
+- [deps] Upgrade deps (_ÀLaMode_ 3).
+
 ## 17 August 2019
 
 ### [1.32.1](https://github.com/artdecocode/documentary/compare/v1.32.0...v1.32.1)
