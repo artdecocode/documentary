@@ -145,7 +145,7 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
         </td>{'\n  '}
         <td colSpan={isMethodCol ? 2 : undefined}>
           <em dangerouslySetInnerHTML={{ __html: md(typeName, [
-            { re: /([_*])/g, replacement: '\\$1' },
+            { re: /([_*])/g, replacement: '\\$1' }, // esc for md2html
           ]) }}/>
         </td>
         {anyHaveDefault && !prop.args && '\n  '}

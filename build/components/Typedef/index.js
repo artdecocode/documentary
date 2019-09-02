@@ -146,7 +146,7 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
         ),'\n  ',
         h('td',{'colSpan':isMethodCol ? 2 : undefined},
           h('em',{'dangerouslySetInnerHTML':{ __html: md(typeName, [
-            { re: /([_*])/g, replacement: '\\$1' },
+            { re: /([_*])/g, replacement: '\\$1' }, // esc for md2html
           ]) }}),
         ),
         anyHaveDefault && !prop.args && '\n  ',

@@ -11,10 +11,10 @@ const Md2Html = ({ children, documentary, li = true, afterCutLinks }) => {
   if (li == 'false') li = false
   const insertInnerCode = documentary.insert.innerCode
   const [c] = children
-  return replace(c, insertInnerCode, { li, afterCutLinks })
+  return replace(c, insertInnerCode, { li, afterCutTags: afterCutLinks })
 }
 
-export const replace = (c, insertInnerCode, { li, afterCutLinks = [] }) => {
+export const replace = (c, insertInnerCode, { li, afterCutTags = [] }) => {
   const codes = {}
   const tocLinks = {} // keep toc-links for toc-links regex
   let s = c.trim()
@@ -44,7 +44,7 @@ export const replace = (c, insertInnerCode, { li, afterCutLinks = [] }) => {
       },
     },
     cutTags,
-    ...afterCutLinks,
+    ...afterCutTags,
     insertInnerCode,
     {
       re: /`(.*?)`/g,
@@ -76,9 +76,20 @@ export const replace = (c, insertInnerCode, { li, afterCutLinks = [] }) => {
       replacement: emReplacer,
     },
     {
-      re: /(^|[^\\])\\([_*])/g,
-      replacement: '$1$2',
+      re: /\\([_*])/g,
+      // re: /(^|[^\\])\\([_*])/g,
+      replacement(m, one, t, pos) {
+        if (t[pos-1] == '\\') return m
+        return one
+      },
     },
+    // {
+    //   re: /[\s\S]+/,
+    //   replacement(m) {
+    //     debugger
+    //     return m
+    //   },
+    // },
     (li ? {
       re: /(^ *)- (.+)$/mg,
       replacement: '$1<li>$2</li>',
