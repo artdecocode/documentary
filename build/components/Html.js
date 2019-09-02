@@ -79,7 +79,7 @@ const replace = (c, insertInnerCode, { li, afterCutTags = [] }) => {
     {
       re: /\\([_*])/g,
       // re: /(^|[^\\])\\([_*])/g,
-      replacement(m, one, t, pos) {
+      replacement(m, one, pos, t) {
         if (t[pos-1] == '\\') return m
         return one
       },
