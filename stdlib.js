@@ -374,7 +374,7 @@ function Ya(a, b = {}, c = {}, d = !1, e = !1, f) {
   u && G && (v = v.replace(/>$/, " />"));
   let B = [];
   if (d) {
-    h && (Na(d) || d.length + ab(v) > x) && (d = "\n" + F + `${d}`.replace(/(\n+)/g, "$1" + (F || "\t"))), v += d;
+    !t && h && (Na(d) || d.length + ab(v) > x) && (d = "\n" + F + `${d}`.replace(/(\n+)/g, "$1" + (F || "\t"))), v += d;
   } else {
     if (a.children) {
       let D = h && v.includes("\n");
