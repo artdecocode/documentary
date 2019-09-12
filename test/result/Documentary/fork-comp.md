@@ -14,3 +14,12 @@ Please confirm: no
 documentary 123
 ```
 /**/
+
+## adds indicatrix
+<fork>test/fixture/fork/indicatrix-placeholder</fork>
+
+/* expected */
+<pre>forking
+<a id="_ind0" href="#_ind0"><img src=".documentary/indicatrix.gif"></a>
+</pre>
+/**/
