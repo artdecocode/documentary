@@ -91,15 +91,10 @@
   resolved "https://registry.yarnpkg.com/@zoroaster/assert/-/assert-1.0.2.tgz#8ffe2ebb10c81d570d4965080f942af688321a1f"
   integrity sha512-5C0LDzW8DkiSSCLyYO9ux3R5ru65yEn/GtxH1wh7ukRhLAZ/Svx4+A81YvciXcn35B2VmvCqyiTrhNdxdgusSw==
 
-"@zoroaster/mask@^2.1.1":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@zoroaster/mask/-/mask-2.2.0.tgz#fecdcb6f863440519b91b51f09549b1e981e84da"
-  integrity sha512-/k9B/ofxE4x9Vs6EOjXQjcsltraJzNLg/uxEwzfCZUN+foiJxK/j+YBiyJmN3Gwpnry2D3Qs0D3Qm+SMkLqkTg==
-
-alamode@^2.1.2:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/alamode/-/alamode-2.4.0.tgz#f774e808acb214f93a890c139ad7819e05d8f1b2"
-  integrity sha512-SpZICdlHLK+9uRVkJEJlqPMlvbE03B28TtCzwBNfjLzc7hAZVghzlOn4lSUQLYXK06/4ae7GxLMn7eXMCSkiRw==
+"@zoroaster/mask@^2.2.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@zoroaster/mask/-/mask-2.3.0.tgz#57d169417e09e481efafccbffdd93cef919ec5e6"
+  integrity sha512-fufal06pS/SYhOKHCmoFQ+PjhQwsCwMr2h0D2xeiVaXstaWHJVEiLg4+BU/KCmOOzLXLKikf81ca4zFXip7ScQ==
 
 alamode@^3.0.0:
   version "3.0.0"
@@ -129,10 +124,10 @@ clearr@^1.0.0:
   resolved "https://registry.yarnpkg.com/clearr/-/clearr-1.0.0.tgz#47f2a0a24aa910ef6b54e998732b825e3b4f90a0"
   integrity sha512-OaDCLwxycJoODRWeNZT2j152jBp59wND+N+WkgkO3UhZM4cGXWwqPNUA1xmZXeKpt9pjdRcsn8L+mw0SZJ/wWg==
 
-competent@^1.8.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/competent/-/competent-1.8.1.tgz#489142bcc1e446b38af2ac8122fca141a99115fb"
-  integrity sha512-nhiQEAb6+3Vpm7PLie1oChUUemCDK88LqYE2uQXgT6ajZkM2pvLFkoKnqC5uwW1DotXciXFdqwHK9jjQ9vX1Ew==
+competent@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/competent/-/competent-2.2.0.tgz#54db8bf33dfa267699c4bd543d71449e8b3397ea"
+  integrity sha512-h+gMRpiWLWNaIY8NVG1CaXbMNtBRLhpJfkWpm8UxCacYQZ3H4wLZFCGSmkEAbgSgAsmxK2ytqt1IlC1BgJ/AjQ==
 
 erotic@^2.1.0, erotic@^2.1.1:
   version "2.1.1"
@@ -165,10 +160,10 @@ fpj@^1.3.0:
     "@wrote/read" "^1.0.4"
     resolve-dependency "^1.0.3"
 
-indicatrix@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/indicatrix/-/indicatrix-1.3.0.tgz#afa0a148f2dc260da56b8ace36d213ab7ddfb254"
-  integrity sha512-Z54tO3QPXVAVvJZkCYhHIoB8DI+eGLHEQSseN3M0QGmyv0QLDjhKLDTj7PTS/sAB3MfOPVNxa659b3fyM9dRlQ==
+indicatrix@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/indicatrix/-/indicatrix-1.4.0.tgz#544c3c9a12485f4a62a88e849819bd3245b3d756"
+  integrity sha512-35LB8ClUvqFFRJhEpllq5H8lnKrQa4CFJapjC0hsU+c8Qr0PCCASf4iffDW28EMHn1AxeY/jTh/ayOpAanUbbQ==
 
 makepromise@^3.0.3, makepromise@^3.1.0:
   version "3.1.0"
@@ -267,10 +262,10 @@ temp-context@^2.1.3:
     makepromise "^3.0.3"
     pedantry "^2.3.1"
 
-typal@^1.22.1:
-  version "1.22.1"
-  resolved "https://registry.yarnpkg.com/typal/-/typal-1.22.1.tgz#d7d861b87c7b1e4eb164547a8eb5c3f3863fb6e9"
-  integrity sha512-0gvvH2reH3rFh8lmVatMZI1SjLR8/LHwDpugs51vPDJnd41ANo59cBMsGl7IbQh2ThkOwvOPfbT+JLzz1Wpshg==
+typal@^1.22.6:
+  version "1.22.6"
+  resolved "https://registry.yarnpkg.com/typal/-/typal-1.22.6.tgz#c3162f5f19e91ad6d830375220e6552fcb4a0936"
+  integrity sha512-N6tkgC/r7OXwH0/hEFNRH6S/7zPfMXJU45w78KGgy8JLbt3lAbWPd4NWUZjQt6o2id23P34KeHSmNR4ddI/zZQ==
 
 usually@^1.2.0:
   version "1.2.0"
@@ -289,11 +284,11 @@ yarn-s@1.1.0:
   dependencies:
     spawncommand "1.1.0"
 
-zoroaster@^4.1.1-alpha:
-  version "4.1.1-alpha"
-  resolved "https://registry.yarnpkg.com/zoroaster/-/zoroaster-4.1.1-alpha.tgz#06dbfc3f903edd3b46612200f108406a91d5d0ed"
-  integrity sha512-p2mIXQhKGmaxFQdWSyNYAqK3gdtwBJhjgjOBX64L2rNJiZF7P9qCpY0ryY+BdJMORC4JuerJwihAsPgef2rHZw==
+zoroaster@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/zoroaster/-/zoroaster-4.1.2.tgz#89e033cdeebf75564713436bd7e72af926e800fb"
+  integrity sha512-mE5RlV12h5bEZ4LBX0NsR5NEwNicLR6kdwXMijWD8vH+8JmbtXuC664ndzsw46lnhmn2VWlafyBi5k/MMCmftA==
   dependencies:
     "@zoroaster/assert" "^1.0.2"
-    "@zoroaster/mask" "^2.1.1"
-    alamode "^2.1.2"
+    "@zoroaster/mask" "^2.2.0"
+    alamode "^3.0.0"
