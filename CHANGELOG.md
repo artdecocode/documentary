@@ -1,3 +1,9 @@
+## 12 September 2019
+
+### [1.33.0](https://github.com/artdecocode/documentary/compare/v1.32.2...v1.33.0)
+
+- [feature] Add _indicatrix_ GIF placeholder support for bash scripts.
+
 ## 2 September 2019
 
 ### [1.32.2](https://github.com/artdecocode/documentary/compare/v1.32.1...v1.32.2)

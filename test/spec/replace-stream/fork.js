@@ -1,5 +1,5 @@
 import Context, { MarkdownSnapshot } from '../../context'
-import TempContext from 'temp-context'
+// import TempContext from 'temp-context'
 import createReplaceStream from '../../../src/lib/replace-stream'
 
 /** @type {Object.<string, (c: Context )>} */
@@ -27,7 +27,7 @@ Below is the output of the program:
     return rs.pipe(stream)
   },
   'removes \\r from the output'({ createReadable, Documentary }) {
-    const rs = createReadable('%FORK test/fixture/indicatrix%')
+    const rs = createReadable('<fork env="INDICATRIX_PLACEHOLDER=0">test/fixture/indicatrix</fork>')
     const stream = new Documentary({ noCache: true })
     return rs.pipe(stream)
   },

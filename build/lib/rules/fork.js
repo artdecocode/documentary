@@ -1,9 +1,10 @@
 const { fork } = require('../../../stdlib');
 const { c } = require('../../../stdlib');
-const { resolve } = require('path');
+const { resolve, join } = require('path');
 const { resolveDependency } = require('../../../stdlib');
 const { clearr } = require('../../../stdlib');
 const { compare } = require('../../../stdlib');
+const { clone } = require('../../../stdlib');
 const { forkfeed } = require('../../../stdlib');
 const { codeSurround } = require('../');
 const { Catchment } = require('../../../stdlib');
@@ -31,6 +32,7 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false,
       console.log(...a)
     })
 
+  const { wiki } = this._args
   let addModulesCacheLater
   if (noCache || !result) {
     printed = true
@@ -54,7 +56,7 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false,
       this.log('%s %s', s, awaited ? 'awaited' : 'cached')
       const { 'stderr': stderr, 'stdout': stdout } = record
       this.addAsset(mmod)
-      return getOutput(err, stderr, stdout, lang)
+      return await getOutput(err, stderr, stdout, lang, wiki)
     } else {
       printed = true
       this.log('%s arguments not cached', s)
@@ -74,7 +76,7 @@ const replacement = async function (noCache, old, err, lang, m, awaited = false,
   ])
 
   this.addAsset(mmod)
-  return getOutput(err, stderr, stdout, lang)
+  return await getOutput(err, stderr, stdout, lang, wiki)
 }
 
 /**
@@ -88,6 +90,7 @@ const doFork = async (old, mod, args, answers = {}, env = {}) => {
     ...(old ? {} : {
       env: {
         DOCUMENTARY_REQUIRE: resolve(mod),
+        INDICATRIX_PLACEHOLDER: '1',
         ...process.env,
         ...env,
       },
@@ -145,10 +148,25 @@ const forkRule = {
   },
 }
 
-const getOutput = (err, stderr, stdout, lang) => {
+let indicatrixId = 0
+
+const getOutput = async (err, stderr, stdout, lang, wiki) => {
   const res = err ? stderr : stdout
   const r = res.trim().replace(/\033\[.*?m/g, '')
-  return codeSurround(clearr(r), lang)
+  const cleared = clearr(r)
+
+  if (/<INDICATRIX_PLACEHOLDER>/.test(cleared)) {
+    let indicatrix = '.documentary/indicatrix.gif'
+    if (wiki) indicatrix = join(wiki, indicatrix)
+    const imgPath = join(__dirname, '../../indicatrix.gif')
+    await clone(imgPath, '.documentary')
+    const t = cleared.replace(/<INDICATRIX_PLACEHOLDER>/g,
+      `<a id="_ind${indicatrixId}" href="#_ind${indicatrixId}"><img src="${indicatrix}"></a>\n`)
+    indicatrixId ++
+    return `<pre>${t}</pre>`
+  }
+
+  return codeSurround(cleared, lang)
 }
 
 module.exports=forkRule
