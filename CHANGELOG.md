@@ -1,3 +1,9 @@
+## 15 September 2019
+
+### [1.33.1](https://github.com/artdecocode/documentary/compare/v1.33.0...v1.33.1)
+
+- [fix] Correct `npm-badge` for packages with a `.`.
+
 ## 12 September 2019
 
 ### [1.33.0](https://github.com/artdecocode/documentary/compare/v1.32.2...v1.33.0)
