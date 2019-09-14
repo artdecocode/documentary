@@ -11,7 +11,7 @@
     "build": {
       "import": {
         "stdlib": {
-          "path": "stdlib.js",
+          "path": "stdlib",
           "packages": [
             "@wrote/write", "argufy", "catchment", "clearr", "erte",
             "forkfeed", "makepromise", "mismatch", "rexml", "@wrote/read",

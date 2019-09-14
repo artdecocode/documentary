@@ -1,10 +1,10 @@
-export const badgeRe = /^%NPM: ((?:[@\w\d-_]+\/)?[\w\d-_]+)%$/gm
+export const badgeRe = /^%NPM: ((?:[@\w\d-_.]+\/)?[\w\d-_.]+)%$/gm
 
 const badgeRule = {
   re: badgeRe,
   replacement(match, name) {
     const n = encodeURIComponent(name)
-    return `[![npm version](https://badge.fury.io/js/${n}.svg)](https://npmjs.org/package/${name})`
+    return `[![npm version](https://badge.fury.io/js/${n}.svg)](https://www.npmjs.com/package/${name})`
   },
 }
 

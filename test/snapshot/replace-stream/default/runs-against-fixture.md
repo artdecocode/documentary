@@ -1,6 +1,6 @@
 # documentary
 
-[![npm version](https://badge.fury.io/js/%40adc%2Fdocumentary.svg)](https://npmjs.org/package/@adc/documentary)
+[![npm version](https://badge.fury.io/js/%40adc%2Fdocumentary.svg)](https://www.npmjs.com/package/@adc/documentary)
 
 A package to manage documentation of Node.js packages.
 
