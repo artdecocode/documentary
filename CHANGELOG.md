@@ -1,5 +1,9 @@
 ## 15 September 2019
 
+### [1.33.2](https://github.com/artdecocode/documentary/compare/v1.33.1...v1.33.2)
+
+- [fix] Fix missing `stdlib` dir in published package.
+
 ### [1.33.1](https://github.com/artdecocode/documentary/compare/v1.33.0...v1.33.1)
 
 - [fix] Correct `npm-badge` for packages with a `.`.

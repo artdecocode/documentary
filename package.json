@@ -38,8 +38,7 @@
     "build",
     "src/bin/index.js",
     "web-components.json",
-    "stdlib.js",
-    "stdlib.js.map"
+    "stdlib"
   ],
   "repository": {
     "type": "git",
