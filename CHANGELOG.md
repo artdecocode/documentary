@@ -1,3 +1,9 @@
+## 18 September 2019
+
+### [1.33.3](https://github.com/artdecocode/documentary/compare/v1.33.2...v1.33.3)
+
+- [fix] Place more than one link with _Html_ component.
+
 ## 15 September 2019
 
 ### [1.33.2](https://github.com/artdecocode/documentary/compare/v1.33.1...v1.33.2)
