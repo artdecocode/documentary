@@ -46,7 +46,7 @@ const shell = async (props) => {
   const r = t.replace(/\033\[.*?m/g, '')
   const output = codeSurround(r, lang)
   if (noconsole) return output
-  const CMD = codeSurround(`$ ${cmd}`, 'console')
+  const CMD = codeSurround(`user:~$ ${cmd}`, 'console')
   return `${CMD}\n\n${output}`
 }
 

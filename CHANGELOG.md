@@ -1,3 +1,11 @@
+## 14 October 2019
+
+### [1.34.0](https://github.com/artdecocode/documentary/compare/v1.33.3...v1.34.0)
+
+- [repo] Add wiki as submodule.
+- [comps] Shell component without console, correct console notation.
+- [comps] Implement `java` component.
+
 ## 18 September 2019
 
 ### [1.33.3](https://github.com/artdecocode/documentary/compare/v1.33.2...v1.33.3)

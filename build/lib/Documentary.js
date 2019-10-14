@@ -5,6 +5,8 @@ const { homedir } = require('os');
 const { write } = require('../../stdlib');
 const { b } = require('../../stdlib');
 const { ensurePath } = require('../../stdlib');
+const { makePromise } = require('../../stdlib');
+const { lstat: Stat } = require('fs');
 const { commentRule: stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe } = require('./rules');
 const tableRule = require('./rules/table'); const { tableRe } = tableRule;
 const methodTitleRule = require('./rules/method-title'); const { methodTitleRe } = methodTitleRule;
@@ -22,6 +24,13 @@ const { macroRule, useMacroRule } = require('./rules/macros');
 const loadComponents = require('./components');
 const Components = require('../components/');
 const Method = require('../components/method');
+
+/**
+ * @return {import('fs').Stats}
+ */
+const stat = async (path) => {
+  return await makePromise(Stat, path)
+}
 
 const LOG = debuglog('doc')
 
@@ -254,6 +263,16 @@ class Documentary extends Replaceable {
   }
 
   /**
+   * Gets the change time in user's locale. Used for cache.
+   * @param {string} source
+   */
+  async getLocaleChangeTime(source) {
+    const s = await stat(source)
+    const mtime = s.mtime.toLocaleString()
+    return mtime
+  }
+
+  /**
    * Adds some information for generating TOC later.
    * @param {string} name
    * @param {Object} value
@@ -284,14 +303,18 @@ class Documentary extends Replaceable {
   get innerCode() {
     return this._innerCode
   }
-  getCache(name, location = this._cacheLocation) {
+  getCache(name, location = this._cacheLocation, item) {
     try {
       const p = resolve(`${location}/${name}.json`)
       delete require.cache[p]
       const c = require(p)
+      if (item) {
+        if (item in c) return c[item]
+        return {}
+      }
       return c
     } catch (err) {
-      return undefined
+      return {}
     }
   }
   async addCache(name, record, location = this._cacheLocation) {
@@ -392,3 +415,4 @@ class Documentary extends Replaceable {
 
 
 module.exports = Documentary
+module.exports.stat = stat
