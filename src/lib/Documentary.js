@@ -5,6 +5,8 @@ import { homedir } from 'os'
 import write from '@wrote/write'
 import { b } from 'erte'
 import ensurePath from '@wrote/ensure-path'
+import makePromise from 'makepromise'
+import { lstat as Stat } from 'fs'
 import { commentRule as stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe } from './rules'
 import tableRule, { tableRe } from './rules/table'
 import methodTitleRule, { methodTitleRe } from './rules/method-title'
@@ -22,6 +24,13 @@ import { macroRule, useMacroRule } from './rules/macros'
 import loadComponents from './components'
 import * as Components from '../components/'
 import Method from '../components/method'
+
+/**
+ * @return {import('fs').Stats}
+ */
+export const stat = async (path) => {
+  return await makePromise(Stat, path)
+}
 
 const LOG = debuglog('doc')
 
@@ -254,6 +263,16 @@ export default class Documentary extends Replaceable {
   }
 
   /**
+   * Gets the change time in user's locale. Used for cache.
+   * @param {string} source
+   */
+  async getLocaleChangeTime(source) {
+    const s = await stat(source)
+    const mtime = s.mtime.toLocaleString()
+    return mtime
+  }
+
+  /**
    * Adds some information for generating TOC later.
    * @param {string} name
    * @param {Object} value
@@ -284,14 +303,18 @@ export default class Documentary extends Replaceable {
   get innerCode() {
     return this._innerCode
   }
-  getCache(name, location = this._cacheLocation) {
+  getCache(name, location = this._cacheLocation, item) {
     try {
       const p = resolve(`${location}/${name}.json`)
       delete require.cache[p]
       const c = require(p)
+      if (item) {
+        if (item in c) return c[item]
+        return {}
+      }
       return c
     } catch (err) {
-      return undefined
+      return {}
     }
   }
   async addCache(name, record, location = this._cacheLocation) {

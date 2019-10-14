@@ -57,6 +57,19 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch For Closure Stylesheets",
+      "program": "${workspaceFolder}/src/bin/index.js",
+      "env": { "NODE_DEBUG": "doc" },
+      "args": ["-o", "README.md"],
+      "cwd": "/Volumes/backup/closure-stylesheets",
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch For cookies",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },

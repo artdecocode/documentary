@@ -8,15 +8,13 @@
 </shell>
 
 /* expected */
-
-```sh
-$ echo "HELLO WORLD" TEST123 -a arg -b
+```console
+user:~$ echo "HELLO WORLD" TEST123 -a arg -b
 ```
 
 ```sh
 HELLO WORLD TEST123 -a arg -b
 ```
-
 /**/
 
 // processes pipe and group
@@ -28,9 +26,8 @@ HELLO WORLD TEST123 -a arg -b
 </shell>
 
 /* expected */
-
-```sh
-$ (echo abc; sleep .5; echo def; sleep .5; echo ghi) | node test/fixture/node
+```console
+user:~$ (echo abc; sleep .5; echo def; sleep .5; echo ghi) | node test/fixture/node
 ```
 
 ```sh
@@ -40,10 +37,8 @@ def
 
 ghi
 ```
-
-
-```sh
-$ (echo abc;) | node test/fixture/node
+```console
+user:~$ (echo abc;) | node test/fixture/node
 ```
 
 ```sh
@@ -51,7 +46,6 @@ abc
 
 
 ```
-
 /**/
 
 // processes md2html component

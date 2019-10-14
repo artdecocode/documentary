@@ -1,0 +1,25 @@
+<types>
+  <type name="JavaProps" desc="Options for Java." noToc>
+    <prop string name="jar">
+      The JAR file to execute.
+    </prop>
+    <prop string name="lang" default="sh">
+      The markdown language of the output.
+    </prop>
+    <prop opt boolean name="stderr" default="false">
+      Whether to print STDERR instead of STDOUT.
+    </prop>
+    <prop string name="children" opt>
+      The arguments to the program, separated by whitespace. `--arg "one arg"` not currently supported.
+    </prop>
+    <prop boolean name="notrim" default="false">
+      Whether to disable trim before printing the output.
+    </prop>
+    <prop string name="console">
+      Print the console block before the result block in form of
+      ```console
+      the-passed-value~$ java ...args
+      ```
+    </prop>
+  </type>
+</types>

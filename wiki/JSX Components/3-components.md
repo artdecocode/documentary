@@ -100,3 +100,28 @@ Converts the markdown with `_`/`__`/`*`/`**`/<code>`</code>/
 </md2html>
 </td></tr>
 </table>
+
+%~ width="20"%
+
+### `<`java`>`
+
+The _Java_ component allow to execute a Java process. The `jar` argument will set the `-jar` option, and all found arguments in the inner code block will be split by whitespace and passed to the process. The cache will be formed based on all arguments that can be resolved to paths on the filesystem, so that the program won't have to be rerun when nothing had changed.
+
+```html
+<java jar="path-to-jar.jar" console="doc-wiki" lang="css">
+  --argument optionsA --pretty-print
+</java>
+```
+
+<table>
+<tr><th>Java Result</th></tr>
+<tr/>
+<tr><td>
+
+<java jar="closure-stylesheets.jar" console="doc-wiki" lang="css">
+  --pretty-print example/example.css
+</java>
+</th></td>
+</table>
+
+<!-- MacBook:documentary zavr$ ln -s  /Users/zavr/node_modules/closure-stylesheets-java/target/closure-stylesheets-1.8.0-SNAPSHOT-jar-with-dependencies.jar closure-stylesheets.jar -->

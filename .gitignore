@@ -71,3 +71,4 @@ build/components/**/*.jsx
 build/lib/rules/*.jsx
 TODO.md
 t
+closure-stylesheets.jar
