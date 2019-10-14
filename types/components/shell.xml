@@ -15,5 +15,8 @@
     <prop boolean name="noTrim" default="false">
       Whether to disable trim before printing the output.
     </prop>
+    <prop boolean name="noconsole" default="false">
+      Do not print the console block.
+    </prop>
   </type>
 </types>

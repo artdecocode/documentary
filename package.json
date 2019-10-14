@@ -1,7 +1,7 @@
 {
   "name": "documentary",
   "version": "1.33.3",
-  "description": "A Documentation Pre-processor To Generate The Table Of Contents, Embed Examples With Their Output, Make Markdown Tables, Maintain Typedefs For JavaScript And README, Watch Changes To Push, Use Macros And Prettify API Titles.",
+  "description": "Documentation Compiler To Generate The Table Of Contents, Embed Examples With Their Output, Make Markdown Tables, Maintain Typedefs For JavaScript And README, Watch Changes To Push, Use Macros And Prettify API Titles.",
   "main": "build",
   "scripts": {
     "t": "DOCUMENTARY_SKIP_USER_COMPONENTS=1 NODE_DEBUG=doc zoroaster -a -t 15000",
@@ -15,7 +15,7 @@
     "d1": "typal src",
     "d": "yarn-s d1",
     "doc": "yarn dev -o README.md",
-    "wiki": "yarn dev wiki -W ../documentary.wiki",
+    "wiki": "yarn dev wiki -W wiki.git",
     "start": "node build/bin",
     "example/": "yarn e example/example.js",
     "old-typal": "doc doc/10-typedef -o doc/typal.md",

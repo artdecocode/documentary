@@ -11,13 +11,14 @@ const { codeSurround } = require('../lib');
  * @param {boolean} [props.err=false] Whether to print STDERR instead of STDOUT (todo: make print both). Default `false`.
  * @param {string} [props.children] The arguments to the program each on new line.
  * @param {boolean} [props.noTrim=false] Whether to disable trim before printing the output. Default `false`.
+ * @param {boolean} [props.noconsole=false] Do not print the console block. Default `false`.
  * @example
  * <shell>(echo abc; sleep 1; echo def; sleep 1; echo ghi) | node test/fixture/node</shell>
  */
 const shell = async (props) => {
   const {
     command, children, language: lang = 'sh', err = false,
-    noTrim = false,
+    noTrim = false, noconsole = false,
   } = props
   const [child] = children
   let s, cmd
@@ -25,7 +26,7 @@ const shell = async (props) => {
     cmd = child.trim()
     s = await new Promise((r, j) => {
       exec(cmd, (error, stdout, stderr) => {
-        if (error) return j(error)
+        if (error && !stderr) return j(error)
         return r(err ? stderr : stdout)
       })
     })
@@ -41,11 +42,12 @@ const shell = async (props) => {
       return aa
     }).join(' ')
   }
-  const CMD = codeSurround(`$ ${cmd}`, 'sh')
   const t = noTrim ? s : s.trim()
   const r = t.replace(/\033\[.*?m/g, '')
   const output = codeSurround(r, lang)
-  return `\n${CMD}\n\n${output}\n`
+  if (noconsole) return output
+  const CMD = codeSurround(`$ ${cmd}`, 'console')
+  return `${CMD}\n\n${output}`
 }
 
 module.exports=shell
@@ -58,4 +60,5 @@ module.exports=shell
  * @prop {boolean} [err=false] Whether to print STDERR instead of STDOUT (todo: make print both). Default `false`.
  * @prop {string} [children] The arguments to the program each on new line.
  * @prop {boolean} [noTrim=false] Whether to disable trim before printing the output. Default `false`.
+ * @prop {boolean} [noconsole=false] Do not print the console block. Default `false`.
  */
