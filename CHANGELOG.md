@@ -1,3 +1,9 @@
+## 22 October 2019
+
+### [1.34.1](https://github.com/artdecocode/documentary/compare/v1.34.0...v1.34.1)
+
+- [comps] Wrap Java args in console with `DOCUMENTARY_MAX_COLUMNS`, document all java args in Wiki.
+
 ## 14 October 2019
 
 ### [1.34.0](https://github.com/artdecocode/documentary/compare/v1.33.3...v1.34.0)
