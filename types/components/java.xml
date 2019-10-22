@@ -1,6 +1,6 @@
 <types>
   <type name="JavaProps" desc="Options for Java." noToc>
-    <prop string name="jar">
+    <prop string name="jar" opt>
       The JAR file to execute.
     </prop>
     <prop string name="lang" default="sh">
@@ -15,10 +15,11 @@
     <prop boolean name="notrim" default="false">
       Whether to disable trim before printing the output.
     </prop>
-    <prop string name="console">
-      Print the console block before the result block in form of
+    <prop string name="console" opt>
+      Print the console block (with user name set to the value of this property) before the result block in form of
+
       ```console
-      the-passed-value~$ java ...args
+      console-name:~$ java -jar lib.jar --arg1 --argN data
       ```
     </prop>
   </type>

@@ -107,6 +107,10 @@ Converts the markdown with `_`/`__`/`*`/`**`/<code>`</code>/
 
 The _Java_ component allow to execute a Java process. The `jar` argument will set the `-jar` option, and all found arguments in the inner code block will be split by whitespace and passed to the process. The cache will be formed based on all arguments that can be resolved to paths on the filesystem, so that the program won't have to be rerun when nothing had changed.
 
+<typedef narrow>types/components/java.xml</typedef>
+
+When printing a shell command using console, new lines will be wrapped at `DOCUMENTARY_MAX_COLUMNS` env variable, which is set to _87_ by default. This can be changed to a lesser value when compiling Wiki documentation, for example.
+
 ```html
 <java jar="path-to-jar.jar" console="doc-wiki" lang="css">
   --argument optionsA --pretty-print

@@ -45,6 +45,27 @@ export default async function Java({ documentary, jar, nocache, children,
   const cmd = codeSurround(r, lang)
   if (!co) return cmd
 
-  const CMD = codeSurround(`${co}:~$ java ${name}`, 'console')
+  const cc = getShellCommand(['java', ...args], `${co}:~$`)
+
+  const CMD = codeSurround(cc, 'console')
   return `${CMD}\n\n${cmd}`
+}
+
+const { DOCUMENTARY_MAX_COLUMNS = 87 } = process.env
+
+export const getShellCommand = (args, program = 'java') => {
+  const maxLength = DOCUMENTARY_MAX_COLUMNS
+  let lastLineLength = program.length
+  const s = args.reduce((acc, current) => {
+    if (lastLineLength + current.length > maxLength) {
+      const space = '> '
+      acc = acc + ` \\\n${space}` + current
+      lastLineLength = current.length + space.length
+    } else {
+      acc = acc + ' ' + current
+      lastLineLength += current.length + 1
+    }
+    return acc
+  }, program)
+  return s
 }
