@@ -109,7 +109,7 @@ The _Java_ component allow to execute a Java process. The `jar` argument will se
 
 <typedef narrow>types/components/java.xml</typedef>
 
-When printing a shell command using console, new lines will be wrapped at `DOCUMENTARY_MAX_COLUMNS` env variable, which is set to _87_ by default. This can be changed to a lesser value when compiling Wiki documentation, for example.
+When printing a shell command using console, new lines will be wrapped at `DOCUMENTARY_MAX_COLUMNS` env variable, which is set to _90_ by default. This can be changed to a lesser value when compiling Wiki documentation, for example.
 
 ```html
 <java jar="path-to-jar.jar" console="doc-wiki" lang="css">

@@ -51,7 +51,7 @@ export default async function Java({ documentary, jar, nocache, children,
   return `${CMD}\n\n${cmd}`
 }
 
-const { DOCUMENTARY_MAX_COLUMNS = 87 } = process.env
+const { DOCUMENTARY_MAX_COLUMNS = 90 } = process.env
 
 export const getShellCommand = (args, program = 'java') => {
   const maxLength = DOCUMENTARY_MAX_COLUMNS
