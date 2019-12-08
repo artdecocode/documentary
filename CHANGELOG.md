@@ -1,3 +1,9 @@
+## 9 December 2019
+
+### [1.34.2](https://github.com/artdecocode/documentary/compare/v1.34.1...v1.34.2)
+
+- [fix] Fix `<typedef>` when printing function descriptions with pre blocks.
+
 ## 22 October 2019
 
 ### [1.34.1](https://github.com/artdecocode/documentary/compare/v1.34.0...v1.34.1)
