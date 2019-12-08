@@ -26,7 +26,7 @@ const makeMethodTable = (method, allTypes = [], linkingOpts, {
     if (description) n += `: ${description}`
     return n
   }).join(join)
-  table += lis ? ((table ? preargs : '') + lis) : ''
+  table += lis ? ((table ? `${table.endsWith('`'.repeat(3)) ? '\n' : ''}${preargs}` : '') + lis) : ''
   return table
 }
 

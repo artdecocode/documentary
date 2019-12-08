@@ -1,4 +1,4 @@
-import '@externs/preact'
+import '@externs/preact/types/externs'
 import write from '@wrote/write'
 import read from '@wrote/read'
 import clone from '@wrote/clone'
@@ -52,7 +52,6 @@ module.exports = {
   'Catchment': Catchment,
   'collect': collect,
   'clearr': clearr,
-  // 'competent': competent,
   'erte': erte,
   'forkfeed': forkfeed,
   'makepromise': makepromise,

@@ -324,11 +324,70 @@ __<a name="type-test">`Test`</a>__
  </tr>
  <tr>
   <td rowSpan="3" align="center"><ins>fn</ins></td>
-  <td><em>(this: Type, ...args: Type) => void</em></td>
+  <td><em>(this: Type, ...args: Type[]) => void</em></td>
  </tr>
  <tr></tr>
  <tr>
   <td></td>
+ </tr>
+</table>
+/**/
+
+## adds newline after ```
+<typedef narrow>test/temp/types.xml</typedef>
+
+/* types */
+<types>
+  <interface name="Test">
+    <fn void name="set">
+      <arg type="string|!Object" name="field">
+        The field to set, or an object of header fields.
+      </arg>
+      <arg type="string|!Array|number" name="val" opt>
+        The value to set, when passing a single field.
+      </arg>
+      Set header `field` to `val`, or pass an object of header fields.
+
+      _Examples_:
+
+      ```js
+      this.set('Foo', ['bar', 'baz'])
+      this.set('Accept', 'application/json')
+      this.set({ Accept: 'text/plain', 'X-API-Key': 'tobi' })
+      ```
+    </fn>
+  </interface>
+</types>
+/**/
+
+/* expected */
+__<a name="type-test">`Test`</a>__
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><ins>set</ins></td>
+  <td><em>(field: (string | !Object), val?: (string | !Array | number)) => void</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+
+Set header `field` to `val`, or pass an object of header fields.
+
+_Examples_:
+
+```js
+this.set('Foo', ['bar', 'baz'])
+this.set('Accept', 'application/json')
+this.set({ Accept: 'text/plain', 'X-API-Key': 'tobi' })
+```
+<br/>
+<kbd><strong>field*</strong></kbd> <em><code>(string \| !Object)</code></em>: The field to set, or an object of header fields.<br/>
+<kbd>val</kbd> <em><code>(string \| !Array \| number)</code></em> (optional): The value to set, when passing a single field.
+  </td>
  </tr>
 </table>
 /**/
