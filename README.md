@@ -1,7 +1,7 @@
 Documentary
 ===
 
-[![npm version](https://badge.fury.io/js/documentary.svg)](https://npmjs.org/package/documentary)
+[![npm version](https://badge.fury.io/js/documentary.svg)](https://www.npmjs.com/package/documentary)
 
 <a href="https://github.com/artdecocode/documentary"><img src="images/LOGO.svg?sanitize=true" width="150" align="left"></a>
 
