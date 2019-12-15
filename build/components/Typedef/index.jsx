@@ -156,7 +156,9 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
       let D = desc
       if (!hasCodes) { // if it had codes, don't bother with markdown
         D = md(desc)
-        if (D) D = D.replace(/^/gm, '   ')
+        if (D) D = D
+          .replace(/^(?!%%_RESTREAM_CODE_REPLACEMENT)/gm, '   ')
+          .replace(/^ +$/gm, '')
         if (D) D = `\n${D}\n  `
       }
 

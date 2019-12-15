@@ -118,8 +118,8 @@
     "zoroaster": "^4.1.2"
   },
   "dependencies": {
-    "alamode": "^3.2.0",
+    "alamode": "^3.3.0",
     "preact": "8.5.3",
-    "typal": "^1.22.9"
+    "typal": "^1.23.1"
   }
 }
