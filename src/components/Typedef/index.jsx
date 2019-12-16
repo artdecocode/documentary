@@ -57,7 +57,6 @@ export default function Typedef({ documentary, children, name, narrow,
   const tt = typesToMd.map(type => {
     if (!type.isMethod) {
       const res = type.toMarkdown(allTypes, opts)
-      res.examples = type.examples
       return res
     }
     const LINE = Method({ documentary, level, method: type, noArgTypesInToc })
@@ -72,12 +71,12 @@ export default function Typedef({ documentary, children, name, narrow,
   const j = importsToMd.map(i => i.toMarkdown(allTypes, { flatten }))
 
   const ttt = tt.map((s, i) => {
-    const { LINE, table: type, displayInDetails, examples } = s
+    const { LINE, table: type, displayInDetails } = s
     const isObject = typeof type == 'object' // table can be empty string, e.g., ''
 
     const ch = isObject ? <Narrow key={i} {...type}
       documentary={documentary} allTypes={allTypes} opts={opts}
-      slimFunctions={slimFunctions} examples={examples}
+      slimFunctions={slimFunctions}
     /> : type
     if (displayInDetails) {
       const line = md2html({ documentary, children: [LINE] })
@@ -113,7 +112,7 @@ export default function Typedef({ documentary, children, name, narrow,
  * @param {boolean} opts.constr Whether this is a table for the interface/constructor.
  */
 const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
-  slimFunctions, examples }) => {
+  slimFunctions }) => {
   const md = (name, afterCutLinks) => {
     return md2html({ documentary, children: [name], afterCutLinks })
   }
@@ -125,11 +124,10 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
       {anyHaveDefault && '\n '}
     </tr></thead>{'\n'}
     {props.reduce((acc, { name, typeName, de, d, prop }) => {
-      if (name == 'constructor') prop.examples = examples
       let desc = (prop.args && !slimFunctions) ? makeMethodTable(prop, allTypes, opts, {
         indent: '', join: '<br/>\n', preargs: '<br/>\n',
       }) : de
-      if (examples.length) {
+      if (prop.examples.length) {
         desc += `\n${makeExamples(prop.examples)}`
       }
       const hasCodes = new RegExp(codeRe.source, codeRe.flags).test(prop.args ? desc : prop.description)

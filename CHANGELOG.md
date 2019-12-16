@@ -1,5 +1,9 @@
 ## 16 December 2019
 
+### [1.34.4](https://github.com/artdecocode/documentary/compare/v1.34.3...v1.34.4)
+
+- [deps] Update `typal` to fix examples.
+
 ### [1.34.3](https://github.com/artdecocode/documentary/compare/v1.34.2...v1.34.3)
 
 - [fix] Fix `indicatrix` for _Wiki_.

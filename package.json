@@ -19,12 +19,9 @@
     "start": "node build/bin",
     "example/": "yarn e example/example.js",
     "old-typal": "doc doc/10-typedef -o doc/typal.md",
-    "b": "ALAMODE_ENV=build yarn-s src jsx b2",
     "competent": "alanode build-competent",
     "stdlib": "depack src/stdlib -o stdlib/index.js -a -c -p -s --source_map_include_content",
-    "src": "alamode src -o build -i bin/index.js,stdlib.js -s",
-    "jsx": "alamode build/components -o build/components -s -j -p",
-    "b2": "alamode build/components -o build/components -s",
+    "b": "ALAMODE_ENV=build alamode src -o build -i bin/index.js,stdlib.js -s -j -p -m",
     "build": "yarn-s b doc",
     "up": "yarn-up -e preact",
     "args": "argufy types/arguments.xml -o src/bin/get-args.js"
@@ -121,6 +118,6 @@
   "dependencies": {
     "alamode": "^3.3.0",
     "preact": "8.5.3",
-    "typal": "^1.24.0"
+    "typal": "^1.24.1"
   }
 }
