@@ -274,6 +274,12 @@ The arguments it accepts are:
     it, forcing git push.</td>
   </tr>
   <tr>
+   <td>--debug</td>
+   <td>-d</td>
+   <td>Print verbose debug information.
+    Same as setting <code>NODE_DEBUG=doc</code>.</td>
+  </tr>
+  <tr>
    <td>--generate</td>
    <td>-g</td>
    <td>[Deprecated] Places typedefs definitions into JavaScript

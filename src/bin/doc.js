@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-import { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _generate, _noCache, _namespace, _help, argsConfig, _wiki, _types, _focus } from './get-args'
+import { _source, _output, _toc, _watch, _push, _version, _extract, _h1,
+  _reverse, _generate, _noCache, _namespace, _help, argsConfig, _wiki,
+  _types, _focus, _debug } from './get-args'
 import { watch } from 'fs'
 import { debuglog } from 'util'
 import { lstatSync } from 'fs'
@@ -11,6 +13,10 @@ import doc from './run/doc'
 import catcher from './catcher'
 import { gitPush } from '../lib'
 
+if (_debug) {
+  process.env.NODE_DEBUG = [process.env.NODE_DEBUG, 'doc']
+    .filter(Boolean).join(',')
+}
 const LOG = debuglog('doc')
 const DEBUG = /doc/.test(process.env['NODE_DEBUG'])
 

@@ -55,6 +55,11 @@ export const argsConfig = {
     description: 'Starts _Documentary_ in watch mode. After changes are\ndetected, the commit is undone, and new one is made over\nit, forcing git push.',
     short: 'p',
   },
+  'debug': {
+    description: 'Print verbose debug information.\nSame as setting `NODE_DEBUG=doc`.',
+    boolean: true,
+    short: 'd',
+  },
   'generate': {
     description: '[Deprecated] Places typedefs definitions into JavaScript\nfiles from types.xml. Use `typal` instead.',
     boolean: true,
@@ -76,6 +81,7 @@ export const argsConfig = {
     short: 'h',
   },
 }
+
 const args = argufy(argsConfig)
 
 /**
@@ -143,6 +149,12 @@ export const _namespace = /** @type {string} */ (args['namespace'])
     it, forcing git push.
  */
 export const _push = /** @type {string} */ (args['push'])
+
+/**
+ * Print verbose debug information.
+    Same as setting `NODE_DEBUG=doc`.
+ */
+export const _debug = /** @type {boolean} */ (args['debug'])
 
 /**
  * [Deprecated] Places typedefs definitions into JavaScript

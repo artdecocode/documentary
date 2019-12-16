@@ -41,6 +41,10 @@
     detected, the commit is undone, and new one is made over
     it, forcing git push.
   </arg>
+  <arg boolean name="debug" short="d">
+    Print verbose debug information.
+    Same as setting `NODE_DEBUG=doc`.
+  </arg>
   <arg boolean name="generate" short="g">
     [Deprecated] Places typedefs definitions into JavaScript
     files from types.xml. Use `typal` instead.
