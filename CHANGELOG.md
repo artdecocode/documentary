@@ -1,3 +1,10 @@
+## 16 December 2019
+
+### [1.34.3](https://github.com/artdecocode/documentary/compare/v1.34.2...v1.34.3)
+
+- [fix] Fix `indicatrix` for _Wiki_.
+- [feature] Embed examples for **Typal**'s slim functions.
+
 ## 9 December 2019
 
 ### [1.34.2](https://github.com/artdecocode/documentary/compare/v1.34.1...v1.34.2)
