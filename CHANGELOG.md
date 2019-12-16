@@ -3,6 +3,7 @@
 ### [1.34.4](https://github.com/artdecocode/documentary/compare/v1.34.3...v1.34.4)
 
 - [deps] Update `typal` to fix examples.
+- [feature] Pass `-d` flag for debug.
 
 ### [1.34.3](https://github.com/artdecocode/documentary/compare/v1.34.2...v1.34.3)
 

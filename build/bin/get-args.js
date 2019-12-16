@@ -55,6 +55,11 @@ const argsConfig = {
     description: 'Starts _Documentary_ in watch mode. After changes are\ndetected, the commit is undone, and new one is made over\nit, forcing git push.',
     short: 'p',
   },
+  'debug': {
+    description: 'Print verbose debug information.\nSame as setting `NODE_DEBUG=doc`.',
+    boolean: true,
+    short: 'd',
+  },
   'generate': {
     description: '[Deprecated] Places typedefs definitions into JavaScript\nfiles from types.xml. Use `typal` instead.',
     boolean: true,
@@ -76,6 +81,7 @@ const argsConfig = {
     short: 'h',
   },
 }
+
 const args = argufy(argsConfig)
 
 /**
@@ -145,6 +151,12 @@ const _namespace = /** @type {string} */ (args['namespace'])
 const _push = /** @type {string} */ (args['push'])
 
 /**
+ * Print verbose debug information.
+    Same as setting `NODE_DEBUG=doc`.
+ */
+const _debug = /** @type {boolean} */ (args['debug'])
+
+/**
  * [Deprecated] Places typedefs definitions into JavaScript
     files from types.xml. Use `typal` instead.
  */
@@ -184,6 +196,7 @@ module.exports._watch = _watch
 module.exports._noCache = _noCache
 module.exports._namespace = _namespace
 module.exports._push = _push
+module.exports._debug = _debug
 module.exports._generate = _generate
 module.exports._extract = _extract
 module.exports._version = _version

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-const { _source, _output, _toc, _watch, _push, _version, _extract, _h1, _reverse, _generate, _noCache, _namespace, _help, argsConfig, _wiki, _types, _focus } = require('./get-args');
+const { _source, _output, _toc, _watch, _push, _version, _extract, _h1,
+  _reverse, _generate, _noCache, _namespace, _help, argsConfig, _wiki,
+  _types, _focus, _debug } = require('./get-args');
 const { watch } = require('fs');
 const { debuglog } = require('util');
 const { lstatSync } = require('fs');
@@ -11,6 +13,10 @@ const doc = require('./run/doc');
 const catcher = require('./catcher');
 const { gitPush } = require('../lib');
 
+if (_debug) {
+  process.env.NODE_DEBUG = [process.env.NODE_DEBUG, 'doc']
+    .filter(Boolean).join(',')
+}
 const LOG = debuglog('doc')
 const DEBUG = /doc/.test(process.env['NODE_DEBUG'])
 
