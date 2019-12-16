@@ -1,6 +1,6 @@
 import { fork } from 'spawncommand'
 import { c } from 'erte'
-import { resolve, join } from 'path'
+import { resolve, join, dirname } from 'path'
 import resolveDependency from 'resolve-dependency'
 import clearr from 'clearr'
 import compare from '@depack/cache'
@@ -157,12 +157,12 @@ const getOutput = async (err, stderr, stdout, lang, wiki) => {
 
   if (/<INDICATRIX_PLACEHOLDER>/.test(cleared)) {
     let indicatrix = '.documentary/indicatrix.gif'
-    if (wiki) indicatrix = join(wiki, indicatrix)
     const imgPath = join(__dirname, '../../indicatrix.gif')
-    await clone(imgPath, '.documentary')
+    const to = wiki ? join(wiki, indicatrix) : indicatrix
+    await clone(imgPath, dirname(to))
     const t = cleared.replace(/<INDICATRIX_PLACEHOLDER>/g,
       `<a id="_ind${indicatrixId}" href="#_ind${indicatrixId}"><img src="${indicatrix}"></a>\n`)
-    indicatrixId ++
+    indicatrixId++
     return `<pre>${t}</pre>`
   }
 

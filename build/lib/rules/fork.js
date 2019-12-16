@@ -1,6 +1,6 @@
 const { fork } = require('../../../stdlib');
 const { c } = require('../../../stdlib');
-const { resolve, join } = require('path');
+const { resolve, join, dirname } = require('path');
 const { resolveDependency } = require('../../../stdlib');
 const { clearr } = require('../../../stdlib');
 const { compare } = require('../../../stdlib');
@@ -157,12 +157,12 @@ const getOutput = async (err, stderr, stdout, lang, wiki) => {
 
   if (/<INDICATRIX_PLACEHOLDER>/.test(cleared)) {
     let indicatrix = '.documentary/indicatrix.gif'
-    if (wiki) indicatrix = join(wiki, indicatrix)
     const imgPath = join(__dirname, '../../indicatrix.gif')
-    await clone(imgPath, '.documentary')
+    const to = wiki ? join(wiki, indicatrix) : indicatrix
+    await clone(imgPath, dirname(to))
     const t = cleared.replace(/<INDICATRIX_PLACEHOLDER>/g,
       `<a id="_ind${indicatrixId}" href="#_ind${indicatrixId}"><img src="${indicatrix}"></a>\n`)
-    indicatrixId ++
+    indicatrixId++
     return `<pre>${t}</pre>`
   }
 

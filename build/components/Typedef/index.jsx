@@ -57,11 +57,12 @@ function Typedef({ documentary, children, name, narrow,
   const tt = typesToMd.map(type => {
     if (!type.isMethod) {
       const res = type.toMarkdown(allTypes, opts)
+      res.examples = type.examples
       return res
     }
     const LINE = Method({ documentary, level, method: type, noArgTypesInToc })
     const table = makeMethodTable(type, allTypes, opts)
-    return { LINE, table }
+    return { LINE, table, examples: type.examples }
   })
   // found those imports that will be flattened
   const importsToMd = t
@@ -71,12 +72,12 @@ function Typedef({ documentary, children, name, narrow,
   const j = importsToMd.map(i => i.toMarkdown(allTypes, { flatten }))
 
   const ttt = tt.map((s, i) => {
-    const { LINE, table: type, displayInDetails } = s
+    const { LINE, table: type, displayInDetails, examples } = s
     const isObject = typeof type == 'object' // table can be empty string, e.g., ''
 
     const ch = isObject ? <Narrow key={i} {...type}
       documentary={documentary} allTypes={allTypes} opts={opts}
-      slimFunctions={slimFunctions}
+      slimFunctions={slimFunctions} examples={examples}
     /> : type
     if (displayInDetails) {
       const line = md2html({ documentary, children: [LINE] })
@@ -108,9 +109,11 @@ function Typedef({ documentary, children, name, narrow,
  * @param {Object} opts
  * @param {!Array<{ prop: Property }>} opts.props
  * @param {boolean} opts.const Whether the type is a constructor or interface.
+ * @param {string[]} opts.examples Examples for the constructor.
+ * @param {boolean} opts.constr Whether this is a table for the interface/constructor.
  */
 const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
-  slimFunctions }) => {
+  slimFunctions, examples }) => {
   const md = (name, afterCutLinks) => {
     return md2html({ documentary, children: [name], afterCutLinks })
   }
@@ -122,23 +125,36 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
       {anyHaveDefault && '\n '}
     </tr></thead>{'\n'}
     {props.reduce((acc, { name, typeName, de, d, prop }) => {
+      if (name == 'constructor') prop.examples = examples
       let desc = (prop.args && !slimFunctions) ? makeMethodTable(prop, allTypes, opts, {
         indent: '', join: '<br/>\n', preargs: '<br/>\n',
       }) : de
+      if (examples.length) {
+        desc += `\n${makeExamples(prop.examples)}`
+      }
       const hasCodes = new RegExp(codeRe.source, codeRe.flags).test(prop.args ? desc : prop.description)
       desc = desc + '\n  '
       if (hasCodes) desc = '\n\n' + desc
       // let n = md(name)
       const { optional, aliases, static: isStatic } = prop
-      const a = optional ? aliases : aliases.map(al => `${al}*`)
-      const n = [name, ...a]
+      const n = aliases.reduce((ac, al) => {
+        if (!constr && !optional) al = `${al}*`
+        // eslint-disable-next-line react/jsx-key
+        ac.push([al, (<sup><em>alias</em></sup>)])
+        return ac
+      }, [name])
       const isMethodCol = anyHaveDefault && prop.args
       const row = (<tr key={name}>{'\n  '}
         <td rowSpan="3" align="center">
           {n.reduce((ac, c, i, ar) => {
+            c = Array.isArray(c) ? c : [c]
+            let al
+            ;[c, al] = c
             if (isStatic) ac.push(<kbd>static</kbd>, ' ')
-            const u = constr ? <ins>{c}</ins> : c
-            ac.push(constr || optional ? u : <strong>{u}</strong>)
+            // eslint-disable-next-line react/jsx-key
+            const u = constr ? [<ins>{c}</ins>, al] : [c]
+            if (constr || optional) ac.push(...u)
+            else ac.push(<strong>{u}</strong>)
             if (i < ar.length - 1) ac.push(<br/>)
             return ac
           }, [])}
@@ -177,6 +193,59 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
       return acc
     }, [])}
   </table>)
+}
+
+// from typal/src/Property.js
+/**
+ * Parse examples into string.
+ * When /// lines are found, they are not part of code blocks.
+ */
+const makeExamples = (examples) => {
+  const pp = []
+  examples.forEach((example) => {
+    const exampleLines = example.split('\n')
+    let currentComment = [], currentBlock = []
+    let state = '', newState
+    let eg = exampleLines.reduce((acc, current) => {
+      if (current.startsWith('///')) {
+        newState = 'comment'
+        currentComment.push(current)
+      } else {
+        newState = 'block'
+        currentBlock.push(current)
+      }
+      if (!state) state = newState
+      if (newState != state) {
+        if (newState == 'block') {
+          acc.push(currentComment.join('\n'))
+          currentComment = []
+        } else {
+          acc.push(currentBlock.join('\n'))
+          currentBlock = []
+        }
+        state = newState
+      }
+      return acc
+    }, [])
+    if (currentComment.length) {
+      eg.push(currentComment.join('\n'))
+    } else if (currentBlock.length) {
+      eg.push(currentBlock.join('\n'))
+    }
+    eg = eg.reduce((acc, e) => {
+      if (e.startsWith('///')) {
+        e = e.replace(/^\/\/\/\s+/gm, '')
+        acc.push(...e.split('\n'))
+      } else {
+        acc.push('```js')
+        acc.push(...e.split('\n'))
+        acc.push('```')
+      }
+      return acc
+    }, [])
+    pp.push(...eg)
+  })
+  return pp.join('\n')
 }
 
 /**
