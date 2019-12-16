@@ -83,6 +83,19 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch For router",
+      "program": "${workspaceFolder}/src/bin/index.js",
+      "env": { "NODE_DEBUG": "doc" },
+      "args": ["-o", "README.md", "-n", "_goa"],
+      "cwd": "${workspaceFolder}/../../goa/router",
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch For goa-wiki",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },
