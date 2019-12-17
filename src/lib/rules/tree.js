@@ -1,7 +1,4 @@
 import spawn from 'spawncommand'
-import { debuglog } from 'util'
-
-const LOG = debuglog('doc')
 
 const treeRule = {
   re: /( *)%TREE (.+)%/mg,
@@ -11,7 +8,7 @@ const treeRule = {
     try {
       const { stdout } = await p.promise
       if (/\[error opening dir\]/.test(stdout)) {
-        LOG('Could not generate a tree for %s', args.join(' '))
+        this.log('Could not generate a tree for %s', args.join(' '))
         return match
       }
       let s = codeSurround(stdout)
@@ -22,7 +19,7 @@ const treeRule = {
         console.warn('tree is not installed')
         return match
       }
-      LOG(err.message)
+      this.log(err.message)
       return match
     }
   },

@@ -1,7 +1,4 @@
-import { debuglog } from 'util'
 import rexml from 'rexml'
-
-const LOG = debuglog('doc')
 
 const typeRe = /^%TYPE( .+)?\n([\s\S]+?)\n%$/mg
 
@@ -72,7 +69,7 @@ const typeRule = {
       const table = makeTable(tags, tocTitles)
       return table
     } catch (err) {
-      LOG('Could not parse type, %s', err.message)
+      this.log('Could not parse type, %s', err.message)
       return match
     }
   },

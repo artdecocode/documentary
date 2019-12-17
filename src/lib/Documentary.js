@@ -1,5 +1,5 @@
 import { Replaceable, makeMarkers, makeCutRule, makePasteRule } from 'restream'
-import { debuglog, isBuffer } from 'util'
+import { isBuffer } from 'util'
 import { join, resolve, basename } from 'path'
 import { homedir } from 'os'
 import write from '@wrote/write'
@@ -32,7 +32,7 @@ export const stat = async (path) => {
   return await makePromise(Stat, path)
 }
 
-const LOG = debuglog('doc')
+const LOG = /doc/.test(process.env.NODE_DEBUG) ? console.error : (() => {})
 
 const getComponents = (paths, getDocumentary) => {
   let method = Method

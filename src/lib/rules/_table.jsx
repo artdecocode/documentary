@@ -1,9 +1,8 @@
-import { debuglog } from 'util'
 import { c as color } from 'erte'
 import Md2html from '../../components/Html'
 import render from '@depack/render'
 
-const LOG = debuglog('doc')
+const LOG = /doc/.test(process.env.NODE_DEBUG) ? console.error : (() => {})
 
 /**
  * Check if any of the columns had new lines.

@@ -1,10 +1,7 @@
 import { join } from 'path'
 import mismatch from 'mismatch'
 import clone from '@wrote/clone'
-import { debuglog } from 'util'
 import { c, b } from 'erte'
-
-const LOG = debuglog('doc')
 
 const sectionBrakeRe = /^%~(?: +(-?\d+))?(?: +(.+))?%$/gm
 
@@ -44,7 +41,7 @@ const rule = {
       const [, ...s] = err.stack.split('\n')
       const st = b(s.join('\n'), 'red')
       const l = `Section break ${n}: ${h}\n${st}`
-      LOG(l)
+      this.log(l)
       return match
     }
   },
