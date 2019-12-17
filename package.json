@@ -23,7 +23,7 @@
     "stdlib": "depack src/stdlib -o stdlib/index.js -a -c -p -s --source_map_include_content",
     "b": "ALAMODE_ENV=build alamode src -o build -i bin/index.js,stdlib.js -s -j -p -m",
     "build": "yarn-s b doc",
-    "up": "yarn-up -e preact",
+    "up": "yarn-up -e preact -u",
     "args": "argufy types/arguments.xml -o src/bin/get-args.js"
   },
   "bin": {
@@ -118,6 +118,6 @@
   "dependencies": {
     "alamode": "^3.3.0",
     "preact": "8.5.3",
-    "typal": "^1.24.1"
+    "typal": "^1.24.2"
   }
 }

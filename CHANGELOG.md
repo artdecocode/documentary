@@ -1,5 +1,9 @@
 ## 17 December 2019
 
+### [1.34.6](https://github.com/artdecocode/documentary/compare/v1.34.5...v1.34.6)
+
+- [fix] Fix levels for types via `<typedef>` element.
+
 ### [1.34.5](https://github.com/artdecocode/documentary/compare/v1.34.4...v1.34.5)
 
 - [fix] Remove debuglog for standard `console.error`.

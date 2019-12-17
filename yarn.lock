@@ -109,12 +109,7 @@
   resolved "https://registry.yarnpkg.com/@zoroaster/mask/-/mask-2.3.0.tgz#57d169417e09e481efafccbffdd93cef919ec5e6"
   integrity sha512-fufal06pS/SYhOKHCmoFQ+PjhQwsCwMr2h0D2xeiVaXstaWHJVEiLg4+BU/KCmOOzLXLKikf81ca4zFXip7ScQ==
 
-alamode@^3.0.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/alamode/-/alamode-3.2.0.tgz#ee79dcf2483b5e28e9aac8cd0dfdc692aa333ca5"
-  integrity sha512-jDV6kYpIf9jHJUre1OOotW8EM2Qy58S/eOks2MWhjNz2xJQdEfyzFKbcdaZowC8sk5DKxsnapf/mZNE53B3haQ==
-
-alamode@^3.3.0:
+alamode@^3.0.0, alamode@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/alamode/-/alamode-3.3.0.tgz#5a73ebb8eae847934f747d67c2680698061b7bbe"
   integrity sha512-/Xi0rZ0HAyobAIi8DJQMeFF3kRrr15PGuYRwvxmQaOqSO3WJgXOsmhL6sZQuvD/okZztzujMxMA+21WOD2rYyQ==
@@ -268,10 +263,10 @@ temp-context@^2.1.3:
     makepromise "^3.0.3"
     pedantry "^2.3.1"
 
-typal@^1.24.1:
-  version "1.24.1"
-  resolved "https://registry.yarnpkg.com/typal/-/typal-1.24.1.tgz#f4b53f6054f2aa57e130a32e0dcb3e41e00075ac"
-  integrity sha512-NwQmMwrr88NXJEBSxoDD3rZI0Zbgke653Tt48Zh4Zd4OQcYpt+bBiSG/oM6saXM/DCXJfgY/JPsSW0cD2CW3YQ==
+typal@^1.24.2:
+  version "1.24.2"
+  resolved "https://registry.yarnpkg.com/typal/-/typal-1.24.2.tgz#542e184cd7ca256ad33e2c9db1b80ad8ef5dce80"
+  integrity sha512-s0IVjeRpGjtbkxoom5DOKviUWiUBYe6TLAskRNEUINQQtAW99gYEOGRD2pLh06H9cOykI5KAGDSG0+4lCatQcQ==
 
 usually@^1.2.0:
   version "1.2.0"

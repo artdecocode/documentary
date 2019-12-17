@@ -58,6 +58,7 @@ function Typedef({ documentary, children, name, narrow,
   const tt = typesToMd.map(type => {
     if (!type.isMethod) {
       const res = type.toMarkdown(allTypes, opts)
+      if (level) res.LINE = res.LINE.replace(/t-type/, `${'#'.repeat(level)}-type`)
       return res
     }
     const LINE = Method({ documentary, level, method: type, noArgTypesInToc })
