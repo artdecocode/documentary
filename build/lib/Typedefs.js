@@ -1,4 +1,3 @@
-const { debuglog } = require('util');
 const { Replaceable, replace } = require('../../stdlib');
 const { collect } = require('../../stdlib');
 const { relative, sep, join } = require('path');
@@ -10,8 +9,6 @@ const { methodTitleRe } = require('./rules/method-title');
 const { macroRule, useMacroRule } = require('./rules/macros');
 const { competent } = require('../../stdlib');
 const { Transform } = require('stream');
-
-const LOG = debuglog('doc')
 
 const nodeAPI = {
   'http.IncomingMessage': {
@@ -89,8 +86,8 @@ class Typedefs extends Replaceable {
               file,
             })
           } catch (e) {
-            LOG('(%s) Could not process typedef-md: %s', location, e.message)
-            LOG(e.stack)
+            this.log('(%s) Could not process typedef-md: %s', location, e.message)
+            this.log(e.stack)
           }
         },
       },
@@ -123,18 +120,18 @@ class Typedefs extends Replaceable {
         }
         b.appearsIn = [file]
         if (imp) {
-          LOG('Adding import %s', fullName)
+          this.log('Adding import %s', fullName)
           this.types.push(b)
           return b
         }
         if (typeName && name == typeName) {
-          LOG('Adding type by matched name %s', fullName)
+          this.log('Adding type by matched name %s', fullName)
           this.types.push(b)
           return b
         } else if (typeName) {
           return
         }
-        LOG('Adding type %s at %s', fullName, this.file)
+        this.log('Adding type %s at %s', fullName, this.file)
         this.types.push(b)
         return b
       }).filter(Boolean)
@@ -147,6 +144,10 @@ class Typedefs extends Replaceable {
     })
     this.cache = {}
     this.file = null
+  }
+  log() {
+    if (/doc/.test(process.env.NODE_DEBUG)) return console.error
+    return () => {}
   }
   addCache(location, typename = '') {
     this.cache[`${location}::${typename}`] = 1

@@ -1,7 +1,3 @@
-// import { debuglog } from 'util'
-
-// const LOG = debuglog('doc')
-
 `%GIF path-to-file
 alt
 summary

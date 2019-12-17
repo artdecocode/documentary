@@ -1,10 +1,7 @@
 const { join } = require('path');
 const { mismatch } = require('../../../stdlib');
 const { clone } = require('../../../stdlib');
-const { debuglog } = require('util');
 const { c, b } = require('../../../stdlib');
-
-const LOG = debuglog('doc')
 
 const sectionBrakeRe = /^%~(?: +(-?\d+))?(?: +(.+))?%$/gm
 
@@ -44,7 +41,7 @@ const rule = {
       const [, ...s] = err.stack.split('\n')
       const st = b(s.join('\n'), 'red')
       const l = `Section break ${n}: ${h}\n${st}`
-      LOG(l)
+      this.log(l)
       return match
     }
   },

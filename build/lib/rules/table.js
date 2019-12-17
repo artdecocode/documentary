@@ -1,7 +1,4 @@
-const { debuglog } = require('util');
 const { c: color } = require('../../../stdlib');
-
-const LOG = debuglog('doc')
 
 const mapNewLines = (rows) => {
   return rows.map((row) => {
@@ -66,11 +63,11 @@ function replacer(match, macro, table) {
       const s2 = table.substring(p + 1, p + 100)
       const r = color(t, 'red')
       const tt = `${s}${r}${s2}`
-      LOG(tt)
+      this.log(tt)
     } else {
-      LOG(err.stack)
+      this.log(err.stack)
     }
-    LOG('Could not parse the table.')
+    this.log('Could not parse the table.')
     return match
   }
 }

@@ -1,7 +1,4 @@
-const { debuglog } = require('util');
-
-const LOG = debuglog('doc')
-const DEBUG = /doc/.test(process.env.NODE_DEBUG)
+const DEBUG = /doc/.test(process.env.NODE_DEBUG) || process.env.DEBUG
 
 const catcher = async (err) => {
   let stack
@@ -11,7 +8,7 @@ const catcher = async (err) => {
   } else {
     stack = message = err
   }
-  DEBUG ? LOG(stack) : console.log(message)
+  DEBUG ? console.error(stack) : console.log(message)
   process.exit(1)
 }
 

@@ -1,5 +1,5 @@
 const { Replaceable, makeMarkers, makeCutRule, makePasteRule } = require('../../stdlib');
-const { debuglog, isBuffer } = require('util');
+const { isBuffer } = require('util');
 const { join, resolve, basename } = require('path');
 const { homedir } = require('os');
 const { write } = require('../../stdlib');
@@ -32,7 +32,7 @@ const stat = async (path) => {
   return await makePromise(Stat, path)
 }
 
-const LOG = debuglog('doc')
+const LOG = /doc/.test(process.env.NODE_DEBUG) ? console.error : (() => {})
 
 const getComponents = (paths, getDocumentary) => {
   let method = Method

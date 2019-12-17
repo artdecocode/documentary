@@ -1,10 +1,9 @@
 const { h } = require('preact');
-const { debuglog } = require('util');
 const { c: color } = require('../../../stdlib');
 const Md2html = require('../../components/Html');
 let render = require('@depack/render'); if (render && render.__esModule) render = render.default;
 
-const LOG = debuglog('doc')
+const LOG = /doc/.test(process.env.NODE_DEBUG) ? console.error : (() => {})
 
 /**
  * Check if any of the columns had new lines.
