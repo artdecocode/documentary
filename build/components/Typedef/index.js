@@ -129,10 +129,13 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
       let desc = (prop.args && !slimFunctions) ? makeMethodTable(prop, allTypes, opts, {
         indent: '', join: '<br/>\n', preargs: '<br/>\n',
       }) : de
+      let hasCodes
       if (prop.examples.length) {
         desc += `\n${makeExamples(prop.examples)}`
+        hasCodes = true
+      } else {
+        hasCodes = new RegExp(codeRe.source, codeRe.flags).test(prop.args ? desc : prop.description)
       }
-      const hasCodes = new RegExp(codeRe.source, codeRe.flags).test(prop.args ? desc : prop.description)
       desc = desc + '\n  '
       if (hasCodes) desc = '\n\n' + desc
       // let n = md(name)

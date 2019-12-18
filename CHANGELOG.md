@@ -1,3 +1,9 @@
+## 18 December 2019
+
+### [1.34.7](https://github.com/artdecocode/documentary/compare/v1.34.6...v1.34.7)
+
+- [fix] Fix examples for properties.
+
 ## 17 December 2019
 
 ### [1.34.6](https://github.com/artdecocode/documentary/compare/v1.34.5...v1.34.6)
