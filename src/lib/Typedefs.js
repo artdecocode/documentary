@@ -77,7 +77,7 @@ export default class Typedefs extends Replaceable {
           this.addCache(location, typeName)
           try {
             const xml = await read(location)
-            const { types, imports } = parseFile(xml, rootNamespace)
+            const { types, imports } = parseFile(xml, rootNamespace, location)
 
             this.emit('types', {
               location,

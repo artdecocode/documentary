@@ -1,5 +1,9 @@
 ## 18 December 2019
 
+### [1.34.8](https://github.com/artdecocode/documentary/compare/v1.34.7...v1.34.8)
+
+- [feature] Read relative examples paths via _Typal_ update.
+
 ### [1.34.7](https://github.com/artdecocode/documentary/compare/v1.34.6...v1.34.7)
 
 - [fix] Fix examples for properties.
