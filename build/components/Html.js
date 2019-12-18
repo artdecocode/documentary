@@ -34,7 +34,7 @@ const replace = (c, insertInnerCode, { li, afterCutTags = [] }) => {
 
   let d = SyncReplaceable(s, [
     {
-      re: /\[(.+?)\]\((.+?)\)/g,
+      re: /\[([^\]\n]+?)\]\((.+?)\)/g,
       replacement(m, title, href, i) {
         // toc-links regex does not accept a-hrefs
         if (['t-type', 'l-type', 't'].includes(href) || /^#+$/.test(href)) {

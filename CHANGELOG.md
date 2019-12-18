@@ -1,5 +1,9 @@
 ## 18 December 2019
 
+### [1.34.9](https://github.com/artdecocode/documentary/compare/v1.34.8...v1.34.9)
+
+- [fix] Fix links with `[]` in types' markdown tables.
+
 ### [1.34.8](https://github.com/artdecocode/documentary/compare/v1.34.7...v1.34.8)
 
 - [feature] Read relative examples paths via _Typal_ update.

@@ -15,6 +15,10 @@ const nodeAPI = {
     link: 'https://nodejs.org/api/http.html#http_class_http_incomingmessage',
     desc: 'A readable stream that receives data from the client in chunks. The first argument of the http.Server.on("request") event.',
   },
+  'http.Server': {
+    link: 'https://nodejs.org/api/http.html#http_class_http_server',
+    desc: 'An HTTP server that extends net.Server to handle network requests.',
+  },
   'http.ServerResponse': {
     // link: 'https://nodejs.org/api/http.html#http_response_socket',
     link: 'https://nodejs.org/api/http.html#http_class_http_serverresponse',

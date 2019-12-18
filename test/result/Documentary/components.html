@@ -68,6 +68,15 @@ The <em>sign</em>, <em>verify</em> and <em>index</em> methods. The <em>Keygrip</
   <li>world</li>
 /**/
 
+// processes md2html component with array and link
+<md2html>
+  (...args: *[]) => [!http.Server](#type-httpserver)
+</md2html>
+
+/* expected */
+(...args: *[]) => <a href="#type-httpserver">!http.Server</a>
+/**/
+
 // processes md2html component with li switched off
 <md2html li="false">
   - hello

@@ -391,3 +391,38 @@ this.set({ Accept: 'text/plain', 'X-API-Key': 'tobi' })
  </tr>
 </table>
 /**/
+
+## correct links with an array
+<typedef flatten narrow slimFunctions>test/temp/types.xml</typedef>
+
+/* types */
+<types>
+  <import from="http" name="Server" />
+  <interface name="Test">
+    <fn name="listen" return="!http.Server" template-no-return>
+      <arg name="...args">The arguments as [described](https://nodejs.org/api/net.html#net_server_listen).</arg>
+      Shorthand for: `http.createServer(app.callback()).listen(...)`.
+    </fn>
+  </interface>
+</types>
+/**/
+
+/* expected */
+__<a name="type-test">`Test`</a>__
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><ins>listen</ins></td>
+  <td><em>(...args: *[]) => <a href="https://nodejs.org/api/http.html#http_class_http_server" title="An HTTP server that extends net.Server to handle network requests.">!http.Server</a></em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Shorthand for: <code>http.createServer(app.callback()).listen(...)</code>.
+  </td>
+ </tr>
+</table>
+/**/
