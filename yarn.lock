@@ -263,10 +263,10 @@ temp-context@^2.1.3:
     makepromise "^3.0.3"
     pedantry "^2.3.1"
 
-typal@^1.24.14:
-  version "1.24.14"
-  resolved "https://registry.yarnpkg.com/typal/-/typal-1.24.14.tgz#1d3c93e52537c269b27b44aa2d251ff3ab3d7838"
-  integrity sha512-GxM7H2Gw3pE0PaSZUZBxy5v9fsCe+BPrXIsmvKFxQtvFCd+jqudoAQDpeil085yUOT0Duxj/+8L/f8bTa0FMLQ==
+typal@^1.24.15:
+  version "1.24.15"
+  resolved "https://registry.yarnpkg.com/typal/-/typal-1.24.15.tgz#e44d2eece47e466285a932d013505192b3cbc3c0"
+  integrity sha512-ghWcOORBgNeYCKu9lIAkYnC+Jv522j2WNjKD/hCkh1jTOrflTqgKKNZRxSOC+GJpk9GUivjaJjNRdImE/W/u1Q==
 
 usually@^1.2.0:
   version "1.2.0"
