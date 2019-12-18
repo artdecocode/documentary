@@ -73,7 +73,7 @@
       "name": "Launch For cookies",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },
-      "args": ["-o", "README.md", "-n", "_goa", "-T", "types/attributes.xml"],
+      "args": ["-o", "README.md", "-n", "_goa"],
       "cwd": "${workspaceFolder}/../../idiocc/cookies",
       "console": "integratedTerminal",
       "skipFiles": [

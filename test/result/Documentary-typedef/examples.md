@@ -25,6 +25,16 @@ __<a name="type-test">`Test`</a>__
   <th>Type &amp; Description</th>
  </tr></thead>
  <tr>
+  <td rowSpan="3" align="center"><ins>constructor</ins></td>
+  <td><em>new () => <a href="#type-test">Test</a></em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Constructor method.
+  </td>
+ </tr>
+ <tr>
   <td rowSpan="3" align="center"><ins>set</ins></td>
   <td><em>() => void</em></td>
  </tr>
@@ -63,6 +73,16 @@ __<a name="type-test">`Test`</a>__
   <th>Name</th>
   <th>Type &amp; Description</th>
  </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><ins>constructor</ins></td>
+  <td><em>new () => <a href="#type-test">Test</a></em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Constructor method.
+  </td>
+ </tr>
  <tr>
   <td rowSpan="3" align="center"><ins>test</ins></td>
   <td><em>string</em></td>

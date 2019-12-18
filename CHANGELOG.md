@@ -1,3 +1,9 @@
+## 19 December 2019
+
+### [1.34.10](https://github.com/artdecocode/documentary/compare/v1.34.9...v1.34.10)
+
+- [feature] Place methods inside the documentation with `<method>` component.
+
 ## 18 December 2019
 
 ### [1.34.9](https://github.com/artdecocode/documentary/compare/v1.34.8...v1.34.9)

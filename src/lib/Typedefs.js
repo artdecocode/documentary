@@ -198,6 +198,12 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
       const r = `%TYPEDEF ${loc}${name ? ` ${name}` : ''}%`
       return r
     },
+    'method'({ children }) {
+      let [loc] = children
+      loc = loc.trim()
+      const r = `%TYPEDEF ${loc}%`
+      return r
+    },
   })
 
   // const r = new Replaceable(c)

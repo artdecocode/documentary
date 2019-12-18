@@ -1,0 +1,15 @@
+<types namespace="preact">
+  <interface name="H" desc="Hello world.">
+    <fn name="constructor">
+      <arg name="nodeName" type="string|!Function">
+        An element name. Ex: `div`, `a`, `span`, etc.
+      </arg>
+      <arg name="attributes" type="Object" opt>
+        Any attributes/props to set on the created element.
+      </arg>
+      <arg type="!(preact.VNode|Array<!preact.VNode>)" name="...args">
+        Additional arguments are taken to be children to append. Can be infinitely nested Arrays.
+      </arg>
+    </fn>
+  </interface>
+</types>

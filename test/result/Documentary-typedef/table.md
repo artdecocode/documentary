@@ -183,6 +183,16 @@ __<a name="type-test">`Test`</a>__
   <th>Type &amp; Description</th>
  </tr></thead>
  <tr>
+  <td rowSpan="3" align="center"><ins>constructor</ins></td>
+  <td><em>new () => <a href="#type-test">Test</a></em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Constructor method.
+  </td>
+ </tr>
+ <tr>
   <td rowSpan="3" align="center"><ins>toMarkdown</ins></td>
   <td><em>(allTypes: !Array&lt;!Type&gt;, opts: <a href="#type-tomarkdownoptions">!ToMarkdownOptions</a>) => void</em></td>
  </tr>
@@ -220,6 +230,16 @@ __<a name="type-test">`Test`</a>__
   <th>Type &amp; Description</th>
  </tr></thead>
  <tr>
+  <td rowSpan="3" align="center"><ins>constructor</ins></td>
+  <td><em>new () => <a href="#type-test">Test</a></em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Constructor method.
+  </td>
+ </tr>
+ <tr>
   <td rowSpan="3" align="center"><ins>toMarkdown</ins></td>
   <td><em>(allTypes: !Array&lt;!_typal.Type&gt;, opts: !_typal.ToMarkdownOptions) => void</em></td>
  </tr>
@@ -249,6 +269,16 @@ __<a name="type-test">`Test`</a>__
   <th>Type &amp; Description</th>
  </tr></thead>
  <tr>
+  <td rowSpan="3" align="center"><ins>constructor</ins></td>
+  <td><em>new () => <a href="#type-test">Test</a></em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Constructor method.
+  </td>
+ </tr>
+ <tr>
   <td rowSpan="3" align="center"><ins>toMarkdown</ins></td>
   <td><em>() => !Promise&lt;!Array&lt;{ record: string }&gt;&gt;</em></td>
  </tr>
@@ -277,6 +307,16 @@ __<a name="type-test">`Test`</a>__
   <th>Name</th>
   <th>Type &amp; Description</th>
  </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><ins>constructor</ins></td>
+  <td><em>new () => <a href="#type-test">Test</a></em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Constructor method.
+  </td>
+ </tr>
  <tr>
   <td rowSpan="3" align="center"><ins>fn</ins></td>
   <td><em>(arg0?: optional) => ?</em></td>
@@ -314,6 +354,16 @@ __<a name="type-test">`Test`</a>__
   <th>Name</th>
   <th>Type &amp; Description</th>
  </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><ins>constructor</ins></td>
+  <td><em>new () => <a href="#type-test">Test</a></em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Constructor method.
+  </td>
+ </tr>
  <tr>
   <td rowSpan="3" align="center"><ins>prop</ins></td>
   <td><em>(this: Type, ...args: Type[]) => ?</em></td>
@@ -368,6 +418,16 @@ __<a name="type-test">`Test`</a>__
   <th>Type &amp; Description</th>
  </tr></thead>
  <tr>
+  <td rowSpan="3" align="center"><ins>constructor</ins></td>
+  <td><em>new () => <a href="#type-test">Test</a></em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Constructor method.
+  </td>
+ </tr>
+ <tr>
   <td rowSpan="3" align="center"><ins>set</ins></td>
   <td><em>(field: (string | !Object), val?: (string | !Array | number)) => void</em></td>
  </tr>
@@ -414,6 +474,16 @@ __<a name="type-test">`Test`</a>__
   <th>Name</th>
   <th>Type &amp; Description</th>
  </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><ins>constructor</ins></td>
+  <td><em>new () => <a href="#type-test">Test</a></em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Constructor method.
+  </td>
+ </tr>
  <tr>
   <td rowSpan="3" align="center"><ins>listen</ins></td>
   <td><em>(...args: *[]) => <a href="https://nodejs.org/api/http.html#http_class_http_server" title="An HTTP server that extends net.Server to handle network requests.">!http.Server</a></em></td>
