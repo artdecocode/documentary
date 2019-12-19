@@ -280,6 +280,12 @@ The arguments it accepts are:
     Same as setting <code>NODE_DEBUG=doc</code>.</td>
   </tr>
   <tr>
+   <td>--annotate</td>
+   <td>-a</td>
+   <td>Place resolved URLs to all documented types into the
+    <code>typedefs.json</code> file and reference it in <code>package.json</code>.</td>
+  </tr>
+  <tr>
    <td>--generate</td>
    <td>-g</td>
    <td>[Deprecated] Places typedefs definitions into JavaScript
