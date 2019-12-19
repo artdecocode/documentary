@@ -44,9 +44,11 @@ export default function Typedef({ documentary, children, name, narrow,
   details = details ? details.split(',') : []
   const {
     locations, allTypes, cut: { code: cutCode },
-    _args: { wiki, source }, currentFile,
+    _args: { wiki, source }, currentFile, _typedefs,
   } = documentary
   const file = wiki ? source : currentFile
+
+  const at = [...allTypes, ..._typedefs.included]
 
   documentary.setPretty(false)
   let [location] = children
@@ -76,12 +78,12 @@ export default function Typedef({ documentary, children, name, narrow,
 
   const tt = typesToMd.map(type => {
     if (!type.isMethod) {
-      const res = type.toMarkdown(allTypes, opts)
+      const res = type.toMarkdown(at, opts)
       if (level) res.LINE = res.LINE.replace(/t-type/, `${'#'.repeat(level)}-type`)
       return res
     }
     const LINE = Method({ documentary, level, method: type, noArgTypesInToc })
-    const table = makeMethodTable(type, allTypes, opts)
+    const table = makeMethodTable(type, at, opts)
     return { LINE, table, examples: type.examples }
   })
   // found those imports that will be flattened
@@ -89,14 +91,14 @@ export default function Typedef({ documentary, children, name, narrow,
     .filter(({ import: i }) => i)
     .filter(({ fullName }) => !(fullName in flattened))
 
-  const j = importsToMd.map(i => i.toMarkdown(allTypes, { flatten }))
+  const j = importsToMd.map(i => i.toMarkdown(at, { flatten }))
 
   const ttt = tt.map((s, i) => {
     const { LINE, table: type, displayInDetails } = s
     const isObject = typeof type == 'object' // table can be empty string, e.g., ''
 
     const ch = isObject ? <Narrow key={i} {...type}
-      documentary={documentary} allTypes={allTypes} opts={opts}
+      documentary={documentary} allTypes={at} opts={opts}
       slimFunctions={slimFunctions}
     /> : type
     if (displayInDetails) {

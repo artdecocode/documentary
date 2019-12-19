@@ -36,7 +36,8 @@
     "build",
     "src/bin/index.js",
     "web-components.json",
-    "stdlib"
+    "stdlib",
+    "typedefs.json"
   ],
   "repository": {
     "type": "git",

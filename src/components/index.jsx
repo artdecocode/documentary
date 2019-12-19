@@ -12,6 +12,9 @@ export default {
   'type-link'({ documentary }) {
     return documentary.removeLine()
   },
+  'include-typedefs'({ documentary }) {
+    return documentary.removeLine()
+  },
 }
 
 /**

@@ -71,9 +71,8 @@ if (IGNORE_HIDDEN) IGNORE_HIDDEN = IGNORE_HIDDEN != 'false'
  */
 export default class Documentary extends Replaceable {
   /**
-   * @param {DocumentaryOptions} options Options for the Documentary constructor.
-   * @param {!Object<string, !Array<_typal.Type>} [options.locations] The source locations of types, e.g., types/index.xml.
-   * @param {!Array<_typal.Type>} [options.types] All extracted types across every processed file.
+   * @param {Object} options Options for the Documentary constructor.
+   * @param {import('./Typedefs').default} [options.typedefs] Pre-extracted typedefs.
    * @param {string} [options.wiki] If processing Wiki, specifies the output location.
    * @param {string} [options.source] The location of the source file or directory from which the documentation is compiled.
    * @param {string} [options.output] The location where to save the `README.md` file.
@@ -84,7 +83,7 @@ export default class Documentary extends Replaceable {
    */
   constructor(options = {}) {
     const {
-      locations = {}, types: allTypes = /** @type {!Array<_typal.Type>} */ ([]),
+      typedefs,
       cwd = CWD, cacheLocation = join(cwd, '.documentary/cache'),
       noCache, disableDtoc, objectMode = true /* deprec */,
       wiki, output, source, // options to remember
@@ -163,14 +162,14 @@ export default class Documentary extends Replaceable {
       {
         re: typedefMdRe,
         replacement(match, location, typeName) {
-          const types = locations[location]
+          const types = this.locations[location]
           if (!types) {
             LOG('No types for location %s.', location)
             return ''
           }
           const t = typeName ? types.filter(a => a.name == typeName) : types
           const res = t.map((type) => {
-            const { LINE, table: tb } = type.toMarkdown(allTypes)
+            const { LINE, table: tb } = type.toMarkdown(this.allTypes)
             return `${LINE}${tb}`
           }).join('\n\n')
           return res
@@ -252,14 +251,32 @@ export default class Documentary extends Replaceable {
       methodTitle: insertMethodTitle,
       innerCode: insertInnerCode,
     }
-    /**
-     * The source locations of types, e.g., types/index.xml.
-     */
-    this.locations = locations
-    /**
-     * All extracted types across every processed file.
-     */
-    this.allTypes = allTypes
+    this._typedefs = typedefs
+    if (this._typedefs) {
+      const imports = this._typedefs.types.filter(({ import: i }) => i)
+      this._typedefs.included.forEach(({ description, fullName: k, link }) => {
+        const i = imports.find(({ fullName }) => fullName == k)
+        if (!i) return
+        if (!i.link) i.link = link
+        if (!i.description) i.description = description
+      })
+    }
+  }
+  /**
+   * The source locations of types, e.g., types/index.xml.
+   */
+  get locations() {
+    if (this._typedefs) return this._typedefs.locations
+    return {}
+  }
+  /**
+   * All extracted types across every processed file.
+   */
+  get allTypes() {
+    if (this._typedefs) {
+      return this._typedefs.types
+    }
+    return []
   }
 
   /**

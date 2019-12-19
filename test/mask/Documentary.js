@@ -90,8 +90,8 @@ export const typedefs = makeTestSuite('test/result/Documentary-typedef', {
       await write('types.xml', this.types)
     }
     let p = createReadable(this.input)
-    const { types, locations } = await getTypedefs(p, this.rootNamespace)
-    const doc = new Documentary({ locations, types, disableDtoc: true })
+    const td = await getTypedefs(p, this.rootNamespace)
+    const doc = new Documentary({ typedefs: td, disableDtoc: true })
     p = createReadable(this.input)
     return p.pipe(doc)
   },
