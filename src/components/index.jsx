@@ -1,5 +1,6 @@
 import { makeMethodTable } from './Typedef/lib'
 import { makeLinking } from './Typedef'
+import { getLink } from '../lib'
 
 export { default as shell } from './shell'
 export { default as argufy } from './Argufy'
@@ -65,5 +66,32 @@ export function method({ name, level, documentary, children, noArgTypesInToc, 'j
   }
   return [res, table].filter(Boolean).join('\n\n')
 }
+
+/**
+ * The method for adding a heading and description of a method inside a constructor/interface.
+ * @param {Object} params
+ * @param {import('../lib/Documentary').default} params.documentary
+ */
+export function link({ documentary, type, children }) {
+  documentary.pretty(false)
+  const foundType = documentary.allTypesWithIncluded.find(({ fullName }) => {
+    return fullName == type
+  })
+  if (!foundType) throw new Error(`Type ${type} not found.`)
+
+  const {
+    _args: { wiki, source }, currentFile, error,
+  } = documentary
+  const file = wiki ? source : currentFile
+  const linking = makeLinking(wiki, file, error)
+
+  if (foundType.link) {
+    return (<a href={foundType.link} title={foundType.description}>{children}</a>)
+  }
+  const l = getLink(foundType.fullName, 'type')
+  const ll = linking({ link: l, type: foundType })
+  return (<a href={ll} title={foundType.description}>{children}</a>)
+}
+
 // export { default as method } from './method'
 // export { default as method } from './Method/index'
