@@ -17,7 +17,7 @@ function loadComponents(components, getDocumentary) {
      * @param {Object} htmlProps
      * @param {import('competent').Meta} meta
      */
-    getProps(htmlProps, meta) {
+    getProps(htmlProps, meta, name) {
       meta.setPretty(true, 100)
       const d = getDocumentary()
       const documentary = new Proxy(d, {
@@ -32,6 +32,13 @@ function loadComponents(components, getDocumentary) {
             return () => {
               meta.removeLine()
               return null
+            }
+          }
+          if (p == 'error') {
+            return (err) => {
+              const stack = err.stack.replace(err.message, '')
+              console.error(b(`<${name}>`, 'yellow'), c(err.message, 'red'))
+              console.error(c(stack, 'grey'))
             }
           }
           return target[p]

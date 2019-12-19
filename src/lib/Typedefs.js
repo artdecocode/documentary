@@ -187,7 +187,7 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
       const r = `%TYPEDEF ${loc}%-${link}`
       return r
     },
-    'include-typedefs'({ children }) {
+    'include-typedefs'({ children, icon, 'icon-alt': iconAlt }) {
       let [loc] = children
       loc = loc.trim() || 'typedefs.json'
       const data = require(resolve(loc))
@@ -198,6 +198,7 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
           fullName: k,
           link,
           description,
+          icon, iconAlt,
         }
         this.included.push(t)
       })
@@ -221,8 +222,10 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
     },
     objectMode: true,
   })
-  t.write({ data: `<include-typedefs>
-    ${resolve(__dirname, '../../typedefs.json')}
+  const nodeTypedefs = resolve(__dirname, '../../typedefs.json')
+  const nodeIcon = resolve(__dirname, '../node.png')
+  t.write({ data: `<include-typedefs icon="${nodeIcon}" icon-alt="Node.JS Docs">
+    ${nodeTypedefs}
   </include-typedefs>`, file: 'fake.md' })
   stream.pipe(t).pipe(typedefs)
 

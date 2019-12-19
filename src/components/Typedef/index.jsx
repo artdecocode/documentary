@@ -43,12 +43,10 @@ export default function Typedef({ documentary, children, name, narrow,
 }) {
   details = details ? details.split(',') : []
   const {
-    locations, allTypes, cut: { code: cutCode },
-    _args: { wiki, source }, currentFile, _typedefs,
+    locations, allTypesWithIncluded, cut: { code: cutCode },
+    _args: { wiki, source }, currentFile,
   } = documentary
   const file = wiki ? source : currentFile
-
-  const at = [...allTypes, ..._typedefs.included]
 
   documentary.setPretty(false)
   let [location] = children
@@ -78,12 +76,12 @@ export default function Typedef({ documentary, children, name, narrow,
 
   const tt = typesToMd.map(type => {
     if (!type.isMethod) {
-      const res = type.toMarkdown(at, opts)
+      const res = type.toMarkdown(allTypesWithIncluded, opts)
       if (level) res.LINE = res.LINE.replace(/t-type/, `${'#'.repeat(level)}-type`)
       return res
     }
     const LINE = Method({ documentary, level, method: type, noArgTypesInToc })
-    const table = makeMethodTable(type, at, opts)
+    const table = makeMethodTable(type, allTypesWithIncluded, opts, { wiki })
     return { LINE, table, examples: type.examples }
   })
   // found those imports that will be flattened
@@ -91,15 +89,15 @@ export default function Typedef({ documentary, children, name, narrow,
     .filter(({ import: i }) => i)
     .filter(({ fullName }) => !(fullName in flattened))
 
-  const j = importsToMd.map(i => i.toMarkdown(at, { flatten }))
+  const j = importsToMd.map(i => i.toMarkdown(allTypesWithIncluded, { flatten }))
 
   const ttt = tt.map((s, i) => {
     const { LINE, table: type, displayInDetails } = s
     const isObject = typeof type == 'object' // table can be empty string, e.g., ''
 
     const ch = isObject ? <Narrow key={i} {...type}
-      documentary={documentary} allTypes={at} opts={opts}
-      slimFunctions={slimFunctions}
+      documentary={documentary} allTypes={allTypesWithIncluded} opts={opts}
+      slimFunctions={slimFunctions} wiki={wiki}
     /> : type
     if (displayInDetails) {
       const line = md2html({ documentary, children: [LINE] })
@@ -135,7 +133,7 @@ export default function Typedef({ documentary, children, name, narrow,
  * @param {boolean} opts.constr Whether this is a table for the interface/constructor.
  */
 const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
-  slimFunctions }) => {
+  slimFunctions, wiki }) => {
   const md = (name, afterCutLinks) => {
     return md2html({ documentary, children: [name], afterCutLinks })
   }
@@ -148,7 +146,7 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
     </tr></thead>{'\n'}
     {props.reduce((acc, { name, typeName, de, d, prop }) => {
       let desc = (prop.args && !slimFunctions) ? makeMethodTable(prop, allTypes, opts, {
-        indent: '', join: '<br/>\n', preargs: '<br/>\n',
+        indent: '', join: '<br/>\n', preargs: '<br/>\n', wiki,
       }) : de
       let hasCodes
       if (prop.examples.length) {

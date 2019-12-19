@@ -3,7 +3,7 @@ const { collect } = require('../../stdlib');
 const { relative, sep, join, resolve } = require('path');
 const { typedefMdRe } = require('./rules/typedef-md');
 const { read } = require('./');
-const { parseFile } = require('typal');
+const { parseFile } = require('typal/src');
 const { codeRe, commentRule } = require('./rules');
 const { methodTitleRe } = require('./rules/method-title');
 const { macroRule, useMacroRule } = require('./rules/macros');
@@ -187,7 +187,7 @@ const getTypedefs = async (stream, namespace, typesLocations = [], options = {})
       const r = `%TYPEDEF ${loc}%-${link}`
       return r
     },
-    'include-typedefs'({ children }) {
+    'include-typedefs'({ children, icon, 'icon-alt': iconAlt }) {
       let [loc] = children
       loc = loc.trim() || 'typedefs.json'
       const data = require(resolve(loc))
@@ -198,6 +198,7 @@ const getTypedefs = async (stream, namespace, typesLocations = [], options = {})
           fullName: k,
           link,
           description,
+          icon, iconAlt,
         }
         this.included.push(t)
       })
@@ -221,8 +222,10 @@ const getTypedefs = async (stream, namespace, typesLocations = [], options = {})
     },
     objectMode: true,
   })
-  t.write({ data: `<include-typedefs>
-    ${resolve(__dirname, '../../typedefs.json')}
+  const nodeTypedefs = resolve(__dirname, '../../typedefs.json')
+  const nodeIcon = resolve(__dirname, '../node.png')
+  t.write({ data: `<include-typedefs icon="${nodeIcon}" icon-alt="Node.JS Docs">
+    ${nodeTypedefs}
   </include-typedefs>`, file: 'fake.md' })
   stream.pipe(t).pipe(typedefs)
 

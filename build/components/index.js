@@ -1,6 +1,6 @@
 const { h } = require('preact');
 const { makeMethodTable } = require('./Typedef/lib');
-const { relative, dirname } = require('path');
+const { makeLinking } = require('./Typedef');
 
 const $_shell = require('./shell');
 const $_Argufy = require('./Argufy');
@@ -19,6 +19,7 @@ module.exports={
 }
 
 /**
+ * The method for adding a heading and description of a method inside a constructor/interface.
  * @param {Object} params
  * @param {import('../lib/Documentary').default} params.documentary
  */
@@ -46,28 +47,22 @@ function method({ name, level, documentary, children, noArgTypesInToc, 'just-hea
   })
 
   const {
-    _args: { wiki, source }, currentFile,
+    _args: { wiki, source }, currentFile, error,
   } = documentary
   const file = wiki ? source : currentFile
-  const linking = ({ link, type: refType }) => {
-    // when splitting wiki over multiple pages, allows
-    // to create links to the exact page.
-    const l = `#${link}`
-    // semi-hack
-    if (refType.appearsIn.includes(file)) return l
-    const ai = refType.appearsIn[0]
-    let rel = relative(dirname(file), ai)
-    if (wiki) rel = rel.replace(/\.(md|html)$/, '')
-    return `${rel}${l}`
-  }
+  const linking = makeLinking(wiki, file)
   if (justHeading) return res
   let table = ''
   try {
-    table = makeMethodTable(prop, documentary.allTypes, {
+    table = makeMethodTable(prop, documentary.allTypesWithIncluded, {
       link: linking,
-    })
+      flatten(n) {
+        // debugger
+        // flattened[n] = true
+      },
+    }, { wiki })
   } catch (err) {
-    console.warn(err.message)
+    error(err)
   }
   return [res, table].filter(Boolean).join('\n\n')
 }
