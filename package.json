@@ -1,6 +1,6 @@
 {
   "name": "documentary",
-  "version": "1.35.1",
+  "version": "1.35.2",
   "description": "Documentation Compiler To Generate The Table Of Contents, Embed Examples With Their Output, Make Markdown Tables, Maintain Typedefs For JavaScript And README, Watch Changes To Push, Use Macros And Prettify API Titles.",
   "main": "build",
   "scripts": {
