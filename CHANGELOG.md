@@ -1,5 +1,9 @@
 ## 19 December 2019
 
+### [1.34.11](https://github.com/artdecocode/documentary/compare/v1.34.10...v1.34.11)
+
+- [feature] Type linking across pages.
+
 ### [1.34.10](https://github.com/artdecocode/documentary/compare/v1.34.9...v1.34.10)
 
 - [feature] Place methods inside the documentation with `<method>` component.
