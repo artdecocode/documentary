@@ -16,7 +16,7 @@ const { makeMethodTable } = require('./lib');
 //   }, {})
 // }
 
-const makeLinking = (wiki, file) => {
+const makeLinking = (wiki, file, error = () => {}) => {
   const linking = ({ link, type: refType }) => {
     // when splitting wiki over multiple pages, allows
     // to create links to the exact page.
@@ -28,6 +28,7 @@ const makeLinking = (wiki, file) => {
     const { appearsIn = [''] } = refType
     if (appearsIn.includes(file)) return l
     const ai = appearsIn[0] //
+    if (!ai) error(new Error('appearsIn is empty'))
     let rel = relative(dirname(file), ai)
     if (wiki) rel = rel.replace(/\.(md|html)$/, '')
     return `${rel}${l}`

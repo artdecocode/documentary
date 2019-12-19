@@ -28,6 +28,9 @@ function loadComponents(components, getDocumentary) {
           if (p == 'setPretty') {
             return meta.setPretty
           }
+          if (p == 'pretty') {
+            return meta.setPretty
+          }
           if (p == 'removeLine') {
             return () => {
               meta.removeLine()

@@ -1,5 +1,11 @@
 ## 19 December 2019
 
+### [1.35.1](https://github.com/artdecocode/documentary/compare/v1.35.0...v1.35.1)
+
+- [feature] _Node.JS_ logo for methods.
+- [api] Add `error` property to _Documentary_ in components.
+- [feature] Add `<link>` component for types' linking.
+
 ### [1.35.0](https://github.com/artdecocode/documentary/compare/v1.34.11...v1.35.0)
 
 - [feature] Implement `<include-typedefs>` component to include annotations and `-a` flag to generate them from Wikis.

@@ -1,6 +1,7 @@
 const { h } = require('preact');
 const { makeMethodTable } = require('./Typedef/lib');
 const { makeLinking } = require('./Typedef');
+const { getLink } = require('../lib');
 
 const $_shell = require('./shell');
 const $_Argufy = require('./Argufy');
@@ -66,10 +67,38 @@ function method({ name, level, documentary, children, noArgTypesInToc, 'just-hea
   }
   return [res, table].filter(Boolean).join('\n\n')
 }
+
+/**
+ * The method for adding a heading and description of a method inside a constructor/interface.
+ * @param {Object} params
+ * @param {import('../lib/Documentary').default} params.documentary
+ */
+function link({ documentary, type, children }) {
+  documentary.pretty(false)
+  const foundType = documentary.allTypesWithIncluded.find(({ fullName }) => {
+    return fullName == type
+  })
+  if (!foundType) throw new Error(`Type ${type} not found.`)
+
+  const {
+    _args: { wiki, source }, currentFile, error,
+  } = documentary
+  const file = wiki ? source : currentFile
+  const linking = makeLinking(wiki, file, error)
+
+  if (foundType.link) {
+    return (h('a',{'href':foundType.link, 'title':foundType.description},children))
+  }
+  const l = getLink(foundType.fullName, 'type')
+  const ll = linking({ link: l, type: foundType })
+  return (h('a',{'href':ll, 'title':foundType.description},children))
+}
+
 // export { default as method } from './method'
 // export { default as method } from './Method/index'
 
 module.exports.method = method
+module.exports.link = link
 module.exports.shell = $_shell
 module.exports.argufy = $_Argufy
 module.exports.md2html = $_Html
