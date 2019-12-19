@@ -13,6 +13,9 @@ module.exports={
   'type-link'({ documentary }) {
     return documentary.removeLine()
   },
+  'include-typedefs'({ documentary }) {
+    return documentary.removeLine()
+  },
 }
 
 /**

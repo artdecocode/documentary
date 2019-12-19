@@ -11,6 +11,61 @@ const { getStream, getLink } = require('../lib');
 const { getTypedefs } = require('../lib/Typedefs');
 const { writeFileSync } = require('fs');
 
+const Annotate = (wiki, types) => {
+  const packageJson = require(join(process.cwd(), 'package.json'))
+  const { repository } = packageJson
+  let github
+  if (typeof repository == 'string') {
+    const [portal, name] = repository.split(':')
+    if (name && portal != 'github') {
+      throw new Error('Only GitHub is supported for repositories in package.json.')
+    } else if (name) github = name
+    else github = repository
+  } else {
+    const { url } = repository
+    const { host, pathname } = parseUrl(url)
+    if (host != 'github.com') throw new Error('Only GitHub is supported for repositories in package.json.')
+    github = pathname.replace(/\.git$/, '').replace(/^\//, '')
+  }
+  github = `https://github.com/${github}`
+  let t = null
+  if (wiki) {
+    t = types.filter(({ import: i }) => !i).reduce((acc, type) => {
+      const { name, appearsIn } = type
+      const [ai] = appearsIn.map((file) => {
+        let rel = relative(dirname(file), file)
+        const [bn] = rel.split(sep)
+        const { name: n } = parse(bn)
+        return n
+      })
+      const link = getLink(name, 'type')
+      const r = `${ai}#${link}`
+      const rr = `${github}/wiki/${r}`
+      acc[`${type.originalNs}${type.name}`] = {
+        link: rr,
+        description: type.description,
+      }
+      return acc
+    }, {})
+  }
+  if (t) {
+    let current = {}
+    try {
+      current = require('typedefs.json')
+    } catch (err) { /* */}
+    writeFileSync('typedefs.json', JSON.stringify({ ...current, ...t }, null, 2))
+    const newPackageJson = Object.entries(packageJson).reduce((acc, [k, v]) => {
+      acc[k] = v
+      if (k == 'repository') {
+        acc['typedefs'] = 'typedefs.json'
+      }
+      return acc
+    }, {})
+    writeFileSync('package.json', JSON.stringify(newPackageJson, null, 2) + '\n')
+    console.log('Updated package.json to point to typdefs.json')
+  }
+}
+
 /**
  * Run the documentary and save the results.
  * @param {RunOptions} options Options for the run command.
@@ -39,63 +94,12 @@ async function run(options) {
   // figure out why can't create a pass-through, pipe into it, pause it then reuse it
   // this is because of highwatermark in the pass-through
 
-  const { types, locations } = await getTypedefs(stream, rootNamespace, typesLocations, {
+  const typedefs = await getTypedefs(stream, rootNamespace, typesLocations, {
     wiki, source, recordOriginalNs: annotate,
   })
 
   if (annotate) {
-    const packageJson = require(join(process.cwd(), 'package.json'))
-    const { repository } = packageJson
-    let github
-    if (typeof repository == 'string') {
-      const [portal, name] = repository.split(':')
-      if (name && portal != 'github') {
-        throw new Error('Only GitHub is supported for repositories in package.json.')
-      } else if (name) github = name
-      else github = repository
-    } else {
-      const { url } = repository
-      const { host, pathname } = parseUrl(url)
-      if (host != 'github.com') throw new Error('Only GitHub is supported for repositories in package.json.')
-      github = pathname.replace(/\.git$/, '').replace(/^\//, '')
-    }
-    github = `https://github.com/${github}`
-    let t = null
-    if (wiki) {
-      t = types.filter(({ import: i }) => !i).reduce((acc, type) => {
-        const { name, appearsIn } = type
-        const [ai] = appearsIn.map((file) => {
-          let rel = relative(dirname(file), file)
-          const [bn] = rel.split(sep)
-          const { name: n } = parse(bn)
-          return n
-        })
-        const link = getLink(name, 'type')
-        const r = `${ai}#${link}`
-        const rr = `${github}/wiki/${r}`
-        acc[`${type.originalNs}${type.name}`] = {
-          link: rr,
-          description: type.description,
-        }
-        return acc
-      }, {})
-    }
-    if (t) {
-      let current = {}
-      try {
-        current = require('typedefs.json')
-      } catch (err) { /* */}
-      writeFileSync('typedefs.json', JSON.stringify({ ...current, ...t }, null, 2))
-      const newPackageJson = Object.entries(packageJson).reduce((acc, [k, v]) => {
-        acc[k] = v
-        if (k == 'repository') {
-          acc['typedefs'] = 'typedefs.json'
-        }
-        return acc
-      }, {})
-      writeFileSync('package.json', JSON.stringify(newPackageJson, null, 2) + '\n')
-      console.log('Updated package.json to point to typdefs.json')
-    }
+    Annotate(wiki, typedefs.types)
   }
 
   let assets = []
@@ -117,8 +121,7 @@ async function run(options) {
       const so = join(source, s)
       const doc = await runPage({
         ...options,
-        locations,
-        types,
+        typedefs,
         wiki,
         output: o,
         source: so,
@@ -128,25 +131,29 @@ async function run(options) {
     }))
     console.log('Saved %s wiki page%s to %s', docs.length, docs.length > 1 ? 's' : '', wiki)
   } else {
-    const doc = await runPage({ source, reverse, locations, types, noCache, h1, justToc, output })
+    const doc = await runPage({ source, reverse, typedefs, noCache, h1, justToc, output })
     assets = doc.assets
     if (output) {
       console.log('Saved documentation to %s', output)
     }
   }
 
-  return [...Object.keys(locations), ...assets]
+  return [...Object.keys(typedefs.locations), ...assets]
 }
 
+/**
+ * @param {Object} opts
+ * @param {import('../lib/Typedefs').default} opts.typedefs
+ */
 const runPage = async (opts) => {
   const {
-    source, reverse, locations, types, noCache, h1, justToc,
+    source, reverse, locations, typedefs, noCache, h1, justToc,
     output = '-', wiki,
   } = opts
 
   const stream = getStream(source, reverse, true)
   const doc = new Documentary({
-    locations, types, noCache, objectMode: true, wiki, output, source,
+    locations, typedefs, noCache, objectMode: true, wiki, output, source,
     cacheLocation: process.env.DOCUMENTARY_CACHE_LOCATION,
   })
   stream.pipe(doc)

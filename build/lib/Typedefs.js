@@ -1,6 +1,6 @@
 const { Replaceable, replace } = require('../../stdlib');
 const { collect } = require('../../stdlib');
-const { relative, sep, join } = require('path');
+const { relative, sep, join, resolve } = require('path');
 const { typedefMdRe } = require('./rules/typedef-md');
 const { read } = require('./');
 const { parseFile } = require('typal');
@@ -9,46 +9,6 @@ const { methodTitleRe } = require('./rules/method-title');
 const { macroRule, useMacroRule } = require('./rules/macros');
 const { competent } = require('../../stdlib');
 const { Transform } = require('stream');
-
-const nodeAPI = {
-  'http.IncomingMessage': {
-    link: 'https://nodejs.org/api/http.html#http_class_http_incomingmessage',
-    desc: 'A readable stream that receives data from the client in chunks. The first argument of the http.Server.on("request") event.',
-  },
-  'http.Server': {
-    link: 'https://nodejs.org/api/http.html#http_class_http_server',
-    desc: 'An HTTP server that extends net.Server to handle network requests.',
-  },
-  'http.ServerResponse': {
-    // link: 'https://nodejs.org/api/http.html#http_response_socket',
-    link: 'https://nodejs.org/api/http.html#http_class_http_serverresponse',
-    desc: 'A writable stream that communicates data to the client. The second argument of the http.Server.on("request") event.',
-  },
-  'http.OutgoingHttpHeaders': {
-    link: 'https://nodejs.org/api/http.html',
-    desc: 'The headers hash map for making requests, including such properties as Content-Encoding, Content-Type, etc.',
-  },
-  'http.IncomingHttpHeaders': {
-    link: 'https://nodejs.org/api/http.html',
-    desc: 'The hash map of headers that are set by the server (e.g., when accessed via IncomingMessage.headers)',
-  },
-  'url.URL': {
-    link: 'https://nodejs.org/api/url.html#url_class_url',
-    desc: 'Browser-compatible URL class, implemented by following the `WHATWG` URL Standard.',
-  },
-  'net.Socket': {
-    link: 'https://nodejs.org/api/net.html#net_class_net_socket',
-    desc: 'A two-way communication channel between clients and servers.',
-  },
-  'stream.Stream': {
-    link: 'https://nodejs.org/api/stream.html#stream',
-    desc: 'Handles streaming data in Node.js.',
-  },
-  'events.EventEmitter': {
-    link: 'https://nodejs.org/api/events.html#events_class_eventemitter',
-    desc: 'Emits named events that cause listeners to be called.',
-  },
-}
 
 /**
  * A Typedefs class will detect and store in a map all type definitions embedded into the documentation.
@@ -105,6 +65,11 @@ class Typedefs extends Replaceable {
     ], { objectMode: true })
     /** @type {!Array<import('typal/src').Type>} */
     this.types = []
+    /** @type {!Array<{fullName: string, link: string, description:string }>} */
+    this.included = []
+    /**
+     * The locations of read types.
+     */
     this.locations = {}
     this.on('types', ({ location, types, typeName, file, link = '' }) => {
       link = link.replace(/^-/, '')
@@ -192,7 +157,7 @@ class Typedefs extends Replaceable {
 /**
  * Returns a complete instance of typedefs, which has types and locations properties.
  * @param {Stream} stream
- * @param {string} [namespace]
+ * @param {string} [namespace] The root namespace.
  * @param {Array<string>} [typesLocations]
  * @param {Object} [options]
  * @param {boolean} [options.wiki] To know if to update refs from PageA/index.md to PageA.
@@ -222,22 +187,44 @@ const getTypedefs = async (stream, namespace, typesLocations = [], options = {})
       const r = `%TYPEDEF ${loc}%-${link}`
       return r
     },
+    'include-typedefs'({ children }) {
+      let [loc] = children
+      loc = loc.trim() || 'typedefs.json'
+      const data = require(resolve(loc))
+      Object.entries(data).forEach(([k, { description, link }]) => {
+        const n = `${namespace}.`
+        if (namespace && k.startsWith(n)) k = k.replace(n, '')
+        const t = {
+          fullName: k,
+          link,
+          description,
+        }
+        this.included.push(t)
+      })
+    },
   })
 
   // const r = new Replaceable(c)
-  stream.pipe(new Transform({
+  const t = new Transform({
     async transform({ data, file }, enc, next) {
       if (!data && !file)
         return next(new Error('No data or file, make sure to pipe in stream in Object mode.'))
       if (data == 'separator' || !data.trim()) return next()
       if (!/\.(md|html)$/.test(file)) return next()
 
-      const d = await replace(new Replaceable(c), data)
+      // Competent components
+      const r = new Replaceable(c)
+      r.included = typedefs.included
+      const d = await replace(r, data)
       this.push({ data: d, file })
       next()
     },
     objectMode: true,
-  })).pipe(typedefs)
+  })
+  t.write({ data: `<include-typedefs>
+    ${resolve(__dirname, '../../typedefs.json')}
+  </include-typedefs>`, file: 'fake.md' })
+  stream.pipe(t).pipe(typedefs)
 
   await collect(typedefs)
 
@@ -251,14 +238,6 @@ const getTypedefs = async (stream, namespace, typesLocations = [], options = {})
         return !t2.import && t2.fullName == type.fullName
       })
       if (realType) type.description = realType.description
-    }
-
-    if (type.import) {
-      const api = nodeAPI[type.fullName]
-      if (api) {
-        if (!type.link) type.link = api.link
-        if (!type.description) type.description = api.desc
-      }
     }
   })
   // const { types, locations } = typedefs

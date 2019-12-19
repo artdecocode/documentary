@@ -1,5 +1,10 @@
 ## 19 December 2019
 
+### [1.35.0](https://github.com/artdecocode/documentary/compare/v1.34.11...v1.35.0)
+
+- [feature] Implement `<include-typedefs>` component to include annotations and `-a` flag to generate them from Wikis.
+- [feature] Add `<type-link>` component to link to a type on another page.
+
 ### [1.34.11](https://github.com/artdecocode/documentary/compare/v1.34.10...v1.34.11)
 
 - [feature] Type linking across pages.
