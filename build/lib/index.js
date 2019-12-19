@@ -6,6 +6,9 @@ const tableRule = require('./rules/table');
 const titleRule = require('./rules/method-title');
 const { PassThrough } = require('stream');
 
+/**
+ * @param {string} title
+ */
 const getLink = (title, prefix = '') => {
   const codes = {}
   const l = title

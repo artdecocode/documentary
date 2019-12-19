@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const { _source, _output, _toc, _watch, _push, _version, _extract, _h1,
   _reverse, _generate, _noCache, _namespace, _help, argsConfig, _wiki,
-  _types, _focus, _debug } = require('./get-args');
+  _types, _focus, _debug, _annotate } = require('./get-args');
 
 if (_debug) {
   process.env.NODE_DEBUG = [process.env.NODE_DEBUG, 'doc']
@@ -63,7 +63,7 @@ if (_source) {
   const docOptions = {
     source: _source, output: _output, justToc: _toc, h1: _h1,
     reverse: _reverse, noCache: _noCache, rootNamespace: _namespace,
-    wiki: _wiki, types: _types, focus: _focus,
+    wiki: _wiki, types: _types, focus: _focus, annotate: _annotate,
   }
   let files
   try {

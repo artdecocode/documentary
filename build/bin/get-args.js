@@ -60,6 +60,11 @@ const argsConfig = {
     boolean: true,
     short: 'd',
   },
+  'annotate': {
+    description: 'Place resolved URLs to all documented types into the\n`typedefs.json` file and reference it in `package.json`.',
+    boolean: true,
+    short: 'a',
+  },
   'generate': {
     description: '[Deprecated] Places typedefs definitions into JavaScript\nfiles from types.xml. Use `typal` instead.',
     boolean: true,
@@ -157,6 +162,12 @@ const _push = /** @type {string} */ (args['push'])
 const _debug = /** @type {boolean} */ (args['debug'])
 
 /**
+ * Place resolved URLs to all documented types into the
+    `typedefs.json` file and reference it in `package.json`.
+ */
+const _annotate = /** @type {boolean} */ (args['annotate'])
+
+/**
  * [Deprecated] Places typedefs definitions into JavaScript
     files from types.xml. Use `typal` instead.
  */
@@ -197,6 +208,7 @@ module.exports._noCache = _noCache
 module.exports._namespace = _namespace
 module.exports._push = _push
 module.exports._debug = _debug
+module.exports._annotate = _annotate
 module.exports._generate = _generate
 module.exports._extract = _extract
 module.exports._version = _version

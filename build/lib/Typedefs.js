@@ -54,7 +54,7 @@ const nodeAPI = {
  * A Typedefs class will detect and store in a map all type definitions embedded into the documentation.
  */
 class Typedefs extends Replaceable {
-  constructor(rootNamespace, { wiki, source } = {}) {
+  constructor(rootNamespace, { wiki, source, recordOriginalNs } = {}) {
     super([
       {
         re: methodTitleRe,
@@ -82,6 +82,12 @@ class Typedefs extends Replaceable {
           try {
             const xml = await read(location)
             const { types, imports } = parseFile(xml, rootNamespace, location)
+            if (recordOriginalNs) {
+              const { types: types2 } = parseFile(xml)
+              types2.forEach(({ ns }, i) => {
+                types[i].originalNs = ns
+              })
+            }
 
             this.emit('types', {
               location,
@@ -255,7 +261,6 @@ const getTypedefs = async (stream, namespace, typesLocations = [], options = {})
       }
     }
   })
-
   // const { types, locations } = typedefs
   return typedefs
 }

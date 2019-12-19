@@ -2,12 +2,14 @@ import whichStream from 'which-stream'
 import Catchment from 'catchment'
 import write from '@wrote/write'
 import readDirStructure from '@wrote/read-dir-structure'
-import { join } from 'path'
+import { join, dirname, relative, parse, sep } from 'path'
+import { parse as parseUrl } from 'url'
 import Stream from 'stream'
 import { getToc } from '../lib/Toc'
 import Documentary from '../lib/Documentary'
-import { getStream } from '../lib'
+import { getStream, getLink } from '../lib'
 import { getTypedefs } from '../lib/Typedefs'
+import { writeFileSync } from 'fs'
 
 /**
  * Run the documentary and save the results.
@@ -24,6 +26,7 @@ import { getTypedefs } from '../lib/Typedefs'
 export default async function run(options) {
   const {
     source, output, reverse, justToc, h1, noCache, rootNamespace, wiki,
+    annotate,
   } = options
 
   let { types: typesLocations, focus } = options
@@ -37,8 +40,63 @@ export default async function run(options) {
   // this is because of highwatermark in the pass-through
 
   const { types, locations } = await getTypedefs(stream, rootNamespace, typesLocations, {
-    wiki, source,
+    wiki, source, recordOriginalNs: annotate,
   })
+
+  if (annotate) {
+    const packageJson = require(join(process.cwd(), 'package.json'))
+    const { repository } = packageJson
+    let github
+    if (typeof repository == 'string') {
+      const [portal, name] = repository.split(':')
+      if (name && portal != 'github') {
+        throw new Error('Only GitHub is supported for repositories in package.json.')
+      } else if (name) github = name
+      else github = repository
+    } else {
+      const { url } = repository
+      const { host, pathname } = parseUrl(url)
+      if (host != 'github.com') throw new Error('Only GitHub is supported for repositories in package.json.')
+      github = pathname.replace(/\.git$/, '').replace(/^\//, '')
+    }
+    github = `https://github.com/${github}`
+    let t = null
+    if (wiki) {
+      t = types.filter(({ import: i }) => !i).reduce((acc, type) => {
+        const { name, appearsIn } = type
+        const [ai] = appearsIn.map((file) => {
+          let rel = relative(dirname(file), file)
+          const [bn] = rel.split(sep)
+          const { name: n } = parse(bn)
+          return n
+        })
+        const link = getLink(name, 'type')
+        const r = `${ai}#${link}`
+        const rr = `${github}/wiki/${r}`
+        acc[`${type.originalNs}${type.name}`] = {
+          link: rr,
+          description: type.description,
+        }
+        return acc
+      }, {})
+    }
+    if (t) {
+      let current = {}
+      try {
+        current = require('typedefs.json')
+      } catch (err) { /* */}
+      writeFileSync('typedefs.json', JSON.stringify({ ...current, ...t }, null, 2))
+      const newPackageJson = Object.entries(packageJson).reduce((acc, [k, v]) => {
+        acc[k] = v
+        if (k == 'repository') {
+          acc['typedefs'] = 'typedefs.json'
+        }
+        return acc
+      }, {})
+      writeFileSync('package.json', JSON.stringify(newPackageJson, null, 2) + '\n')
+      console.log('Updated package.json to point to typdefs.json')
+    }
+  }
 
   let assets = []
   if (wiki) {

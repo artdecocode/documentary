@@ -45,6 +45,10 @@
     Print verbose debug information.
     Same as setting `NODE_DEBUG=doc`.
   </arg>
+  <arg boolean name="annotate" short="a">
+    Place resolved URLs to all documented types into the
+    `typedefs.json` file and reference it in `package.json`.
+  </arg>
   <arg boolean name="generate" short="g">
     [Deprecated] Places typedefs definitions into JavaScript
     files from types.xml. Use `typal` instead.

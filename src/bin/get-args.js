@@ -60,6 +60,11 @@ export const argsConfig = {
     boolean: true,
     short: 'd',
   },
+  'annotate': {
+    description: 'Place resolved URLs to all documented types into the\n`typedefs.json` file and reference it in `package.json`.',
+    boolean: true,
+    short: 'a',
+  },
   'generate': {
     description: '[Deprecated] Places typedefs definitions into JavaScript\nfiles from types.xml. Use `typal` instead.',
     boolean: true,
@@ -155,6 +160,12 @@ export const _push = /** @type {string} */ (args['push'])
     Same as setting `NODE_DEBUG=doc`.
  */
 export const _debug = /** @type {boolean} */ (args['debug'])
+
+/**
+ * Place resolved URLs to all documented types into the
+    `typedefs.json` file and reference it in `package.json`.
+ */
+export const _annotate = /** @type {boolean} */ (args['annotate'])
 
 /**
  * [Deprecated] Places typedefs definitions into JavaScript

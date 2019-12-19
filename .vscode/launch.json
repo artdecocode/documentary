@@ -83,6 +83,19 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch For cookies-wiki",
+      "program": "${workspaceFolder}/src/bin/index.js",
+      "env": { "NODE_DEBUG": "doc" },
+      "args": ["wiki", "-W", "wiki.git", "-a", "-n", "_goa"],
+      "cwd": "${workspaceFolder}/../../idiocc/cookies",
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch For router",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },

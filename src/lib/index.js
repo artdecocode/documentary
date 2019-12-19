@@ -6,6 +6,9 @@ import tableRule from './rules/table'
 import titleRule from './rules/method-title'
 import { PassThrough } from 'stream'
 
+/**
+ * @param {string} title
+ */
 export const getLink = (title, prefix = '') => {
   const codes = {}
   const l = title
