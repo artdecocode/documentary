@@ -43,7 +43,7 @@ class Typedefs extends Replaceable {
             const xml = await read(location)
             const { types, imports } = parseFile(xml, rootNamespace, location)
             if (recordOriginalNs) {
-              const { types: types2 } = parseFile(xml)
+              const { types: types2 } = parseFile(xml, null, location)
               types2.forEach(({ ns }, i) => {
                 types[i].originalNs = ns
               })
@@ -126,7 +126,23 @@ class Typedefs extends Replaceable {
     this.cache = {}
     this.file = null
   }
-  log() {
+  updateImports() {
+    if (this._importsUpdated) return
+    const imports = this.types.filter(({ import: i }) => i)
+    const included = this.included.filter(({ description, fullName: k, link, icon, iconAlt }) => {
+      const ii = imports.filter(({ fullName }) => fullName == k)
+      ii.forEach((i) => {
+        if (!i.link) i.link = link
+        if (!i.description) i.description = description
+        if (!i.icon) i.icon = icon
+        if (!i.iconAlt) i.iconAlt = iconAlt
+      })
+      return !ii.length
+    })
+    this.included = included
+    this._importsUpdated = true
+  }
+  get log() {
     if (/doc/.test(process.env.NODE_DEBUG)) return console.error
     return () => {}
   }

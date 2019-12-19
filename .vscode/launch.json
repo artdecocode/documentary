@@ -109,11 +109,11 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch For goa-wiki",
+      "name": "Launch For Goa Wiki",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },
-      "args": ["../goa/wiki/Request.md", "-o", "Request.md"],
-      "cwd": "${workspaceFolder}/../../idiocc/goa.wiki",
+      "args": ["doc-wiki", "-W", "wiki", "-n", "_goa"],
+      "cwd": "${workspaceFolder}/../../idiocc/goa",
       "console": "integratedTerminal",
       "skipFiles": [
         "<node_internals>/**/*.js"
@@ -138,8 +138,8 @@
       "name": "Launch For accepts-wiki",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },
-      "args": ["../accepts/wiki/Accepts.md", "-o", "Accepts.md"],
-      "cwd": "${workspaceFolder}/../../idiocc/accepts.wiki",
+      "args": ["../accepts/wiki", "-W", "wiki.git", "-n", "_goa", "-a"],
+      "cwd": "${workspaceFolder}/../../idiocc/accepts",
       "console": "integratedTerminal",
       "sourceMaps": false,
       "skipFiles": [

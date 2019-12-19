@@ -1,6 +1,6 @@
 import { getLinks } from 'typal'
 import clone from '@wrote/clone'
-import { basename, dirname, join: joinPath } from 'path'
+import { basename, dirname, join as joinPath } from 'path'
 
 /**
  * @param {import('typal/types').Method} method

@@ -254,15 +254,7 @@ class Documentary extends Replaceable {
     this._typedefs = typedefs
     if (this._typedefs) {
       // update imports
-      const imports = this._typedefs.types.filter(({ import: i }) => i)
-      this._typedefs.included.forEach(({ description, fullName: k, link, icon, iconAlt }) => {
-        const i = imports.find(({ fullName }) => fullName == k)
-        if (!i) return
-        if (!i.link) i.link = link
-        if (!i.description) i.description = description
-        if (!i.icon) i.icon = icon
-        if (!i.iconAlt) i.iconAlt = iconAlt
-      })
+      this._typedefs.updateImports()
     }
   }
   /**
