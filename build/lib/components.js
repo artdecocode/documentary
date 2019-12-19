@@ -19,9 +19,24 @@ function loadComponents(components, getDocumentary) {
      */
     getProps(htmlProps, meta) {
       meta.setPretty(true, 100)
-      const documentary = getDocumentary()
-      documentary.renderAgain = meta.renderAgain
-      documentary.setPretty = meta.setPretty
+      const d = getDocumentary()
+      const documentary = new Proxy(d, {
+        get(target, p) {
+          if (p == 'renderAgain') {
+            return meta.renderAgain
+          }
+          if (p == 'setPretty') {
+            return meta.setPretty
+          }
+          if (p == 'removeLine') {
+            return () => {
+              meta.removeLine()
+              return null
+            }
+          }
+          return target[p]
+        },
+      })
       return {
         ...htmlProps,
         documentary,

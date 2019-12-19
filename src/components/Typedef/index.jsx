@@ -5,6 +5,35 @@ import { codeRe } from '../../lib/rules'
 import Method from '../method'
 import { makeMethodTable } from './lib'
 
+// const extractPages = (props) => {
+//   return Object.entries(props).reduce((acc, [key, val]) => {
+//     if (key.startsWith('page-')) {
+//       key = key.replace('page-', '')
+//       acc[key] = val
+//     }
+//     return acc
+//   }, {})
+// }
+
+export const makeLinking = (wiki, file) => {
+  const linking = ({ link, type: refType }) => {
+    // when splitting wiki over multiple pages, allows
+    // to create links to the exact page.
+    const l = `#${link}`
+    // <type-link> component will set `typeLink`
+    if (refType.typeLink) return `${refType.typeLink}${l}`
+
+    // semi-hack
+    const { appearsIn = [''] } = refType
+    if (appearsIn.includes(file)) return l
+    const ai = appearsIn[0] //
+    let rel = relative(dirname(file), ai)
+    if (wiki) rel = rel.replace(/\.(md|html)$/, '')
+    return `${rel}${l}`
+  }
+  return linking
+}
+
 /**
  * @param {Object} opts
  * @param {import('../../lib/Documentary').default} opts.documentary
@@ -32,17 +61,8 @@ export default function Typedef({ documentary, children, name, narrow,
   const typesToMd = t.filter(({ import: i }) => !i)
   let flattened = {}
 
-  const linking = ({ link, type: refType }) => {
-    // when splitting wiki over multiple pages, allows
-    // to create links to the exact page.
-    const l = `#${link}`
-    // semi-hack
-    if (refType.appearsIn.includes(file)) return l
-    const ai = refType.appearsIn[0]
-    let rel = relative(dirname(file), ai)
-    if (wiki) rel = rel.replace(/\.(md|html)$/, '')
-    return `${rel}${l}`
-  }
+  const linking = makeLinking(wiki, file)
+
   const preprocessDesc = (d) => {
     if (!d) return d
     // cut ``` from properties, inserted by doc at the end

@@ -73,7 +73,7 @@ export default class Typedefs extends Replaceable {
       useMacroRule,
       {
         re: typedefMdRe,
-        async replacement(match, location, typeName) {
+        async replacement(match, location, typeName, link) {
           const file = this.file // read early before async
 
           // the cache doesn't work so this must be synced
@@ -88,6 +88,7 @@ export default class Typedefs extends Replaceable {
               types: [...imports, ...types],
               typeName,
               file,
+              link,
             })
           } catch (e) {
             this.log('(%s) Could not process typedef-md: %s', location, e.message)
@@ -99,7 +100,8 @@ export default class Typedefs extends Replaceable {
     /** @type {!Array<import('typal/src').Type>} */
     this.types = []
     this.locations = {}
-    this.on('types', ({ location, types, typeName, file }) => {
+    this.on('types', ({ location, types, typeName, file, link = '' }) => {
+      link = link.replace(/^-/, '')
       if (wiki) {
         const rf = relative(source, file)
         const [page] = rf.split(sep, 1)
@@ -122,7 +124,8 @@ export default class Typedefs extends Replaceable {
           }
           return
         }
-        b.appearsIn = [file]
+        if (!link) b.appearsIn = [file]
+        else b.typeLink = link // set arbitrary link to use for linking in typedef/index.jsx
         if (imp) {
           this.log('Adding import %s', fullName)
           this.types.push(b)
@@ -135,11 +138,14 @@ export default class Typedefs extends Replaceable {
         } else if (typeName) {
           return
         }
-        this.log('Adding type %s at %s', fullName, this.file)
+        if (link)
+          this.log('Adding type link %s to %s', fullName, link)
+        else this.log('Adding type %s at %s', fullName, this.file)
         this.types.push(b)
         return b
       }).filter(Boolean)
       // this.types.push(...types)
+      if (link) return
       const oldLocationTypes = this.locations[location] || []
       this.locations = {
         ...this.locations,
@@ -202,6 +208,12 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
       let [loc] = children
       loc = loc.trim()
       const r = `%TYPEDEF ${loc}%`
+      return r
+    },
+    'type-link'({ link, children }) {
+      let [loc] = children
+      loc = loc.trim()
+      const r = `%TYPEDEF ${loc}%-${link}`
       return r
     },
   })
