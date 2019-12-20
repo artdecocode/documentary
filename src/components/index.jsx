@@ -41,7 +41,6 @@ export function method({ name, level, documentary, children, noArgTypesInToc, 'j
   if (!prop) throw new Error(`Property ${m} of type ${fn} not found in ${children[0]}.`)
   const res = this.Method({
     method: prop,
-    documentary: this,
     level,
     noArgTypesInToc,
   })
@@ -50,16 +49,13 @@ export function method({ name, level, documentary, children, noArgTypesInToc, 'j
     _args: { wiki, source }, currentFile, error,
   } = documentary
   const file = wiki ? source : currentFile
-  const linking = makeLinking(wiki, file)
+  const linking = makeLinking(wiki, file, documentary)
   if (justHeading) return res
   let table = ''
   try {
     table = makeMethodTable(prop, documentary.allTypesWithIncluded, {
       link: linking,
-      flatten(n) {
-        // debugger
-        // flattened[n] = true
-      },
+      flatten: true,
     }, { documentary })
   } catch (err) {
     error(err)
@@ -80,10 +76,10 @@ export function link({ documentary, type, children }) {
   if (!foundType) throw new Error(`Type ${type} not found.`)
 
   const {
-    _args: { wiki, source }, currentFile, error,
+    _args: { wiki, source }, currentFile,
   } = documentary
   const file = wiki ? source : currentFile
-  const linking = makeLinking(wiki, file, error)
+  const linking = makeLinking(wiki, file, documentary)
 
   if (foundType.link) {
     return (<a href={foundType.link} title={foundType.description}>{children}</a>)

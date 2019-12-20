@@ -112,7 +112,7 @@
       "name": "Launch For Goa Wiki",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },
-      "args": ["doc-wiki", "-W", "wiki", "-n", "_goa"],
+      "args": ["doc-wiki", "-W", "wiki", "-n", "_goa", "-a"],
       "cwd": "${workspaceFolder}/../../idiocc/goa",
       "console": "integratedTerminal",
       "skipFiles": [

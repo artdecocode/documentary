@@ -10,6 +10,18 @@ import { macroRule, useMacroRule } from './rules/macros'
 import competent from 'competent'
 import { Transform } from 'stream'
 
+const extract = async (location, { recordOriginalNs, rootNamespace }) => {
+  const xml = await read(location)
+  const { types, imports } = parseFile(xml, rootNamespace, location)
+  if (recordOriginalNs) {
+    const { types: types2 } = parseFile(xml, null, location)
+    types2.forEach(({ ns }, i) => {
+      types[i].originalNs = ns
+    })
+  }
+  return { types, imports }
+}
+
 /**
  * A Typedefs class will detect and store in a map all type definitions embedded into the documentation.
  */
@@ -36,18 +48,11 @@ export default class Typedefs extends Replaceable {
         async replacement(match, location, typeName, link) {
           const file = this.file // read early before async
 
-          // the cache doesn't work so this must be synced
           if (this.hasCache(location, typeName)) return
           this.addCache(location, typeName)
+
           try {
-            const xml = await read(location)
-            const { types, imports } = parseFile(xml, rootNamespace, location)
-            if (recordOriginalNs) {
-              const { types: types2 } = parseFile(xml, null, location)
-              types2.forEach(({ ns }, i) => {
-                types[i].originalNs = ns
-              })
-            }
+            const { types, imports } = await extract(location, { recordOriginalNs, rootNamespace })
 
             this.emit('types', {
               location,
@@ -183,27 +188,35 @@ export default class Typedefs extends Replaceable {
  */
 export const getTypedefs = async (stream, namespace, typesLocations = [], options = {}) => {
   const typedefs = new Typedefs(namespace, options)
-  typesLocations.forEach((location) => {
-    typedefs.write(`%TYPEDEF ${location}%\n`)
-  })
+  const proc = async (children, file, { link, typeName } = {}) => {
+    let [location] = children
+    location = location.trim()
+    if (typedefs.hasCache(location, typeName)) return
+    typedefs.addCache(location, typeName)
+    const { types, imports } = await extract(location, { ...options, rootNamespace: namespace })
+    typedefs.emit('types', {
+      location,
+      types: [...imports, ...types],
+      file,
+      typeName,
+      link,
+    })
+  }
+  await Promise.all(typesLocations.map(async (location) => {
+    await proc([location], 'mock.md')
+  }))
   const c = competent({
-    'typedef'({ name, children }) {
-      let [loc] = children
-      loc = loc.trim()
-      const r = `%TYPEDEF ${loc}${name ? ` ${name}` : ''}%`
-      return r
+    async'typedef'({ name, children }) {
+      await proc(children, this.file, { typeName: name })
+      return null
     },
-    'method'({ children }) {
-      let [loc] = children
-      loc = loc.trim()
-      const r = `%TYPEDEF ${loc}%`
-      return r
+    async'method'({ children }) {
+      await proc(children, this.file)
+      return null
     },
-    'type-link'({ link, children }) {
-      let [loc] = children
-      loc = loc.trim()
-      const r = `%TYPEDEF ${loc}%-${link}`
-      return r
+    async'type-link'({ link, children }) {
+      await proc(children, this.file, { link })
+      return null
     },
     'include-typedefs'({ children, icon, 'icon-alt': iconAlt, 'icon-odd': iconOdd, 'icon-even': iconEven }) {
       let [loc] = children
@@ -232,6 +245,7 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
 
       // Competent components
       const r = new Replaceable(c)
+      r.file = file
       r.included = typedefs.included
       const d = await replace(r, data)
       this.push({ data: d, file })
@@ -239,13 +253,7 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
     },
     objectMode: true,
   })
-  const nodeTypedefs = resolve(__dirname, '../../typedefs.json')
-  const nodeIcon = resolve(__dirname, '../icons/node.png')
-  const nodeIconOdd = resolve(__dirname, '../icons/node-odd.png')
-  const nodeIconEven = resolve(__dirname, '../icons/node-even.png')
-  t.write({ data: `<include-typedefs icon-odd="${nodeIconOdd}" icon-even="${nodeIconEven}" icon="${nodeIcon}" icon-alt="Node.JS Docs">
-    ${nodeTypedefs}
-  </include-typedefs>`, file: 'fake.md' })
+  includeNodeTypedefs(t)
   stream.pipe(t).pipe(typedefs)
 
   await collect(typedefs)
@@ -264,4 +272,16 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
   })
   // const { types, locations } = typedefs
   return typedefs
+}
+
+const includeNodeTypedefs = (t) => {
+  const icons = resolve(__dirname, '../icons')
+  const nodeTypedefs = resolve(__dirname, '../../typedefs.json')
+  const nodeIcon = join(icons, 'node.png')
+  const nodeIconOdd = join(icons, 'node-odd.png')
+  const nodeIconEven = join(icons, 'node-even.png')
+
+  t.write({ data: `<include-typedefs icon-odd="${nodeIconOdd}" icon-even="${nodeIconEven}" icon="${nodeIcon}" icon-alt="Node.JS Docs">
+    ${nodeTypedefs}
+  </include-typedefs>`, file: 'nodejs.md' })
 }

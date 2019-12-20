@@ -20,8 +20,13 @@ function loadComponents(components, getDocumentary) {
     getProps(htmlProps, meta, name) {
       meta.setPretty(true, 100)
       const d = getDocumentary()
+      const { currentFile } = d
       const documentary = new Proxy(d, {
         get(target, p) {
+          // guard against async shift
+          if (p == 'currentFile') {
+            return currentFile
+          }
           if (p == 'renderAgain') {
             return meta.renderAgain
           }

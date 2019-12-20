@@ -2,69 +2,13 @@ import whichStream from 'which-stream'
 import Catchment from 'catchment'
 import write from '@wrote/write'
 import readDirStructure from '@wrote/read-dir-structure'
-import { join, dirname, relative, parse, sep } from 'path'
-import { parse as parseUrl } from 'url'
+import { join } from 'path'
 import Stream from 'stream'
 import { getToc } from '../lib/Toc'
 import Documentary from '../lib/Documentary'
 import { getStream, getLink } from '../lib'
 import { getTypedefs } from '../lib/Typedefs'
-import { writeFileSync } from 'fs'
-
-const Annotate = (wiki, types) => {
-  const packageJson = require(join(process.cwd(), 'package.json'))
-  const { repository } = packageJson
-  let github
-  if (typeof repository == 'string') {
-    const [portal, name] = repository.split(':')
-    if (name && portal != 'github') {
-      throw new Error('Only GitHub is supported for repositories in package.json.')
-    } else if (name) github = name
-    else github = repository
-  } else {
-    const { url } = repository
-    const { host, pathname } = parseUrl(url)
-    if (host != 'github.com') throw new Error('Only GitHub is supported for repositories in package.json.')
-    github = pathname.replace(/\.git$/, '').replace(/^\//, '')
-  }
-  github = `https://github.com/${github}`
-  let t = null
-  if (wiki) {
-    t = types.filter(({ import: i }) => !i).reduce((acc, type) => {
-      const { name, appearsIn } = type
-      const [ai] = appearsIn.map((file) => {
-        let rel = relative(dirname(file), file)
-        const [bn] = rel.split(sep)
-        const { name: n } = parse(bn)
-        return n
-      })
-      const link = getLink(name, 'type')
-      const r = `${ai}#${link}`
-      const rr = `${github}/wiki/${r}`
-      acc[`${type.originalNs}${type.name}`] = {
-        link: rr,
-        description: type.description,
-      }
-      return acc
-    }, {})
-  }
-  if (t) {
-    let current = {}
-    try {
-      current = require('typedefs.json')
-    } catch (err) { /* */}
-    writeFileSync('typedefs.json', JSON.stringify({ ...current, ...t }, null, 2))
-    const newPackageJson = Object.entries(packageJson).reduce((acc, [k, v]) => {
-      acc[k] = v
-      if (k == 'repository') {
-        acc['typedefs'] = 'typedefs.json'
-      }
-      return acc
-    }, {})
-    writeFileSync('package.json', JSON.stringify(newPackageJson, null, 2) + '\n')
-    console.log('Updated package.json to point to typdefs.json')
-  }
-}
+import Annotate from './annotate'
 
 /**
  * Run the documentary and save the results.
@@ -98,11 +42,10 @@ export default async function run(options) {
     wiki, source, recordOriginalNs: annotate,
   })
 
-  if (annotate) {
-    Annotate(wiki, typedefs.types)
-  }
+  if (annotate) Annotate(wiki, typedefs.types)
 
   let assets = []
+  let _annotatedTypes = []
   if (wiki) {
     const { type, content } = await readDirStructure(source)
     if (type != 'Directory') throw new Error('Please point to the wiki directory.')
@@ -127,15 +70,28 @@ export default async function run(options) {
         source: so,
       })
       assets = [...assets, ...doc.assets]
+      _annotatedTypes = [..._annotatedTypes, ...doc._annotatedTypes]
       return doc
     }))
     console.log('Saved %s wiki page%s to %s', docs.length, docs.length > 1 ? 's' : '', wiki)
   } else {
     const doc = await runPage({ source, reverse, typedefs, noCache, h1, justToc, output })
     assets = doc.assets
+    _annotatedTypes = doc._annotatedTypes
     if (output) {
       console.log('Saved documentation to %s', output)
     }
+  }
+
+  if (annotate) {
+    const at = _annotatedTypes.map(({ type, sig, currentFile }) => {
+      sig = sig.replace(/^#+ +/, '')
+      const { name, description, originalNs } = type
+      return { name, description, originalNs, sig, appearsIn: [currentFile] }
+    })
+    Annotate(wiki, at, (type) => {
+      return getLink(type.sig)
+    })
   }
 
   return [...Object.keys(typedefs.locations), ...assets]
@@ -165,6 +121,7 @@ const runPage = async (opts) => {
     writable: c,
   })
   const toc = await tocPromise
+
   if (justToc) { // can also write toc to the output
     console.log(toc)
     return

@@ -207,7 +207,7 @@ export default class Documentary extends Replaceable {
       insertMethodTitle,
     ], { objectMode })
 
-    this.Method = method // the method component can be overridden by users.
+    this._method = method // the method component can be overridden by users.
 
     this._types = {}
 
@@ -257,6 +257,13 @@ export default class Documentary extends Replaceable {
       this._typedefs.updateImports()
     }
     this._addedFiles = {}
+    this._annotatedTypes = []
+  }
+  Method(opts = {}) {
+    return this._method({
+      documentary: this,
+      ...opts,
+    })
   }
   /**
    * The source locations of types, e.g., types/index.xml.
@@ -333,6 +340,15 @@ export default class Documentary extends Replaceable {
     if (value.level) value.hash = '#'.repeat(value.level)
     arr.push(value)
     return `%%DTOC_${name}_${arr.length - 1}%%`
+  }
+  /**
+   * Add the type for annotations. Only used in methods at the moment.
+   * @param {_typal.Type} type
+   * @param {string} sig How the heading will appear on the page.
+   */
+  annotateType(type, sig) {
+    const { currentFile } = this
+    this._annotatedTypes.push({ type, sig, currentFile })
   }
   /**
    * Used by the Toc stream later to create lines for link and method titles.

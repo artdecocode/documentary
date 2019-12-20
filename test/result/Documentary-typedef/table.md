@@ -486,7 +486,7 @@ __<a name="type-test">`Test`</a>__
  </tr>
  <tr>
   <td rowSpan="3" align="center"><ins>listen</ins></td>
-  <td><em>(...args: *[]) => <a href="https://nodejs.org/api/http.html#http_class_http_server" title="An HTTP server that extends net.Server to handle network requests.">!http.Server</a></em></td>
+  <td><em>(...args: *[]) => <a href="https://nodejs.org/api/http.html#http_class_http_server" title="An HTTP server that extends net.Server to handle network requests."><img src=".documentary/type-icons/node-even.png" alt="Node.JS Docs">!http.Server</a></em></td>
  </tr>
  <tr></tr>
  <tr>

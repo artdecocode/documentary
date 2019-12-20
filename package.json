@@ -119,6 +119,6 @@
   "dependencies": {
     "alamode": "^3.3.0",
     "preact": "8.5.3",
-    "typal": "^1.24.16"
+    "typal": "^1.24.17"
   }
 }

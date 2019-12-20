@@ -85,7 +85,13 @@ export default class Context {
   }
   mockDoc(rules) {
     const rs = new Replaceable(rules)
-    rs.Method = Method
+    rs.Method = (opts = {}) => {
+      return Method({
+        ...opts,
+        documentary: rs,
+      })
+    }
+    rs.annotateType = () => {}
     rs.addDtoc = () => ''
     rs.log = (...args) => {
       // console.log(args)

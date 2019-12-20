@@ -2,8 +2,8 @@ import { SyncReplaceable } from 'restream'
 import { relative, dirname } from 'path'
 import md2html from '../Html'
 import { codeRe } from '../../lib/rules'
-import Method from '../method'
 import { makeMethodTable, makeIconsName } from './lib'
+import { getLink } from '../../lib'
 
 // const extractPages = (props) => {
 //   return Object.entries(props).reduce((acc, [key, val]) => {
@@ -15,29 +15,44 @@ import { makeMethodTable, makeIconsName } from './lib'
 //   }, {})
 // }
 
-export const makeLinking = (wiki, file, error = () => {}) => {
-  const linking = ({ link, type: refType }) => {
-    // when splitting wiki over multiple pages, allows
-    // to create links to the exact page.
-    const l = `#${link}`
-    // <type-link> component will set `typeLink`
-    if (refType.typeLink) return `${refType.typeLink}${l}`
+/**
+ * @param {string} wiki
+ * @param {string} file
+ * @param {Documentary} documentary
+ */
+export const makeLinking = (wiki, file, documentary) => {
+  /** @type {import('typal/types').ToMarkdownOptions} */
+  const opts = {
+    link({ link, type: refType }) {
+      // when splitting wiki over multiple pages, allows
+      // to create links to the exact page.
+      if (refType.isMethod) {
+        const { getSig } = documentary._method
+        if (getSig) {
+          const sig = getSig(refType)
+          link = getLink(sig)
+        }
+      }
+      const l = `#${link}`
+      // <type-link> component will set `typeLink`
+      if (refType.typeLink) return `${refType.typeLink}${l}`
 
-    // semi-hack
-    const { appearsIn = [''] } = refType
-    if (appearsIn.includes(file)) return l
-    const ai = appearsIn[0] //
-    if (!ai) error(new Error('appearsIn is empty'))
-    let rel = relative(dirname(file), ai)
-    if (wiki) rel = rel.replace(/\.(md|html)$/, '')
-    return `${rel}${l}`
+      // semi-hack
+      const { appearsIn = [''] } = refType
+      if (appearsIn.includes(file)) return l
+      const ai = appearsIn[0] //
+      if (!ai) documentary.error(new Error('appearsIn is empty'))
+      let rel = relative(dirname(file), ai)
+      if (wiki) rel = rel.replace(/\.(md|html)$/, '')
+      return `${rel}${l}`
+    },
   }
-  return linking
+  return opts.link
 }
 
 /**
  * @param {Object} opts
- * @param {import('../../lib/Documentary').default} opts.documentary
+ * @param {Documentary} opts.documentary
  */
 export default function Typedef({ documentary, children, name, narrow,
   flatten, details, level, noArgTypesInToc = false, slimFunctions = false,
@@ -49,7 +64,7 @@ export default function Typedef({ documentary, children, name, narrow,
   } = documentary
   const file = wiki ? source : currentFile
 
-  documentary.setPretty(false)
+  documentary.pretty(false)
   let [location] = children
   location = location.trim()
   /** @type {!Array<!Type>} */
@@ -62,21 +77,19 @@ export default function Typedef({ documentary, children, name, narrow,
   const typesToMd = t.filter(({ import: i }) => !i)
   let flattened = {}
 
-  const linking = makeLinking(wiki, file)
-
-  const preprocessDesc = (d) => {
-    if (!d) return d
-    // cut ``` from properties, inserted by doc at the end
-    const r = SyncReplaceable(d, [cutCode])
-    return r
-  }
+  const linking = makeLinking(wiki, file, documentary)
 
   /**
    * @type {import('typal/types').LinkingOptions}
    */
   const opts = { details, narrow, flatten(n) {
     flattened[n] = true
-  }, preprocessDesc, link: linking, level,
+  }, preprocessDesc(d) {
+    if (!d) return d
+    // cut ``` from properties, inserted by doc at the end
+    const r = SyncReplaceable(d, [cutCode])
+    return r
+  }, link: linking, level,
   nameProcess: makeIconsName(allTypesWithIncluded, documentary) }
 
   const tt = typesToMd.map(type => {
@@ -85,7 +98,9 @@ export default function Typedef({ documentary, children, name, narrow,
       if (level) res.LINE = res.LINE.replace(/t-type/, `${'#'.repeat(level)}-type`)
       return res
     }
-    const LINE = Method({ documentary, level, method: type, noArgTypesInToc })
+    const LINE = documentary.Method({
+      level, method: type, noArgTypesInToc,
+    })
     const table = makeMethodTable(type, allTypesWithIncluded, opts, { documentary })
     return { LINE, table, examples: type.examples }
   })
@@ -100,10 +115,10 @@ export default function Typedef({ documentary, children, name, narrow,
     const { LINE, table: type, displayInDetails } = s
     const isObject = typeof type == 'object' // table can be empty string, e.g., ''
 
-    const ch = isObject ? <Narrow key={i} {...type}
+    const ch = isObject ? (<Narrow key={i} {...type}
       documentary={documentary} allTypes={allTypesWithIncluded} opts={opts}
-      slimFunctions={slimFunctions} wiki={wiki}
-    /> : type
+      slimFunctions={slimFunctions}
+    />) : type
     if (displayInDetails) {
       const line = md2html({ documentary, children: [LINE] })
 
@@ -282,4 +297,8 @@ const makeExamples = (examples) => {
 /**
  * @suppress {nonStandardJsDocs}
  * @typedef {import('typal/types').Property} Property
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('../../lib/Documentary').default} Documentary
  */
