@@ -27,7 +27,6 @@ const replacer = function (match, level, isAsync, name, returnType, jsonArgs) {
   try {
     const m = this.Method({
       method,
-      documentary: this,
       level: level.length,
     })
     return m

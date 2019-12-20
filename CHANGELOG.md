@@ -1,3 +1,10 @@
+## 20 December 2019
+
+### [1.35.3](https://github.com/artdecocode/documentary/compare/v1.35.2...v1.35.3)
+
+- [fix] Correct methods links and update their annotations.
+- [feature] Odd and even icons for tables.
+
 ## 19 December 2019
 
 ### [1.35.2](https://github.com/artdecocode/documentary/compare/v1.35.1...v1.35.2)

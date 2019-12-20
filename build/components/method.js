@@ -11,7 +11,34 @@ const I = '&nbsp;&nbsp;' // indent
  */
 function Method({ documentary, method, level = 2, noArgTypesInToc }) {
   const hash = '#'.repeat(level)
-  let sig = `${hash} <code>${method.async ? 'async ' : ''}<ins>${method.name}</ins>(`
+  let sig = getSig(method)
+  sig = `${hash} ${sig}`
+
+  const dtoc = documentary.addDtoc('MT', {
+    args: method.args.map(({ name, type, shortType, optional }) => {
+      const N = `${name}${optional ? '=' : ''}`
+      return [N, type, shortType]
+    }),
+    hash,
+    isAsync: method.async,
+    name: method.name,
+    returnType: method.return,
+    replacedTitle: sig,
+    noArgTypesInToc,
+  })
+  documentary.annotateType(method, sig)
+
+  return `${dtoc}${sig}`
+}
+
+/**
+ * @param {import('typal/types').Method} method
+ */
+const getSig = (method) => {
+  // cache
+  if (method.fullName && getSig[method.fullName]) return getSig[method.fullName]
+
+  let sig = `<code>${method.async ? 'async ' : ''}<ins>${method.name}</ins>(`
 
   const lines = method.args.map(({ name, type, optional }) => {
     const N = `${name}${optional ? '=' : ''}`
@@ -42,21 +69,9 @@ function Method({ documentary, method, level = 2, noArgTypesInToc }) {
   } else {
     sig += `): <i>${method.return || 'void'}</i></code>`
   }
-
-  const dtoc = documentary.addDtoc('MT', {
-    args: method.args.map(({ name, type, shortType, optional }) => {
-      const N = `${name}${optional ? '=' : ''}`
-      return [N, type, shortType]
-    }),
-    hash,
-    isAsync: method.async,
-    name: method.name,
-    returnType: method.return,
-    replacedTitle: sig,
-    noArgTypesInToc,
-  })
-
-  return `${dtoc}${sig}`
+  if (method.fullName) getSig[method.fullName] = sig
+  return sig
 }
 
 module.exports = Method
+module.exports.getSig = getSig

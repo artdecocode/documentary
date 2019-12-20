@@ -4,9 +4,9 @@ const { join, resolve, basename } = require('path');
 const { homedir } = require('os');
 const { write } = require('../../stdlib');
 const { b } = require('../../stdlib');
-const { ensurePath } = require('../../stdlib');
+const             { ensurePath, ensurePathSync } = require('../../stdlib');
 const { makePromise } = require('../../stdlib');
-const { lstat: Stat } = require('fs');
+const { lstat: Stat, writeFileSync, readFileSync } = require('fs');
 const { commentRule: stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe } = require('./rules');
 const tableRule = require('./rules/table'); const { tableRe } = tableRule;
 const methodTitleRule = require('./rules/method-title'); const { methodTitleRe } = methodTitleRule;
@@ -207,7 +207,7 @@ class Documentary extends Replaceable {
       insertMethodTitle,
     ], { objectMode })
 
-    this.Method = method // the method component can be overridden by users.
+    this._method = method // the method component can be overridden by users.
 
     this._types = {}
 
@@ -256,6 +256,14 @@ class Documentary extends Replaceable {
       // update imports
       this._typedefs.updateImports()
     }
+    this._addedFiles = {}
+    this._annotatedTypes = []
+  }
+  Method(opts = {}) {
+    return this._method({
+      documentary: this,
+      ...opts,
+    })
   }
   /**
    * The source locations of types, e.g., types/index.xml.
@@ -282,6 +290,23 @@ class Documentary extends Replaceable {
       return [..._typedefs.types, ..._typedefs.included]
     }
     return []
+  }
+
+  /**
+   * Adds the file to `.documentary` folder, considering for wiki
+   * and returns the path that can be used online.
+   * @param {string} file path to the file.
+   * @param {...string} innerPath Any folders inside the .documentary.
+   */
+  addFile(file, ...innerPath) {
+    const added = this._addedFiles[file]
+    if (added) return added
+    const path = join('.documentary', ...innerPath, basename(file))
+    const to = this._args.wiki ? join(this._args.wiki, path) : path
+    ensurePathSync(to)
+    writeFileSync(to, readFileSync(file))
+    this._addedFiles[file] = path
+    return path
   }
 
   /**
@@ -315,6 +340,15 @@ class Documentary extends Replaceable {
     if (value.level) value.hash = '#'.repeat(value.level)
     arr.push(value)
     return `%%DTOC_${name}_${arr.length - 1}%%`
+  }
+  /**
+   * Add the type for annotations. Only used in methods at the moment.
+   * @param {_typal.Type} type
+   * @param {string} sig How the heading will appear on the page.
+   */
+  annotateType(type, sig) {
+    const { currentFile } = this
+    this._annotatedTypes.push({ type, sig, currentFile })
   }
   /**
    * Used by the Toc stream later to create lines for link and method titles.

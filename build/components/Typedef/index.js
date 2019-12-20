@@ -3,8 +3,8 @@ const { SyncReplaceable } = require('../../../stdlib');
 const { relative, dirname } = require('path');
 const md2html = require('../Html');
 const { codeRe } = require('../../lib/rules');
-const Method = require('../method');
-const { makeMethodTable } = require('./lib');
+const { makeMethodTable, makeIconsName } = require('./lib');
+const { getLink } = require('../../lib');
 
 // const extractPages = (props) => {
 //   return Object.entries(props).reduce((acc, [key, val]) => {
@@ -16,29 +16,44 @@ const { makeMethodTable } = require('./lib');
 //   }, {})
 // }
 
-const makeLinking = (wiki, file, error = () => {}) => {
-  const linking = ({ link, type: refType }) => {
-    // when splitting wiki over multiple pages, allows
-    // to create links to the exact page.
-    const l = `#${link}`
-    // <type-link> component will set `typeLink`
-    if (refType.typeLink) return `${refType.typeLink}${l}`
+/**
+ * @param {string} wiki
+ * @param {string} file
+ * @param {Documentary} documentary
+ */
+const makeLinking = (wiki, file, documentary) => {
+  /** @type {import('typal/types').ToMarkdownOptions} */
+  const opts = {
+    link({ link, type: refType }) {
+      // when splitting wiki over multiple pages, allows
+      // to create links to the exact page.
+      if (refType.isMethod) {
+        const { getSig } = documentary._method
+        if (getSig) {
+          const sig = getSig(refType)
+          link = getLink(sig)
+        }
+      }
+      const l = `#${link}`
+      // <type-link> component will set `typeLink`
+      if (refType.typeLink) return `${refType.typeLink}${l}`
 
-    // semi-hack
-    const { appearsIn = [''] } = refType
-    if (appearsIn.includes(file)) return l
-    const ai = appearsIn[0] //
-    if (!ai) error(new Error('appearsIn is empty'))
-    let rel = relative(dirname(file), ai)
-    if (wiki) rel = rel.replace(/\.(md|html)$/, '')
-    return `${rel}${l}`
+      // semi-hack
+      const { appearsIn = [''] } = refType
+      if (appearsIn.includes(file)) return l
+      const ai = appearsIn[0] //
+      if (!ai) documentary.error(new Error('appearsIn is empty'))
+      let rel = relative(dirname(file), ai)
+      if (wiki) rel = rel.replace(/\.(md|html)$/, '')
+      return `${rel}${l}`
+    },
   }
-  return linking
+  return opts.link
 }
 
 /**
  * @param {Object} opts
- * @param {import('../../lib/Documentary').default} opts.documentary
+ * @param {Documentary} opts.documentary
  */
 function Typedef({ documentary, children, name, narrow,
   flatten, details, level, noArgTypesInToc = false, slimFunctions = false,
@@ -50,7 +65,7 @@ function Typedef({ documentary, children, name, narrow,
   } = documentary
   const file = wiki ? source : currentFile
 
-  documentary.setPretty(false)
+  documentary.pretty(false)
   let [location] = children
   location = location.trim()
   /** @type {!Array<!Type>} */
@@ -63,18 +78,20 @@ function Typedef({ documentary, children, name, narrow,
   const typesToMd = t.filter(({ import: i }) => !i)
   let flattened = {}
 
-  const linking = makeLinking(wiki, file)
+  const linking = makeLinking(wiki, file, documentary)
 
-  const preprocessDesc = (d) => {
+  /**
+   * @type {import('typal/types').LinkingOptions}
+   */
+  const opts = { details, narrow, flatten(n) {
+    flattened[n] = true
+  }, preprocessDesc(d) {
     if (!d) return d
     // cut ``` from properties, inserted by doc at the end
     const r = SyncReplaceable(d, [cutCode])
     return r
-  }
-
-  const opts = { details, narrow, flatten(n) {
-    flattened[n] = true
-  }, preprocessDesc, link: linking, level }
+  }, link: linking, level,
+  nameProcess: makeIconsName(allTypesWithIncluded, documentary) }
 
   const tt = typesToMd.map(type => {
     if (!type.isMethod) {
@@ -82,8 +99,10 @@ function Typedef({ documentary, children, name, narrow,
       if (level) res.LINE = res.LINE.replace(/t-type/, `${'#'.repeat(level)}-type`)
       return res
     }
-    const LINE = Method({ documentary, level, method: type, noArgTypesInToc })
-    const table = makeMethodTable(type, allTypesWithIncluded, opts, { wiki })
+    const LINE = documentary.Method({
+      level, method: type, noArgTypesInToc,
+    })
+    const table = makeMethodTable(type, allTypesWithIncluded, opts, { documentary })
     return { LINE, table, examples: type.examples }
   })
   // found those imports that will be flattened
@@ -97,10 +116,10 @@ function Typedef({ documentary, children, name, narrow,
     const { LINE, table: type, displayInDetails } = s
     const isObject = typeof type == 'object' // table can be empty string, e.g., ''
 
-    const ch = isObject ?        h(Narrow,{...type,key:i,
+    const ch = isObject ? (      h(Narrow,{...type,key:i,
       documentary:documentary, allTypes:allTypesWithIncluded, opts:opts,
-      slimFunctions:slimFunctions, wiki:wiki
-    }) : type
+      slimFunctions:slimFunctions
+    })) : type
     if (displayInDetails) {
       const line = md2html({ documentary, children: [LINE] })
 
@@ -135,7 +154,7 @@ function Typedef({ documentary, children, name, narrow,
  * @param {boolean} opts.constr Whether this is a table for the interface/constructor.
  */
 const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
-  slimFunctions, wiki }) => {
+  slimFunctions }) => {
   const md = (name, afterCutLinks) => {
     return md2html({ documentary, children: [name], afterCutLinks })
   }
@@ -148,7 +167,7 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
     )),'\n',
     props.reduce((acc, { name, typeName, de, d, prop }) => {
       let desc = (prop.args && !slimFunctions) ? makeMethodTable(prop, allTypes, opts, {
-        indent: '', join: '<br/>\n', preargs: '<br/>\n', wiki,
+        indent: '', join: '<br/>\n', preargs: '<br/>\n', documentary,
       }) : de
       let hasCodes
       if (prop.examples.length) {
@@ -277,6 +296,10 @@ const makeExamples = (examples) => {
 /**
  * @suppress {nonStandardJsDocs}
  * @typedef {import('typal/types').Property} Property
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('../../lib/Documentary').default} Documentary
  */
 
 
