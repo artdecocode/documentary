@@ -129,13 +129,15 @@ export default class Typedefs extends Replaceable {
   updateImports() {
     if (this._importsUpdated) return
     const imports = this.types.filter(({ import: i }) => i)
-    const included = this.included.filter(({ description, fullName: k, link, icon, iconAlt }) => {
+    const included = this.included.filter(({ description, fullName: k, link, icon, iconAlt, iconOdd, iconEven }) => {
       const ii = imports.filter(({ fullName }) => fullName == k)
       ii.forEach((i) => {
         if (!i.link) i.link = link
         if (!i.description) i.description = description
         if (!i.icon) i.icon = icon
         if (!i.iconAlt) i.iconAlt = iconAlt
+        if (!i.iconOdd) i.iconOdd = iconOdd
+        if (!i.iconEven) i.iconEven = iconEven
       })
       return !ii.length
     })
@@ -203,18 +205,17 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
       const r = `%TYPEDEF ${loc}%-${link}`
       return r
     },
-    'include-typedefs'({ children, icon, 'icon-alt': iconAlt }) {
+    'include-typedefs'({ children, icon, 'icon-alt': iconAlt, 'icon-odd': iconOdd, 'icon-even': iconEven }) {
       let [loc] = children
       loc = loc.trim() || 'typedefs.json'
       const data = require(resolve(loc))
-      Object.entries(data).forEach(([k, { description, link }]) => {
+      Object.entries(data).forEach(([k, d]) => {
         const n = `${namespace}.`
         if (namespace && k.startsWith(n)) k = k.replace(n, '')
         const t = {
           fullName: k,
-          link,
-          description,
-          icon, iconAlt,
+          icon, iconAlt, iconOdd, iconEven,
+          ...d,
         }
         this.included.push(t)
       })
@@ -239,8 +240,10 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
     objectMode: true,
   })
   const nodeTypedefs = resolve(__dirname, '../../typedefs.json')
-  const nodeIcon = resolve(__dirname, '../node.png')
-  t.write({ data: `<include-typedefs icon="${nodeIcon}" icon-alt="Node.JS Docs">
+  const nodeIcon = resolve(__dirname, '../icons/node.png')
+  const nodeIconOdd = resolve(__dirname, '../icons/node-odd.png')
+  const nodeIconEven = resolve(__dirname, '../icons/node-even.png')
+  t.write({ data: `<include-typedefs icon-odd="${nodeIconOdd}" icon-even="${nodeIconEven}" icon="${nodeIcon}" icon-alt="Node.JS Docs">
     ${nodeTypedefs}
   </include-typedefs>`, file: 'fake.md' })
   stream.pipe(t).pipe(typedefs)

@@ -1,6 +1,23 @@
 import { getLinks } from 'typal'
-import clone from '@wrote/clone'
-import { basename, dirname, join as joinPath } from 'path'
+
+export const makeIconsName = (allTypes, documentary) => {
+  function nameProcess(n, odd) {
+    const nn = n.replace('!', '')
+    const found = allTypes.find(({ fullName }) => fullName == nn)
+
+    if (!found) return n
+    const { icon, iconAlt = 'Type Icon', iconOdd, iconEven } = found
+    let i
+    if (odd !== undefined) {
+      i = odd ? iconOdd : iconEven
+    } else if (icon) i = icon
+    if (!i) return n
+    const iconPath = documentary.addFile(i, 'type-icons')
+    const s = `<img src="${iconPath}" alt="${iconAlt}">${n}`
+    return s
+  }
+  return nameProcess
+}
 
 /**
  * @param {import('typal/types').Method} method
@@ -8,7 +25,7 @@ import { basename, dirname, join as joinPath } from 'path'
  * @param {import('typal/types').LinkingOptions} [linkingOpts]
  */
 export const makeMethodTable = (method, allTypes = [], linkingOpts = {}, {
-  indent = ' - ', join = '\n', preargs = '\n\n', wiki,
+  indent = ' - ', join = '\n', preargs = '\n\n', documentary,
 } = {}) => {
   let table = method.description || ''
   const lis = method.args.map(({ optional, name, type, description }) => {
@@ -19,20 +36,7 @@ export const makeMethodTable = (method, allTypes = [], linkingOpts = {}, {
       , useCode = false
     typeWithLink = getLinks(allTypes, type, {
       ...linkingOpts,
-      nameProcess(n) {
-        const nn = n.replace('!', '')
-        const found = allTypes.find(({ fullName }) => fullName == nn)
-
-        if (!found) return n
-        const { icon, iconAlt = 'Type Icon' } = found
-        if (!icon) return n
-        let iconPath = joinPath('.documentary', 'type-icons', basename(icon))
-        const to = wiki ? joinPath(wiki, iconPath) : iconPath
-        clone(icon, dirname(to))
-        const s = `<img src="${iconPath}" alt="${iconAlt}">${n}`
-        // debugger
-        return s
-      },
+      nameProcess: makeIconsName(allTypes, documentary),
     })
     useCode = typeWithLink != type
     typeWithLink = wrapCode(typeWithLink, useCode)

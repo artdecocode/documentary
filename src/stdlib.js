@@ -2,7 +2,7 @@ import '@externs/preact/types/externs'
 import write from '@wrote/write'
 import read from '@wrote/read'
 import clone from '@wrote/clone'
-import ensurePath from '@wrote/ensure-path'
+import ensurePath, { ensurePathSync } from '@wrote/ensure-path'
 import readDirStructure from '@wrote/read-dir-structure'
 import rexml from 'rexml'
 import argufy, { reduceUsage } from 'argufy'
@@ -34,6 +34,7 @@ module.exports = {
   'whichStream': whichStream,
   'compare': compare,
   'ensurePath': ensurePath,
+  'ensurePathSync': ensurePathSync,
   'read': read,
   'replace': replace,
   'usually': usually,

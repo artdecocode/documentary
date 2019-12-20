@@ -4,9 +4,9 @@ import { join, resolve, basename } from 'path'
 import { homedir } from 'os'
 import write from '@wrote/write'
 import { b } from 'erte'
-import ensurePath from '@wrote/ensure-path'
+import ensurePath, { ensurePathSync } from '@wrote/ensure-path'
 import makePromise from 'makepromise'
-import { lstat as Stat } from 'fs'
+import { lstat as Stat, writeFileSync, readFileSync } from 'fs'
 import { commentRule as stripComments, codeRe, innerCodeRe, linkTitleRe, linkRe } from './rules'
 import tableRule, { tableRe } from './rules/table'
 import methodTitleRule, { methodTitleRe } from './rules/method-title'
@@ -256,6 +256,7 @@ export default class Documentary extends Replaceable {
       // update imports
       this._typedefs.updateImports()
     }
+    this._addedFiles = {}
   }
   /**
    * The source locations of types, e.g., types/index.xml.
@@ -282,6 +283,23 @@ export default class Documentary extends Replaceable {
       return [..._typedefs.types, ..._typedefs.included]
     }
     return []
+  }
+
+  /**
+   * Adds the file to `.documentary` folder, considering for wiki
+   * and returns the path that can be used online.
+   * @param {string} file path to the file.
+   * @param {...string} innerPath Any folders inside the .documentary.
+   */
+  addFile(file, ...innerPath) {
+    const added = this._addedFiles[file]
+    if (added) return added
+    const path = join('.documentary', ...innerPath, basename(file))
+    const to = this._args.wiki ? join(this._args.wiki, path) : path
+    ensurePathSync(to)
+    writeFileSync(to, readFileSync(file))
+    this._addedFiles[file] = path
+    return path
   }
 
   /**

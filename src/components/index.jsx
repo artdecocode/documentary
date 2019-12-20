@@ -60,7 +60,7 @@ export function method({ name, level, documentary, children, noArgTypesInToc, 'j
         // debugger
         // flattened[n] = true
       },
-    }, { wiki })
+    }, { documentary })
   } catch (err) {
     error(err)
   }

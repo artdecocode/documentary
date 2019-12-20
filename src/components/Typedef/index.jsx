@@ -3,7 +3,7 @@ import { relative, dirname } from 'path'
 import md2html from '../Html'
 import { codeRe } from '../../lib/rules'
 import Method from '../method'
-import { makeMethodTable } from './lib'
+import { makeMethodTable, makeIconsName } from './lib'
 
 // const extractPages = (props) => {
 //   return Object.entries(props).reduce((acc, [key, val]) => {
@@ -71,9 +71,13 @@ export default function Typedef({ documentary, children, name, narrow,
     return r
   }
 
+  /**
+   * @type {import('typal/types').LinkingOptions}
+   */
   const opts = { details, narrow, flatten(n) {
     flattened[n] = true
-  }, preprocessDesc, link: linking, level }
+  }, preprocessDesc, link: linking, level,
+  nameProcess: makeIconsName(allTypesWithIncluded, documentary) }
 
   const tt = typesToMd.map(type => {
     if (!type.isMethod) {
@@ -82,7 +86,7 @@ export default function Typedef({ documentary, children, name, narrow,
       return res
     }
     const LINE = Method({ documentary, level, method: type, noArgTypesInToc })
-    const table = makeMethodTable(type, allTypesWithIncluded, opts, { wiki })
+    const table = makeMethodTable(type, allTypesWithIncluded, opts, { documentary })
     return { LINE, table, examples: type.examples }
   })
   // found those imports that will be flattened
@@ -134,7 +138,7 @@ export default function Typedef({ documentary, children, name, narrow,
  * @param {boolean} opts.constr Whether this is a table for the interface/constructor.
  */
 const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
-  slimFunctions, wiki }) => {
+  slimFunctions }) => {
   const md = (name, afterCutLinks) => {
     return md2html({ documentary, children: [name], afterCutLinks })
   }
@@ -147,7 +151,7 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
     </tr></thead>{'\n'}
     {props.reduce((acc, { name, typeName, de, d, prop }) => {
       let desc = (prop.args && !slimFunctions) ? makeMethodTable(prop, allTypes, opts, {
-        indent: '', join: '<br/>\n', preargs: '<br/>\n', wiki,
+        indent: '', join: '<br/>\n', preargs: '<br/>\n', documentary,
       }) : de
       let hasCodes
       if (prop.examples.length) {
