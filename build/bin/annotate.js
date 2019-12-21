@@ -42,6 +42,16 @@ function Annotate(wiki, types, gl = ({ name }) => {
       }
       return acc
     }, {})
+  } else {
+    t = types.filter(({ import: i }) => !i).reduce((acc, type) => {
+      const { name, description, originalNs } = type
+      const rr = `${github}#${gl(type)}`
+      acc[`${originalNs}${name}`] = {
+        link: rr,
+        description,
+      }
+      return acc
+    }, {})
   }
   if (t && Object.keys(t).length) {
     let current = {}

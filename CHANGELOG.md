@@ -1,5 +1,9 @@
 ## 21 December 2019
 
+### [1.35.5](https://github.com/artdecocode/documentary/compare/v1.35.4...v1.35.5)
+
+- [feature] Annotate for non-wikis also.
+
 ### [1.35.4](https://github.com/artdecocode/documentary/compare/v1.35.3...v1.35.4)
 
 - [feature] Read `<include-typedefs>` from package.json's typedefs field.
