@@ -49,11 +49,6 @@
   resolved "https://registry.yarnpkg.com/@idio/debug/-/debug-1.2.3.tgz#ff002ec176bf45782aca7f70adcdde650fcb2a04"
   integrity sha512-MalXJDXpDY7p8oNlKqQTmk6d5Q5WTeT18HqvySj4byU0BX2G7KX+IISUMH7uLdYv9y/usKU+uZO+5n2v41/kqw==
 
-"@typedefs/goa@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@typedefs/goa/-/goa-0.1.4.tgz#728af94e06efd2bc158072c3e29c713b5f726865"
-  integrity sha512-yGrlT+RDiyVswch1JFAnr3NlLaedMfNxS2eOhGhKKkRRFI2G+Va4cezV3c6ApB+zFbtmJz5dgsmjUuXemRHP9A==
-
 "@wrote/clone@^1.1.1", "@wrote/clone@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@wrote/clone/-/clone-1.2.1.tgz#112cfab56adcfe8df9341a82c48ddb0d6bd6dbc4"

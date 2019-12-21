@@ -18,19 +18,24 @@ export default {
   },
 }
 
-/**
- * The method for adding a heading and description of a method inside a constructor/interface.
- * @param {Object} params
- * @param {import('../lib/Documentary').default} params.documentary
- */
-export function method({ name, level, documentary, children, noArgTypesInToc, 'just-heading': justHeading = false }) {
+export const splitTypeMethod = (name) => {
   let [ns,type,m] = name.split('.')
   if (!m) {
     m = type
     type = ns
     ns = ''
   }
-  const fn = [ns, type].filter(Boolean).join('.')
+  const fullName = [ns, type].filter(Boolean).join('.')
+  return { ns, type, method: m, fullName }
+}
+
+/**
+ * The method for adding a heading and description of a method inside a constructor/interface.
+ * @param {Object} params
+ * @param {import('../lib/Documentary').default} params.documentary
+ */
+export function method({ name, level, documentary, children, noArgTypesInToc, 'just-heading': justHeading = false }) {
+  const { method: m, fullName: fn } = splitTypeMethod(name)
   const foundType = documentary.allTypes.find(({ fullName }) => {
     return fullName == fn
   })

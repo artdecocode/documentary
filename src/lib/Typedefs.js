@@ -9,6 +9,7 @@ import { methodTitleRe } from './rules/method-title'
 import { macroRule, useMacroRule } from './rules/macros'
 import competent from 'competent'
 import { Transform } from 'stream'
+import { splitTypeMethod } from '../components'
 
 const extract = async (location, { recordOriginalNs, rootNamespace }) => {
   const xml = await read(location)
@@ -210,8 +211,11 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
       await proc(children, this.file, { typeName: name })
       return null
     },
-    async'method'({ children }) {
-      await proc(children, this.file)
+    async'method'({ children, name }) {
+      let typeName
+      if (name)
+        ({ type: typeName } = splitTypeMethod(name))
+      await proc(children, this.file, { typeName })
       return null
     },
     async'type-link'({ link, children }) {

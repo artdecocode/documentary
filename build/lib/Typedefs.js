@@ -9,6 +9,7 @@ const { methodTitleRe } = require('./rules/method-title');
 const { macroRule, useMacroRule } = require('./rules/macros');
 const { competent } = require('../../stdlib');
 const { Transform } = require('stream');
+const { splitTypeMethod } = require('../components');
 
 const extract = async (location, { recordOriginalNs, rootNamespace }) => {
   const xml = await read(location)
@@ -210,8 +211,11 @@ const getTypedefs = async (stream, namespace, typesLocations = [], options = {})
       await proc(children, this.file, { typeName: name })
       return null
     },
-    async'method'({ children }) {
-      await proc(children, this.file)
+    async'method'({ children, name }) {
+      let typeName
+      if (name)
+        ({ type: typeName } = splitTypeMethod(name))
+      await proc(children, this.file, { typeName })
       return null
     },
     async'type-link'({ link, children }) {

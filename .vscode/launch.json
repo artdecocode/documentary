@@ -149,6 +149,20 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch For koa",
+      "program": "${workspaceFolder}/src/bin/index.js",
+      "env": { "NODE_DEBUG": "doc" },
+      "args": ["-o", "README.md", "-n", "_goa"],
+      "cwd": "${workspaceFolder}/../../idiocc/koa",
+      "console": "integratedTerminal",
+      "sourceMaps": false,
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch For Depack/Doc",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },

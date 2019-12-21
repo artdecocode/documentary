@@ -58,15 +58,23 @@ export const getSig = (method) => {
     return n
   })
 
+  let ret = method.return
+  try {
+    if (method.isConstructor && method.isParsedFunction) {
+      ret = method.parsed.function.new.name
+    }
+  } catch (err) {
+    // ok ?
+  }
   // let done
   if (lines.length) {
     const nls = `${NL}${I.repeat(1)}`
     const s = lines.join(nls)
     sig += '</code>'
     sig += `<sub>${nls}${s}${NL}`
-    sig += `</sub><code>): <i>${method.return || 'void'}</i></code>`
+    sig += `</sub><code>): <i>${ret || 'void'}</i></code>`
   } else {
-    sig += `): <i>${method.return || 'void'}</i></code>`
+    sig += `): <i>${ret || 'void'}</i></code>`
   }
   if (method.fullName) getSig[method.fullName] = sig
   return sig
