@@ -29,6 +29,7 @@ const makeMethodTable = (method, allTypes = [], linkingOpts = {}, {
   indent = ' - ', join = '\n', preargs = '\n\n', documentary,
 } = {}) => {
   let table = method.description || ''
+  const nameProcess = makeIconsName(allTypes, documentary)
   const lis = method.args.map(({ optional, name, type, description }) => {
     optional = optional || name.startsWith('...')
     const N = optional ? name : `<strong>${name}*</strong>`
@@ -37,7 +38,7 @@ const makeMethodTable = (method, allTypes = [], linkingOpts = {}, {
       , useCode = false
     typeWithLink = getLinks(allTypes, type, {
       ...linkingOpts,
-      nameProcess: makeIconsName(allTypes, documentary),
+      nameProcess,
     })
     useCode = typeWithLink != type
     typeWithLink = wrapCode(typeWithLink, useCode)

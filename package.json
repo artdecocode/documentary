@@ -86,6 +86,7 @@
     "@depack/split": "^1.0.0",
     "@externs/preact": "^1.2.9",
     "@idio/debug": "^1.2.3",
+    "@typedefs/goa": "^0.1.4",
     "@wrote/clone": "^1.2.1",
     "@wrote/ensure-path": "^1.1.0",
     "@wrote/read": "^1.0.4",
@@ -119,6 +120,6 @@
   "dependencies": {
     "alamode": "^3.3.0",
     "preact": "8.5.3",
-    "typal": "^1.24.17"
+    "typal": "^1.24.19"
   }
 }

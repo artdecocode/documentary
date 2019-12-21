@@ -1,3 +1,11 @@
+## 21 December 2019
+
+### [1.35.4](https://github.com/artdecocode/documentary/compare/v1.35.3...v1.35.4)
+
+- [feature] Read `<include-typedefs>` from package.json's typedefs field.
+- [feature] Flatten imports in types by default.
+- [fix] Update _Typal_ to fix linking order bug.
+
 ## 20 December 2019
 
 ### [1.35.3](https://github.com/artdecocode/documentary/compare/v1.35.2...v1.35.3)

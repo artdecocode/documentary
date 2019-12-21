@@ -135,11 +135,11 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch For accepts-wiki",
+      "name": "Launch For session",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },
-      "args": ["../accepts/wiki", "-W", "wiki.git", "-n", "_goa", "-a"],
-      "cwd": "${workspaceFolder}/../../idiocc/accepts",
+      "args": ["-o", "README.md", "-n", "_idio"],
+      "cwd": "${workspaceFolder}/../../idiocc/session",
       "console": "integratedTerminal",
       "sourceMaps": false,
       "skipFiles": [

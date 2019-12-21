@@ -51,11 +51,15 @@ export const makeLinking = (wiki, file, documentary) => {
 }
 
 /**
+ * Prints the type definition table.
  * @param {Object} opts
  * @param {Documentary} opts.documentary
+ * @param {boolean} [opts.print-imports=false] Add lines with imports
+ * @param {boolean} opts.slimFunctions Don't add method tables with <kbd> for arguments.
  */
 export default function Typedef({ documentary, children, name, narrow,
-  flatten, details, level, noArgTypesInToc = false, slimFunctions = false,
+  'print-imports': noFlatten = false, flatten = !noFlatten, details, level,
+  noArgTypesInToc = false, slimFunctions = false,
 }) {
   details = details ? details.split(',') : []
   const {

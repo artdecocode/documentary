@@ -49,6 +49,11 @@
   resolved "https://registry.yarnpkg.com/@idio/debug/-/debug-1.2.3.tgz#ff002ec176bf45782aca7f70adcdde650fcb2a04"
   integrity sha512-MalXJDXpDY7p8oNlKqQTmk6d5Q5WTeT18HqvySj4byU0BX2G7KX+IISUMH7uLdYv9y/usKU+uZO+5n2v41/kqw==
 
+"@typedefs/goa@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@typedefs/goa/-/goa-0.1.4.tgz#728af94e06efd2bc158072c3e29c713b5f726865"
+  integrity sha512-yGrlT+RDiyVswch1JFAnr3NlLaedMfNxS2eOhGhKKkRRFI2G+Va4cezV3c6ApB+zFbtmJz5dgsmjUuXemRHP9A==
+
 "@wrote/clone@^1.1.1", "@wrote/clone@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@wrote/clone/-/clone-1.2.1.tgz#112cfab56adcfe8df9341a82c48ddb0d6bd6dbc4"
@@ -263,10 +268,10 @@ temp-context@^2.1.3:
     makepromise "^3.0.3"
     pedantry "^2.3.1"
 
-typal@^1.24.17:
-  version "1.24.17"
-  resolved "https://registry.yarnpkg.com/typal/-/typal-1.24.17.tgz#0bb301ad8be4a8076f59527f167622a17b15f4d8"
-  integrity sha512-8qPwL4uPqRBAmHkGz0DIoWbCswykXo9kjz4urajEz7G7GsT2p6KNCiAqk+mJ+1MhNsO9yW9U1zSVS7TvSj3B3g==
+typal@^1.24.19:
+  version "1.24.19"
+  resolved "https://registry.yarnpkg.com/typal/-/typal-1.24.19.tgz#b77d62a25cf65bfbb13808d3939a571c8a65a8f4"
+  integrity sha512-LAdurZ+1RxVKXkxGR9qr+CM7b5DfQ+HB7zk1dBd2YVL3mcCS+s0K5k/5plxM3NMPcmjQi12nz2woWxoQp9nnbQ==
 
 usually@^1.2.0:
   version "1.2.0"

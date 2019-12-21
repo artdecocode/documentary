@@ -1,6 +1,6 @@
 import { Replaceable, replace } from 'restream'
 import { collect } from 'catchment'
-import { relative, sep, join, resolve } from 'path'
+import { relative, sep, join, resolve, dirname } from 'path'
 import { typedefMdRe } from './rules/typedef-md'
 import { read } from './'
 import { parseFile } from 'typal'
@@ -221,7 +221,18 @@ export const getTypedefs = async (stream, namespace, typesLocations = [], option
     'include-typedefs'({ children, icon, 'icon-alt': iconAlt, 'icon-odd': iconOdd, 'icon-even': iconEven }) {
       let [loc] = children
       loc = loc.trim() || 'typedefs.json'
-      const data = require(resolve(loc))
+      let data
+      try {
+        // if a package is referenced
+        const p = `${loc}/package.json`
+        const { typedefs: td } = require(p)
+        const pl = require.resolve(p)
+        if (td) loc = join(dirname(pl), td)
+        else throw new Error(`typedefs field not found in ${loc}/package.json`)
+      } catch (err) {
+        loc = resolve(loc)
+      }
+      data = require(loc)
       Object.entries(data).forEach(([k, d]) => {
         const n = `${namespace}.`
         if (namespace && k.startsWith(n)) k = k.replace(n, '')
