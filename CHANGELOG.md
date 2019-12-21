@@ -1,5 +1,9 @@
 ## 21 December 2019
 
+### [1.35.6](https://github.com/artdecocode/documentary/compare/v1.35.5...v1.35.6)
+
+- [fix] Fix parsing methods for methods.
+
 ### [1.35.5](https://github.com/artdecocode/documentary/compare/v1.35.4...v1.35.5)
 
 - [feature] Annotate for non-wikis also.
