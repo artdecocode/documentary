@@ -109,12 +109,17 @@ function Typedef({ documentary, children, name, narrow,
     const table = makeMethodTable(type, allTypesWithIncluded, opts, { documentary })
     return { LINE, table, examples: type.examples }
   })
-  // found those imports that will be flattened
-  const importsToMd = t
-    .filter(({ import: i }) => i)
-    .filter(({ fullName }) => !(fullName in flattened))
+  let j = []
+  if (!flatten) {
+    // found those imports that will be flattened
+    const importsToMd = t
+      .filter(({ import: i }) => i)
+      .filter(({ fullName }) => !(fullName in flattened))
 
-  const j = importsToMd.map(i => i.toMarkdown(allTypesWithIncluded, { flatten }))
+    j = importsToMd
+      .map(i => i.toMarkdown(allTypesWithIncluded, { flatten }))
+      .map(i => i.LINE)
+  }
 
   const ttt = tt.map((s, i) => {
     const { LINE, table: type, displayInDetails } = s
