@@ -96,6 +96,19 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch For idio",
+      "program": "${workspaceFolder}/src/bin/index.js",
+      "env": { "NODE_DEBUG": "doc" },
+      "args": ["-o", "README.md", "-a", "-n", "_idio"],
+      "cwd": "${workspaceFolder}/../../idiocc/idio",
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch For router",
       "program": "${workspaceFolder}/src/bin/index.js",
       "env": { "NODE_DEBUG": "doc" },

@@ -6,3 +6,4 @@ alamode({
   pragma: `const { h } = require("${preact}");`,
 })
 require('./doc')
+process.env.DOCUMENTARY_DEV = true

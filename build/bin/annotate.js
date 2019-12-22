@@ -24,8 +24,9 @@ function Annotate(wiki, types, gl = ({ name }) => {
   }
   github = `https://github.com/${github}`
   let t = null
+  const f = types.filter(({ import: i, external }) => !i && !external)
   if (wiki) {
-    t = types.filter(({ import: i }) => !i).reduce((acc, type) => {
+    t = f.reduce((acc, type) => {
       const { name, appearsIn, description, originalNs } = type
       const [ai] = appearsIn.map((file) => {
         let rel = relative(dirname(file), file)
@@ -43,7 +44,7 @@ function Annotate(wiki, types, gl = ({ name }) => {
       return acc
     }, {})
   } else {
-    t = types.filter(({ import: i }) => !i).reduce((acc, type) => {
+    t = f.reduce((acc, type) => {
       const { name, description, originalNs } = type
       const rr = `${github}#${gl(type)}`
       acc[`${originalNs}${name}`] = {

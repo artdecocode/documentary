@@ -1,3 +1,10 @@
+## 22 December 2019
+
+### [1.35.8](https://github.com/artdecocode/documentary/compare/v1.35.7...v1.35.8)
+
+- [feature] Support `external` in links.
+- [fix] Correct link to _types_ on the same page.
+
 ## 21 December 2019
 
 ### [1.35.7](https://github.com/artdecocode/documentary/compare/v1.35.6...v1.35.7)

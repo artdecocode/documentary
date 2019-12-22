@@ -74,10 +74,13 @@ function method({ name, level, documentary, children, noArgTypesInToc, 'just-hea
  * @param {Object} params
  * @param {import('../lib/Documentary').default} params.documentary
  */
-function link({ documentary, type, children }) {
+function link({ documentary, type, children, external }) {
   documentary.pretty(false)
-  const foundType = documentary.allTypesWithIncluded.find(({ fullName }) => {
-    return fullName == type
+  const foundType = documentary.allTypesWithIncluded.find((t) => {
+    const { fullName, external: e } = t
+    if (fullName != type) return false
+    if (external) return e
+    return true
   })
   if (!foundType) throw new Error(`Type ${type} not found.`)
 

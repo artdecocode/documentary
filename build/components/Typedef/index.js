@@ -37,6 +37,7 @@ const makeLinking = (wiki, file, documentary) => {
       const l = `#${link}`
       // <type-link> component will set `typeLink`
       if (refType.typeLink) return `${refType.typeLink}${l}`
+      if (!wiki) return l
 
       // semi-hack
       const { appearsIn = [''] } = refType

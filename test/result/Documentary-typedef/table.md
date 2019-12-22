@@ -496,3 +496,27 @@ __<a name="type-test">`Test`</a>__
  </tr>
 </table>
 /**/
+
+
+## adds links
+<typedef narrow slimFunctions>test/fixture/typedef/fns.xml</typedef>
+<link type="preact.H">LINK</link>
+
+/* expected */
+__<a name="type-preacth">`preact.H`</a>__: Hello world.
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><ins>constructor</ins></td>
+  <td><em>new (nodeName: (string | !Function), attributes?: Object, ...args: !(preact.VNode | Array&lt;!preact.VNode&gt;)[]) => <a href="#type-preacth" title="Hello world.">preact.H</a></em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td></td>
+ </tr>
+</table>
+<a href="#type-preacth" title="Hello world.">LINK</a>
+/**/

@@ -11,6 +11,15 @@ const { competent } = require('../../stdlib');
 const { Transform } = require('stream');
 const { splitTypeMethod } = require('../components');
 
+const tryRequire = (loc) => {
+  const p = `${loc}/package.json`
+  const { typedefs: td } = require(p)
+  const pl = require.resolve(p)
+  if (td) loc = join(dirname(pl), td)
+  else throw new Error(`typedefs field not found in ${loc}/package.json`)
+  return loc
+}
+
 const extract = async (location, { recordOriginalNs, rootNamespace }) => {
   const xml = await read(location)
   const { types, imports } = parseFile(xml, rootNamespace, location)
@@ -144,6 +153,7 @@ class Typedefs extends Replaceable {
         if (!i.iconAlt) i.iconAlt = iconAlt
         if (!i.iconOdd) i.iconOdd = iconOdd
         if (!i.iconEven) i.iconEven = iconEven
+        i.external = true
       })
       return !ii.length
     })
@@ -222,25 +232,30 @@ const getTypedefs = async (stream, namespace, typesLocations = [], options = {})
       await proc(children, this.file, { link })
       return null
     },
-    'include-typedefs'({ children, icon, 'icon-alt': iconAlt, 'icon-odd': iconOdd, 'icon-even': iconEven }) {
+    'include-typedefs'({ children, icon, 'icon-alt': iconAlt,
+      'icon-odd': iconOdd, 'icon-even': iconEven }) {
       let [loc] = children
       loc = loc.trim() || 'typedefs.json'
       let data
       try {
         // if a package is referenced
-        const p = `${loc}/package.json`
-        const { typedefs: td } = require(p)
-        const pl = require.resolve(p)
-        if (td) loc = join(dirname(pl), td)
-        else throw new Error(`typedefs field not found in ${loc}/package.json`)
+        loc = tryRequire(loc)
       } catch (err) {
-        loc = resolve(loc)
+        if (process.env.DOCUMENTARY_DEV) {
+          try {
+            const nm = join(process.cwd(), 'node_modules', loc)
+            loc = tryRequire(nm)
+          } catch (e) {
+            loc = resolve(loc)
+          }
+        } else loc = resolve(loc)
       }
       data = require(loc)
       Object.entries(data).forEach(([k, d]) => {
         const n = `${namespace}.`
         if (namespace && k.startsWith(n)) k = k.replace(n, '')
         const t = {
+          external: true,
           fullName: k,
           icon, iconAlt, iconOdd, iconEven,
           ...d,
