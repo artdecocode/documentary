@@ -1,0 +1,12 @@
+<types namespace="wiki">
+
+  <method async name="workHard" desc="Spawns a worker process.">
+    <arg number name="hours">How long to work for.</arg>
+    <arg type="wiki.Location" name="location">Where to work.</arg>
+  </method>
+
+  <type name="Location">
+    <prop number name="lat" />
+    <prop number name="long" />
+  </type>
+</types>

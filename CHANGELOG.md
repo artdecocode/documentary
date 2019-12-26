@@ -1,3 +1,9 @@
+## 26 December 2019
+
+### [1.35.9](https://github.com/artdecocode/documentary/compare/v1.35.8...v1.35.9)
+
+- [fix] Fix typedef links with level.
+
 ## 22 December 2019
 
 ### [1.35.8](https://github.com/artdecocode/documentary/compare/v1.35.7...v1.35.8)

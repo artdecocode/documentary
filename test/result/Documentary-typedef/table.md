@@ -520,3 +520,43 @@ __<a name="type-preacth">`preact.H`</a>__: Hello world.
 </table>
 <a href="#type-preacth" title="Hello world.">LINK</a>
 /**/
+
+## levels
+1. In the body of a method:
+    <typedef level="4" narrow details="Location">test/fixture/typedef/method.xml</typedef>
+
+/* expected */
+1. In the body of a method:
+    #### <code>async <ins>workHard</ins>(</code><sub><br/>&nbsp;&nbsp;`hours: number,`<br/>&nbsp;&nbsp;`location: wiki.Location,`<br/></sub><code>): <i>void</i></code>
+    Spawns a worker process.
+    
+     - <kbd><strong>hours*</strong></kbd> <em>`number`</em>: How long to work for.
+     - <kbd><strong>location*</strong></kbd> <em><code>[wiki.Location](#type-wikilocation)</code></em>: Where to work.
+    
+    
+    <details>
+     <summary><strong><a name="type-wikilocation"><code>wiki.Location</code></a></strong></summary>
+    <table>
+     <thead><tr>
+      <th>Name</th>
+      <th>Type &amp; Description</th>
+     </tr></thead>
+     <tr>
+      <td rowSpan="3" align="center"><strong>lat*</strong></td>
+      <td><em>number</em></td>
+     </tr>
+     <tr></tr>
+     <tr>
+      <td></td>
+     </tr>
+     <tr>
+      <td rowSpan="3" align="center"><strong>long*</strong></td>
+      <td><em>number</em></td>
+     </tr>
+     <tr></tr>
+     <tr>
+      <td></td>
+     </tr>
+    </table>
+    </details>
+/**/

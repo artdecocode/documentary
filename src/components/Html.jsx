@@ -36,7 +36,7 @@ export const replace = (c, insertInnerCode, { li, afterCutTags = [] }) => {
       re: /\[([^\]\n]+?)\]\((.+?)\)/g,
       replacement(m, title, href, i) {
         // toc-links regex does not accept a-hrefs
-        if (['t-type', 'l-type', 't'].includes(href) || /^#+$/.test(href)) {
+        if (['t-type', 'l-type', 't'].includes(href) || /^#+(-type)?$/.test(href)) {
           tocLinks[i] = href
           return `<RESTREAM-REPLACE-TOC-LINKS-${i}%%>${title}</RESTREAM-REPLACE-TOC-LINKS>`
         }
