@@ -1382,8 +1382,8 @@ module.exports = {competent:(a, b = {}) => {
   if (!b) {
     return {result:!1, reason:"NO_CACHE", mtime:d, hash:e, md5:a};
   }
-  const f = b.mtime;
-  return d != f ? {result:!1, reason:"MTIME_CHANGE", mtime:d, hash:e, currentMtime:f, md5:a} : vc(b.hash, e, c) ? {result:!0, md5:a} : {result:!1, mtime:d, hash:e, reason:"HASH_CHANGE", md5:a};
+  const {mtime:f, hash:h} = b;
+  return d != f ? {result:!1, reason:"MTIME_CHANGE", mtime:d, hash:e, currentMtime:f, md5:a} : vc(h, e, c) ? {result:!0, md5:a} : {result:!1, mtime:d, hash:e, reason:"HASH_CHANGE", md5:a};
 }, ensurePath:Ea, ensurePathSync:function(a) {
   const b = M(a);
   try {

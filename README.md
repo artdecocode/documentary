@@ -362,19 +362,12 @@ Section breaks from [FoglihtenDeH0](https://www.1001fonts.com/foglihtendeh0-font
 <table>
   <tr>
     <th>
-      <a href="https://artd.eco">
+      <a href="https://www.artd.eco">
         <img width="100" src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png"
           alt="Art Deco">
       </a>
     </th>
-    <th>© <a href="https://artd.eco">Art Deco</a>   2019</th>
-    <th>
-      <a href="https://www.technation.sucks" title="Tech Nation Visa">
-        <img width="100" src="https://raw.githubusercontent.com/idiocc/cookies/master/wiki/arch4.jpg"
-          alt="Tech Nation Visa">
-      </a>
-    </th>
-    <th><a href="https://www.technation.sucks">Tech Nation Visa Sucks</a></th>
+    <th>© <a href="https://www.artd.eco">Art Deco™</a>   2020</th>
   </tr>
 </table>
 
