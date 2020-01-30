@@ -1,3 +1,10 @@
+## 30 January 2020
+
+### [1.35.10](https://github.com/artdecocode/documentary/compare/v1.35.9...v1.35.10)
+
+- [typedefs] Add some Node API types.
+- [upd] Upd for 2020.
+
 ## 26 December 2019
 
 ### [1.35.9](https://github.com/artdecocode/documentary/compare/v1.35.8...v1.35.9)
