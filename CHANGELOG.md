@@ -1,3 +1,10 @@
+## 3 February 2020
+
+### [1.35.11](https://github.com/artdecocode/documentary/compare/v1.35.10...v1.35.11)
+
+- [fix] Upgrade to EOLs.
+- [deps] Update `makePromise` for Node 12.
+
 ## 30 January 2020
 
 ### [1.35.10](https://github.com/artdecocode/documentary/compare/v1.35.9...v1.35.10)
