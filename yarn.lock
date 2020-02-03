@@ -137,10 +137,10 @@ competent@^3.7.3:
   resolved "https://registry.yarnpkg.com/competent/-/competent-3.7.3.tgz#99885f0800c2e8fd8eb0337ba22de6143df9930c"
   integrity sha512-OVkk9+zU1e9zdWTwL4Xg7JWFdcyV8ckSxRhzpgeg99O+Ws2jveG9bcjo2ttfJEKAH0z1YxaUsr6aQYB3Padvtg==
 
-depack@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/depack/-/depack-1.1.0.tgz#d40c718709ba65cc4bddb7746ffbb6d1c2f24d51"
-  integrity sha512-J7wd3ttuynA0Ok14Z84sTRv2OuMHpEh67axAC5xKjlB/9wf5U8HNS+mtBVVmhJOTP3hJkF345ctdZPB4H8DETQ==
+depack@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/depack/-/depack-1.1.1.tgz#92773b5637b923f7734a7e2309d9f05d10abc655"
+  integrity sha512-/sOJfu26agc2KFzqCpvwpEmbVlbOUXJ7oSWcL/fLrw3IybrF5F8DvaMPrikZ0+HdV2nFW2TFmN0WJAEYCExNAQ==
   dependencies:
     "@depack/nodejs" "^1.1.4"
     "@externs/nodejs" "^1.5.0"
@@ -193,12 +193,10 @@ mismatch@^1.2.0:
   resolved "https://registry.yarnpkg.com/mismatch/-/mismatch-1.2.0.tgz#3f5021861e8084e36a14c2c1f9489941cd18f790"
   integrity sha512-kuw1k8ZHS+12fBVAVOBXMBJBXcNGnByFTJIDzH4W4v84OocejZ/qzxmT4ll9CLX5OD23NXr+NvrQDus0BsQ8xw==
 
-pedantry@^2.3.1, pedantry@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/pedantry/-/pedantry-2.5.1.tgz#cd360103e34b6bf3ac19ea64e5af6c02265878ff"
-  integrity sha512-k0qBBiLpd90MObeWeW0Yx1bFc4O3emg46CJGdywIQJCoE/rZtbnnk9uAzkD6h5MmmcfMSFbGsfSXKJUzyN1XSw==
-  dependencies:
-    depack "^1.1.0"
+pedantry@^2.3.1, pedantry@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/pedantry/-/pedantry-2.5.2.tgz#631adc950b36ac5790b9dbca3e24ccbeb572f778"
+  integrity sha512-seZWm7tMjRMThtI4rON3u8DyKW3//a7dFfGMt0hj1R/TvlLVLOe3+T2HunKgh51gt71fxYTfbi0DkvUkZh0Qrg==
 
 preact@8.5.3:
   version "8.5.3"

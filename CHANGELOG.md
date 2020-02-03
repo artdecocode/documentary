@@ -1,5 +1,10 @@
 ## 3 February 2020
 
+### [1.35.12](https://github.com/artdecocode/documentary/compare/v1.35.11...v1.35.12)
+
+- [fix] Fix section breaks path of windows.
+- [deps] Update alamode.
+
 ### [1.35.11](https://github.com/artdecocode/documentary/compare/v1.35.10...v1.35.11)
 
 - [fix] Upgrade to EOLs.
