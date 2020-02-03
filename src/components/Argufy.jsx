@@ -1,3 +1,4 @@
+import { EOL } from 'os'
 import read from '@wrote/read'
 import Md2Html from './Html'
 import rexml from 'rexml'
@@ -45,27 +46,27 @@ const Argufy = async ({ children, documentary }) => {
     if (def) description += ` Default \`${def}\`.`
     const d = Md2Html({ children: [description], documentary })
 
-    const r = (<tr key={i}>{'\n   '}
-      <td>{nn}</td>{'\n   '}
+    const r = (<tr key={i}>{EOL + '   '}
+      <td>{nn}</td>{EOL + '   '}
       {hasShort && <td>{short ? `-${short}` : ''}</td>}
-      {hasShort && '\n   '}
-      <td dangerouslySetInnerHTML={{ __html: d }}/>{'\n  '}
+      {hasShort && EOL + '   '}
+      <td dangerouslySetInnerHTML={{ __html: d }}/>{EOL + '  '}
     </tr>)
 
     acc.push('  ')
     acc.push(r)
-    acc.push('\n')
+    acc.push(EOL + '')
     return acc
   }, [])
-  return (<table>{'\n '}
-    <thead>{'\n  '}
-      <tr>{'\n   '}
-        <th>Argument</th> {'\n   '}
+  return (<table>{EOL + ' '}
+    <thead>{EOL + '  '}
+      <tr>{EOL + '   '}
+        <th>Argument</th> {EOL + '   '}
         { hasShort && <th>Short</th>}
-        { hasShort && '\n   '}
-        <th>Description</th>{'\n  '}
-      </tr>{'\n '}
-    </thead>{'\n'}
+        { hasShort && EOL + '   '}
+        <th>Description</th>{EOL + '  '}
+      </tr>{EOL + ' '}
+    </thead>{EOL + ''}
     {trs}
   </table>)
 }

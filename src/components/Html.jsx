@@ -33,7 +33,7 @@ export const replace = (c, insertInnerCode, { li, afterCutTags = [] }) => {
 
   let d = SyncReplaceable(s, [
     {
-      re: /\[([^\]\n]+?)\]\((.+?)\)/g,
+      re: /\[([^\]\r?\n]+?)\]\((.+?)\)/g,
       replacement(m, title, href, i) {
         // toc-links regex does not accept a-hrefs
         if (['t-type', 'l-type', 't'].includes(href) || /^#+(-type)?$/.test(href)) {

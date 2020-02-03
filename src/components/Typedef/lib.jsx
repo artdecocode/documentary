@@ -1,3 +1,4 @@
+import { EOL } from 'os'
 import { getLinks } from 'typal'
 
 export const makeIconsName = (allTypes, documentary) => {
@@ -25,7 +26,7 @@ export const makeIconsName = (allTypes, documentary) => {
  * @param {import('typal/types').LinkingOptions} [linkingOpts]
  */
 export const makeMethodTable = (method, allTypes = [], linkingOpts = {}, {
-  indent = ' - ', join = '\n', preargs = '\n\n', documentary,
+  indent = ' - ', join = EOL, preargs = `${EOL}${EOL}`, documentary,
 } = {}) => {
   let table = method.description || ''
   const nameProcess = makeIconsName(allTypes, documentary)
@@ -48,7 +49,7 @@ export const makeMethodTable = (method, allTypes = [], linkingOpts = {}, {
     if (description) n += `: ${description}`
     return n
   }).join(join)
-  table += lis ? ((table ? `${table.endsWith('`'.repeat(3)) ? '\n' : ''}${preargs}` : '') + lis) : ''
+  table += lis ? ((table ? `${table.endsWith('`'.repeat(3)) ? EOL : ''}${preargs}` : '') + lis) : ''
   return table
 }
 

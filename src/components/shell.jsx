@@ -1,6 +1,7 @@
 import spawn from 'spawncommand'
 import { exec } from 'child_process'
 import { codeSurround } from '../lib'
+import { EOL } from 'os'
 
 /**
  * The component to display the shell command and its output. The child received by the component will be split by new lines to get arguments to the program. When the `command` argument is not passed, then the command is taken from children and executed with `exec` method.
@@ -30,7 +31,7 @@ const shell = async (props) => {
       })
     })
   } else {
-    const a = child.trim().split('\n').map(c => {
+    const a = child.trim().split(EOL).map(c => {
       return c.trim()
     })
     const p = spawn(command, a)
@@ -46,7 +47,7 @@ const shell = async (props) => {
   const output = codeSurround(r, lang)
   if (noconsole) return output
   const CMD = codeSurround(`user:~$ ${cmd}`, 'console')
-  return `${CMD}\n\n${output}`
+  return `${CMD}${EOL}${EOL}${output}`
 }
 
 export default shell

@@ -1,6 +1,7 @@
 import { parse } from 'path'
 import resolveDependency from 'resolve-dependency'
 import { read, codeSurround } from '../'
+import { EOL } from 'os'
 
 const getExt = (type, source) => {
   if (type) return type
@@ -11,10 +12,10 @@ const getExt = (type, source) => {
 
 const getPartial = (boundExample) => {
   const s = boundExample
-    .replace(/^\s*\n/gm, '')
+    .replace(/^\s*\r?\n/gm, '')
     .replace(/[^\s]/g, '')
   const minLength = s
-    .split('\n')
+    .split(EOL)
     .reduce((acc, current) => {
       if (current.length < acc) return current.length
       return acc
@@ -65,7 +66,7 @@ export async function replacer(match, ws, source, from, to, type) {
     return match
   }
 }
-export const re = /^( *)%EXAMPLE: (.[^\n,]+)(?:, (.+?) => (.[^\s,]+))?(?:, (.+))?%$/gm
+export const re = /^( *)%EXAMPLE: (.[^\r\n,]+)(?:, (.+?) => (.[^\s,]+))?(?:, (.+))?%$/gm
 
 const exampleRule = {
   re,

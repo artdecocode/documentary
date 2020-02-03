@@ -1,3 +1,4 @@
+import { EOL } from 'os'
 import { c as color } from 'erte'
 import Md2html from '../../components/Html'
 import render from '@depack/render'
@@ -10,7 +11,7 @@ const LOG = /doc/.test(process.env.NODE_DEBUG) ? console.error : (() => {})
 const hasNewLines = (rows) => {
   return rows.some((row) => {
     return row.some((column) => {
-      return /\n/.test(column)
+      return /\r?\n/.test(column)
     })
   })
 }
@@ -18,7 +19,7 @@ const hasNewLines = (rows) => {
 const mapNewLines = (rows) => {
   return rows.map((row) => {
     return row.map((column) => {
-      return column.replace(/\n/g, '<br/>')
+      return column.replace(/\r?\n/g, '<br/>')
     })
   })
 }
@@ -71,7 +72,7 @@ export function replacer(match, macro, table) {
       sep,
       ...realRows,
     ].map(r => getRow(r, lengths))
-    return [he, ...a].join('\n')
+    return [he, ...a].join(EOL)
   } catch (err) {
     const token = /Unexpected token (.) in JSON at position (\d+)/.exec(err.message)
     if (token) {

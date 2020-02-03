@@ -5,6 +5,7 @@ import Pedantry from 'pedantry'
 import tableRule from './rules/table'
 import titleRule from './rules/method-title'
 import { PassThrough } from 'stream'
+import { EOL } from 'os'
 
 /**
  * @param {string} title
@@ -101,5 +102,5 @@ export const codeSurround = (content, lang = '') => {
   if (lang == 'md') lang = 'markdown'
   const hasBackticks = /```/.test(content)
   const t = hasBackticks ? '````' : '```'
-  return `${t}${lang}\n${content}\n${t}`
+  return `${t}${lang}${EOL}${content}${EOL}${t}`
 }

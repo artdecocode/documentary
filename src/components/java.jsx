@@ -2,6 +2,7 @@ import spawn from 'spawncommand'
 import { deepStrictEqual } from 'assert'
 import { codeSurround } from '../lib'
 import { c } from 'erte'
+import { EOL } from 'os'
 
 /**
  * Executes a Java program. Caches the output.
@@ -48,7 +49,7 @@ export default async function Java({ documentary, jar, nocache, children,
   const cc = getShellCommand(['java', ...args], `${co}:~$`)
 
   const CMD = codeSurround(cc, 'console')
-  return `${CMD}\n\n${cmd}`
+  return `${CMD}${EOL}${EOL}${cmd}`
 }
 
 const { DOCUMENTARY_MAX_COLUMNS = 90 } = process.env
@@ -59,7 +60,7 @@ export const getShellCommand = (args, program = 'java') => {
   const s = args.reduce((acc, current) => {
     if (lastLineLength + current.length > maxLength) {
       const space = '> '
-      acc = acc + ` \\\n${space}` + current
+      acc = acc + ` \\${EOL}${space}` + current
       lastLineLength = current.length + space.length
     } else {
       acc = acc + ' ' + current

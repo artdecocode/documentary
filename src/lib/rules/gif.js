@@ -3,7 +3,7 @@ alt
 summary
 %`
 
-const gifRe = /^%GIF (.+)\n(.+)\n(.+)\n%$/mg
+const gifRe = /^%GIF (.+)\r?\n(.+)\r?\n(.+)\r?\n%$/mg
 
 export { gifRe }
 

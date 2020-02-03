@@ -8,6 +8,7 @@ import clone from '@wrote/clone'
 import forkfeed from 'forkfeed'
 import { codeSurround } from '../'
 import Catchment from 'catchment'
+import { EOL } from 'os'
 
 const queue = {}
 
@@ -161,7 +162,7 @@ const getOutput = async (err, stderr, stdout, lang, wiki) => {
     const to = wiki ? join(wiki, indicatrix) : indicatrix
     await clone(imgPath, dirname(to))
     const t = cleared.replace(/<INDICATRIX_PLACEHOLDER>/g,
-      `<a id="_ind${indicatrixId}" href="#_ind${indicatrixId}"><img src="${indicatrix}"></a>\n`)
+      `<a id="_ind${indicatrixId}" href="#_ind${indicatrixId}"><img src="${indicatrix}"></a>${EOL}`)
     indicatrixId++
     return `<pre>${t}</pre>`
   }

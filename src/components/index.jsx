@@ -1,3 +1,4 @@
+import { EOL } from 'os'
 import { makeMethodTable } from './Typedef/lib'
 import { makeLinking } from './Typedef'
 import { getLink } from '../lib'
@@ -65,7 +66,7 @@ export function method({ name, level, documentary, children, noArgTypesInToc, 'j
   } catch (err) {
     error(err)
   }
-  return [res, table].filter(Boolean).join('\n\n')
+  return [res, table].filter(Boolean).join(EOL.repeat(2))
 }
 
 /**

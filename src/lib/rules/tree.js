@@ -1,3 +1,4 @@
+import { EOL } from 'os'
 import spawn from 'spawncommand'
 
 const treeRule = {
@@ -25,6 +26,6 @@ const treeRule = {
   },
 }
 
-const codeSurround = (m, lang = 'm') => `\`\`\`${lang}\n${m.trim()}\n\`\`\``
+const codeSurround = (m, lang = 'm') => `\`\`\`${lang}${EOL}${m.trim()}${EOL}\`\`\``
 
 export default treeRule

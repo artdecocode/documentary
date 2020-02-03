@@ -1,6 +1,6 @@
 import rexml from 'rexml'
-export const macroRe = /^(%+)MACRO (.+)\n([\s\S]+?)\n\1(\n|$)/gm
-export const useMacroRe = /^%USE-MACRO (.+)\n([\s\S]+?)\n%$/gm
+export const macroRe = /^(%+)MACRO (.+)\r?\n([\s\S]+?)\r?\n\1(\r?\n|$)/gm
+export const useMacroRe = /^%USE-MACRO (.+)\r?\n([\s\S]+?)\r?\n%$/gm
 
 /**
  * @param {string} match

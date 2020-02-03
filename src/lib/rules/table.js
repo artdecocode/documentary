@@ -1,3 +1,4 @@
+import { EOL } from 'os'
 import { c as color } from 'erte'
 
 const mapNewLines = (rows) => {
@@ -6,7 +7,7 @@ const mapNewLines = (rows) => {
     return row.map((column) => {
       if (!column) return column
       /** @type {!Array<string>} */
-      let c = column.split('\n')
+      let c = column.split(EOL)
       c = c.map((t, i) => {
         t = t.replace(/`(.+?)`/, (m, g) => {
           // (possibly) temp fix for typal escaping
@@ -52,7 +53,7 @@ export function replacer(match, macro, table) {
       sep,
       ...realRows,
     ].map(r => getRow(r, lengths))
-    return [h, ...a].join('\n')
+    return [h, ...a].join(EOL)
   } catch (err) {
     const token = /Unexpected token (.) in JSON at position (\d+)/.exec(err.message)
     if (token) {
@@ -121,7 +122,7 @@ const getRow = (row, lengths, center = false, adjustments) => {
   return s
 }
 
-const re = /```table(?: +(.+) *)?\n([\s\S]+?)\n```/mg
+const re = /```table(?: +(.+) *)?\r?\n([\s\S]+?)\r?\n```/mg
 
 const tableRule = {
   re,

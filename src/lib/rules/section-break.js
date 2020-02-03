@@ -2,6 +2,7 @@ import { join } from 'path'
 import mismatch from 'mismatch'
 import clone from '@wrote/clone'
 import { c, b } from 'erte'
+import { EOL } from 'os'
 
 const sectionBrakeRe = /^%~(?: +(-?\d+))?(?: +(.+))?%$/gm
 
@@ -38,9 +39,9 @@ const rule = {
       return tags
     } catch (err) {
       const h = c(err.message, 'red')
-      const [, ...s] = err.stack.split('\n')
-      const st = b(s.join('\n'), 'red')
-      const l = `Section break ${n}: ${h}\n${st}`
+      const [, ...s] = err.stack.split(EOL)
+      const st = b(s.join(EOL), 'red')
+      const l = `Section break ${n}: ${h}${EOL}${st}`
       this.log(l)
       return match
     }

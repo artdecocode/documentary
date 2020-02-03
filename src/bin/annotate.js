@@ -3,6 +3,7 @@ import { parse as parseUrl } from 'url'
 import { writeFileSync } from 'fs'
 import { c } from 'erte'
 import { getLink } from '../lib'
+import { EOL } from 'os'
 
 export default function Annotate(wiki, types, gl = ({ name }) => {
   return getLink(name, 'type')
@@ -69,7 +70,7 @@ export default function Annotate(wiki, types, gl = ({ name }) => {
       }
       return acc
     }, {})
-    writeFileSync('package.json', JSON.stringify(newPackageJson, null, 2) + '\n')
+    writeFileSync('package.json', JSON.stringify(newPackageJson, null, 2) + EOL)
     console.log('Updated %s with', c('typedefs.json', 'yellow'))
     Object.keys(t).forEach((tt) => {
       console.log(' - %s', tt)

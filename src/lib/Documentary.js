@@ -1,7 +1,7 @@
 import { Replaceable, makeMarkers, makeCutRule, makePasteRule } from 'restream'
 import { isBuffer } from 'util'
 import { join, resolve, basename } from 'path'
-import { homedir } from 'os'
+import { homedir, EOL } from 'os'
 import write from '@wrote/write'
 import { b } from 'erte'
 import ensurePath, { ensurePathSync } from '@wrote/ensure-path'
@@ -171,7 +171,7 @@ export default class Documentary extends Replaceable {
           const res = t.map((type) => {
             const { LINE, table: tb } = type.toMarkdown(this.allTypes)
             return `${LINE}${tb}`
-          }).join('\n\n')
+          }).join(`${EOL}${EOL}`)
           return res
         },
       },
