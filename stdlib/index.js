@@ -30,13 +30,13 @@ const na = /\s+at.*(?:\(|\s)(.*)\)?/, oa = /^(?:(?:(?:node|(?:internal\/[\w/]*|.
     }
     f = f[1];
     return f.includes(".app/Contents/Resources/electron.asar") || f.includes(".app/Contents/Resources/default_app.asar") ? !1 : !e.test(f);
-  }).filter(f => f.trim()).map(f => b ? f.replace(na, (h, k) => h.replace(k, k.replace(pa, "~"))) : f).join("\n");
+  }).filter(f => f.trim()).map(f => b ? f.replace(na, (g, k) => g.replace(k, k.replace(pa, "~"))) : f).join("\n");
 };
 function ra(a, b, c = !1) {
   return function(d) {
     var e = la(arguments), {stack:f} = Error();
-    const h = ja(f, 2, !0), k = (f = d instanceof Error) ? d.message : d;
-    e = [`Error: ${k}`, ...null !== e && a === e || c ? [b] : [h, b]].join("\n");
+    const g = ja(f, 2, !0), k = (f = d instanceof Error) ? d.message : d;
+    e = [`Error: ${k}`, ...null !== e && a === e || c ? [b] : [g, b]].join("\n");
     e = qa(e);
     return Object.assign(f ? d : Error(), {message:k, stack:e});
   };
@@ -57,25 +57,25 @@ const wa = (a, b) => {
 };
 class xa extends va {
   constructor(a) {
-    const {binary:b = !1, rs:c = null, ...d} = a || {}, {H:e = H(!0), proxyError:f} = a || {}, h = (k, l) => e(l);
+    const {binary:b = !1, rs:c = null, ...d} = a || {}, {H:e = H(!0), proxyError:f} = a || {}, g = (k, l) => e(l);
     super(d);
     this.g = [];
     this.F = new Promise((k, l) => {
       this.on("finish", () => {
-        let g;
-        b ? g = Buffer.concat(this.g) : g = this.g.join("");
-        k(g);
+        let h;
+        b ? h = Buffer.concat(this.g) : h = this.g.join("");
+        k(h);
         this.g = [];
       });
-      this.once("error", g => {
-        if (-1 == g.stack.indexOf("\n")) {
-          h`${g}`;
+      this.once("error", h => {
+        if (-1 == h.stack.indexOf("\n")) {
+          g`${h}`;
         } else {
-          const m = qa(g.stack);
-          g.stack = m;
-          f && h`${g}`;
+          const m = qa(h.stack);
+          h.stack = m;
+          f && g`${h}`;
         }
-        l(g);
+        l(h);
       });
       c && wa(this, c).pipe(this);
     });
@@ -96,34 +96,26 @@ async function za(a) {
   a = aa(a);
   return await ya(a);
 }
-;function Aa(a, b) {
-  if (b > a - 2) {
-    throw Error("Function does not accept that many arguments.");
-  }
-}
-async function I(a, b, c) {
+;async function I(a, b, c) {
   const d = H(!0);
-  if ("function" !== typeof a) {
+  if ("function" != typeof a) {
     throw Error("Function must be passed.");
   }
-  const e = a.length;
-  if (!e) {
-    throw Error("Function does not accept any arguments.");
+  if (!a.length) {
+    throw Error(`Function${a.name ? ` ${a.name}` : ""} does not accept any arguments.`);
   }
-  return await new Promise((f, h) => {
-    const k = (g, m) => g ? (g = d(g), h(g)) : f(c || m);
-    let l = [k];
-    Array.isArray(b) ? (b.forEach((g, m) => {
-      Aa(e, m);
-    }), l = [...b, k]) : 1 < Array.from(arguments).length && (Aa(e, 0), l = [b, k]);
-    a(...l);
+  return await new Promise((e, f) => {
+    const g = (l, h) => l ? (l = d(l), f(l)) : e(c || h);
+    let k = [g];
+    Array.isArray(b) ? k = [...b, g] : 1 < Array.from(arguments).length && (k = [b, g]);
+    a(...k);
   });
 }
-;const Ba = path.basename, M = path.dirname, Q = path.join, Ca = path.relative, Da = path.resolve;
-async function Ea(a) {
+;const Aa = path.basename, M = path.dirname, Q = path.join, Ba = path.relative, Ca = path.resolve;
+async function Da(a) {
   const b = M(a);
   try {
-    return await Fa(b), a;
+    return await Ea(b), a;
   } catch (c) {
     if (/EEXIST/.test(c.message) && -1 != c.message.indexOf(b)) {
       return a;
@@ -131,14 +123,14 @@ async function Ea(a) {
     throw c;
   }
 }
-async function Fa(a) {
+async function Ea(a) {
   try {
     await I(ca, a);
   } catch (b) {
     if ("ENOENT" == b.code) {
       const c = M(a);
-      await Fa(c);
-      await Fa(a);
+      await Ea(c);
+      await Ea(a);
     } else {
       if ("EEXIST" != b.code) {
         throw b;
@@ -146,14 +138,14 @@ async function Fa(a) {
     }
   }
 }
-function Ga(a) {
+function Fa(a) {
   try {
     ea(a);
   } catch (b) {
     if ("ENOENT" == b.code) {
       const c = M(a);
-      Ga(c);
-      Ga(a);
+      Fa(c);
+      Fa(a);
     } else {
       if ("EEXIST" != b.code) {
         throw b;
@@ -161,15 +153,15 @@ function Ga(a) {
     }
   }
 }
-;async function Ha(a, b) {
+;async function Ga(a, b) {
   b = b.map(async c => {
     const d = Q(a, c);
     return {lstat:await I(B, d), path:d, relativePath:c};
   });
   return await Promise.all(b);
 }
-const Ia = a => a.lstat.isDirectory(), Ja = a => !a.lstat.isDirectory();
-async function Ka(a, b = {}) {
+const Ha = a => a.lstat.isDirectory(), Ia = a => !a.lstat.isDirectory();
+async function Ja(a, b = {}) {
   if (!a) {
     throw Error("Please specify a path to the directory");
   }
@@ -178,24 +170,24 @@ async function Ka(a, b = {}) {
     throw b = Error("Path is not a directory"), b.code = "ENOTDIR", b;
   }
   b = await I(fa, a);
-  var d = await Ha(a, b);
-  b = d.filter(Ia);
-  d = d.filter(Ja).reduce((e, f) => {
-    var h = f.lstat.isDirectory() ? "Directory" : f.lstat.isFile() ? "File" : f.lstat.isSymbolicLink() ? "SymbolicLink" : void 0;
-    return {...e, [f.relativePath]:{type:h}};
+  var d = await Ga(a, b);
+  b = d.filter(Ha);
+  d = d.filter(Ia).reduce((e, f) => {
+    var g = f.lstat.isDirectory() ? "Directory" : f.lstat.isFile() ? "File" : f.lstat.isSymbolicLink() ? "SymbolicLink" : void 0;
+    return {...e, [f.relativePath]:{type:g}};
   }, {});
-  b = await b.reduce(async(e, {path:f, relativePath:h}) => {
-    const k = Ca(a, f);
+  b = await b.reduce(async(e, {path:f, relativePath:g}) => {
+    const k = Ba(a, f);
     if (c.includes(k)) {
       return e;
     }
     e = await e;
-    f = await Ka(f);
-    return {...e, [h]:f};
+    f = await Ja(f);
+    return {...e, [g]:f};
   }, {});
   return {content:{...d, ...b}, type:"Directory"};
 }
-;const La = async(a, b) => {
+;const Ka = async(a, b) => {
   const c = aa(a), d = ba(b);
   c.pipe(d);
   await Promise.all([new Promise((e, f) => {
@@ -203,53 +195,53 @@ async function Ka(a, b = {}) {
   }), new Promise((e, f) => {
     d.on("close", e).on("error", f);
   })]);
-}, Ma = async(a, b) => {
+}, La = async(a, b) => {
   a = await I(ha, a);
   await I(ia, [a, b]);
-}, Na = async(a, b) => {
-  await Ea(Q(b, "path.file"));
-  const {content:c} = await Ka(a), d = Object.keys(c).map(async e => {
-    const {type:f} = c[e], h = Q(a, e);
+}, Ma = async(a, b) => {
+  await Da(Q(b, "path.file"));
+  const {content:c} = await Ja(a), d = Object.keys(c).map(async e => {
+    const {type:f} = c[e], g = Q(a, e);
     e = Q(b, e);
-    "Directory" == f ? await Na(h, e) : "File" == f ? await La(h, e) : "SymbolicLink" == f && await Ma(h, e);
+    "Directory" == f ? await Ma(g, e) : "File" == f ? await Ka(g, e) : "SymbolicLink" == f && await La(g, e);
   });
   await Promise.all(d);
 };
-function Oa(a, b, c, d = !1) {
+function Na(a, b, c, d = !1) {
   const e = [];
-  b.replace(a, (f, ...h) => {
-    f = h[h.length - 2];
+  b.replace(a, (f, ...g) => {
+    f = g[g.length - 2];
     f = d ? {position:f} : {};
-    h = h.slice(0, h.length - 2).reduce((k, l, g) => {
-      g = c[g];
-      if (!g || void 0 === l) {
+    g = g.slice(0, g.length - 2).reduce((k, l, h) => {
+      h = c[h];
+      if (!h || void 0 === l) {
         return k;
       }
-      k[g] = l;
+      k[h] = l;
       return k;
     }, f);
-    e.push(h);
+    e.push(g);
   });
   return e;
 }
-;const Pa = new RegExp(`${/([^\s>=/]+)/.source}(?:\\s*=\\s*${/(?:"([\s\S]*?)"|'([\s\S]*?)')/.source})?`, "g"), Qa = new RegExp(`(?:\\s+((?:${Pa.source}\\s*)*))`);
-const Sa = (a, b) => {
+;const Oa = new RegExp(`${/([^\s>=/]+)/.source}(?:\\s*=\\s*${/(?:"([\s\S]*?)"|'([\s\S]*?)')/.source})?`, "g"), Pa = new RegExp(`(?:\\s+((?:${Oa.source}\\s*)*))`);
+const Ra = (a, b) => {
   a = (Array.isArray(a) ? a : [a]).join("|");
-  return Oa(new RegExp(`<(${a})${Qa.source}?(?:${/\s*\/>/.source}|${/>([\s\S]+?)?<\/\1>/.source})`, "g"), b, "t a v v1 v2 c".split(" ")).map(({t:c, a:d = "", c:e = ""}) => {
+  return Na(new RegExp(`<(${a})${Pa.source}?(?:${/\s*\/>/.source}|${/>([\s\S]+?)?<\/\1>/.source})`, "g"), b, "t a v v1 v2 c".split(" ")).map(({t:c, a:d = "", c:e = ""}) => {
     d = d.replace(/\/$/, "").trim();
-    d = Ra(d);
+    d = Qa(d);
     return {content:e, props:d, tag:c};
   });
-}, Ra = a => Oa(Pa, a, ["key", "val", "def", "f"]).reduce((b, {key:c, val:d}) => {
+}, Qa = a => Na(Oa, a, ["key", "val", "def", "f"]).reduce((b, {key:c, val:d}) => {
   if (void 0 === d) {
     return b[c] = !0, b;
   }
   b[c] = "true" == d ? !0 : "false" == d ? !1 : /^\d+$/.test(d) ? parseInt(d, 10) : d;
   return b;
 }, {});
-const Ta = (a, b, c, d = !1, e = !1) => {
+const Sa = (a, b, c, d = !1, e = !1) => {
   const f = c ? new RegExp(`^-(${c}|-${b})$`) : new RegExp(`^--${b}$`);
-  b = a.findIndex(h => f.test(h));
+  b = a.findIndex(g => f.test(g));
   if (-1 == b) {
     return {argv:a};
   }
@@ -262,7 +254,7 @@ const Ta = (a, b, c, d = !1, e = !1) => {
   }
   e && (d = parseInt(d, 10));
   return {value:d, index:b, length:2};
-}, Ua = a => {
+}, Ta = a => {
   const b = [];
   for (let c = 0; c < a.length; c++) {
     const d = a[c];
@@ -273,10 +265,10 @@ const Ta = (a, b, c, d = !1, e = !1) => {
   }
   return b;
 };
-const Va = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
-let Wa = a => `${a}`.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"), Xa = a => 40 < `${a}`.length || -1 != `${a}`.indexOf("\n") || -1 !== `${a}`.indexOf("<");
-const Ya = {};
-function Za(a) {
+const Ua = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
+let Va = a => `${a}`.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"), Wa = a => 40 < `${a}`.length || -1 != `${a}`.indexOf("\n") || -1 !== `${a}`.indexOf("<");
+const Xa = {};
+function Ya(a) {
   const b = {...a.attributes, children:a.children};
   a = a.nodeName.defaultProps;
   if (void 0 !== a) {
@@ -286,94 +278,94 @@ function Za(a) {
   }
   return b;
 }
-;const $a = (a, b, {allAttributes:c, xml:d, J:e, sort:f, w:h} = {}) => {
+;const Za = (a, b, {allAttributes:c, xml:d, J:e, sort:f, w:g} = {}) => {
   let k;
   const l = Object.keys(a);
   f && l.sort();
-  return {K:l.map(g => {
-    var m = a[g];
-    if ("children" != g && !g.match(/[\s\n\\/='"\0<>]/) && (c || !["key", "ref"].includes(g))) {
-      if ("className" == g) {
+  return {K:l.map(h => {
+    var m = a[h];
+    if ("children" != h && !h.match(/[\s\n\\/='"\0<>]/) && (c || !["key", "ref"].includes(h))) {
+      if ("className" == h) {
         if (a.class) {
           return;
         }
-        g = "class";
+        h = "class";
       } else {
-        if ("htmlFor" == g) {
+        if ("htmlFor" == h) {
           if (a.for) {
             return;
           }
-          g = "for";
+          h = "for";
         } else {
-          if ("srcSet" == g) {
+          if ("srcSet" == h) {
             if (a.srcset) {
               return;
             }
-            g = "srcset";
+            h = "srcset";
           }
         }
       }
-      e && g.match(/^xlink:?./) && (g = g.toLowerCase().replace(/^xlink:?/, "xlink:"));
-      if ("style" == g && m && "object" == typeof m) {
+      e && h.match(/^xlink:?./) && (h = h.toLowerCase().replace(/^xlink:?/, "xlink:"));
+      if ("style" == h && m && "object" == typeof m) {
         {
           let n = "";
           for (var p in m) {
             let q = m[p];
-            null != q && (n && (n += " "), n += Ya[p] || (Ya[p] = p.replace(/([A-Z])/g, "-$1").toLowerCase()), n += ": ", n += q, "number" == typeof q && !1 === Va.test(p) && (n += "px"), n += ";");
+            null != q && (n && (n += " "), n += Xa[p] || (Xa[p] = p.replace(/([A-Z])/g, "-$1").toLowerCase()), n += ": ", n += q, "number" == typeof q && !1 === Ua.test(p) && (n += "px"), n += ";");
           }
           m = n || void 0;
         }
       }
-      if ("dangerouslySetInnerHTML" == g) {
+      if ("dangerouslySetInnerHTML" == h) {
         k = m && m.__html;
       } else {
         if ((m || 0 === m || "" === m) && "function" != typeof m) {
           if (!0 === m || "" === m) {
-            if (m = g, !d) {
-              return g;
+            if (m = h, !d) {
+              return h;
             }
           }
           p = "";
-          if ("value" == g) {
+          if ("value" == h) {
             if ("select" == b) {
-              h = m;
+              g = m;
               return;
             }
-            "option" == b && h == m && (p = "selected ");
+            "option" == b && g == m && (p = "selected ");
           }
-          return `${p}${g}="${Wa(m)}"`;
+          return `${p}${h}="${Va(m)}"`;
         }
       }
     }
-  }).filter(Boolean), I:k, w:h};
+  }).filter(Boolean), I:k, w:g};
 };
-const ab = [], bb = /^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/, cb = /^(a|abbr|acronym|audio|b|bdi|bdo|big|br|button|canvas|cite|code|data|datalist|del|dfn|em|embed|i|iframe|img|input|ins|kbd|label|map|mark|meter|noscript|object|output|picture|progress|q|ruby|s|samp|slot|small|span|strong|sub|sup|svg|template|textarea|time|u|tt|var|video|wbr)$/, eb = (a, b = {}) => {
+const $a = [], ab = /^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/, bb = /^(a|abbr|acronym|audio|b|bdi|bdo|big|br|button|canvas|cite|code|data|datalist|del|dfn|em|embed|i|iframe|img|input|ins|kbd|label|map|mark|meter|noscript|object|output|picture|progress|q|ruby|s|samp|slot|small|span|strong|sub|sup|svg|template|textarea|time|u|tt|var|video|wbr)$/, db = (a, b = {}) => {
   const c = b.addDoctype, d = b.pretty;
-  a = db(a, b, {});
+  a = cb(a, b, {});
   return c ? `<!doctype html>${d ? "\n" : ""}${a}` : a;
 };
-function db(a, b = {}, c = {}, d = !1, e = !1, f) {
+function cb(a, b = {}, c = {}, d = !1, e = !1, f) {
   if (null == a || "boolean" == typeof a) {
     return "";
   }
-  const {pretty:h = !1, shallow:k = !1, renderRootComponent:l = !1, shallowHighOrder:g = !1, sortAttributes:m, allAttributes:p, xml:n, initialPadding:q = 0, closeVoidTags:t = !1} = b;
+  const {pretty:g = !1, shallow:k = !1, renderRootComponent:l = !1, shallowHighOrder:h = !1, sortAttributes:m, allAttributes:p, xml:n, initialPadding:q = 0, closeVoidTags:t = !1} = b;
   let {lineLength:v = 40} = b;
   v -= q;
   let {nodeName:r, attributes:F = {}} = a;
   var w = ["textarea", "pre"].includes(r);
-  const da = " ".repeat(q), D = "string" == typeof h ? h : `  ${da}`;
+  const da = " ".repeat(q), D = "string" == typeof g ? g : `  ${da}`;
   if ("object" != typeof a && !r) {
-    return Wa(a);
+    return Va(a);
   }
   if ("function" == typeof r) {
     if (!k || !d && l) {
-      return w = Za(a), r.prototype && "function" == typeof r.prototype.render ? (a = new r(w, c), a._disable = a.__x = !0, a.props = w, a.context = c, r.getDerivedStateFromProps ? a.state = {...a.state, ...r.getDerivedStateFromProps(a.props, a.state)} : a.componentWillMount && a.componentWillMount(), w = a.render(a.props, a.state, a.context), a.getChildContext && (c = {...c, ...a.getChildContext()})) : w = r(w, c), db(w, b, c, g, e, f);
+      return w = Ya(a), r.prototype && "function" == typeof r.prototype.render ? (a = new r(w, c), a._disable = a.__x = !0, a.props = w, a.context = c, r.getDerivedStateFromProps ? a.state = {...a.state, ...r.getDerivedStateFromProps(a.props, a.state)} : a.componentWillMount && a.componentWillMount(), w = a.render(a.props, a.state, a.context), a.getChildContext && (c = {...c, ...a.getChildContext()})) : w = r(w, c), cb(w, b, c, h, e, f);
     }
-    r = r.displayName || r !== Function && r.name || fb(r);
+    r = r.displayName || r !== Function && r.name || eb(r);
   }
   let x = "";
-  ({K:N, I:d, w:f} = $a(F, r, {allAttributes:p, xml:n, J:e, sort:m, w:f}));
-  if (h) {
+  ({K:N, I:d, w:f} = Za(F, r, {allAttributes:p, xml:n, J:e, sort:m, w:f}));
+  if (g) {
     let G = `<${r}`.length;
     x = N.reduce((K, u) => {
       const A = G + 1 + u.length;
@@ -390,31 +382,31 @@ function db(a, b = {}, c = {}, d = !1, e = !1, f) {
   if (`${r}`.match(/[\s\n\\/='"\0<>]/)) {
     throw x;
   }
-  var N = `${r}`.match(bb);
+  var N = `${r}`.match(ab);
   t && N && (x = x.replace(/>$/, " />"));
   let L = [];
   if (d) {
-    !w && h && (Xa(d) || d.length + gb(x) > v) && (d = "\n" + D + `${d}`.replace(/(\n+)/g, "$1" + (D || "\t"))), x += d;
+    !w && g && (Wa(d) || d.length + fb(x) > v) && (d = "\n" + D + `${d}`.replace(/(\n+)/g, "$1" + (D || "\t"))), x += d;
   } else {
     if (a.children) {
-      let G = h && x.includes("\n");
+      let G = g && x.includes("\n");
       const K = [];
       L = a.children.map((u, A) => {
         if (null != u && !1 !== u) {
-          var C = db(u, b, c, !0, "svg" == r ? !0 : "foreignObject" == r ? !1 : e, f);
+          var C = cb(u, b, c, !0, "svg" == r ? !0 : "foreignObject" == r ? !1 : e, f);
           if (C) {
-            h && C.length + gb(x) > v && (G = !0);
+            g && C.length + fb(x) > v && (G = !0);
             if ("string" == typeof u.nodeName) {
               const y = C.replace(new RegExp(`</${u.nodeName}>$`), "");
-              hb(u.nodeName, y) && (K[A] = C.length);
+              gb(u.nodeName, y) && (K[A] = C.length);
             }
             return C;
           }
         }
       }).filter(Boolean);
-      h && G && !w && (L = L.reduce((u, A, C) => {
+      g && G && !w && (L = L.reduce((u, A, C) => {
         var y = (C = K[C - 1]) && /^<([\s\S]+?)>/.exec(A);
-        y && ([, y] = y, y = !cb.test(y));
+        y && ([, y] = y, y = !bb.test(y));
         if (C && !y) {
           y = /[^<]*?(\s)/y;
           var J;
@@ -440,30 +432,30 @@ function db(a, b = {}, c = {}, d = !1, e = !1, f) {
       return x.substring(0, x.length - 1) + " />";
     }
   }
-  N || (!hb(r, L[L.length - 1]) && !w && h && x.includes("\n") && (x += `\n${da}`), x += `</${r}>`);
+  N || (!gb(r, L[L.length - 1]) && !w && g && x.includes("\n") && (x += `\n${da}`), x += `</${r}>`);
   return x;
 }
-const hb = (a, b) => `${a}`.match(cb) && (b ? !/>$/.test(b) : !0);
-function fb(a) {
+const gb = (a, b) => `${a}`.match(bb) && (b ? !/>$/.test(b) : !0);
+function eb(a) {
   var b = (Function.prototype.toString.call(a).match(/^\s*function\s+([^( ]+)/) || "")[1];
   if (!b) {
     b = -1;
-    for (let c = ab.length; c--;) {
-      if (ab[c] === a) {
+    for (let c = $a.length; c--;) {
+      if ($a[c] === a) {
         b = c;
         break;
       }
     }
-    0 > b && (b = ab.push(a) - 1);
+    0 > b && (b = $a.push(a) - 1);
     b = `UnnamedComponent${b}`;
   }
   return b;
 }
-const gb = a => {
+const fb = a => {
   a = a.split("\n");
   return a[a.length - 1].length;
 };
-function jb(a) {
+function ib(a) {
   if ("object" != typeof a) {
     return !1;
   }
@@ -471,7 +463,7 @@ function jb(a) {
   a = -1 != ["string", "function"].indexOf(typeof a.replacement);
   return b && a;
 }
-const kb = (a, b) => {
+const jb = (a, b) => {
   if (!(b instanceof Error)) {
     throw b;
   }
@@ -485,9 +477,9 @@ const kb = (a, b) => {
   b.stack = a.substr(0, c);
   throw b;
 };
-function lb(a, b) {
+function kb(a, b) {
   function c() {
-    return b.filter(jb).reduce((d, {re:e, replacement:f}) => {
+    return b.filter(ib).reduce((d, {re:e, replacement:f}) => {
       if (this.j) {
         return d;
       }
@@ -495,13 +487,13 @@ function lb(a, b) {
         return d = d.replace(e, f);
       }
       {
-        let h;
+        let g;
         return d.replace(e, (k, ...l) => {
-          h = Error();
+          g = Error();
           try {
             return this.j ? k : f.call(this, k, ...l);
-          } catch (g) {
-            kb(h, g);
+          } catch (h) {
+            jb(g, h);
           }
         });
       }
@@ -512,21 +504,21 @@ function lb(a, b) {
   };
   return c.call(c);
 }
-;const mb = a => new RegExp(`%%_RESTREAM_${a.toUpperCase()}_REPLACEMENT_(\\d+)_%%`, "g"), nb = (a, b) => `%%_RESTREAM_${a.toUpperCase()}_REPLACEMENT_${b}_%%`;
-async function ob(a, b) {
-  return pb(a, b);
+;const lb = a => new RegExp(`%%_RESTREAM_${a.toUpperCase()}_REPLACEMENT_(\\d+)_%%`, "g"), mb = (a, b) => `%%_RESTREAM_${a.toUpperCase()}_REPLACEMENT_${b}_%%`;
+async function nb(a, b) {
+  return ob(a, b);
 }
-class qb extends ua {
+class pb extends ua {
   constructor(a, b) {
     super(b);
-    this.g = (Array.isArray(a) ? a : [a]).filter(jb);
+    this.g = (Array.isArray(a) ? a : [a]).filter(ib);
     this.j = !1;
     this.s = b;
   }
   async replace(a, b) {
-    const c = new qb(this.g, this.s);
+    const c = new pb(this.g, this.s);
     b && Object.assign(c, b);
-    a = await ob(c, a);
+    a = await nb(c, a);
     c.j && (this.j = !0);
     b && Object.keys(b).forEach(d => {
       b[d] = c[d];
@@ -544,17 +536,17 @@ class qb extends ua {
       } else {
         const e = [];
         let f;
-        const h = b.replace(c, (k, ...l) => {
+        const g = b.replace(c, (k, ...l) => {
           f = Error();
           try {
             if (this.j) {
               return e.length ? e.push(Promise.resolve(k)) : k;
             }
-            const g = d.call(this, k, ...l);
-            g instanceof Promise && e.push(g);
-            return g;
-          } catch (g) {
-            kb(f, g);
+            const h = d.call(this, k, ...l);
+            h instanceof Promise && e.push(h);
+            return h;
+          } catch (h) {
+            jb(f, h);
           }
         });
         if (e.length) {
@@ -562,10 +554,10 @@ class qb extends ua {
             const k = await Promise.all(e);
             b = b.replace(c, () => k.shift());
           } catch (k) {
-            kb(f, k);
+            jb(f, k);
           }
         } else {
-          b = h;
+          b = g;
         }
       }
       return b;
@@ -581,32 +573,32 @@ class qb extends ua {
     }
   }
 }
-async function pb(a, b) {
+async function ob(a, b) {
   b instanceof sa ? b.pipe(a) : a.end(b);
   return await ya(a);
 }
-;const rb = a => {
+;const qb = a => {
   a = `(${a.join("|")})`;
   return new RegExp(`(\\n)?( *)(<${a}${"(?:\\s+(?!\\/>)[^>]*?)?"}(?:\\s*?/>|>[\\s\\S]*?<\\/\\4>))`, "gm");
 };
-var sb = tty;
-const tb = util.debuglog, ub = util.format, vb = util.inspect;
+var rb = tty;
+const sb = util.debuglog, tb = util.format, ub = util.inspect;
 /*
 
  Copyright (c) 2016 Zeit, Inc.
  https://npmjs.org/ms
 */
-function wb(a) {
+function vb(a) {
   var b = {}, c = typeof a;
   if ("string" == c && 0 < a.length) {
-    return xb(a);
+    return wb(a);
   }
   if ("number" == c && isFinite(a)) {
-    return b.S ? (b = Math.abs(a), a = 864E5 <= b ? yb(a, b, 864E5, "day") : 36E5 <= b ? yb(a, b, 36E5, "hour") : 6E4 <= b ? yb(a, b, 6E4, "minute") : 1000 <= b ? yb(a, b, 1000, "second") : a + " ms") : (b = Math.abs(a), a = 864E5 <= b ? Math.round(a / 864E5) + "d" : 36E5 <= b ? Math.round(a / 36E5) + "h" : 6E4 <= b ? Math.round(a / 6E4) + "m" : 1000 <= b ? Math.round(a / 1000) + "s" : a + "ms"), a;
+    return b.S ? (b = Math.abs(a), a = 864E5 <= b ? xb(a, b, 864E5, "day") : 36E5 <= b ? xb(a, b, 36E5, "hour") : 6E4 <= b ? xb(a, b, 6E4, "minute") : 1000 <= b ? xb(a, b, 1000, "second") : a + " ms") : (b = Math.abs(a), a = 864E5 <= b ? Math.round(a / 864E5) + "d" : 36E5 <= b ? Math.round(a / 36E5) + "h" : 6E4 <= b ? Math.round(a / 6E4) + "m" : 1000 <= b ? Math.round(a / 1000) + "s" : a + "ms"), a;
   }
   throw Error("val is not a non-empty string or a valid number. val=" + JSON.stringify(a));
 }
-function xb(a) {
+function wb(a) {
   a = String(a);
   if (!(100 < a.length) && (a = /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(a))) {
     var b = parseFloat(a[1]);
@@ -652,7 +644,7 @@ function xb(a) {
     }
   }
 }
-function yb(a, b, c, d) {
+function xb(a, b, c, d) {
   return Math.round(a / c) + " " + d + (b >= 1.5 * c ? "s" : "");
 }
 ;/*
@@ -661,16 +653,16 @@ function yb(a, b, c, d) {
  Copyright(c) 2015 Jed Watson
  MIT Licensed
 */
-const zb = /\B(?=(\d{3})+(?!\d))/g, Ab = /(?:\.0*|(\.[^0]+)0+)$/, R = {b:1, kb:1024, mb:1048576, gb:1073741824, tb:Math.pow(1024, 4), pb:Math.pow(1024, 5)};
+const yb = /\B(?=(\d{3})+(?!\d))/g, zb = /(?:\.0*|(\.[^0]+)0+)$/, R = {b:1, kb:1024, mb:1048576, gb:1073741824, tb:Math.pow(1024, 4), pb:Math.pow(1024, 5)};
 function U(a, b) {
   if (!Number.isFinite(a)) {
     return null;
   }
-  const c = Math.abs(a), d = b && b.T || "", e = b && b.V || "", f = b && void 0 !== b.G ? b.G : 2, h = !(!b || !b.P);
+  const c = Math.abs(a), d = b && b.T || "", e = b && b.V || "", f = b && void 0 !== b.G ? b.G : 2, g = !(!b || !b.P);
   (b = b && b.U || "") && R[b.toLowerCase()] || (b = c >= R.pb ? "PB" : c >= R.tb ? "TB" : c >= R.gb ? "GB" : c >= R.mb ? "MB" : c >= R.kb ? "KB" : "B");
   a = (a / R[b.toLowerCase()]).toFixed(f);
-  h || (a = a.replace(Ab, "$1"));
-  d && (a = a.replace(zb, d));
+  g || (a = a.replace(zb, "$1"));
+  d && (a = a.replace(yb, d));
   return a + e + b;
 }
 ;/*
@@ -678,56 +670,56 @@ function U(a, b) {
  BSD License
  Copyright (c) 2009-2015, Kevin Decker <kpdecker@gmail.com>
 */
-function Bb(a, b, c) {
+function Ab(a, b, c) {
   let d = a[a.length - 1];
   d && d.l === b && d.u === c ? a[a.length - 1] = {count:d.count + 1, l:b, u:c} : a.push({count:1, l:b, u:c});
 }
-function Cb(a, b, c, d, e) {
-  let f = c.length, h = d.length, k = b.i;
+function Bb(a, b, c, d, e) {
+  let f = c.length, g = d.length, k = b.i;
   e = k - e;
   let l = 0;
-  for (; k + 1 < f && e + 1 < h && a.equals(c[k + 1], d[e + 1]);) {
+  for (; k + 1 < f && e + 1 < g && a.equals(c[k + 1], d[e + 1]);) {
     k++, e++, l++;
   }
   l && b.m.push({count:l});
   b.i = k;
   return e;
 }
-function Db(a) {
+function Cb(a) {
   let b = [];
   for (let c = 0; c < a.length; c++) {
     a[c] && b.push(a[c]);
   }
   return b;
 }
-class Eb {
+class Db {
   diff(a, b) {
-    a = Db(a.split(""));
-    b = Db(b.split(""));
-    let c = b.length, d = a.length, e = 1, f = c + d, h = [{i:-1, m:[]}];
-    var k = Cb(this, h[0], b, a, 0);
-    if (h[0].i + 1 >= c && k + 1 >= d) {
+    a = Cb(a.split(""));
+    b = Cb(b.split(""));
+    let c = b.length, d = a.length, e = 1, f = c + d, g = [{i:-1, m:[]}];
+    var k = Bb(this, g[0], b, a, 0);
+    if (g[0].i + 1 >= c && k + 1 >= d) {
       return [{value:this.join(b), count:b.length}];
     }
     for (; e <= f;) {
       a: {
         for (k = -1 * e; k <= e; k += 2) {
-          var l = h[k - 1];
-          let m = h[k + 1];
-          var g = (m ? m.i : 0) - k;
-          l && (h[k - 1] = void 0);
+          var l = g[k - 1];
+          let m = g[k + 1];
+          var h = (m ? m.i : 0) - k;
+          l && (g[k - 1] = void 0);
           let p = l && l.i + 1 < c;
-          g = m && 0 <= g && g < d;
-          if (p || g) {
-            !p || g && l.i < m.i ? (l = {i:m.i, m:m.m.slice(0)}, Bb(l.m, void 0, !0)) : (l.i++, Bb(l.m, !0, void 0));
-            g = Cb(this, l, b, a, k);
-            if (l.i + 1 >= c && g + 1 >= d) {
-              k = Fb(this, l.m, b, a);
+          h = m && 0 <= h && h < d;
+          if (p || h) {
+            !p || h && l.i < m.i ? (l = {i:m.i, m:m.m.slice(0)}, Ab(l.m, void 0, !0)) : (l.i++, Ab(l.m, !0, void 0));
+            h = Bb(this, l, b, a, k);
+            if (l.i + 1 >= c && h + 1 >= d) {
+              k = Eb(this, l.m, b, a);
               break a;
             }
-            h[k] = l;
+            g[k] = l;
           } else {
-            h[k] = void 0;
+            g[k] = void 0;
           }
         }
         e++;
@@ -745,24 +737,24 @@ class Eb {
     return a.join("");
   }
 }
-function Fb(a, b, c, d) {
-  let e = 0, f = b.length, h = 0, k = 0;
+function Eb(a, b, c, d) {
+  let e = 0, f = b.length, g = 0, k = 0;
   for (; e < f; e++) {
     var l = b[e];
     if (l.u) {
       l.value = a.join(d.slice(k, k + l.count)), k += l.count, e && b[e - 1].l && (l = b[e - 1], b[e - 1] = b[e], b[e] = l);
     } else {
       if (l.l) {
-        l.value = a.join(c.slice(h, h + l.count));
+        l.value = a.join(c.slice(g, g + l.count));
       } else {
-        let g = c.slice(h, h + l.count);
-        g = g.map(function(m, p) {
+        let h = c.slice(g, g + l.count);
+        h = h.map(function(m, p) {
           p = d[k + p];
           return p.length > m.length ? p : m;
         });
-        l.value = a.join(g);
+        l.value = a.join(h);
       }
-      h += l.count;
+      g += l.count;
       l.l || (k += l.count);
     }
   }
@@ -770,14 +762,14 @@ function Fb(a, b, c, d) {
   1 < f && "string" === typeof c.value && (c.l || c.u) && a.equals("", c.value) && (b[f - 2].value += c.value, b.pop());
   return b;
 }
-;const Gb = {black:30, red:31, green:32, yellow:33, blue:34, magenta:35, cyan:36, white:37, grey:90}, Hb = {black:40, red:41, green:42, yellow:43, blue:44, magenta:45, cyan:46, white:47};
+;const Fb = {black:30, red:31, green:32, yellow:33, blue:34, magenta:35, cyan:36, white:37, grey:90}, Gb = {black:40, red:41, green:42, yellow:43, blue:44, magenta:45, cyan:46, white:47};
 function W(a, b) {
+  return (b = Fb[b]) ? `\x1b[${b}m${a}\x1b[0m` : a;
+}
+function Hb(a, b) {
   return (b = Gb[b]) ? `\x1b[${b}m${a}\x1b[0m` : a;
 }
-function Ib(a, b) {
-  return (b = Hb[b]) ? `\x1b[${b}m${a}\x1b[0m` : a;
-}
-;var Jb = {f:U, ["fy"](a) {
+;var Ib = {f:U, ["fy"](a) {
   return W(U(a) || "", "yellow");
 }, ["fr"](a) {
   return W(U(a) || "", "red");
@@ -790,74 +782,74 @@ function Ib(a, b) {
 }, ["fm"](a) {
   return W(U(a) || "", "magenta");
 }};
-const Kb = Object.keys(process.env).filter(a => /^debug_/i.test(a)).reduce((a, b) => {
+const Jb = Object.keys(process.env).filter(a => /^debug_/i.test(a)).reduce((a, b) => {
   const c = b.substring(6).toLowerCase().replace(/_([a-z])/g, (d, e) => e.toUpperCase());
   b = process.env[b];
   /^(yes|on|true|enabled)$/i.test(b) ? b = !0 : /^(no|off|false|disabled)$/i.test(b) ? b = !1 : "null" === b ? b = null : b = Number(b);
   a[c] = b;
   return a;
-}, {}), Lb = {init:function(a) {
-  a.inspectOpts = {...Kb};
+}, {}), Kb = {init:function(a) {
+  a.inspectOpts = {...Jb};
 }, log:function(...a) {
-  return process.stderr.write(ub(...a) + "\n");
+  return process.stderr.write(tb(...a) + "\n");
 }, formatArgs:function(a) {
   var b = this.namespace, c = this.color;
   const d = this.diff;
-  this.useColors ? (c = "\u001b[3" + (8 > c ? c : "8;5;" + c), b = `  ${c};1m${b} \u001B[0m`, a[0] = b + a[0].split("\n").join("\n" + b), a.push(c + "m+" + wb(d) + "\u001b[0m")) : a[0] = (Kb.hideDate ? "" : (new Date).toISOString() + " ") + b + " " + a[0];
+  this.useColors ? (c = "\u001b[3" + (8 > c ? c : "8;5;" + c), b = `  ${c};1m${b} \u001B[0m`, a[0] = b + a[0].split("\n").join("\n" + b), a.push(c + "m+" + vb(d) + "\u001b[0m")) : a[0] = (Jb.hideDate ? "" : (new Date).toISOString() + " ") + b + " " + a[0];
 }, save:function(a) {
   a ? process.env.DEBUG = a : delete process.env.DEBUG;
 }, load:function() {
   return process.env.DEBUG;
 }, useColors:function() {
-  return "colors" in Kb ? !!Kb.colors : sb.isatty(process.stderr.fd);
-}, colors:[6, 2, 3, 4, 5, 1], inspectOpts:Kb, formatters:{o:function(a) {
-  return vb(a, {...this.inspectOpts, colors:this.useColors}).replace(/\s*\n\s*/g, " ");
+  return "colors" in Jb ? !!Jb.colors : rb.isatty(process.stderr.fd);
+}, colors:[6, 2, 3, 4, 5, 1], inspectOpts:Jb, formatters:{o:function(a) {
+  return ub(a, {...this.inspectOpts, colors:this.useColors}).replace(/\s*\n\s*/g, " ");
 }, O:function(a) {
-  return vb(a, {...this.inspectOpts, colors:this.useColors});
-}, ...Jb}};
-function Mb(a) {
-  function b(...h) {
+  return ub(a, {...this.inspectOpts, colors:this.useColors});
+}, ...Ib}};
+function Lb(a) {
+  function b(...g) {
     if (b.enabled) {
       var k = Number(new Date);
       b.diff = k - (f || k);
       b.prev = f;
       f = b.curr = k;
-      h[0] = Nb(h[0]);
-      "string" != typeof h[0] && h.unshift("%O");
+      g[0] = Mb(g[0]);
+      "string" != typeof g[0] && g.unshift("%O");
       var l = 0;
-      h[0] = h[0].replace(/%([a-zA-Z%]+)/g, (g, m) => {
-        if ("%%" == g) {
-          return g;
+      g[0] = g[0].replace(/%([a-zA-Z%]+)/g, (h, m) => {
+        if ("%%" == h) {
+          return h;
         }
         l++;
         if (m = c[m]) {
-          g = m.call(b, h[l]), h.splice(l, 1), l--;
+          h = m.call(b, g[l]), g.splice(l, 1), l--;
         }
-        return g;
+        return h;
       });
-      d.call(b, h);
-      (b.log || e).apply(b, h);
+      d.call(b, g);
+      (b.log || e).apply(b, g);
     }
   }
   const c = a.formatters, d = a.formatArgs, e = a.log;
   let f;
   return b;
 }
-function Ob(a) {
-  const b = Mb(a);
+function Nb(a) {
+  const b = Lb(a);
   "function" == typeof a.init && a.init(b);
   a.g.push(b);
   return b;
 }
-function Pb(a, b) {
+function Ob(a, b) {
   let c = 0;
   for (let d = 0; d < b.length; d++) {
     c = (c << 5) - c + b.charCodeAt(d), c |= 0;
   }
   return a.colors[Math.abs(c) % a.colors.length];
 }
-function Qb(a) {
-  var b = Lb.load();
+function Pb(a) {
+  var b = Kb.load();
   a.save(b);
   a.s = [];
   a.v = [];
@@ -870,7 +862,7 @@ function Qb(a) {
     b = a.g[c], b.enabled = a.enabled(b.namespace);
   }
 }
-class Rb {
+class Qb {
   constructor(a) {
     this.colors = a.colors;
     this.formatArgs = a.formatArgs;
@@ -907,24 +899,24 @@ class Rb {
     return !1;
   }
 }
-function Nb(a) {
+function Mb(a) {
   return a instanceof Error ? a.stack || a.message : a;
 }
-;const Sb = _crypto.createHash;
+;const Rb = _crypto.createHash;
 require("./init");
 require("./make-io");
 require("./start");
 require("./preact-proxy");
 require("./start-plain");
-var Tb;
-Tb = function() {
-  const a = new Rb(Lb);
+var Sb;
+Sb = function() {
+  const a = new Qb(Kb);
   return function(b) {
-    const c = Ob(a);
+    const c = Nb(a);
     c.namespace = b;
-    c.useColors = Lb.useColors();
+    c.useColors = Kb.useColors();
     c.enabled = a.enabled(b);
-    c.color = Pb(a, b);
+    c.color = Ob(a, b);
     c.destroy = function() {
       a.destroy(this);
     };
@@ -933,22 +925,22 @@ Tb = function() {
       d.log = this.log;
       return d;
     };
-    Qb(a);
+    Pb(a);
     return c;
   };
 }()("competent");
-const Ub = (a, b) => {
+const Tb = (a, b) => {
   let c;
-  "string" == typeof a ? c = a : Array.isArray(a) ? c = a.map(d => "string" == typeof d ? d : eb(d, b)).join("\n") : c = eb(a, b);
+  "string" == typeof a ? c = a : Array.isArray(a) ? c = a.map(d => "string" == typeof d ? d : db(d, b)).join("\n") : c = db(a, b);
   return c;
-}, Wb = async({getReplacements:a, key:b, D:c, re:d, replacement:e, getContext:f, A:h, position:k, body:l}) => {
-  let g;
-  a ? g = a(b, c) : c ? g = {re:Vb(d, b), replacement:e} : g = {re:d, replacement:e};
-  a = new qb(g);
-  f && (b = f(h, {position:k, key:b}), Object.assign(a, b));
-  return await ob(a, l);
-}, Vb = (a, b) => new RegExp(a.source.replace(new RegExp(`([|(])${b}([|)])`), (c, d, e) => "|" == d && "|" == e ? "|" : ")" == e ? e : "(" == d ? d : ""), a.flags);
-const Xb = async a => {
+}, Vb = async({getReplacements:a, key:b, D:c, re:d, replacement:e, getContext:f, A:g, position:k, body:l}) => {
+  let h;
+  a ? h = a(b, c) : c ? h = {re:Ub(d, b), replacement:e} : h = {re:d, replacement:e};
+  a = new pb(h);
+  f && (b = f(g, {position:k, key:b}), Object.assign(a, b));
+  return await nb(a, l);
+}, Ub = (a, b) => new RegExp(a.source.replace(new RegExp(`([|(])${b}([|)])`), (c, d, e) => "|" == d && "|" == e ? "|" : ")" == e ? e : "(" == d ? d : ""), a.flags);
+const Wb = async a => {
   try {
     return await I(B, a);
   } catch (b) {
@@ -957,20 +949,20 @@ const Xb = async a => {
 };
 const Z = async(a, b) => {
   b && (b = M(b), a = Q(b, a));
-  var c = await Xb(a);
+  var c = await Wb(a);
   b = a;
   let d = !1;
   if (!c) {
-    if (b = await Yb(a), !b) {
+    if (b = await Xb(a), !b) {
       throw Error(`${a}.js or ${a}.jsx is not found.`);
     }
   } else {
     if (c.isDirectory()) {
       c = !1;
       let e;
-      a.endsWith("/") || (e = b = await Yb(a), c = !0);
+      a.endsWith("/") || (e = b = await Xb(a), c = !0);
       if (!e) {
-        b = await Yb(Q(a, "index"));
+        b = await Xb(Q(a, "index"));
         if (!b) {
           throw Error(`${c ? `${a}.jsx? does not exist, and ` : ""}index.jsx? file is not found in ${a}`);
         }
@@ -978,72 +970,72 @@ const Z = async(a, b) => {
       }
     }
   }
-  return {path:a.startsWith(".") ? Ca("", b) : b, R:d};
-}, Yb = async a => {
+  return {path:a.startsWith(".") ? Ba("", b) : b, R:d};
+}, Xb = async a => {
   a = `${a}.js`;
-  let b = await Xb(a);
+  let b = await Wb(a);
   b || (a = `${a}x`);
-  if (b = await Xb(a)) {
+  if (b = await Wb(a)) {
     return a;
   }
 };
-const Zb = child_process.fork, $b = child_process.spawn;
-const ac = async a => {
+const Yb = child_process.fork, Zb = child_process.spawn;
+const $b = async a => {
   const [b, c, d] = await Promise.all([new Promise((e, f) => {
-    a.on("error", f).on("exit", h => {
-      e(h);
+    a.on("error", f).on("exit", g => {
+      e(g);
     });
   }), a.stdout ? ya(a.stdout) : void 0, a.stderr ? ya(a.stderr) : void 0]);
   return {code:b, stdout:c, stderr:d};
 };
-const bc = (a, b) => a.some(c => c == b), cc = (a, b) => {
-  const c = bc(a, "index.md"), d = bc(a, "footer.md"), e = ["index.md", "footer.md"];
-  a = a.filter(f => !e.includes(f)).sort((f, h) => {
-    f = f.localeCompare(h, void 0, {numeric:!0});
+const ac = (a, b) => a.some(c => c == b), bc = (a, b) => {
+  const c = ac(a, "index.md"), d = ac(a, "footer.md"), e = ["index.md", "footer.md"];
+  a = a.filter(f => !e.includes(f)).sort((f, g) => {
+    f = f.localeCompare(g, void 0, {numeric:!0});
     return b ? -f : f;
   });
   return c && d ? ["index.md", ...a, "footer.md"] : c ? ["index.md", ...a] : d ? [...a, "footer.md"] : a;
 };
-const dc = tb("pedantry"), fc = async({stream:a, source:b, path:c = ".", content:d = {}, reverse:e = !1, separator:f, includeFilename:h, ignoreHidden:k}) => {
+const cc = sb("pedantry"), ec = async({stream:a, source:b, path:c = ".", content:d = {}, reverse:e = !1, separator:f, includeFilename:g, ignoreHidden:k}) => {
   var l = Object.keys(d);
-  l = await cc(l, e).reduce(async(g, m) => {
-    g = await g;
+  l = await bc(l, e).reduce(async(h, m) => {
+    h = await h;
     const {type:p, content:n} = d[m], q = Q(c, m);
     let t;
-    "File" == p ? k && m.startsWith(".") || (t = await ec({stream:a, source:b, path:q, separator:f, includeFilename:h})) : "Directory" == p && (t = await fc({stream:a, source:b, path:q, content:n, reverse:e, separator:f, includeFilename:h, ignoreHidden:k}));
-    return g + t;
+    "File" == p ? k && m.startsWith(".") || (t = await dc({stream:a, source:b, path:q, separator:f, includeFilename:g})) : "Directory" == p && (t = await ec({stream:a, source:b, path:q, content:n, reverse:e, separator:f, includeFilename:g, ignoreHidden:k}));
+    return h + t;
   }, 0);
-  dc("dir %s size: %s B", c, l);
+  cc("dir %s size: %s B", c, l);
   return l;
-}, ec = async a => {
+}, dc = async a => {
   const b = a.stream, c = a.path, d = a.separator, e = a.includeFilename, f = Q(a.source, c);
   b.emit("file", c);
   d && !b.B && (e ? b.push({file:"separator", data:d}) : b.push(d));
-  a = await new Promise((h, k) => {
+  a = await new Promise((g, k) => {
     let l = 0;
-    const g = aa(f);
-    g.on("data", m => {
+    const h = aa(f);
+    h.on("data", m => {
       l += m.byteLength;
     }).on("error", m => {
       k(m);
     }).on("close", () => {
-      h(l);
+      g(l);
     });
     if (e) {
-      g.on("data", m => {
+      h.on("data", m => {
         b.push({file:f, data:`${m}`});
       });
     } else {
-      g.pipe(b, {end:!1});
+      h.pipe(b, {end:!1});
     }
   });
   b.B = !1;
-  dc("file %s :: %s B", f, a);
+  cc("file %s :: %s B", f, a);
   return a;
 };
-class gc extends ta {
+class fc extends ta {
   constructor(a, b = {}) {
-    const {reverse:c = !1, addNewLine:d = !1, addBlankLine:e = !1, includeFilename:f = !1, ignoreHidden:h = !1} = b;
+    const {reverse:c = !1, addNewLine:d = !1, addBlankLine:e = !1, includeFilename:f = !1, ignoreHidden:g = !1} = b;
     super({objectMode:f});
     let k;
     d ? k = "\n" : e && (k = "\n\n");
@@ -1051,83 +1043,83 @@ class gc extends ta {
     (async() => {
       let l;
       try {
-        ({content:l} = await Ka(a));
-      } catch (g) {
-        this.emit("error", Error(g.message));
+        ({content:l} = await Ja(a));
+      } catch (h) {
+        this.emit("error", Error(h.message));
       }
       try {
-        await fc({stream:this, source:a, content:l, reverse:c, separator:k, includeFilename:f, ignoreHidden:h});
-      } catch (g) {
-        this.emit("error", g);
+        await ec({stream:this, source:a, content:l, reverse:c, separator:k, includeFilename:f, ignoreHidden:g});
+      } catch (h) {
+        this.emit("error", h);
       } finally {
         this.end();
       }
     })();
   }
 }
-;const hc = _module.builtinModules;
-const ic = /^ *import(?:\s+(?:[^\s,]+)\s*,?)?(?:\s*{(?:[^}]+)})?\s+from\s+(['"])(.+?)\1/gm, jc = /^ *import\s+(?:.+?\s*,\s*)?\*\s+as\s+.+?\s+from\s+(['"])(.+?)\1/gm, kc = /^ *import\s+(['"])(.+?)\1/gm, lc = /^ *export\s+(?:{[^}]+?}|\*)\s+from\s+(['"])(.+?)\1/gm, mc = a => [ic, jc, kc, lc].reduce((b, c) => {
-  c = Oa(c, a, ["q", "from"]).map(d => d.from);
+;const gc = _module.builtinModules;
+const hc = /^ *import(?:\s+(?:[^\s,]+)\s*,?)?(?:\s*{(?:[^}]+)})?\s+from\s+(['"])(.+?)\1/gm, ic = /^ *import\s+(?:.+?\s*,\s*)?\*\s+as\s+.+?\s+from\s+(['"])(.+?)\1/gm, jc = /^ *import\s+(['"])(.+?)\1/gm, kc = /^ *export\s+(?:{[^}]+?}|\*)\s+from\s+(['"])(.+?)\1/gm, lc = a => [hc, ic, jc, kc].reduce((b, c) => {
+  c = Na(c, a, ["q", "from"]).map(d => d.from);
   return [...b, ...c];
 }, []);
-const oc = async(a, b, c = {}) => {
+const nc = async(a, b, c = {}) => {
   const {fields:d, soft:e = !1} = c;
   var f = Q(a, "node_modules", b);
   f = Q(f, "package.json");
-  const h = await Xb(f);
-  if (h) {
-    a = await nc(f, d);
+  const g = await Wb(f);
+  if (g) {
+    a = await mc(f, d);
     if (void 0 === a) {
-      throw Error(`The package ${Ca("", f)} does export the module.`);
+      throw Error(`The package ${Ba("", f)} does export the module.`);
     }
     if (!a.entryExists && !e) {
       throw Error(`The exported module ${a.main} in package ${b} does not exist.`);
     }
-    const {entry:k, version:l, packageName:g, main:m, entryExists:p, ...n} = a;
-    return {entry:Ca("", k), packageJson:Ca("", f), ...l ? {version:l} : {}, packageName:g, ...m ? {hasMain:!0} : {}, ...p ? {} : {entryExists:!1}, ...n};
+    const {entry:k, version:l, packageName:h, main:m, entryExists:p, ...n} = a;
+    return {entry:Ba("", k), packageJson:Ba("", f), ...l ? {version:l} : {}, packageName:h, ...m ? {hasMain:!0} : {}, ...p ? {} : {entryExists:!1}, ...n};
   }
-  if ("/" == a && !h) {
+  if ("/" == a && !g) {
     throw Error(`Package.json for module ${b} not found.`);
   }
-  return oc(Q(Da(a), ".."), b, c);
-}, nc = async(a, b = []) => {
+  return nc(Q(Ca(a), ".."), b, c);
+}, mc = async(a, b = []) => {
   const c = await za(a);
-  let d, e, f, h, k;
+  let d, e, f, g, k;
   try {
-    ({module:d, version:e, name:f, main:h, ...k} = JSON.parse(c)), k = b.reduce((g, m) => {
-      g[m] = k[m];
-      return g;
+    ({module:d, version:e, name:f, main:g, ...k} = JSON.parse(c)), k = b.reduce((h, m) => {
+      h[m] = k[m];
+      return h;
     }, {});
-  } catch (g) {
+  } catch (h) {
     throw Error(`Could not parse ${a}.`);
   }
   a = M(a);
-  b = d || h;
+  b = d || g;
   if (!b) {
-    if (!await Xb(Q(a, "index.js"))) {
+    if (!await Wb(Q(a, "index.js"))) {
       return;
     }
-    b = h = "index.js";
+    b = g = "index.js";
   }
   a = Q(a, b);
   let l;
   try {
     ({path:l} = await Z(a)), a = l;
-  } catch (g) {
+  } catch (h) {
   }
-  return {entry:a, version:e, packageName:f, main:!d && h, entryExists:!!l, ...k};
+  return {entry:a, version:e, packageName:f, main:!d && g, entryExists:!!l, ...k};
 };
-const pc = a => /^[./]/.test(a), qc = async(a, b, c, d, e = null) => {
-  const f = H(), h = M(a);
+const oc = a => /^[./]/.test(a), pc = async(a, b, c, d, e = null) => {
+  const f = H(), g = M(a);
   b = b.map(async k => {
-    if (hc.includes(k)) {
+    if (gc.includes(k)) {
       return {internal:k};
     }
     if (/^[./]/.test(k)) {
       try {
         var {path:l} = await Z(k, a);
         return {entry:l, package:e};
-      } catch (g) {
+      } catch (h) {
       }
     } else {
       {
@@ -1135,36 +1127,36 @@ const pc = a => /^[./]/.test(a), qc = async(a, b, c, d, e = null) => {
         !p.startsWith("@") && n ? (q = [n, ...q], n = p) : n = p.startsWith("@") ? `${p}/${n}` : p;
         l = {name:n, paths:q.join("/")};
       }
-      const {name:g, paths:m} = l;
+      const {name:h, paths:m} = l;
       if (m) {
-        const {packageJson:p, packageName:n} = await oc(h, g);
+        const {packageJson:p, packageName:n} = await nc(g, h);
         k = M(p);
         ({path:k} = await Z(Q(k, m)));
         return {entry:k, package:n};
       }
     }
     try {
-      const {entry:g, packageJson:m, version:p, packageName:n, hasMain:q, ...t} = await oc(h, k, {fields:d});
-      return n == e ? (console.warn("[static-analysis] Skipping package %s that imports itself in %s", n, a), null) : {entry:g, packageJson:m, version:p, name:n, ...q ? {hasMain:q} : {}, ...t};
-    } catch (g) {
+      const {entry:h, packageJson:m, version:p, packageName:n, hasMain:q, ...t} = await nc(g, k, {fields:d});
+      return n == e ? (console.warn("[static-analysis] Skipping package %s that imports itself in %s", n, a), null) : {entry:h, packageJson:m, version:p, name:n, ...q ? {hasMain:q} : {}, ...t};
+    } catch (h) {
       if (c) {
         return null;
       }
-      throw f(g);
+      throw f(h);
     }
   });
   return (await Promise.all(b)).filter(Boolean);
-}, sc = async(a, b = {}, {nodeModules:c = !0, shallow:d = !1, soft:e = !1, fields:f = [], L:h = {}, mergeSameNodeModules:k = !0, package:l} = {}) => {
+}, rc = async(a, b = {}, {nodeModules:c = !0, shallow:d = !1, soft:e = !1, fields:f = [], L:g = {}, mergeSameNodeModules:k = !0, package:l} = {}) => {
   if (a in b) {
     return [];
   }
   b[a] = 1;
-  var g = await za(a), m = mc(g);
-  g = rc(g);
-  m = c ? m : m.filter(pc);
-  g = c ? g : g.filter(pc);
+  var h = await za(a), m = lc(h);
+  h = qc(h);
+  m = c ? m : m.filter(oc);
+  h = c ? h : h.filter(oc);
   try {
-    const n = await qc(a, m, e, f, l), q = await qc(a, g, e, f, l);
+    const n = await pc(a, m, e, f, l), q = await pc(a, h, e, f, l);
     q.forEach(t => {
       t.required = !0;
     });
@@ -1177,10 +1169,10 @@ const pc = a => /^[./]/.test(a), qc = async(a, b, c, d, e = null) => {
     const v = n.required;
     if (q && t) {
       q = `${q}:${t}${v ? "-required" : ""}`;
-      if (t = h[q]) {
+      if (t = g[q]) {
         return t;
       }
-      h[q] = n;
+      g[q] = n;
     }
     return n;
   }) : p;
@@ -1190,43 +1182,43 @@ const pc = a => /^[./]/.test(a), qc = async(a, b, c, d, e = null) => {
       return n;
     }
     n = await n;
-    r = (await sc(q, b, {nodeModules:c, shallow:d, soft:e, fields:f, package:r || F, L:h, mergeSameNodeModules:k})).map(w => ({...w, from:w.from ? w.from : q, ...!w.packageJson && t ? {hasMain:t} : {}}));
+    r = (await rc(q, b, {nodeModules:c, shallow:d, soft:e, fields:f, package:r || F, L:g, mergeSameNodeModules:k})).map(w => ({...w, from:w.from ? w.from : q, ...!w.packageJson && t ? {hasMain:t} : {}}));
     return [...n, ...r];
   }, p);
-}, rc = a => Oa(/(?:^|[^\w\d_])require\(\s*(['"])(.+?)\1\s*\)/gm, a, ["q", "from"]).map(b => b.from);
-const tc = async a => {
+}, qc = a => Na(/(?:^|[^\w\d_])require\(\s*(['"])(.+?)\1\s*\)/gm, a, ["q", "from"]).map(b => b.from);
+const sc = async a => {
   const b = H();
   a = Array.isArray(a) ? a : [a];
   a = await Promise.all(a.map(async l => {
     ({path:l} = await Z(l));
     return l;
   }));
-  const {nodeModules:c = !0, shallow:d = !1, soft:e = !1, fields:f = [], mergeSameNodeModules:h = !0} = {shallow:!0, soft:!0};
+  const {nodeModules:c = !0, shallow:d = !1, soft:e = !1, fields:f = [], mergeSameNodeModules:g = !0} = {shallow:!0, soft:!0};
   let k;
   try {
     const l = {};
-    k = await a.reduce(async(g, m) => {
-      g = await g;
-      m = await sc(m, l, {nodeModules:c, shallow:d, soft:e, fields:f, mergeSameNodeModules:h});
-      g.push(...m);
-      return g;
+    k = await a.reduce(async(h, m) => {
+      h = await h;
+      m = await rc(m, l, {nodeModules:c, shallow:d, soft:e, fields:f, mergeSameNodeModules:g});
+      h.push(...m);
+      return h;
     }, []);
   } catch (l) {
     throw b(l);
   }
-  return k.filter(({internal:l, entry:g}, m) => l ? k.findIndex(({internal:p}) => p == l) == m : k.findIndex(({entry:p}) => g == p) == m).map(l => {
-    const g = l.entry, m = l.internal, p = k.filter(({internal:n, entry:q}) => {
+  return k.filter(({internal:l, entry:h}, m) => l ? k.findIndex(({internal:p}) => p == l) == m : k.findIndex(({entry:p}) => h == p) == m).map(l => {
+    const h = l.entry, m = l.internal, p = k.filter(({internal:n, entry:q}) => {
       if (m) {
         return m == n;
       }
-      if (g) {
-        return g == q;
+      if (h) {
+        return h == q;
       }
     }).map(({from:n}) => n).filter((n, q, t) => t.indexOf(n) == q);
     return {...l, from:p};
-  }).map(({package:l, ...g}) => l ? {package:l, ...g} : g);
+  }).map(({package:l, ...h}) => l ? {package:l, ...h} : h);
 };
-const vc = (a, b, c = console.log) => {
+const uc = (a, b, c = console.log) => {
   const d = [], e = [];
   b.forEach(f => {
     a.includes(f) || d.push(f);
@@ -1238,34 +1230,34 @@ const vc = (a, b, c = console.log) => {
     return !0;
   }
   d.forEach(f => {
-    const {entry:h, C:k} = uc(f);
-    c(W("+", "green"), h, k);
+    const {entry:g, C:k} = tc(f);
+    c(W("+", "green"), g, k);
   });
   e.forEach(f => {
-    const {entry:h, C:k} = uc(f);
-    c(W("-", "red"), h, k);
+    const {entry:g, C:k} = tc(f);
+    c(W("-", "red"), g, k);
   });
   return !1;
-}, uc = a => {
+}, tc = a => {
   const [b, c] = a.split(" ");
   a = "";
   c && (a = /^\d+$/.test(c) ? (new Date(parseInt(c, 10))).toLocaleString() : c);
   return {entry:b, C:a};
-}, wc = async a => (await I(B, a)).mtime.getTime(), xc = async a => await Promise.all(a.map(async({entry:b, name:c, internal:d, version:e}) => {
+}, vc = async a => (await I(B, a)).mtime.getTime(), wc = async a => await Promise.all(a.map(async({entry:b, name:c, internal:d, version:e}) => {
   if (c) {
     return `${c} ${e}`;
   }
   if (d) {
     return d;
   }
-  c = await wc(b);
+  c = await vc(b);
   return `${b} ${c}`;
-})), yc = async a => {
-  const b = await tc(a), c = await xc(b);
+})), xc = async a => {
+  const b = await sc(a), c = await wc(b);
   ({path:a} = await Z(a));
-  return {mtime:await wc(a), hash:c, N:b};
+  return {mtime:await vc(a), hash:c, N:b};
 };
-const zc = async(a, b, c) => {
+const yc = async(a, b, c) => {
   if (b.path == a || c == a) {
     ({promise:c} = new xa({rs:b}));
     const d = await c;
@@ -1282,25 +1274,25 @@ const zc = async(a, b, c) => {
 };
 module.exports = {competent:(a, b = {}) => {
   async function c(n, q, t, v, r, F, w) {
-    Tb("render %s", r);
+    Sb("render %s", r);
     const da = Error("Skip render");
     try {
       const D = a[r], x = w.slice(0, F), N = w.slice(F + n.length);
       if (/\x3c!--\s*$/.test(x) && /^\s*--\x3e/.test(N)) {
         return n;
       }
-      const [{content:L = "", props:G}] = Sa(r, v);
+      const [{content:L = "", props:G}] = Ra(r, v);
       v = [L];
       let K = !1, u = !0, A = !1;
       const C = {pretty:void 0, lineLength:void 0};
       let y, J, V, O;
       const P = e.call(this, {...G, children:v}, {export(z = !0, E = null) {
         K = z;
-        E && (O = Object.entries(E).reduce((S, [T, ib]) => {
-          if (void 0 === ib) {
+        E && (O = Object.entries(E).reduce((S, [T, hb]) => {
+          if (void 0 === hb) {
             return S;
           }
-          S[T] = ib;
+          S[T] = hb;
           return S;
         }, {}));
       }, setPretty(z, E) {
@@ -1328,8 +1320,8 @@ module.exports = {competent:(a, b = {}) => {
         X = S instanceof Promise ? await S : S;
         if (E.fileRender) {
           let T = await E.render(P);
-          T = Ub(T, C);
-          u && (T = await Wb({getContext:g.bind(this), getReplacements:m.bind(this), key:r, D:A, re:p, replacement:c, A:J, body:T}));
+          T = Tb(T, C);
+          u && (T = await Vb({getContext:h.bind(this), getReplacements:m.bind(this), key:r, D:A, re:p, replacement:c, A:J, body:T}));
           await E.fileRender(T, P);
         }
       }
@@ -1338,14 +1330,14 @@ module.exports = {competent:(a, b = {}) => {
         y = z.attributes.id;
         y || (y = d.call(this, r, O || G), z.attributes.id = y);
       }
-      let Y = Ub(X, C);
+      let Y = Tb(X, C);
       if (!Y && V) {
-        return h && h.call(this, r, G), "";
+        return g && g.call(this, r, G), "";
       }
       Y = (q || "") + Y.replace(/^/gm, t);
-      u && (Y = await Wb({getContext:g ? g.bind(this) : void 0, getReplacements:m ? m.bind(this) : void 0, key:r, D:A, re:p, replacement:c, A:J, body:Y, position:F}));
+      u && (Y = await Vb({getContext:h ? h.bind(this) : void 0, getReplacements:m ? m.bind(this) : void 0, key:r, D:A, re:p, replacement:c, A:J, body:Y, position:F}));
       K && f.call(this, r, y, O || G, v);
-      h && h.call(this, r, G);
+      g && g.call(this, r, G);
       return Y;
     } catch (D) {
       if (D === da) {
@@ -1355,13 +1347,13 @@ module.exports = {competent:(a, b = {}) => {
       return l ? "" : n;
     }
   }
-  const {getId:d, getProps:e = (n, q) => ({...n, ...q}), markExported:f, onSuccess:h, onFail:k, removeOnError:l = !1, getContext:g, getReplacements:m} = b, p = rb(Object.keys(a));
+  const {getId:d, getProps:e = (n, q) => ({...n, ...q}), markExported:f, onSuccess:g, onFail:k, removeOnError:l = !1, getContext:h, getReplacements:m} = b, p = qb(Object.keys(a));
   return {re:p, replacement:c};
-}, c:W, b:Ib, readDirStructure:Ka, clone:async(a, b) => {
-  const c = await I(B, a), d = Ba(a);
+}, c:W, b:Hb, readDirStructure:Ja, clone:async(a, b) => {
+  const c = await I(B, a), d = Aa(a);
   b = Q(b, d);
-  c.isDirectory() ? await Na(a, b) : c.isSymbolicLink() ? await Ma(a, b) : (await Ea(b), await La(a, b));
-}, Pedantry:gc, whichStream:async function(a) {
+  c.isDirectory() ? await Ma(a, b) : c.isSymbolicLink() ? await La(a, b) : (await Da(b), await Ka(a, b));
+}, Pedantry:fc, whichStream:async function(a) {
   const b = a.source, c = a.destination;
   let {readable:d, writable:e} = a;
   if (!b && !d) {
@@ -1371,51 +1363,51 @@ module.exports = {competent:(a, b = {}) => {
     throw Error("Please give either a destination or writable.");
   }
   b && !d && (d = aa(b));
-  "-" == c ? d.pipe(process.stdout) : c ? await zc(c, d, b) : e instanceof va && (d.pipe(e), await new Promise((f, h) => {
-    e.on("error", h);
+  "-" == c ? d.pipe(process.stdout) : c ? await yc(c, d, b) : e instanceof va && (d.pipe(e), await new Promise((f, g) => {
+    e.on("error", g);
     e.on("finish", f);
   }));
 }, compare:async(a, b = {}, c = console.log) => {
   b = b[a];
-  const {mtime:d, hash:e} = await yc(a);
-  a = Sb("md5").update(JSON.stringify(e)).digest("hex");
+  const {mtime:d, hash:e} = await xc(a);
+  a = Rb("md5").update(JSON.stringify(e)).digest("hex");
   if (!b) {
     return {result:!1, reason:"NO_CACHE", mtime:d, hash:e, md5:a};
   }
-  const {mtime:f, hash:h} = b;
-  return d != f ? {result:!1, reason:"MTIME_CHANGE", mtime:d, hash:e, currentMtime:f, md5:a} : vc(h, e, c) ? {result:!0, md5:a} : {result:!1, mtime:d, hash:e, reason:"HASH_CHANGE", md5:a};
-}, ensurePath:Ea, ensurePathSync:function(a) {
+  const {mtime:f, hash:g} = b;
+  return d != f ? {result:!1, reason:"MTIME_CHANGE", mtime:d, hash:e, currentMtime:f, md5:a} : uc(g, e, c) ? {result:!0, md5:a} : {result:!1, mtime:d, hash:e, reason:"HASH_CHANGE", md5:a};
+}, ensurePath:Da, ensurePathSync:function(a) {
   const b = M(a);
   try {
-    return Ga(b), a;
+    return Fa(b), a;
   } catch (c) {
     if (/EEXIST/.test(c.message) && -1 != c.message.indexOf(b)) {
       return a;
     }
     throw c;
   }
-}, read:za, replace:pb, usually:function(a = {usage:{}}) {
+}, read:za, replace:ob, usually:function(a = {usage:{}}) {
   const {usage:b = {}, description:c, line:d, example:e} = a;
   a = Object.keys(b);
-  const f = Object.values(b), [h] = a.reduce(([g = 0, m = 0], p) => {
+  const f = Object.values(b), [g] = a.reduce(([h = 0, m = 0], p) => {
     const n = b[p].split("\n").reduce((q, t) => t.length > q ? t.length : q, 0);
     n > m && (m = n);
-    p.length > g && (g = p.length);
-    return [g, m];
-  }, []), k = (g, m) => {
-    m = " ".repeat(m - g.length);
-    return `${g}${m}`;
+    p.length > h && (h = p.length);
+    return [h, m];
+  }, []), k = (h, m) => {
+    m = " ".repeat(m - h.length);
+    return `${h}${m}`;
   };
-  a = a.reduce((g, m, p) => {
+  a = a.reduce((h, m, p) => {
     p = f[p].split("\n");
-    m = k(m, h);
+    m = k(m, g);
     const [n, ...q] = p;
     m = `${m}\t${n}`;
-    const t = k("", h);
+    const t = k("", g);
     p = q.map(v => `${t}\t${v}`);
-    return [...g, m, ...p];
-  }, []).map(g => `\t${g}`);
-  const l = [c, `  ${d || ""}`].filter(g => g ? g.trim() : g).join("\n\n");
+    return [...h, m, ...p];
+  }, []).map(h => `\t${h}`);
+  const l = [c, `  ${d || ""}`].filter(h => h ? h.trim() : h).join("\n\n");
   a = `${l ? `${l}\n` : ""}
 ${a.join("\n")}
 `;
@@ -1428,8 +1420,8 @@ ${a.join("\n")}
   if (!a) {
     throw Error("Please specify a command to spawn.");
   }
-  a = $b(a, b, c);
-  b = ac(a);
+  a = Zb(a, b, c);
+  b = $b(a);
   a.promise = b;
   a.spawnCommand = a.spawnargs.join(" ");
   return a;
@@ -1437,15 +1429,15 @@ ${a.join("\n")}
   if (!a) {
     throw Error("Please specify a module to fork");
   }
-  a = Zb(a, b, c);
-  b = ac(a);
+  a = Yb(a, b, c);
+  b = $b(a);
   a.promise = b;
   a.spawnCommand = a.spawnargs.join(" ");
   return a;
-}, SyncReplaceable:lb, Replaceable:qb, makeMarkers:(a, b) => Object.keys(a).reduce((c, d) => {
+}, SyncReplaceable:kb, Replaceable:pb, makeMarkers:(a, b) => Object.keys(a).reduce((c, d) => {
   {
     var e = a[d];
-    const {getReplacement:f = nb, getRegex:h = mb} = b || {}, k = h(d);
+    const {getReplacement:f = mb, getRegex:g = lb} = b || {}, k = g(d);
     e = {name:d, re:e, regExp:k, getReplacement:f, map:{}, lastIndex:0};
   }
   return {...c, [d]:e};
@@ -1463,9 +1455,9 @@ ${a.join("\n")}
     d = c[e];
     delete c[e];
     e = Array.isArray(b) ? b : [b];
-    return lb(d, e);
+    return kb(d, e);
   }};
-}, resolveDependency:Z, rexml:Sa, reduceUsage:a => Object.keys(a).reduce((b, c) => {
+}, resolveDependency:Z, rexml:Ra, reduceUsage:a => Object.keys(a).reduce((b, c) => {
   const d = a[c];
   if ("string" == typeof d) {
     return b[`-${d}`] = "", b;
@@ -1482,48 +1474,48 @@ ${a.join("\n")}
   }
   const c = H(!0), d = ba(a);
   await new Promise((e, f) => {
-    d.on("error", h => {
-      h = c(h);
-      f(h);
+    d.on("error", g => {
+      g = c(g);
+      f(g);
     }).on("close", e).end(b);
   });
 }, argufy:function(a = {}, b = process.argv) {
   let [, , ...c] = b;
-  const d = Ua(c);
+  const d = Ta(c);
   c = c.slice(d.length);
-  a = Object.entries(a).reduce((h, [k, l]) => {
-    h[k] = "string" == typeof l ? {short:l} : l;
-    return h;
+  a = Object.entries(a).reduce((g, [k, l]) => {
+    g[k] = "string" == typeof l ? {short:l} : l;
+    return g;
   }, {});
   const e = [];
-  a = Object.entries(a).reduce((h, [k, l]) => {
-    let g;
+  a = Object.entries(a).reduce((g, [k, l]) => {
+    let h;
     try {
       const m = l.short, p = l.boolean, n = l.number, q = l.command, t = l.multiple;
       if (q && t && d.length) {
-        g = d;
+        h = d;
       } else {
         if (q && d.length) {
-          g = d[0];
+          h = d[0];
         } else {
-          const v = Ta(c, k, m, p, n);
-          ({value:g} = v);
+          const v = Sa(c, k, m, p, n);
+          ({value:h} = v);
           const r = v.index, F = v.length;
           void 0 !== r && F && e.push({index:r, length:F});
         }
       }
     } catch (m) {
-      return h;
+      return g;
     }
-    return void 0 === g ? h : {...h, [k]:g};
+    return void 0 === h ? g : {...g, [k]:h};
   }, {});
   let f = c;
-  e.forEach(({index:h, length:k}) => {
-    Array.from({length:k}).forEach((l, g) => {
-      f[h + g] = null;
+  e.forEach(({index:g, length:k}) => {
+    Array.from({length:k}).forEach((l, h) => {
+      f[g + h] = null;
     });
   });
-  f = f.filter(h => null !== h);
+  f = f.filter(g => null !== g);
   Object.assign(a, {M:f});
   return a;
 }, Catchment:xa, collect:ya, clearr:a => a.split("\n").map(b => {
@@ -1536,9 +1528,9 @@ ${a.join("\n")}
     return `${d}${c}`;
   }, b[0]);
 }).join("\n"), erte:function(a, b) {
-  return (new Eb).diff(a, b).map(({l:c, u:d, value:e}) => {
+  return (new Db).diff(a, b).map(({l:c, u:d, value:e}) => {
     const f = e.split(" ");
-    return c ? f.map(h => h.replace(/\n$/mg, "\u23ce\n")).map(h => W(h, "green")).join(Ib(" ", "green")) : d ? f.map(h => h.replace(/\n$/mg, "\u23ce\n")).map(h => W(h, "red")).join(Ib(" ", "red")) : W(e, "grey");
+    return c ? f.map(g => g.replace(/\n$/mg, "\u23ce\n")).map(g => W(g, "green")).join(Hb(" ", "green")) : d ? f.map(g => g.replace(/\n$/mg, "\u23ce\n")).map(g => W(g, "red")).join(Hb(" ", "red")) : W(e, "grey");
   }).join("");
 }, forkfeed:(a, b, c = [], d = null) => {
   if (d) {
@@ -1546,13 +1538,13 @@ ${a.join("\n")}
   }
   let [e, ...f] = c;
   if (e) {
-    var h = k => {
-      const [l, g] = e;
-      l.test(k) && (k = `${g}\n`, d && d.write(k), b.write(k), [e, ...f] = f, e || a.removeListener("data", h));
+    var g = k => {
+      const [l, h] = e;
+      l.test(k) && (k = `${h}\n`, d && d.write(k), b.write(k), [e, ...f] = f, e || a.removeListener("data", g));
     };
-    a.on("data", h);
+    a.on("data", g);
   }
-}, makepromise:I, mismatch:Oa};
+}, makepromise:I, mismatch:Na};
 
 
 //# sourceMappingURL=index.js.map

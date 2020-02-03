@@ -2,5 +2,9 @@
   "[2e4e99111290fde96a7b3135a9a1d7f4] test/fixture/fork test/temp/output.txt": {
     "stdout": "File has been written (read from cache).\n",
     "stderr": "There has been no errors (read from cache).\n"
+  },
+  "[dae51d889157627e33e19e297649171c] test/fixture/fork test/temp/output.txt": {
+    "stdout": "File has been written (read from cache).\n",
+    "stderr": "There has been no errors (read from cache).\n"
   }
 }
