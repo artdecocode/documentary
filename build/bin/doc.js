@@ -16,6 +16,7 @@ const { reduceUsage } = require('../../stdlib');
 const doc = require('./run/doc');
 const catcher = require('./catcher');
 const { gitPush } = require('../lib');
+const { EOL } = require('os');
 
 const DEBUG = /doc/.test(process.env.NODE_DEBUG) || process.env.DEBUG
 
@@ -51,13 +52,13 @@ if (_source) {
   if (_extract) {
     console.log('Typal: smart typedefs https://artdecocode.com/typal/')
     console.log('Please use typal (included w/ Documentary):')
-    console.log('\ntypal %s -m', _source)
+    console.log(`${EOL}typal %s -m`, _source)
     return
   }
   if (_generate) {
     console.log('Typal: smart typedefs https://artdecocode.com/typal/')
     console.log('Please use typal (included w/ Documentary):')
-    console.log('\ntypal %s [--closure]', _source)
+    console.log(`${EOL}typal %s [--closure]`, _source)
     return
   }
   const docOptions = {

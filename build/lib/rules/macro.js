@@ -1,4 +1,4 @@
-const re = /^%TABLE-MACRO (.+)\n([\s\S]+?)\n%(\n|$)/gm
+const re = /^%TABLE-MACRO (.+)\r?\n([\s\S]+?)\r?\n%(\r?\n|$)/gm
 
 /**
  * Reverse a string.

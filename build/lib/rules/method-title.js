@@ -1,4 +1,4 @@
-const re = /```(#+)( async)? (.+?)(?: => (.+))?(\n[\s\S]*?)?```/g
+const re = /```(#+)( async)? (.+?)(?: => (.+))?(\r?\n[\s\S]*?)?```/g
 
 /**
  * @this {Documentary}

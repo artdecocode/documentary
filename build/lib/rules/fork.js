@@ -8,6 +8,7 @@ const { clone } = require('../../../stdlib');
 const { forkfeed } = require('../../../stdlib');
 const { codeSurround } = require('../');
 const { Catchment } = require('../../../stdlib');
+const { EOL } = require('os');
 
 const queue = {}
 
@@ -161,7 +162,7 @@ const getOutput = async (err, stderr, stdout, lang, wiki) => {
     const to = wiki ? join(wiki, indicatrix) : indicatrix
     await clone(imgPath, dirname(to))
     const t = cleared.replace(/<INDICATRIX_PLACEHOLDER>/g,
-      `<a id="_ind${indicatrixId}" href="#_ind${indicatrixId}"><img src="${indicatrix}"></a>\n`)
+      `<a id="_ind${indicatrixId}" href="#_ind${indicatrixId}"><img src="${indicatrix}"></a>${EOL}`)
     indicatrixId++
     return `<pre>${t}</pre>`
   }

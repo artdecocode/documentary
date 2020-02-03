@@ -1,4 +1,5 @@
 const { h } = require('preact');
+const { EOL } = require('os');
 const { getLinks } = require('typal');
 
 const makeIconsName = (allTypes, documentary) => {
@@ -26,7 +27,7 @@ const makeIconsName = (allTypes, documentary) => {
  * @param {import('typal/types').LinkingOptions} [linkingOpts]
  */
 const makeMethodTable = (method, allTypes = [], linkingOpts = {}, {
-  indent = ' - ', join = '\n', preargs = '\n\n', documentary,
+  indent = ' - ', join = EOL, preargs = `${EOL}${EOL}`, documentary,
 } = {}) => {
   let table = method.description || ''
   const nameProcess = makeIconsName(allTypes, documentary)
@@ -49,7 +50,7 @@ const makeMethodTable = (method, allTypes = [], linkingOpts = {}, {
     if (description) n += `: ${description}`
     return n
   }).join(join)
-  table += lis ? ((table ? `${table.endsWith('`'.repeat(3)) ? '\n' : ''}${preargs}` : '') + lis) : ''
+  table += lis ? ((table ? `${table.endsWith('`'.repeat(3)) ? EOL : ''}${preargs}` : '') + lis) : ''
   return table
 }
 

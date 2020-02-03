@@ -5,6 +5,7 @@ const { Pedantry } = require('../../stdlib');
 const tableRule = require('./rules/table');
 const titleRule = require('./rules/method-title');
 const { PassThrough } = require('stream');
+const { EOL } = require('os');
 
 /**
  * @param {string} title
@@ -101,7 +102,7 @@ const codeSurround = (content, lang = '') => {
   if (lang == 'md') lang = 'markdown'
   const hasBackticks = /```/.test(content)
   const t = hasBackticks ? '````' : '```'
-  return `${t}${lang}\n${content}\n${t}`
+  return `${t}${lang}${EOL}${content}${EOL}${t}`
 }
 
 module.exports.getLink = getLink

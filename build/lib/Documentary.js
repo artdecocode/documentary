@@ -1,7 +1,7 @@
 const { Replaceable, makeMarkers, makeCutRule, makePasteRule } = require('../../stdlib');
 const { isBuffer } = require('util');
 const { join, resolve, basename } = require('path');
-const { homedir } = require('os');
+const { homedir, EOL } = require('os');
 const { write } = require('../../stdlib');
 const { b } = require('../../stdlib');
 const             { ensurePath, ensurePathSync } = require('../../stdlib');
@@ -171,7 +171,7 @@ class Documentary extends Replaceable {
           const res = t.map((type) => {
             const { LINE, table: tb } = type.toMarkdown(this.allTypes)
             return `${LINE}${tb}`
-          }).join('\n\n')
+          }).join(`${EOL}${EOL}`)
           return res
         },
       },

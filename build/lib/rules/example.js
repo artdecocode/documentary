@@ -1,6 +1,7 @@
 const { parse } = require('path');
 const { resolveDependency } = require('../../../stdlib');
 const { read, codeSurround } = require('../');
+const { EOL } = require('os');
 
 const getExt = (type, source) => {
   if (type) return type
@@ -11,10 +12,10 @@ const getExt = (type, source) => {
 
 const getPartial = (boundExample) => {
   const s = boundExample
-    .replace(/^\s*\n/gm, '')
+    .replace(/^\s*\r?\n/gm, '')
     .replace(/[^\s]/g, '')
   const minLength = s
-    .split('\n')
+    .split(EOL)
     .reduce((acc, current) => {
       if (current.length < acc) return current.length
       return acc
@@ -65,7 +66,7 @@ async function replacer(match, ws, source, from, to, type) {
     return match
   }
 }
-const re = /^( *)%EXAMPLE: (.[^\n,]+)(?:, (.+?) => (.[^\s,]+))?(?:, (.+))?%$/gm
+const re = /^( *)%EXAMPLE: (.[^\r\n,]+)(?:, (.+?) => (.[^\s,]+))?(?:, (.+))?%$/gm
 
 const exampleRule = {
   re,

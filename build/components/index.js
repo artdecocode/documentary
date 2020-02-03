@@ -1,4 +1,5 @@
 const { h } = require('preact');
+const { EOL } = require('os');
 const { makeMethodTable } = require('./Typedef/lib');
 const { makeLinking } = require('./Typedef');
 const { getLink } = require('../lib');
@@ -66,7 +67,7 @@ function method({ name, level, documentary, children, noArgTypesInToc, 'just-hea
   } catch (err) {
     error(err)
   }
-  return [res, table].filter(Boolean).join('\n\n')
+  return [res, table].filter(Boolean).join(EOL.repeat(2))
 }
 
 /**

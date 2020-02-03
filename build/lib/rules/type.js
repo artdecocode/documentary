@@ -1,6 +1,7 @@
+const { EOL } = require('os');
 const { rexml } = require('../../../stdlib');
 
-const typeRe = /^%TYPE( .+)?\n([\s\S]+?)\n%$/mg
+const typeRe = /^%TYPE( .+)?\r?\n([\s\S]+?)\r?\n%$/mg
 
 
 const tag = (t, s) => `<${t}>${s}</${t}>`
@@ -28,7 +29,7 @@ const makeTable = (properties, tocTitles) => {
     const t = `<code>${required ? `${name}*` : name}</code>`
     const n = required ? strong(t) : t
     const nn = tocTitles ? `[${n}](t)` : n
-    const e = example.startsWith('```') ? `\n\n${example}`: example
+    const e = example.startsWith('```') ? `${EOL}${EOL}${example}`: example
     return `  <tr>
    <td>${nn}</td>
    <td>${tag('em', type)}</td>
@@ -40,11 +41,11 @@ const makeTable = (properties, tocTitles) => {
   <tr>
    <th>Property</th>
    <th>Type</th>
-   <th>Description</th>${hasExamples ? '\n   <th>Example</th>' : ''}
+   <th>Description</th>${hasExamples ? EOL + '   <th>Example</th>' : ''}
   </tr>
  </thead>
  <tbody>
-${rows.join('\n')}
+${rows.join(EOL)}
  </tbody>
 </table>
 `

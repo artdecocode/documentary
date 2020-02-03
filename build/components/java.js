@@ -3,6 +3,7 @@ const { spawn } = require('../../stdlib');
 const { deepStrictEqual } = require('assert');
 const { codeSurround } = require('../lib');
 const { c } = require('../../stdlib');
+const { EOL } = require('os');
 
 /**
  * Executes a Java program. Caches the output.
@@ -49,7 +50,7 @@ async function Java({ documentary, jar, nocache, children,
   const cc = getShellCommand(['java', ...args], `${co}:~$`)
 
   const CMD = codeSurround(cc, 'console')
-  return `${CMD}\n\n${cmd}`
+  return `${CMD}${EOL}${EOL}${cmd}`
 }
 
 const { DOCUMENTARY_MAX_COLUMNS = 90 } = process.env
@@ -60,7 +61,7 @@ const getShellCommand = (args, program = 'java') => {
   const s = args.reduce((acc, current) => {
     if (lastLineLength + current.length > maxLength) {
       const space = '> '
-      acc = acc + ` \\\n${space}` + current
+      acc = acc + ` \\${EOL}${space}` + current
       lastLineLength = current.length + space.length
     } else {
       acc = acc + ' ' + current

@@ -5,11 +5,11 @@ const createTocRule = (toc) => {
   }
 }
 
-const commentRe = /<!--[\s\S]*?-->\n*/g
+const commentRe = /<!--[\s\S]*?-->\r?\n*/g
 
-const codeRe = /^( *)```(`)?(?!table$)(\w+)?\n[\s\S]*?\n\1```\2/gm
+const codeRe = /^( *)```(`)?(?!table$)(\w+)?\r?\n[\s\S]*?\r?\n\1```\2/gm
 
-const innerCodeRe = /`[^`\n]+?`/gm
+const innerCodeRe = /`[^`\r\n]+?`/gm
 
 const commentRule = {
   re: commentRe,
@@ -20,8 +20,8 @@ const commentRule = {
 }
 
 // ^[\n because can be part of a table row
-const linkTitleRe = /\[([^[\n]+?)\]\((t|#+)(?:-([\w\d]+))?\)/gm
-const linkRe = /\[([^\n\]]+?)\]\(l(?:-([\w\d]+))?\)/gm
+const linkTitleRe = /\[([^[\r\n]+?)\]\((t|#+)(?:-([\w\d]+))?\)/gm
+const linkRe = /\[([^\r\n\]]+?)\]\(l(?:-([\w\d]+))?\)/gm
 
 module.exports.createTocRule = createTocRule
 module.exports.commentRe = commentRe

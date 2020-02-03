@@ -58,7 +58,8 @@ const getTags = ({ wiki, src, href, ...attrs }) => {
     a = wiki ? `|${a}` : ` ${a}`
   }
 
-  const img = wiki ? `[[${src}${a}]]` : `<img src="${src}"${a}>`
+  const usrc = src.replace(/\\/g, '/')
+  const img = wiki ? `[[${usrc}${a}]]` : `<img src="${usrc}"${a}>`
   const s = `<p align="center"><a href="${href}">
   ${img}
 </a></p>`

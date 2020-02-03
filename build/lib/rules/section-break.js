@@ -2,6 +2,7 @@ const { join } = require('path');
 const { mismatch } = require('../../../stdlib');
 const { clone } = require('../../../stdlib');
 const { c, b } = require('../../../stdlib');
+const { EOL } = require('os');
 
 const sectionBrakeRe = /^%~(?: +(-?\d+))?(?: +(.+))?%$/gm
 
@@ -38,9 +39,9 @@ const rule = {
       return tags
     } catch (err) {
       const h = c(err.message, 'red')
-      const [, ...s] = err.stack.split('\n')
-      const st = b(s.join('\n'), 'red')
-      const l = `Section break ${n}: ${h}\n${st}`
+      const [, ...s] = err.stack.split(EOL)
+      const st = b(s.join(EOL), 'red')
+      const l = `Section break ${n}: ${h}${EOL}${st}`
       this.log(l)
       return match
     }
@@ -57,7 +58,8 @@ const getTags = ({ wiki, src, href, ...attrs }) => {
     a = wiki ? `|${a}` : ` ${a}`
   }
 
-  const img = wiki ? `[[${src}${a}]]` : `<img src="${src}"${a}>`
+  const usrc = src.replace(/\\/g, '/')
+  const img = wiki ? `[[${usrc}${a}]]` : `<img src="${usrc}"${a}>`
   const s = `<p align="center"><a href="${href}">
   ${img}
 </a></p>`

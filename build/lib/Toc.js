@@ -3,8 +3,9 @@ const { collect } = require('../../stdlib');
 const { getLink } = require('.');
 const { codeRe, innerCodeRe } = require('./rules');
 const { Replaceable, makeCutRule, makeMarkers } = require('../../stdlib');
+const { EOL } = require('os');
 
-const re = /(?:^|\n) *(#+) +(.+)/g
+const re = /(?:^|\r?\n) *(#+) +(.+)/g
 
 const underline = /^ *([=-]+) *$/gm
 
@@ -54,7 +55,7 @@ class ChunkReplaceable extends Replaceable {
           let ok = true
           let s = input.substr(0, position - 1)
           while (ok) {
-            const li = s.lastIndexOf('\n')
+            const li = s.lastIndexOf('\n') // eol not needed
             const t = s.substr(li + 1)
             const isLine = new RegExp(underline.source).test(t)
             if (isLine) {
@@ -229,7 +230,7 @@ class Toc extends Transform {
         }
         const line = this.getTocLine(title)
         this.push(line)
-        this.push('\n')
+        this.push(EOL)
       })
       this.clear()
       next()
@@ -263,7 +264,7 @@ const getToc = async (stream, h1, locations, justToc = false) => {
   return (justToc || toc.hasToc ? '' : tocA) + res.trimRight()
 }
 
-const tocA = '<a name="table-of-contents"></a>\n\n'
+const tocA = `<a name="table-of-contents"></a>${EOL}${EOL}`
 
 /**
  * @typedef {import('./typedef/Type').default} Type

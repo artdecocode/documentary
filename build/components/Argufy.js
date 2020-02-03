@@ -1,4 +1,5 @@
 const { h } = require('preact');
+const { EOL } = require('os');
 const { read } = require('../../stdlib');
 const Md2Html = require('./Html');
 const { rexml } = require('../../stdlib');
@@ -46,27 +47,27 @@ const Argufy = async ({ children, documentary }) => {
     if (def) description += ` Default \`${def}\`.`
     const d = Md2Html({ children: [description], documentary })
 
-    const r = (h('tr',{'key':i},'\n   ',
-      h('td',{},nn),'\n   ',
+    const r = (h('tr',{'key':i},EOL + '   ',
+      h('td',{},nn),EOL + '   ',
       hasShort && h('td',{},short ? `-${short}` : ''),
-      hasShort && '\n   ',
-      h('td',{'dangerouslySetInnerHTML':{ __html: d }}),'\n  ',
+      hasShort && EOL + '   ',
+      h('td',{'dangerouslySetInnerHTML':{ __html: d }}),EOL + '  ',
     ))
 
     acc.push('  ')
     acc.push(r)
-    acc.push('\n')
+    acc.push(EOL + '')
     return acc
   }, [])
-  return (h('table',{},'\n ',
-    h('thead',{},'\n  ',
-      h('tr',{},'\n   ',
-        h('th',{},`Argument`),` `,'\n   ',
+  return (h('table',{},EOL + ' ',
+    h('thead',{},EOL + '  ',
+      h('tr',{},EOL + '   ',
+        h('th',{},`Argument`),` `,EOL + '   ',
          hasShort && h('th',{},`Short`),
-         hasShort && '\n   ',
-        h('th',{},`Description`),'\n  ',
-      ),'\n ',
-    ),'\n',
+         hasShort && EOL + '   ',
+        h('th',{},`Description`),EOL + '  ',
+      ),EOL + ' ',
+    ),EOL + '',
     trs,
   ))
 }

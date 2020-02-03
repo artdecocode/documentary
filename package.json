@@ -103,7 +103,7 @@
     "indicatrix": "^1.4.1",
     "makepromise": "^3.2.0",
     "mismatch": "^1.2.0",
-    "pedantry": "^2.5.0",
+    "pedantry": "^2.5.1",
     "reloquent": "^1.3.2",
     "resolve-dependency": "^1.0.3",
     "restream": "^3.7.4",
@@ -117,7 +117,7 @@
     "zoroaster": "^4.2.0"
   },
   "dependencies": {
-    "alamode": "^3.3.2",
+    "alamode": "^3.3.3",
     "preact": "8.5.3",
     "typal": "^1.26.2"
   }

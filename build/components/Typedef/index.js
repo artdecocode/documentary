@@ -5,6 +5,7 @@ const md2html = require('../Html');
 const { codeRe } = require('../../lib/rules');
 const { makeMethodTable, makeIconsName } = require('./lib');
 const { getLink } = require('../../lib');
+const { EOL } = require('os');
 
 // const extractPages = (props) => {
 //   return Object.entries(props).reduce((acc, [key, val]) => {
@@ -133,9 +134,9 @@ function Typedef({ documentary, children, name, narrow,
     if (displayInDetails) {
       const line = md2html({ documentary, children: [LINE] })
 
-      if (isObject) return (   h('details',{},'\n ',
-        h('summary',{'dangerouslySetInnerHTML':{ __html: line }}),'\n',
-        ch,'\n',
+      if (isObject) return (   h('details',{},EOL + ' ',
+        h('summary',{'dangerouslySetInnerHTML':{ __html: line }}),EOL,
+        ch,EOL,
       ))
 
       return `<details>
@@ -149,7 +150,7 @@ function Typedef({ documentary, children, name, narrow,
 
   const res = [...j, ...ttt].reduce((acc, c, i, ar) => {
     acc.push(...(Array.isArray(c) ? c : [c]))
-    if (i < ar.length - 1) acc.push('\n')
+    if (i < ar.length - 1) acc.push(EOL)
     return acc
   }, [])
 
@@ -168,26 +169,26 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
   const md = (name, afterCutLinks) => {
     return md2html({ documentary, children: [name], afterCutLinks })
   }
-  return (h('table',{},'\n ',
-    h('thead',{},h('tr',{},'\n  ',
-      h('th',{},`Name`),'\n  ',
-      h('th',{},`Type & Description`),anyHaveDefault ? '\n  ' : '\n ' ,
+  return (h('table',{},EOL + ' ',
+    h('thead',{},h('tr',{},EOL + '  ',
+      h('th',{},`Name`),EOL + '  ',
+      h('th',{},`Type & Description`),anyHaveDefault ? EOL + '  ' : EOL + ' ' ,
       anyHaveDefault && h('th',{},constr ? 'Initial' : 'Default' ),
-      anyHaveDefault && '\n ',
-    )),'\n',
+      anyHaveDefault && EOL + ' ',
+    )),EOL,
     props.reduce((acc, { name, typeName, de, d, prop }) => {
       let desc = (prop.args && !slimFunctions) ? makeMethodTable(prop, allTypes, opts, {
-        indent: '', join: '<br/>\n', preargs: '<br/>\n', documentary,
+        indent: '', join: '<br/>' + EOL, preargs: '<br/>' + EOL, documentary,
       }) : de
       let hasCodes
       if (prop.examples.length) {
-        desc += `\n${makeExamples(prop.examples)}`
+        desc += `${EOL}${makeExamples(prop.examples)}`
         hasCodes = true
       } else {
         hasCodes = new RegExp(codeRe.source, codeRe.flags).test(prop.args ? desc : prop.description)
       }
-      desc = desc + '\n  '
-      if (hasCodes) desc = '\n\n' + desc
+      desc = desc + EOL + '  '
+      if (hasCodes) desc = EOL + EOL + desc
       // let n = md(name)
       const { optional, aliases, static: isStatic } = prop
       const n = aliases.reduce((ac, al) => {
@@ -197,7 +198,7 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
         return ac
       }, [name])
       const isMethodCol = anyHaveDefault && prop.args
-      const row = (h('tr',{'key':name},'\n  ',
+      const row = (h('tr',{'key':name},EOL + '  ',
         h('td',{'rowSpan':"3",'align':"center"},
           n.reduce((ac, c, i, ar) => {
             c = Array.isArray(c) ? c : [c]
@@ -211,15 +212,15 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
             if (i < ar.length - 1) ac.push(h('br'))
             return ac
           }, []),
-        ),'\n  ',
+        ),EOL + '  ',
         h('td',{'colSpan':isMethodCol ? 2 : undefined},
           h('em',{'dangerouslySetInnerHTML':{ __html: md(typeName, [
             { re: /([_*])/g, replacement: '\\$1' }, // esc for md2html
           ]) }}),
         ),
-        anyHaveDefault && !prop.args && '\n  ',
+        anyHaveDefault && !prop.args && EOL + '  ',
         anyHaveDefault && !prop.args && h('td',{'dangerouslySetInnerHTML':{ __html: md(d) },'rowSpan':"3"}),
-        '\n ',
+        EOL + ' ',
       ))
       let D = desc
       if (!hasCodes) { // if it had codes, don't bother with markdown
@@ -227,20 +228,20 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
         if (D) D = D
           .replace(/^(?!%%_RESTREAM_CODE_REPLACEMENT)/gm, '   ')
           .replace(/^ +$/gm, '')
-        if (D) D = `\n${D}\n  `
+        if (D) D = `${EOL}${D}${EOL}  `
       }
 
-      const descRow =       h('tr',{},'\n  ',
-        h('td',{'colSpan':isMethodCol ? 2 : undefined,'dangerouslySetInnerHTML':{ __html: D }}),'\n ',
+      const descRow =       h('tr',{},EOL + '  ',
+        h('td',{'colSpan':isMethodCol ? 2 : undefined,'dangerouslySetInnerHTML':{ __html: D }}),EOL + ' ',
       )
 
       acc.push(' ')
       acc.push(row)
-      acc.push('\n ')
+      acc.push(EOL + ' ')
       acc.push(h('tr'))
-      acc.push('\n ')
+      acc.push(EOL + ' ')
       acc.push(descRow)
-      acc.push('\n')
+      acc.push(EOL)
       return acc
     }, []),
   ))
@@ -254,7 +255,7 @@ const Narrow = ({ props, anyHaveDefault, documentary, constr, allTypes, opts,
 const makeExamples = (examples) => {
   const pp = []
   examples.forEach((example) => {
-    const exampleLines = example.split('\n')
+    const exampleLines = example.split(EOL)
     let currentComment = [], currentBlock = []
     let state = '', newState
     let eg = exampleLines.reduce((acc, current) => {
@@ -268,10 +269,10 @@ const makeExamples = (examples) => {
       if (!state) state = newState
       if (newState != state) {
         if (newState == 'block') {
-          acc.push(currentComment.join('\n'))
+          acc.push(currentComment.join(EOL))
           currentComment = []
         } else {
-          acc.push(currentBlock.join('\n'))
+          acc.push(currentBlock.join(EOL))
           currentBlock = []
         }
         state = newState
@@ -279,24 +280,24 @@ const makeExamples = (examples) => {
       return acc
     }, [])
     if (currentComment.length) {
-      eg.push(currentComment.join('\n'))
+      eg.push(currentComment.join(EOL))
     } else if (currentBlock.length) {
-      eg.push(currentBlock.join('\n'))
+      eg.push(currentBlock.join(EOL))
     }
     eg = eg.reduce((acc, e) => {
       if (e.startsWith('///')) {
         e = e.replace(/^\/\/\/\s+/gm, '')
-        acc.push(...e.split('\n'))
+        acc.push(...e.split(EOL))
       } else {
         acc.push('```js')
-        acc.push(...e.split('\n'))
+        acc.push(...e.split(EOL))
         acc.push('```')
       }
       return acc
     }, [])
     pp.push(...eg)
   })
-  return pp.join('\n')
+  return pp.join(EOL)
 }
 
 /**

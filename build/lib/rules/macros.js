@@ -1,6 +1,6 @@
 const { rexml } = require('../../../stdlib');
-const macroRe = /^(%+)MACRO (.+)\n([\s\S]+?)\n\1(\n|$)/gm
-const useMacroRe = /^%USE-MACRO (.+)\n([\s\S]+?)\n%$/gm
+const macroRe = /^(%+)MACRO (.+)\r?\n([\s\S]+?)\r?\n\1(\r?\n|$)/gm
+const useMacroRe = /^%USE-MACRO (.+)\r?\n([\s\S]+?)\r?\n%$/gm
 
 /**
  * @param {string} match

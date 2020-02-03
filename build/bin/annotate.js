@@ -3,6 +3,7 @@ const { parse: parseUrl } = require('url');
 const { writeFileSync } = require('fs');
 const { c } = require('../../stdlib');
 const { getLink } = require('../lib');
+const { EOL } = require('os');
 
 function Annotate(wiki, types, gl = ({ name }) => {
   return getLink(name, 'type')
@@ -69,7 +70,7 @@ function Annotate(wiki, types, gl = ({ name }) => {
       }
       return acc
     }, {})
-    writeFileSync('package.json', JSON.stringify(newPackageJson, null, 2) + '\n')
+    writeFileSync('package.json', JSON.stringify(newPackageJson, null, 2) + EOL)
     console.log('Updated %s with', c('typedefs.json', 'yellow'))
     Object.keys(t).forEach((tt) => {
       console.log(' - %s', tt)
