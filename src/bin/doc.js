@@ -35,6 +35,7 @@ if (_version) {
 }
 
 const preact = dirname(require.resolve('preact/package.json'))
+  .replace(/\\/g, '\\\\') // win
 alamode({
   pragma: 'const { h } = r'+`equire("${preact}");`,
 })

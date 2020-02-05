@@ -114,10 +114,10 @@
     "usually": "^1.2.0",
     "which-stream": "^1.2.1",
     "yarn-s": "1.2.3",
-    "zoroaster": "^4.2.0"
+    "zoroaster": "^4.3.0"
   },
   "dependencies": {
-    "alamode": "^3.3.3",
+    "alamode": "^3.4.1",
     "preact": "8.5.3",
     "typal": "^1.26.2"
   }
