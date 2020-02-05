@@ -1,3 +1,9 @@
+## 5 February 2020
+
+### [1.35.13](https://github.com/artdecocode/documentary/compare/v1.35.12...v1.35.13)
+
+- [fix] Fix preact path on Win.
+
 ## 3 February 2020
 
 ### [1.35.12](https://github.com/artdecocode/documentary/compare/v1.35.11...v1.35.12)
