@@ -1,5 +1,9 @@
 ## 10 February 2020
 
+### [1.37.0](https://github.com/artdecocode/documentary/compare/v1.36.1...v1.37.0)
+
+- [feature] Add `cl` binary.
+
 ### [1.36.1](https://github.com/artdecocode/documentary/compare/v1.36.0...v1.36.1)
 
 - [fix] Pass relative paths to forks also.

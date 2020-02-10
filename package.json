@@ -16,6 +16,7 @@
     "d": "yarn-s d1",
     "doc": "yarn dev -o README.md",
     "wiki": "DOCUMENTARY_MAX_COLUMNS=70 yarn dev wiki -W wiki.git",
+    "cl": "depack src/cl -o build/bin/cl.js -a -c -p",
     "start": "node build/bin",
     "example/": "yarn e example/example.js",
     "old-typal": "doc doc/10-typedef -o doc/typal.md",
@@ -28,10 +29,10 @@
   },
   "bin": {
     "doc": "build/bin/doc.js",
+    "cl": "build/bin/cl.js",
     "doc-dev": "src/bin/index.js",
     "typal": "build/bin/typal.js"
   },
-  "man": "man/doc.1",
   "files": [
     "build",
     "src/bin/index.js",
