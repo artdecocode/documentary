@@ -1,3 +1,10 @@
+## 10 February 2020
+
+### [1.36.0](https://github.com/artdecocode/documentary/compare/v1.35.13...v1.36.0)
+
+- [feature] Relative examples.
+- [feature] Read only markdown/html files.
+
 ## 5 February 2020
 
 ### [1.35.13](https://github.com/artdecocode/documentary/compare/v1.35.12...v1.35.13)
