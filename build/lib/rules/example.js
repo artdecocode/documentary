@@ -1,4 +1,4 @@
-const { parse } = require('path');
+const { parse, join, dirname } = require('path');
 const { resolveDependency } = require('../../../stdlib');
 const { read, codeSurround } = require('../');
 const { EOL } = require('os');
@@ -27,6 +27,7 @@ const getPartial = (boundExample) => {
 
 async function replacer(match, ws, source, from, to, type) {
   try {
+    if (source.startsWith('./')) source = join(dirname(this.currentFile), source)
     const { path } = await resolveDependency(source)
     let f = await read(path)
     f = f.trim()
