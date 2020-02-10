@@ -63,8 +63,9 @@ const SKIP_USER_COMPONENTS = process.env.DOCUMENTARY_SKIP_USER_COMPONENTS
   && process.env.DOCUMENTARY_SKIP_USER_COMPONENTS != 'false'
 
 const { DOCUMENTARY_CWD: CWD = '.' } = process.env
-let { DOCUMENTARY_IGNORE_HIDDEN: IGNORE_HIDDEN = true } = process.env
+let { DOCUMENTARY_IGNORE_HIDDEN: IGNORE_HIDDEN = true, ONLY_DOC = true } = process.env
 if (IGNORE_HIDDEN) IGNORE_HIDDEN = IGNORE_HIDDEN != 'false'
+if (ONLY_DOC) ONLY_DOC = ONLY_DOC != 'false'
 
 /**
  * Documentary is a _Replaceable_ stream with transform rules for documentation.
@@ -423,7 +424,10 @@ export default class Documentary extends Replaceable {
       await super._transform(chunk, _, next)
     } else if (typeof chunk == 'object') {
       if (basename(chunk.file) == '.DS_Store') return next()
-      if (/\.(jsx?|xml|png|jpe?g|gif|svg)$/i.test(chunk.file)) return next()
+      if (chunk.file != 'separator' && ONLY_DOC && !/\.(markdown|md|html?)$/i.test(chunk.file)) {
+        console.log('ignore', chunk.file)
+        return next()
+      }
       if (IGNORE_HIDDEN && basename(chunk.file).startsWith('.')) return next()
       chunk.file != 'separator' && LOG(b(chunk.file, 'cyan'))
       /** @type {string} */

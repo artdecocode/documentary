@@ -109,10 +109,10 @@
   resolved "https://registry.yarnpkg.com/@zoroaster/mask/-/mask-2.5.0.tgz#de128987743d71376485ba9b34977d49e18cde92"
   integrity sha512-GuEHgVneq0MkSHBcF7YgTAuk42/pWJnvMPvbOsUXmq3m2FcSe1v788Bfw896RzZ7p6LWq11xnq48YOkhcy5jLA==
 
-alamode@^3.3.3, alamode@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/alamode/-/alamode-3.4.1.tgz#69067860e42c366a539d5461a1657400fd8a0a80"
-  integrity sha512-pQl2V/OwPbXGCgFnCZ1SEHiD2KK2L7Sj0DfX3nVKMpyDv7hBRsZMDz87l/rKtDI6IUBJ0Hjmbcw28jivm4jCTg==
+alamode@^3.3.3, alamode@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/alamode/-/alamode-3.5.0.tgz#c0928b365d892c643335c9b2651ad10e32b47151"
+  integrity sha512-kuhhCIqHMwiMGSKqE+F//SLgxffkhtT0QFp+8XahzYVwvsxwg9gbtCGriKawEBxeHpU9v3s0jp9qpYzlDUdKFg==
 
 argufy@^1.7.5:
   version "1.7.5"

@@ -1,4 +1,4 @@
-import { parse } from 'path'
+import { parse, join, dirname } from 'path'
 import resolveDependency from 'resolve-dependency'
 import { read, codeSurround } from '../'
 import { EOL } from 'os'
@@ -27,6 +27,7 @@ const getPartial = (boundExample) => {
 
 export async function replacer(match, ws, source, from, to, type) {
   try {
+    if (source.startsWith('./')) source = join(dirname(this.currentFile), source)
     const { path } = await resolveDependency(source)
     let f = await read(path)
     f = f.trim()

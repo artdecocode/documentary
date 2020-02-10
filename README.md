@@ -77,6 +77,7 @@ All of these features come with just 3 transient dependencies in your `node_modu
   * [Replacement Rules](#replacement-rules)
 - [CLI](#cli)
   * [`NODE_DEBUG=doc`](#node_debugdoc)
+  * [Markdown Files](#markdown-files)
   * [Hidden Files](#hidden-files)
 - [♫ PRO<br/>♪ Underlined<br/>♯ `Titles`](#-pro-underlined-titles)
 - [Glossary](#glossary)
@@ -309,7 +310,7 @@ The arguments it accepts are:
   </tr>
 </table>
 
-When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set, the program will print processing information, e.g.,
+When <a name="node_debugdoc">`NODE_DEBUG=doc`</a> is set (or `-d` flag is passed), the program will print processing information, e.g.,
 
 ```
 DOC 80734: stripping comment
@@ -317,6 +318,10 @@ DOC 80734: could not parse the table
 ```
 
 This is quite essential to understanding the status of documentation processing, and will be enabled by default in the next version.
+
+### Markdown Files
+
+Only the following extensions are processed: `markdown`, `md`, `html`, `htm`. Anything else is ignored. This is to allow to place examples in the documentary folder. To process all files, set the `ONLY_DOC=false` variable.
 
 ### Hidden Files
 

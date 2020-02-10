@@ -8,7 +8,7 @@
     "spec": "yarn t test/spec",
     "mask": "yarn t test/mask",
     "test": "yarn t test/spec test/mask",
-    "test-build": "ALAMODE_ENV=test-build yarn test",
+    "test-build": "yarn test -e test-build",
     "lint": "eslint .",
     "e": "node example",
     "dev": "node src/bin -d",
@@ -117,7 +117,7 @@
     "zoroaster": "^4.3.0"
   },
   "dependencies": {
-    "alamode": "^3.4.1",
+    "alamode": "^3.5.0",
     "preact": "8.5.3",
     "typal": "^1.26.2"
   }
