@@ -15,7 +15,8 @@ const queue = {}
 const replacement = async function (noCache, old, err, lang, m, awaited = false, answers, {
   parsedEnv, env } = {}) {
   if (awaited) noCache = false
-  const [mod, ...args] = m.split(' ')
+  let [mod, ...args] = m.split(' ')
+  if (mod.startsWith('./')) mod = join(dirname(this.currentFile), mod)
 
   const { path: mmod } = await resolveDependency(mod)
   const s = `FORK${err || ''}${lang ? `-${lang}` : ''}: ${c(mmod, 'yellow')} ${

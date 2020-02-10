@@ -1,5 +1,9 @@
 ## 10 February 2020
 
+### [1.36.1](https://github.com/artdecocode/documentary/compare/v1.36.0...v1.36.1)
+
+- [fix] Pass relative paths to forks also.
+
 ### [1.36.0](https://github.com/artdecocode/documentary/compare/v1.35.13...v1.36.0)
 
 - [feature] Relative examples.
