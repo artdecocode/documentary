@@ -109,7 +109,9 @@ async function w(b) {
   var d = new Date;
   d = `## ${`${d.getDate()} ${d.toLocaleString("en-GB", {month:"long"})} ${d.getFullYear()}`}`;
   b = `${d}
+
 ### [${a}](${b}/compare/v${c}...v${a})
+
 ${e.startsWith(d) ? e.replace(`${d}\n\n`, "") : e}`;
   n("CHANGELOG.md", b);
   try {

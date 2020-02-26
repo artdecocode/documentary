@@ -1,4 +1,5 @@
 ## 26 February 2020
+
 ### [1.37.1](https://github.com/artdecocode/documentary/compare/v1.37.0...v1.37.1)
 
 - [fix] Fix `stdlib` for Windows forks caching.

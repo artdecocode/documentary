@@ -17,7 +17,9 @@ const PATH = 'CHANGELOG.md'
   const dd = `${d.getDate()} ${m} ${d.getFullYear()}`
   const heading = `## ${dd}`
   const t = `${heading}
+
 ### [${next}](${git}/compare/v${version}...v${next})
+
 ${current.startsWith(heading) ? current.replace(`${heading}\n\n`, '') : current}`
   writeFileSync(PATH, t)
   try {
