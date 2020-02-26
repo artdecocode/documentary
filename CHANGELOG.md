@@ -5,6 +5,7 @@
 - [fix] Fix `stdlib` for Windows forks caching.
 - [feature] Multiple partial examples.
 - [feature] Open _Code_ automatically with **cl**.
+- [ci] Add _GitHub_ Actions.
 
 ## 10 February 2020
 
