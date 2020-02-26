@@ -105,6 +105,7 @@
     "makepromise": "^3.2.0",
     "mismatch": "^1.2.0",
     "pedantry": "^2.5.2",
+    "promto": "^1.2.0",
     "reloquent": "^1.4.1",
     "resolve-dependency": "^1.0.3",
     "restream": "^3.7.4",

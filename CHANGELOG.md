@@ -1,3 +1,10 @@
+## 26 February 2020
+### [1.37.1](https://github.com/artdecocode/documentary/compare/v1.37.0...v1.37.1)
+
+- [fix] Fix `stdlib` for Windows forks caching.
+- [feature] Multiple partial examples.
+- [feature] Open _Code_ automatically with **cl**.
+
 ## 10 February 2020
 
 ### [1.37.0](https://github.com/artdecocode/documentary/compare/v1.36.1...v1.37.0)

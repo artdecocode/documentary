@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 const fs = require('fs');
+const child_process = require('child_process');
 const readline = require('readline');             
 const m = fs.readFileSync, n = fs.writeFileSync;
 const p = readline.createInterface;
@@ -36,22 +37,23 @@ async function t(b, c, f) {
   }
 }
 ;function u(b, c = {}) {
-  const {timeout:f, password:a = !1, output:e = process.stdout, input:d = process.stdin, ...g} = c;
-  c = p({input:d, output:e, ...g});
+  const {timeout:f, password:a = !1, output:e = process.stdout, input:d = process.stdin, ...g} = c, h = p({input:d, output:e, ...g});
   if (a) {
-    const k = c.output;
-    c._writeToOutput = h => {
-      if (["\r\n", "\n", "\r"].includes(h)) {
-        return k.write(h);
+    const k = h.output;
+    h._writeToOutput = l => {
+      if (["\r\n", "\n", "\r"].includes(l)) {
+        return k.write(l);
       }
-      h = h.split(b);
-      "2" == h.length ? (k.write(b), k.write("*".repeat(h[1].length))) : k.write("*");
+      l = l.split(b);
+      "2" == l.length ? (k.write(b), k.write("*".repeat(l[1].length))) : k.write("*");
     };
   }
-  var l = new Promise(c.question.bind(c, b));
-  l = f ? t(l, f, `reloquent: ${b}`) : l;
-  c.promise = v(l, c);
-  return c;
+  c = new Promise(k => {
+    h.question(b, k);
+  });
+  c = f ? t(c, f, `reloquent: ${b}`) : c;
+  h.promise = v(c, h);
+  return h;
 }
 const v = async(b, c) => {
   try {
@@ -86,7 +88,7 @@ async function w(b) {
     let g = d || "";
     d && e && d != e ? g = `\x1b[90m${d}\x1b[0m` : d && d == e && (g = "");
     d = e || "";
-    ({promise:d} = u(`${a.text}${g ? `[${g}] ` : ""}${d ? `[${d}] ` : ""}`, {timeout:void 0, password:a.password}));
+    ({promise:d} = u(`${a.text}${g ? `[${g}] ` : ""}${d ? `[${d}] ` : ""}`, {timeout:void 0, password:a.password, ...a}));
     e = await d || e || a.defaultValue;
     "function" == typeof a.validation && a.validation(e);
     "function" == typeof a.postProcess && (e = await a.postProcess(e));
@@ -97,7 +99,8 @@ async function w(b) {
   ({question:b} = await w({question:b}));
   return b;
 }
-;(async() => {
+;const y = child_process.spawnSync;
+(async() => {
   var b = m("package.json", "utf8");
   const {version:c, repository:f} = JSON.parse(b);
   ({url:b} = f);
@@ -106,11 +109,13 @@ async function w(b) {
   var d = new Date;
   d = `## ${`${d.getDate()} ${d.toLocaleString("en-GB", {month:"long"})} ${d.getFullYear()}`}`;
   b = `${d}
-
 ### [${a}](${b}/compare/v${c}...v${a})
-
 ${e.startsWith(d) ? e.replace(`${d}\n\n`, "") : e}`;
   n("CHANGELOG.md", b);
+  try {
+    y("code", ["CHANGELOG.md"], {shell:"win32" == process.platform});
+  } catch (g) {
+  }
 })();
 
 
