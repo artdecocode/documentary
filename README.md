@@ -2,6 +2,7 @@ Documentary
 ===
 
 [![npm version](https://badge.fury.io/js/documentary.svg)](https://www.npmjs.com/package/documentary)
+![Node.js CI](https://github.com/artdecocode/documentary/workflows/Node.js%20CI/badge.svg)
 
 <a href="https://github.com/artdecocode/documentary"><img src="images/LOGO.svg?sanitize=true" width="150" align="left"></a>
 
@@ -9,6 +10,7 @@ _Documentary_ is a command-line tool to manage documentation of _Node.JS_ packag
 
 ```sh
 yarn add -D documentary
+npm i documentary --save-dev
 ```
 
 <p align="center"><a href="#table-of-contents">
