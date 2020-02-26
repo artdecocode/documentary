@@ -137,6 +137,12 @@ import Catchment from 'catchment'
   get PARTIAL_EXAMPLE_PATH() {
     return resolve(__dirname, '../fixtures/example-part.js')
   }
+  /**
+   * An example with multiple partials.
+   */
+  get PARTIAL_EXAMPLE2_PATH() {
+    return resolve(__dirname, '../fixtures/example-part-2.js')
+  }
   get mismatch() {
     return mismatch
   }

@@ -1,5 +1,6 @@
 import { parse, join, dirname } from 'path'
 import resolveDependency from 'resolve-dependency'
+import mismatch from 'mismatch'
 import { read, codeSurround } from '../'
 import { EOL } from 'os'
 
@@ -47,10 +48,11 @@ export async function replacer(match, ws, source, from, to, type) {
     }
 
     let ff = f
-    const fre = /\/\* start example \*\/([\s\S]+?)\/\* end example \*\//.exec(f)
-    if (fre) {
-      const [, boundExample] = fre
-      ff = getPartial(boundExample)
+    const fre = mismatch(/\/\* start example \*\/([\s\S]+?)\/\* end example \*\//g, f, ['xmpl'])
+    if (fre.length) {
+      // const [, ...boundExamples] = fre
+      const partials = fre.map(({ 'xmpl': x }) => getPartial(x))
+      ff = partials.join('')
       this.log('Example (partial): %s', path)
     } else {
       this.log('Example: %s', path)
